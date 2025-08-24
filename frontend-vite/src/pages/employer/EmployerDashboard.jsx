@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/ui/Logo.jsx';
 
+// sample dashboard yall
 const EmployerDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
