@@ -1,0 +1,68 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Landing from './pages/public/Landing';
+import SignIn from './pages/public/SignIn.jsx';
+import ChooseUser from './pages/public/ChooseUser.jsx';
+import JobseekerSignUp from './pages/public/jobseeker/JobseekerSignUp.jsx';
+import EmployerSignUp from './pages/public/employer/EmployerSignUp.jsx';
+import JobseekerVerification from './pages/public/jobseeker/JobseekerVerification.jsx';
+import JobseekerActivation from './pages/public/jobseeker/JobseekerActivation.jsx';
+import JobseekerOnboardingSkills from './pages/public/jobseeker/JobseekerOnboardingSkills.jsx';
+import JobseekerOnboardingEducation from './pages/public/jobseeker/JobseekerOnboardingEducation.jsx';
+import JobseekerOnboardingExperience from './pages/public/jobseeker/JobseekerOnboardingExperience.jsx';
+import JobseekerOnboardingAccessibility from './pages/public/jobseeker/JobseekerOnboardingAccessibility.jsx';
+import JobseekerOnboardingPreferences from './pages/public/jobseeker/JobseekerOnboardingPreferences.jsx';
+import JobseekerOnboardingCompletion from './pages/public/jobseeker/JobseekerOnboardingCompletion.jsx';
+
+// Employer verification and activation components
+import EmployerVerification from './pages/public/employer/EmployerVerification.jsx';
+import EmployerActivation from './pages/public/employer/EmployerActivation.jsx';
+
+// Employer onboarding components
+import EmployerOnboardingSkills from './pages/public/employer/EmployerOnboardingSkills.jsx';
+import EmployerOnboardingEducation from './pages/public/employer/EmployerOnboardingEducation.jsx';
+import EmployerOnboardingCompletion from './pages/public/employer/EmployerOnboardingCompletion.jsx';
+
+// Dashboard components
+import EmployerDashboard from './pages/employer/EmployerDashboard.jsx';
+import JobseekerDashboard from './pages/jobseeker/JobseekerDashboard.jsx';
+
+import './App.css';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/landing" element={<Landing />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/chooseuser" element={<ChooseUser />} />
+        <Route path="/signup/jobseeker" element={<JobseekerSignUp />} />
+        <Route path="/signup/employer" element={<EmployerSignUp />} />
+        <Route path="/signup/jobseeker/verification" element={<JobseekerVerification />} />
+        <Route path="/signup/jobseeker/activation" element={<JobseekerActivation />} />
+        <Route path="/onboarding/jobseeker/skills" element={<JobseekerOnboardingSkills />} />
+        <Route path="/onboarding/jobseeker/education" element={<JobseekerOnboardingEducation />} />
+        <Route path="/onboarding/jobseeker/experience" element={<JobseekerOnboardingExperience />} />
+        <Route path="/onboarding/jobseeker/accessibility" element={<JobseekerOnboardingAccessibility />} />
+        <Route path="/onboarding/jobseeker/preferences" element={<JobseekerOnboardingPreferences />} />
+        <Route path="/onboarding/jobseeker/completion" element={<JobseekerOnboardingCompletion />} />
+        
+        {/* Employer verification and activation routes */}
+        <Route path="/employer/verification" element={<EmployerVerification />} />
+        <Route path="/employer/activation" element={<EmployerActivation />} />
+        
+        {/* Employer onboarding routes (kept for future use) */}
+        <Route path="/onboarding/employer/skills" element={<EmployerOnboardingSkills />} />
+        <Route path="/onboarding/employer/education" element={<EmployerOnboardingEducation />} />
+        <Route path="/onboarding/employer/completion" element={<EmployerOnboardingCompletion />} />
+        
+        {/* Dashboard routes */}
+        <Route path="/employer/dashboard" element={<EmployerDashboard />} />
+        <Route path="/jobseeker/dashboard" element={<JobseekerDashboard />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
