@@ -36,7 +36,7 @@ const CheckboxItem = ({ children }) => (
 );
 
 const Section = ({ title, children }) => (
-  <div className="bg-white rounded-xl border p-4 md:p-6">
+  <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
     <div className="text-gray-900 font-medium mb-3">{title}</div>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">{children}</div>
   </div>
@@ -57,8 +57,8 @@ const JobseekerOnboardingAccessibility = () => {
       <JobseekerHeader />
 
       <main className="flex-1 py-8">
-        <div className="max-w-6xl mx-auto px-6 space-y-6">
-          <div className="bg-white rounded-2xl border shadow-sm p-8 text-center">
+        <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 space-y-6">
+          <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
             <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600 text-lg mb-3">🛠️</div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Welcome to PWDe: AI-Powered Job Matching Platform</h1>
             <p className="text-gray-600 mt-2">Help us understand your skills and preferences to find the perfect job opportunities tailored for you.</p>
@@ -67,7 +67,7 @@ const JobseekerOnboardingAccessibility = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border shadow-sm p-6 space-y-6">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
             <Stepper steps={steps} currentKey="accessibility" onStepClick={handleStepClick} />
 
             <h2 className="text-xl font-semibold text-gray-900">Accessibility Needs</h2>
@@ -118,9 +118,9 @@ const JobseekerOnboardingAccessibility = () => {
             </Section>
 
             <div className="bg-white">
-              <div className="bg-white rounded-xl border p-4">
+              <div className="bg-white rounded-xl border border-gray-200 p-4">
                 <div className="text-gray-900 font-medium mb-2">Additional Information</div>
-                <textarea rows="4" className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Please share any other specific accommodation needs..." />
+                <textarea rows="4" className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Please share any other specific accommodation needs..." />
                 <div className="mt-3 text-xs text-blue-700 bg-blue-50 border border-blue-100 rounded-lg p-3">This information is used only for job matching and accommodation purposes. Employers will only see relevant accommodation needs if you choose to share them.</div>
               </div>
             </div>
@@ -136,8 +136,8 @@ const JobseekerOnboardingAccessibility = () => {
         </div>
       </main>
 
-      <footer className="bg-white border-t border-gray-200 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-white border-t border-gray-100 mt-12">
+        <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
             <p>© 2025 PWDe. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 sm:mt-0">

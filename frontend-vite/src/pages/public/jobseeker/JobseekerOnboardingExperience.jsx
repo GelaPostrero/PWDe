@@ -48,8 +48,8 @@ const JobseekerOnboardingExperience = () => {
       <JobseekerHeader />
 
       <main className="flex-1 py-8">
-        <div className="max-w-6xl mx-auto px-6 space-y-6">
-          <div className="bg-white rounded-2xl border shadow-sm p-8 text-center">
+        <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 space-y-6">
+          <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
             <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600 text-lg mb-3">🛠️</div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Welcome to PWDe: AI-Powered Job Matching Platform</h1>
             <p className="text-gray-600 mt-2">Help us understand your skills and preferences to find the perfect job opportunities tailored for you.</p>
@@ -58,7 +58,7 @@ const JobseekerOnboardingExperience = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border shadow-sm p-6">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6">
             <Stepper steps={steps} currentKey="experience" onStepClick={handleStepClick} />
 
             <h2 className="text-xl font-semibold text-gray-900 mt-6">Experience</h2>
@@ -67,15 +67,15 @@ const JobseekerOnboardingExperience = () => {
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm text-gray-700 mb-1">Job Title*</label>
-                <input className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Software Developer" />
+                <input className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Software Developer" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1">Company*</label>
-                <input className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Cebu City, Philippines" />
+                <input className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Cebu City, Philippines" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1">Location*</label>
-                <input className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Cebu City, Manila, Makati" />
+                <input className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Cebu City, Manila, Makati" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1">Country*</label>
@@ -140,7 +140,7 @@ const JobseekerOnboardingExperience = () => {
               </div>
               <div className="md:col-span-2">
                 <label className="block text-sm text-gray-700 mb-1">Description</label>
-                <textarea rows="4" className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Describe your responsibilities, achievements, and key accomplishments in this role." />
+                <textarea rows="4" className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Describe your responsibilities, achievements, and key accomplishments in this role." />
               </div>
             </div>
 
@@ -161,8 +161,8 @@ const JobseekerOnboardingExperience = () => {
         </div>
       </main>
 
-      <footer className="bg-white border-t border-gray-200 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-white border-t border-gray-100 mt-12">
+        <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
             <p>© 2025 PWDe. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 sm:mt-0">

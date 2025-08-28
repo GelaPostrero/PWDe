@@ -50,7 +50,7 @@ const IconButton = ({
 const JobseekerHeader = () => {
   return (
     <header className="bg-white border-b border-gray-200">
-      <div className="max-w-15xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <div className="flex items-center h-16">
           {/* Logo and Text group - positioned with more left margin */}
           <div className="flex items-center ml-4">

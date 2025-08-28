@@ -46,8 +46,8 @@ const JobseekerOnboardingPreferences = () => {
       <JobseekerHeader />
 
       <main className="flex-1 py-8">
-        <div className="max-w-6xl mx-auto px-6 space-y-6">
-          <div className="bg-white rounded-2xl border shadow-sm p-8 text-center">
+        <div className="mx-full px-6 space-y-6">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
             <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600 text-lg mb-3">🛠️</div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Welcome to PWDe: AI-Powered Job Matching Platform</h1>
             <p className="text-gray-600 mt-2">Help us understand your skills and preferences to find the perfect job opportunities tailored for you.</p>
@@ -131,8 +131,8 @@ const JobseekerOnboardingPreferences = () => {
         </div>
       </main>
 
-      <footer className="bg-white border-t border-gray-200 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-white border-t border-gray-100 mt-12">
+        <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
             <p>© 2025 PWDe. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 sm:mt-0">

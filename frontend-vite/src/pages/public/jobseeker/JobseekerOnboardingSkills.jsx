@@ -71,9 +71,9 @@ const JobseekerOnboardingSkills = () => {
     <div className="min-h-screen bg-gray-50">
       <JobseekerHeader />
 
-      <main className="flex-1 py-8">
+      <main className="flex-5 py-10">
         {/* Consistent margin with header - matching max-w-15xl */}
-        <div className="max-w-15xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 space-y-6">
           
           {/* Welcome Section */}
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
@@ -247,8 +247,8 @@ const JobseekerOnboardingSkills = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-12">
-        <div className="max-w-15xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <footer className="bg-white border-t border-gray-100 mt-12">
+        <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
             <p>© 2025 PWDe. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 sm:mt-0">
