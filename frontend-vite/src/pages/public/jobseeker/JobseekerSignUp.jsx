@@ -34,7 +34,7 @@ const JobseekerSignUp = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
           <div className="flex justify-between items-center py-4">
             <Logo showText={true} />
             <div className="flex items-center space-x-4">
@@ -118,7 +118,7 @@ const JobseekerSignUp = () => {
       </main>
 
       <footer className="bg-white border-t border-gray-200 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
           <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
             <p>© 2025 PWDe. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 sm:mt-0">

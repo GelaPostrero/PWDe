@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 
-// Your actual Logo component
+
 const Logo = ({ showText = false, to = '/' }) => {
   return (
     <Link to={to} className="flex items-center space-x-2" aria-label="PWDe Home">
@@ -30,7 +30,7 @@ const EmployerHeader = () => {
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
           <Logo showText={true} to="/employer/dashboard" />

@@ -13,7 +13,7 @@ const Landing = () => {
   return (
     <div className="w-full">
       {/* Navigation Bar */}
-      <nav className="flex justify-between items-center px-8 py-6 w-full">
+      <nav className="flex justify-between items-center px-24 py-6 w-full">
         {/* Logo */}
         <Logo size="default" showText={true} />
 
@@ -73,11 +73,11 @@ const Landing = () => {
           </div>
 
           {/* Right Side */}
-          <div className="relative flex items-start justify-center w-full">
+          <div className="relative flex items-start justify-end w-full -mr-10 lg:-mr-20">
             <img 
               src={heroImg} 
               alt="Hero Illustration" 
-              className="w-full max-w-lg rounded-2xl shadow-lg"
+              className="w-full max-w-xl rounded-2xl shadow-lg"
             />
           </div>
         </div>

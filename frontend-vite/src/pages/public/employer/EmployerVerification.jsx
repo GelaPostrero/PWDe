@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../../../components/ui/Logo.jsx';
 
-// Mock Logo component (you can replace with your actual Logo component)
-const Logo = ({ showText }) => (
-  <div className="flex items-center">
-    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-2">
-      <span className="text-white font-bold">P</span>
-    </div>
-    {showText && <span className="text-xl font-bold text-gray-900">PWDe</span>}
-  </div>
-);
 
 const EmployerVerification = () => {
   const [formData, setFormData] = useState({
