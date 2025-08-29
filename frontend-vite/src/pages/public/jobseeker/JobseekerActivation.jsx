@@ -25,6 +25,38 @@ const JobseekerActivation = () => {
     setCode(next);
   };
 
+  const handleActivation = async () => {
+    const pwdEmail = localStorage.getItem('userEmail');
+    const fdata = {
+      email: pwdEmail,
+      code: code.join('')
+    }
+    console.log('Activation dataaa:', fdata);
+    try {
+      var url = "http://localhost:4000/accounts/users/register/verify";
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(fdata)
+      });
+
+      const data = await response.json();
+      if(data.success) {
+        localStorage.removeItem('userEmail');
+        alert('Activation successful! (Demo mode - connect to your backend API)');
+        navigate('/onboarding/jobseeker/skills');
+      } else {
+        alert(data.message || 'Activation failed. Please try again.');
+        return;
+      }
+    } catch (error) {
+      console.error('Activation failed:', error);
+      alert('Failed to connect to the server. Please try again later.');
+      return;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <header className="bg-white shadow-sm">
@@ -115,7 +147,7 @@ const JobseekerActivation = () => {
                 Skip & Continue to Onboarding
               </button>
               <button 
-                onClick={() => navigate('/onboarding/jobseeker/skills')}
+                onClick={handleActivation}
                 className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 Create Account

@@ -148,7 +148,7 @@ const EmployerVerification = () => {
     setUploadErrors(prev => ({ ...prev, [field]: null }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Check if required files are uploaded
@@ -165,22 +165,49 @@ const EmployerVerification = () => {
       return;
     }
 
-    console.log('Employer verification submitted:', {
-      formData,
-      uploadedFiles: Object.entries(uploadedFiles).reduce((acc, [key, value]) => {
-        if (value) {
-          acc[key] = {
-            name: value.name,
-            size: value.size,
-            type: value.type,
-            uploadDate: value.uploadDate
-          };
-        }
-        return acc;
-      }, {})
-    });
+    try {
+      const fd = new FormData();
 
-    navigate('/employer/activation');
+      // Append form fields
+      Object.entries(formData).forEach(([key, value]) => {
+        fd.append(key, value);
+      });
+
+      // Append files
+      requiredFiles.forEach(field => {
+        if (uploadedFiles[field] && uploadedFiles[field].file) {
+          fd.append(field, uploadedFiles[field].file);
+        }
+      });
+
+      // If you store companyEmail in localStorage, add it here for backend lookup
+      const companyEmail = localStorage.getItem('companyEmail');
+      if (companyEmail) {
+        fd.append('companyEmail', companyEmail);
+      }
+
+      const response = await fetch("http://localhost:4000/accounts/users/register/employer/documents", {
+        method: "POST",
+        body: fd
+        // Do NOT set Content-Type header!
+      });
+
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Server error: ${response.status} - ${text}`);
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        alert('Verification documents submitted successfully!');
+        navigate('/employer/activation');
+      } else {
+        alert(`Submission failed: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error submitting employer verification:', error);
+      alert('There was an error submitting your verification. Please try again.');
+    }
   };
 
   const handleSkip = () => {

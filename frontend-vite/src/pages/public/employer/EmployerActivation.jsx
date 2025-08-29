@@ -99,15 +99,41 @@ const EmployerActivation = () => {
     console.log('Resending verification code...');
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const companyEmail = localStorage.getItem('companyEmail');
     const verificationCode = code.join('');
-    if (verificationCode.length === 6) {
-      console.log('Verification code submitted:', verificationCode);
-      // Here you would typically verify the code with an API
-      // For now, redirect to onboarding since we can't receive email codes
-      navigate('/onboarding/employer/skills');
-    } else {
-      alert('Please enter the complete 6-digit verification code.');
+    const fdata = {
+      email: companyEmail,
+      code: verificationCode
+    }
+    try {
+      console.log('Activation dataaa:', fdata);
+      if (verificationCode.length === 6) {
+        console.log('Submitting activation with code:', verificationCode);
+        const response = await fetch("http://localhost:4000/accounts/users/register/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(fdata)
+        });
+
+        const data = await response.json();
+        if(data.success) {
+          localStorage.removeItem('companyEmail');
+          alert('Activation successful! (Demo mode - connect to your backend API)');
+          navigate('/onboarding/employer/skills');
+        } else if (data.message.includes('Incorrect verification code.')) {
+          alert(data.message);
+        } else {
+          alert(data.message || 'Activation failed. Please try again.');
+          return;
+        }
+      } else {
+        alert('Please enter the complete 6-digit verification code.');
+      }
+    } catch (error) {
+      console.error('Activation failed:', error);
+      alert('Failed to connect to the server. Please try again later.');
+      return;
     }
   };
 
