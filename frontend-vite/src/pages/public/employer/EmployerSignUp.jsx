@@ -18,11 +18,38 @@ const EmployerSignUp = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Employer registration:', formData);
-    // Redirect to employer verification
-    navigate('/employer/verification');
+    localStorage.setItem('companyEmail', formData.companyEmail);
+
+    try {
+      var url = "http://localhost:4000/accounts/users/register/employer";
+      var headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if(data.success) {
+        alert('Registration successful! Please proceed to verification.');
+        // Redirect to employer verification page
+        navigate('/employer/verification');
+      } else {
+        alert(`Registration failed: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      alert('An unexpected error occurred. Please try again later.');
+    }
   };
 
   return (

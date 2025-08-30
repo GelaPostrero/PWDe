@@ -9,6 +9,7 @@ const JobseekerSignUp = () => {
     middleName: '',
     lastName: '',
     email: '',
+    userType: 'PWD',
     phone: '',
     birthdate: '',
     gender: '',
@@ -24,11 +25,34 @@ const JobseekerSignUp = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Jobseeker registration:', formData);
-    // Redirect to verification step
-    navigate('/signup/jobseeker/verification');
+    if(!formData.email) {
+      alert("Email is required.");
+      return;
+    }
+    localStorage.setItem('userEmail', formData.email);
+    
+    try {
+      const response = await fetch("http://localhost:4000/accounts/users/register/pwd", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+      if(data.success) {
+        alert("Registration successful! Please verify your email or phone number.");
+        navigate('/signup/jobseeker/verification');        
+      } else {
+        if (data.message?.includes("already registered")) {
+          alert("Email or phone number already exists. Please use a different one.");
+        }
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Failed to connect to the server. Please try again later.");
+    }
   };
 
   return (
@@ -89,10 +113,10 @@ const JobseekerSignUp = () => {
                 <input name="birthdate" value={formData.birthdate} onChange={handleChange} placeholder="mm/dd/yy" className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
                 <select name="gender" value={formData.gender} onChange={handleChange} className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700">
                   <option value="" disabled>Choose your gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
                   <option value="prefer-not">Prefer not to say</option>
-                  <option value="other">Other</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
 

@@ -1,0 +1,10 @@
+-- AlterTable
+ALTER TABLE "public"."Pwd_Profile" ALTER COLUMN "first_name" DROP NOT NULL,
+ALTER COLUMN "first_name" SET DATA TYPE TEXT,
+ALTER COLUMN "last_name" DROP NOT NULL,
+ALTER COLUMN "last_name" SET DATA TYPE TEXT,
+ALTER COLUMN "middle_name" DROP NOT NULL,
+ALTER COLUMN "middle_name" SET DATA TYPE TEXT,
+ALTER COLUMN "address" DROP NOT NULL,
+ALTER COLUMN "professional_role" DROP NOT NULL,
+ALTER COLUMN "professional_summary" DROP NOT NULL;

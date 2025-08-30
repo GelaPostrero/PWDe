@@ -4,6 +4,13 @@ import Logo from '../../components/ui/Logo.jsx';
 
 // sample dashboard yall
 const EmployerDashboard = () => {
+  const signOut = () => {
+    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
+    alert('You have been signed out.');
+    // Redirect to sign-in page
+    window.location.href = '/';
+  }
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
@@ -23,7 +30,7 @@ const EmployerDashboard = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </button>
-              <button className="text-gray-700 hover:text-gray-900 transition-colors font-medium">
+              <button onClick={signOut} className="text-gray-700 hover:text-gray-900 transition-colors font-medium">
                 Sign Out
               </button>
             </div>

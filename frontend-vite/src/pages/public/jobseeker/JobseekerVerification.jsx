@@ -206,18 +206,17 @@ const JobseekerVerification = () => {
 
     // Prepare FormData for backend submission
     const formData = new FormData();
-    
-    allDocuments.forEach((doc, index) => {
+
+    const userEmail = localStorage.getItem('userEmail');
+    formData.append('email', userEmail);
+
+    allDocuments.forEach((doc) => {
       if (doc.file) {
-        formData.append(`document_${index}`, doc.file);
+        formData.append('documents', doc.file);
       } else if (doc.blob) {
-        formData.append(`photo_${index}`, doc.blob, doc.name);
+        formData.append('documents', doc.blob, doc.name);
       }
     });
-
-    // Add metadata
-    formData.append('documentCount', allDocuments.length.toString());
-    formData.append('submissionTime', new Date().toISOString());
 
     try {
       // TODO: Replace with actual API endpoint when backend is ready
@@ -225,21 +224,18 @@ const JobseekerVerification = () => {
       console.log('FormData prepared for backend:', formData);
       
       // Example of how to connect to your backend:
-      // const response = await fetch('/api/verify-documents', {
-      //   method: 'POST',
-      //   body: formData,
-      //   headers: {
-      //     // Don't set Content-Type - let browser set it for FormData
-      //   }
-      // });
-      // 
-      // if (response.ok) {
-      //   const result = await response.json();
-      //   console.log('Upload successful:', result);
-      //   navigate('/signup/jobseeker/activation');
-      // } else {
-      //   throw new Error('Upload failed');
-      // }
+      const response = await fetch('http://localhost:4000/accounts/users/register/pwd/documents', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Upload successful:', result);
+        navigate('/signup/jobseeker/activation');
+      } else {
+        throw new Error('Upload failed');
+      }
       
       alert('Documents submitted successfully! (Demo mode - connect to your backend API)');
       navigate('/signup/jobseeker/activation');
@@ -247,10 +243,6 @@ const JobseekerVerification = () => {
       console.error('Error submitting documents:', error);
       alert('Error submitting documents. Please try again.');
     }
-  };
-
-  const goNext = () => {
-    submitDocuments();
   };
 
   // Cleanup on unmount
@@ -495,7 +487,7 @@ const JobseekerVerification = () => {
               <div className="mt-6 flex items-center gap-4">
                 <button onClick={() => navigate('/onboarding/jobseeker/skills')} className="flex-1 border border-gray-300 rounded-lg py-3 hover:bg-gray-50 transition-colors">Skip for Now</button>
                 <button 
-                  onClick={goNext} 
+                  onClick={submitDocuments} 
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 transition-colors"
                   disabled={uploadedFiles.length === 0 && capturedPhotos.length === 0}
                 >

@@ -8,7 +8,7 @@ import signInImg from '../../assets/div.png'; // Replace with your actual image 
 const SignIn = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [userRole, setUserRole] = useState('jobseeker'); // Default role
+  const [userRole, setUserRole] = useState('');
   
   const [formData, setFormData] = useState({
     email: '',
@@ -31,16 +31,50 @@ const SignIn = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle sign in logic here
-    console.log('Sign in attempt:', formData);
-    
-    // Redirect based on user role
-    if (userRole === 'employer') {
-      navigate('/employer/dashboard');
-    } else {
-      navigate('/jobseeker/dashboard');
+    const { email, password, rememberMe } = formData;
+
+    try {
+      var url = 'http://localhost:4000/accounts/users/login';
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, rememberMe })
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        console.log('Sign in successful:', data);
+        console.log('User role:', data.role);
+        alert('Sign in successful!');
+
+        if(rememberMe) {
+          localStorage.setItem('authToken', data.token);
+        } else {
+          sessionStorage.setItem('authToken', data.token);
+        }
+
+        switch(data.role) {
+          case 'PWD':
+            setUserRole('jobseeker');
+            navigate('/jobseeker/dashboard');
+            break;
+          case 'Employer':
+            setUserRole('employer');
+            navigate('/employer/dashboard');
+            break;
+          default:
+            setUserRole('administrator');
+            break;
+        }
+      } else {
+        console.error('Sign in failed:', data.message);
+        alert(`Sign in failed: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Sign in failed:', error);
+      alert('Sign in failed. Please check your credentials and try again.');
     }
   };
 
