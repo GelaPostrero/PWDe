@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Logo from '../../../components/ui/Logo.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 
@@ -34,20 +35,30 @@ const JobseekerSignUp = () => {
     localStorage.setItem('userEmail', formData.email);
     
     try {
-      const response = await fetch("http://localhost:4000/accounts/users/register/pwd", {
+      const url = "http://localhost:4000/accounts/users/register/pwd";
+      const headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+      const response = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: headers,
         body: JSON.stringify(formData)
       });
 
       const data = await response.json();
       if(data.success) {
-        alert("Registration successful! Please verify your email or phone number.");
+        Swal.fire({
+          icon: 'success',
+          title: 'First phase registration successful!',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        })
         navigate('/signup/jobseeker/verification');        
       } else {
-        if (data.message?.includes("already registered")) {
-          alert("Email or phone number already exists. Please use a different one.");
-        }
+        alert(`Registration failed: ${data.error || data.message}`);
       }
     } catch (error) {
       console.error("Error:", error);

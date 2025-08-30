@@ -3330,6 +3330,7 @@ export namespace Prisma {
     account_status: $Enums.AccountStatus | null
     is_verified: boolean | null
     user_id: number | null
+    password_reset_token: string | null
     created_at: string | null
   }
 
@@ -3341,6 +3342,7 @@ export namespace Prisma {
     account_status: $Enums.AccountStatus | null
     is_verified: boolean | null
     user_id: number | null
+    password_reset_token: string | null
     created_at: string | null
   }
 
@@ -3352,6 +3354,7 @@ export namespace Prisma {
     account_status: number
     is_verified: number
     user_id: number
+    password_reset_token: number
     created_at: number
     _all: number
   }
@@ -3373,6 +3376,7 @@ export namespace Prisma {
     account_status?: true
     is_verified?: true
     user_id?: true
+    password_reset_token?: true
     created_at?: true
   }
 
@@ -3384,6 +3388,7 @@ export namespace Prisma {
     account_status?: true
     is_verified?: true
     user_id?: true
+    password_reset_token?: true
     created_at?: true
   }
 
@@ -3395,6 +3400,7 @@ export namespace Prisma {
     account_status?: true
     is_verified?: true
     user_id?: true
+    password_reset_token?: true
     created_at?: true
     _all?: true
   }
@@ -3493,6 +3499,7 @@ export namespace Prisma {
     account_status: $Enums.AccountStatus
     is_verified: boolean
     user_id: number
+    password_reset_token: string | null
     created_at: string
     _count: UsersCountAggregateOutputType | null
     _avg: UsersAvgAggregateOutputType | null
@@ -3523,6 +3530,7 @@ export namespace Prisma {
     account_status?: boolean
     is_verified?: boolean
     user_id?: boolean
+    password_reset_token?: boolean
     created_at?: boolean
     messages?: boolean | Users$messagesArgs<ExtArgs>
     employer_Profile?: boolean | Users$employer_ProfileArgs<ExtArgs>
@@ -3547,6 +3555,7 @@ export namespace Prisma {
     account_status?: boolean
     is_verified?: boolean
     user_id?: boolean
+    password_reset_token?: boolean
     created_at?: boolean
   }, ExtArgs["result"]["users"]>
 
@@ -3558,6 +3567,7 @@ export namespace Prisma {
     account_status?: boolean
     is_verified?: boolean
     user_id?: boolean
+    password_reset_token?: boolean
     created_at?: boolean
   }, ExtArgs["result"]["users"]>
 
@@ -3569,10 +3579,11 @@ export namespace Prisma {
     account_status?: boolean
     is_verified?: boolean
     user_id?: boolean
+    password_reset_token?: boolean
     created_at?: boolean
   }
 
-  export type UsersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"email" | "password_hash" | "phone_number" | "user_type" | "account_status" | "is_verified" | "user_id" | "created_at", ExtArgs["result"]["users"]>
+  export type UsersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"email" | "password_hash" | "phone_number" | "user_type" | "account_status" | "is_verified" | "user_id" | "password_reset_token" | "created_at", ExtArgs["result"]["users"]>
   export type UsersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     messages?: boolean | Users$messagesArgs<ExtArgs>
     employer_Profile?: boolean | Users$employer_ProfileArgs<ExtArgs>
@@ -3615,6 +3626,7 @@ export namespace Prisma {
       account_status: $Enums.AccountStatus
       is_verified: boolean
       user_id: number
+      password_reset_token: string | null
       created_at: string
     }, ExtArgs["result"]["users"]>
     composites: {}
@@ -4058,6 +4070,7 @@ export namespace Prisma {
     readonly account_status: FieldRef<"Users", 'AccountStatus'>
     readonly is_verified: FieldRef<"Users", 'Boolean'>
     readonly user_id: FieldRef<"Users", 'Int'>
+    readonly password_reset_token: FieldRef<"Users", 'String'>
     readonly created_at: FieldRef<"Users", 'String'>
   }
     
@@ -28680,6 +28693,7 @@ export namespace Prisma {
     account_status: 'account_status',
     is_verified: 'is_verified',
     user_id: 'user_id',
+    password_reset_token: 'password_reset_token',
     created_at: 'created_at'
   };
 
@@ -29357,6 +29371,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFilter<"Users"> | $Enums.AccountStatus
     is_verified?: BoolFilter<"Users"> | boolean
     user_id?: IntFilter<"Users"> | number
+    password_reset_token?: StringNullableFilter<"Users"> | string | null
     created_at?: StringFilter<"Users"> | string
     messages?: Chat_MessageListRelationFilter
     employer_Profile?: XOR<Employer_ProfileNullableScalarRelationFilter, Employer_ProfileWhereInput> | null
@@ -29380,6 +29395,7 @@ export namespace Prisma {
     account_status?: SortOrder
     is_verified?: SortOrder
     user_id?: SortOrder
+    password_reset_token?: SortOrderInput | SortOrder
     created_at?: SortOrder
     messages?: Chat_MessageOrderByRelationAggregateInput
     employer_Profile?: Employer_ProfileOrderByWithRelationInput
@@ -29406,6 +29422,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFilter<"Users"> | $Enums.UserType
     account_status?: EnumAccountStatusFilter<"Users"> | $Enums.AccountStatus
     is_verified?: BoolFilter<"Users"> | boolean
+    password_reset_token?: StringNullableFilter<"Users"> | string | null
     created_at?: StringFilter<"Users"> | string
     messages?: Chat_MessageListRelationFilter
     employer_Profile?: XOR<Employer_ProfileNullableScalarRelationFilter, Employer_ProfileWhereInput> | null
@@ -29429,6 +29446,7 @@ export namespace Prisma {
     account_status?: SortOrder
     is_verified?: SortOrder
     user_id?: SortOrder
+    password_reset_token?: SortOrderInput | SortOrder
     created_at?: SortOrder
     _count?: UsersCountOrderByAggregateInput
     _avg?: UsersAvgOrderByAggregateInput
@@ -29448,6 +29466,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusWithAggregatesFilter<"Users"> | $Enums.AccountStatus
     is_verified?: BoolWithAggregatesFilter<"Users"> | boolean
     user_id?: IntWithAggregatesFilter<"Users"> | number
+    password_reset_token?: StringNullableWithAggregatesFilter<"Users"> | string | null
     created_at?: StringWithAggregatesFilter<"Users"> | string
   }
 
@@ -31211,6 +31230,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
@@ -31234,6 +31254,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -31256,6 +31277,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
@@ -31279,6 +31301,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -31302,6 +31325,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
   }
 
@@ -31312,6 +31336,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
   }
 
@@ -31323,6 +31348,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
   }
 
@@ -33219,6 +33245,21 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type Chat_MessageListRelationFilter = {
     every?: Chat_MessageWhereInput
     some?: Chat_MessageWhereInput
@@ -33271,6 +33312,11 @@ export namespace Prisma {
     none?: withdrawal_requestsWhereInput
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type Chat_MessageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -33307,6 +33353,7 @@ export namespace Prisma {
     account_status?: SortOrder
     is_verified?: SortOrder
     user_id?: SortOrder
+    password_reset_token?: SortOrder
     created_at?: SortOrder
   }
 
@@ -33322,6 +33369,7 @@ export namespace Prisma {
     account_status?: SortOrder
     is_verified?: SortOrder
     user_id?: SortOrder
+    password_reset_token?: SortOrder
     created_at?: SortOrder
   }
 
@@ -33333,6 +33381,7 @@ export namespace Prisma {
     account_status?: SortOrder
     is_verified?: SortOrder
     user_id?: SortOrder
+    password_reset_token?: SortOrder
     created_at?: SortOrder
   }
 
@@ -33402,7 +33451,7 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -33414,7 +33463,10 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type EnumDisability_SeverityNullableFilter<$PrismaModel = never> = {
@@ -33510,11 +33562,6 @@ export namespace Prisma {
     every?: transactionsWhereInput
     some?: transactionsWhereInput
     none?: transactionsWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type ApplicationsOrderByRelationAggregateInput = {
@@ -33623,24 +33670,6 @@ export namespace Prisma {
     rating?: SortOrder
     pwd_id?: SortOrder
     user_id?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type EnumDisability_SeverityNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -35154,6 +35183,10 @@ export namespace Prisma {
     set?: boolean
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type Chat_MessageUpdateManyWithoutSenderNestedInput = {
     create?: XOR<Chat_MessageCreateWithoutSenderInput, Chat_MessageUncheckedCreateWithoutSenderInput> | Chat_MessageCreateWithoutSenderInput[] | Chat_MessageUncheckedCreateWithoutSenderInput[]
     connectOrCreate?: Chat_MessageCreateOrConnectWithoutSenderInput | Chat_MessageCreateOrConnectWithoutSenderInput[]
@@ -35606,10 +35639,6 @@ export namespace Prisma {
     connectOrCreate?: transactionsCreateOrConnectWithoutPayeeInput | transactionsCreateOrConnectWithoutPayeeInput[]
     createMany?: transactionsCreateManyPayeeInputEnvelope
     connect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type NullableEnumDisability_SeverityFieldUpdateOperationsInput = {
@@ -36790,6 +36819,20 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -36862,7 +36905,7 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -36873,7 +36916,21 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedEnumDisability_SeverityNullableFilter<$PrismaModel = never> = {
@@ -36910,34 +36967,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedEnumDisability_SeverityNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -38236,6 +38265,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
@@ -38258,6 +38288,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -38555,6 +38586,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
@@ -38577,6 +38609,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -39280,6 +39313,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
@@ -39302,6 +39336,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -39431,6 +39466,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
@@ -39453,6 +39489,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -39768,6 +39805,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
@@ -39790,6 +39828,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -39849,6 +39888,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
@@ -39871,6 +39911,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -39920,6 +39961,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
@@ -39942,6 +39984,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -39968,6 +40011,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
@@ -39990,6 +40034,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -40027,6 +40072,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
@@ -40049,6 +40095,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -40081,6 +40128,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
@@ -40103,6 +40151,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -40584,6 +40633,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
@@ -40606,6 +40656,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -40632,6 +40683,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
@@ -40654,6 +40706,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -40727,6 +40780,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
@@ -40749,6 +40803,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -40781,6 +40836,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
@@ -40803,6 +40859,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -41150,6 +41207,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
@@ -41172,6 +41230,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -41209,6 +41268,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
@@ -41231,6 +41291,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -41575,6 +41636,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
@@ -41597,6 +41659,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -41623,6 +41686,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
@@ -41645,6 +41709,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -41682,6 +41747,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
@@ -41704,6 +41770,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -41736,6 +41803,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
@@ -41758,6 +41826,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -41779,6 +41848,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
@@ -41801,6 +41871,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -41838,6 +41909,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
@@ -41860,6 +41932,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -42137,6 +42210,7 @@ export namespace Prisma {
     user_type: $Enums.UserType
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
@@ -42159,6 +42233,7 @@ export namespace Prisma {
     account_status?: $Enums.AccountStatus
     is_verified?: boolean
     user_id?: number
+    password_reset_token?: string | null
     created_at: string
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -42196,6 +42271,7 @@ export namespace Prisma {
     user_type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
@@ -42218,6 +42294,7 @@ export namespace Prisma {
     account_status?: EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     user_id?: IntFieldUpdateOperationsInput | number
+    password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput

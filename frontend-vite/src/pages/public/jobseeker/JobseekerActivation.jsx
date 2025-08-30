@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Logo from '../../../components/ui/Logo.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 
@@ -12,6 +13,18 @@ const steps = [
 const JobseekerActivation = () => {
   const navigate = useNavigate();
   const [code, setCode] = useState(['', '', '', '', '', '']);
+  const [userEmail, setUserEmail] = useState(localStorage.getItem('userEmail') || '');
+  const [countdown, setCountdown] = useState(30);
+  const [isResendDisabled, setIsResendDisabled] = useState(true);
+
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setIsResendDisabled(false);
+    }
+  }, [countdown]);
 
   const handleStepClick = (key) => {
     if (key === 'registration') navigate('/signup/jobseeker');
@@ -44,9 +57,27 @@ const JobseekerActivation = () => {
       const data = await response.json();
       if(data.success) {
         localStorage.removeItem('userEmail');
-        alert('Activation successful! (Demo mode - connect to your backend API)');
+        Swal.fire({
+          icon: 'success',
+          html: '<b>Activation successful!</b> \n<p>Your employer account is now active.</p>',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
         navigate('/onboarding/jobseeker/skills');
-      } else {
+      } else if (data.message.includes('Incorrect verification')) {
+        Swal.fire({
+          icon: 'error',
+          html: '<b>Incorrect Code!</b> \n<p>Please check the code and try again.</p>',
+          timer: 4000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
+        setCode(['', '', '', '', '', '']);
+      }
+      else {
         alert(data.message || 'Activation failed. Please try again.');
         return;
       }
@@ -54,6 +85,41 @@ const JobseekerActivation = () => {
       console.error('Activation failed:', error);
       alert('Failed to connect to the server. Please try again later.');
       return;
+    }
+  };
+
+  const handleResendCode = async () => {
+    setIsResendDisabled(true);
+    const email = localStorage.getItem('userEmail');
+    if (!email) {
+      alert('No email found. Please restart the registration process.');
+      return;
+    }
+    try {
+      const url = "http://localhost:4000/accounts/users/register/verify/resend";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+      const data = await response.json();
+      if(data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Verification code resent!',
+          text: 'A new verification code has been sent to your email.',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
+        setCountdown(30);
+      } else {
+        alert(data.message || 'Failed to resend code. Please try again.');
+      }
+    } catch (error) {
+      console.error('Resend code failed:', error);
+      alert('Failed to connect to the server. Please try again later.');
     }
   };
 
@@ -121,7 +187,7 @@ const JobseekerActivation = () => {
 
             <div className="mt-8">
               <div className="text-sm text-gray-600">Verification code sent to:</div>
-              <div className="text-2xl font-semibold mt-1">your@email.com</div>
+              <div className="text-2xl font-semibold mt-1">{userEmail}</div>
             </div>
 
             <div className="mt-8 flex items-center justify-center gap-4">
@@ -137,7 +203,28 @@ const JobseekerActivation = () => {
               ))}
             </div>
 
-            <div className="mt-4 text-sm text-gray-600">Didn't receive the code? <button className="text-blue-600 hover:text-blue-700">Resend Code 30s</button></div>
+            <div className="mt-4 text-sm text-gray-600">
+              Didn't receive the code?{' '}
+              <button 
+                  type="button"
+                  onClick={handleResendCode}
+                  disabled={isResendDisabled}
+                  className={`transition-colors ${
+                    isResendDisabled
+                      ? 'text-gray-400 cursor-not-allowed'
+                      : 'text-blue-600 hover:text-blue-700'
+                  }`}
+                >
+                  Resend Code
+                  {isResendDisabled && (
+                    <span
+                      className={`${countdown == 0 && isResendDisabled ? 'text-transparent' : 'text-gray-900'} font-semibold ml-1`}
+                    >
+                      {countdown}s
+                    </span>
+                  )}
+                </button>
+            </div>
 
             <div className="mt-8 flex gap-4">
               <button 

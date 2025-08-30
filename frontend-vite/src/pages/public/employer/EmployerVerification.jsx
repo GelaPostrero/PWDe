@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Logo from '../../../components/ui/Logo.jsx';
 
 
@@ -199,7 +200,14 @@ const EmployerVerification = () => {
 
       const data = await response.json();
       if (data.success) {
-        alert('Verification documents submitted successfully!');
+        Swal.fire({
+          icon: 'success',
+          html: '<b>Verification documents submitted successfully!</b> \n<p>Please check your email for the verification code.</p>',
+          timer: 5000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
         navigate('/employer/activation');
       } else {
         alert(`Submission failed: ${data.message}`);

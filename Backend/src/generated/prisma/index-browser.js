@@ -128,6 +128,7 @@ exports.Prisma.UsersScalarFieldEnum = {
   account_status: 'account_status',
   is_verified: 'is_verified',
   user_id: 'user_id',
+  password_reset_token: 'password_reset_token',
   created_at: 'created_at'
 };
 

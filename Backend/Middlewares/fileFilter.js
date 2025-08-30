@@ -1,4 +1,4 @@
-// Middlweware for File filtering with Multer
+// Middlweware for File filtering with Multer in Registration
 function fileFilter(req, file, cb) {
     const allowedTypes = [
         'application/pdf', 

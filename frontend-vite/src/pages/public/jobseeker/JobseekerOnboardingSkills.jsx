@@ -48,6 +48,7 @@ const routeForStep = (key) => {
 
 const JobseekerOnboardingSkills = () => {
   const navigate = useNavigate();
+  const [profession, setProfession] = useState("");
   const [selected, setSelected] = useState(['javascript', 'uiux', 'pm']);
 
   const toggleSkill = (id) => {
@@ -58,7 +59,19 @@ const JobseekerOnboardingSkills = () => {
     navigate(routeForStep(key));
   };
 
+  const handleChange = (e) => {
+    setProfession(e.target.value);
+  };
+
   const handleNext = () => {
+    // const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+
+    const selectedSkill = selected.map((skillId) => {
+      const skill = initialSkills.find(s => s.id === skillId);
+      return skill ? `${skill.label} (${skill.category})` : null;
+    })
+
+    console.log('Submitting skills and profession:', { selectedSkill, profession });
     navigate(routeForStep('education'));
   };
 
@@ -109,11 +122,11 @@ const JobseekerOnboardingSkills = () => {
                   Profession Category
                 </label>
                 <div className="relative">
-                  <select className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
-                    <option>Choose your profession</option>
-                    <option>Software Development</option>
-                    <option>Design</option>
-                    <option>Management</option>
+                  <select value={profession} onChange={handleChange} className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                    <option value="" disabled hidden>Choose your profession</option>
+                    <option value="Software Development">Software Development</option>
+                    <option value="Design">Design</option>
+                    <option value="Management">Management</option>
                   </select>
                   <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                     <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
