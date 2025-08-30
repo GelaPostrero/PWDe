@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Logo from '../../../components/ui/Logo.jsx';
 
 
@@ -52,8 +53,9 @@ const steps = [
 
 const EmployerActivation = () => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
+  const [companyEmail, setCompanyEmail] = useState(localStorage.getItem('companyEmail') || '');
   const [countdown, setCountdown] = useState(30);
-  const [isResendDisabled, setIsResendDisabled] = useState(false);
+  const [isResendDisabled, setIsResendDisabled] = useState(true);
 
   const navigate = useNavigate();
 
@@ -92,11 +94,38 @@ const EmployerActivation = () => {
     }
   };
 
-  const handleResendCode = () => {
-    setCountdown(30);
+  const handleResendCode = async () => {
     setIsResendDisabled(true);
-    // Here you would typically call an API to resend the code
-    console.log('Resending verification code...');
+    const email = localStorage.getItem('companyEmail');
+    if (!email) {
+      alert('No email found. Please restart the registration process.');
+      return;
+    }
+    try {
+      const url = "http://localhost:4000/accounts/users/register/verify/resend";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+      const data = await response.json();
+      if(data.success) {
+        Swal.fire({
+          icon: 'success',
+          html: '<b>Verification code resent!</b> \n<p>A new code has been sent to your email.</p>',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
+        setCountdown(30);
+      } else {
+        alert(data.message || 'Failed to resend code. Please try again.');
+      }
+    } catch (error) {
+      console.error('Resend code failed:', error);
+      alert('Failed to connect to the server. Please try again later.');
+    }
   };
 
   const handleSubmit = async () => {
@@ -119,10 +148,25 @@ const EmployerActivation = () => {
         const data = await response.json();
         if(data.success) {
           localStorage.removeItem('companyEmail');
-          alert('Activation successful! (Demo mode - connect to your backend API)');
+          Swal.fire({
+            icon: 'success',
+            html: '<b>Activation successful!</b> \n<p>Your employer account is now active.</p>',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'bottom-end'
+          });
           navigate('/onboarding/employer/skills');
-        } else if (data.message.includes('Incorrect verification code.')) {
-          alert(data.message);
+        } else if (data.message.includes('Incorrect verification')) {
+          Swal.fire({
+            icon: 'error',
+            html: '<b>Incorrect Code!</b> \n<p>Please check the code and try again.</p>',
+            timer: 4000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'bottom-end'
+          });
+          setCode(['', '', '', '', '', '']);
         } else {
           alert(data.message || 'Activation failed. Please try again.');
           return;
@@ -157,7 +201,7 @@ const EmployerActivation = () => {
 
             <div className="mt-8">
               <div className="text-sm text-gray-600">Verification code sent to:</div>
-              <div className="text-2xl font-semibold mt-1">your@email.com</div>
+              <div className="text-2xl font-semibold mt-1">{companyEmail}</div>
             </div>
 
             <div onSubmit={handleSubmit}>
@@ -190,7 +234,11 @@ const EmployerActivation = () => {
                 >
                   Resend Code
                   {isResendDisabled && (
-                    <span className="text-gray-900 font-semibold ml-1">{countdown}s</span>
+                    <span
+                      className={`${countdown == 0 && isResendDisabled ? 'text-transparent' : 'text-gray-900'} font-semibold ml-1`}
+                    >
+                      {countdown}s
+                    </span>
                   )}
                 </button>
               </div>

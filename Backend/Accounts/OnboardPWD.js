@@ -3,6 +3,7 @@ const router = express.Router();
 const { PrismaClient } = require('../src/generated/prisma');
 const { withAccelerate } = require('../node_modules/@prisma/extension-accelerate');
 const prisma = new PrismaClient().$extends(withAccelerate());
+const authenticateToken = require('../Middlewares/auth');
 
 const path = require('path');
 const multer = require('multer');
@@ -40,23 +41,7 @@ const storage = multer.diskStorage({
   }
 });
 
-function fileFilter(req, file, cb) {
-  if (file.fieldname === 'profile_picture') {
-    // Only jpg/png
-    if (!file.originalname.match(/\.(jpg|jpeg|png)$/i)) {
-      return cb(new Error('Only JPG and PNG images are allowed for profile picture'), false);
-    }
-  }
-
-  if (file.fieldname === 'resume_cv_file') {
-    // Only pdf/doc/docx
-    if (!file.originalname.match(/\.(pdf|doc|docx)$/i)) {
-      return cb(new Error('Only PDF, DOC, DOCX files are allowed for resume'), false);
-    }
-  }
-
-  cb(null, true);
-}
+const fileFilter = require('../Middlewares/fileFilterProfilePic');
 
 // Professional Skills Assessment ni nga API for PWD
 const tempOnboardPWDs = new Map();
@@ -76,9 +61,11 @@ const completeProfile = multer({ storage, fileFilter }).fields([
     { name: 'resume_cv_file', maxCount: 1 }
 ]);
 
-router.post('/pwd/onboard/assessment', async (req, res) => {
+router.post('/pwd/onboard/assessment', authenticateToken, async (req, res) => {
+    console.log("Raw body:", req.body);
+
+    const pwd_id = req.user?.pwd_id;
     const {
-        pwd_id,
         profession,
         skills
     } = req.body;
@@ -88,20 +75,14 @@ router.post('/pwd/onboard/assessment', async (req, res) => {
     }
 
     try {
-        const AssessmentData = {
-        pwd_id,
-        profession,
-        skills: skills.split(',').map(skill => skill.trim()),
-        };
-
         mergeStepData(pwd_id, 'assessment', {
             profession,
             skills: skills.split(',').map(skill => skill.trim())
         });
-
+        console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)))
         res.status(200).json({
-        message: 'PWD onboarding assessment data received successfully.',
-        data: tempOnboardPWDs.get(pwd_id)
+            message: 'PWD onboarding assessment data received successfully.',
+            data: tempOnboardPWDs.get(String(pwd_id))
         });
     } catch (error) {
         console.log('Error processing PWD onboarding assessment:', error);
@@ -109,9 +90,9 @@ router.post('/pwd/onboard/assessment', async (req, res) => {
     }
 });
 // Education & Qualification ni nga API for PWD
-router.post('/pwd/onboard/education', async (req, res) => {
-    const { 
-        pwd_id,
+router.post('/pwd/onboard/education', authenticateToken, async (req, res) => {
+    const pwd_id = req.user.pwd_id;
+    const {
         highest_level,
         institution_name,
         location,
@@ -146,9 +127,10 @@ router.post('/pwd/onboard/education', async (req, res) => {
             graduation_details,
             graduation_year
         });
+        console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
         res.status(200).json({
             message: 'PWD education data received successfully.',
-            data: tempOnboardPWDs.get(pwd_id)
+            data: tempOnboardPWDs.get(String(pwd_id))
         });
     } catch (error) {
         console.log('Error processing PWD education data:', error);

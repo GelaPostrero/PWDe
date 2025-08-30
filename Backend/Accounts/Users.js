@@ -5,6 +5,8 @@ const { PrismaClient } = require('../src/generated/prisma')
 const { withAccelerate } = require('../node_modules/@prisma/extension-accelerate');
 const prisma = new PrismaClient().$extends(withAccelerate());
 
+const { generateVerificationCode, verifyCode } = require('../Middlewares/verificationCode');
+
 const memoryUploadForEMP = require('../Middlewares/multerEMP');
 const memoryUploadForPWD = require('../Middlewares/multerPwd');
 const path = require('path');
@@ -16,8 +18,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const tempPwdUser = new Map();
 const tempEmpUser = new Map();
-
-const generateCode = () => Math.floor(100000 + Math.random() * 900000).toString();
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -70,12 +70,11 @@ router.post('/users/register/pwd', async (req, res) => {
     return res.status(400).json({ error: 'This phone number is already registered.' });
   }
 
-  const code = generateCode();
   const userData = { 
     email,
     password,
     phone,
-    userType,
+    userType: 'PWD',
     firstName,
     lastName,
     middleName,
@@ -84,11 +83,37 @@ router.post('/users/register/pwd', async (req, res) => {
     disabilityType,
     gender,
     isVerified,
-    code,
    }
 
   tempPwdUser.set(email, userData);
   console.log(`Temporary PWD user data stored for ${email}:`, userData);
+  res.json({ message: 'First phase registration successful! Please proceed to upload your documents.', data: userData, success: true });
+});
+
+// Register a new user phase 2 for PWD
+router.post('/users/register/pwd/documents', memoryUploadForPWD, async (req, res) => {
+  const email = req.body.email;
+  const userData = tempPwdUser.get(email);
+
+  if (!userData) {
+    return res.status(404).json({ message: 'User not found or session expired.' });
+  }
+
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({ message: 'No files uploaded.' });
+  }
+
+  const totalSize = req.files.reduce((sum, file) => sum + file.size, 0);
+  if (totalSize > 5 * 1024 * 1024) {
+    return res.status(400).json({ message: 'Total file size must not exceed 5MB.' });
+  }
+
+  const code = generateVerificationCode(email);
+  userData.verificationCode = code;
+  userData.lastResendTime = Date.now();
+
+  userData.tempFiles = req.files;
+  tempPwdUser.set(email, userData);
 
   // Send verification code padong email
   try {
@@ -96,54 +121,14 @@ router.post('/users/register/pwd', async (req, res) => {
       from: 'PWDe App',
       to: email,
       subject: 'Your PWDe Verification Code',
-      html: `<p>Hello ${firstName} ${lastName},</p><p>Your verification code is <b>${code}</b>.</p>`
+      html: `<p>Hello ${userData.firstName} ${userData.lastName},</p><p>Your verification code is <b>${code}</b>.</p>`
     });
-    res.json({ message: 'Verification code sent to your email.', data: userData, success: true });
     console.log(`Verification code sent to ${email}: ${code}`);
+    return res.status(200).json({ message: 'Verification code sent to your email.', data: userData, success: true });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to send verification email.' });
   }
-});
-
-// Register a new user phase 2 for PWD
-router.post('/users/register/pwd/documents', (req, res) => {
-  memoryUploadForPWD(req, res, function (err) {
-    const email = req.body.email;
-    const userData = tempPwdUser.get(email);
-
-    if (err) {
-      return res.status(400).json({ message: err.message});
-    }
-
-    if (!userData) {
-      return res.status(404).json({ message: 'User not found or session expired.' });
-    }
-
-    if (userData.userType === 'PWD') {
-      if (!req.files || req.files.length === 0) {
-        return res.status(400).json({ message: 'No files uploaded.' });
-      }
-
-      const totalSize = req.files.reduce((sum, file) => sum + file.size, 0);
-      if (totalSize > 5 * 1024 * 1024) {
-        return res.status(400).json({ message: 'Total file size must not exceed 5MB.' });
-      }
-
-      userData.tempFiles = req.files;
-      tempPwdUser.set(email, userData);
-
-      console.log(`PWD documents stored in memory for ${email}:`, req.files.map(file => file.originalname));
-      return res.status(200).json({
-        message: 'PWD documents uploaded successfully.',
-        files: req.files.map(file => file.originalname),
-        from: email
-      });
-    } else {
-      console.log('User type is not PWD:', userData.userType);
-      return res.status(400).json({ message: 'Unknown user type.' });
-    }
-  });
 });
 
 // Register a new user phase 1 for Employer
@@ -172,37 +157,22 @@ router.post('/users/register/employer', async (req, res) => {
     return res.status(400).json({ error: 'This phone number is already registered.' });
   }
 
-  const code = generateCode();
   const userData = {
     companyName,
     companyEmail,
     companyPhone,
     companyAddress,
     password,
-    code,
     userType: 'Employer'
   }
 
   tempEmpUser.set(companyEmail, userData);
   console.log(`Temporary employer user data stored for ${companyEmail}:`, userData);
-  // Send verification code padong email
-  try {
-    await transporter.sendMail({
-      from: 'PWDe App',
-      to: companyEmail,
-      subject: 'Your PWDe Verification Code',
-      html: `<p>Hello ${companyName},</p><p>Your verification code is <b>${code}</b>.</p>`
-    });
-    res.json({ message: 'Verification code sent to your email.', data: userData, success: true });
-    console.log(`Verification code sent to ${companyEmail}: ${code}`);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Failed to send verification email.' });
-  }
+  res.json({ message: 'First phase registration successful!', data: userData, success: true });
 });
 
 // Register a new user phase 2 for Employer
-router.post('/users/register/employer/documents', memoryUploadForEMP, (req, res) => {
+router.post('/users/register/employer/documents', memoryUploadForEMP, async (req, res) => {
   const email = req.body.companyEmail;
   const userData = tempEmpUser.get(email);
   const {
@@ -223,6 +193,8 @@ router.post('/users/register/employer/documents', memoryUploadForEMP, (req, res)
     return res.status(404).json({ message: 'User not found or session expired.' });
   }
 
+  const code = generateVerificationCode(email);
+
   // Store the actual file objects for later saving
   userData.businessRegistration = businessRegistration;
   userData.governmentId = governmentId;
@@ -235,6 +207,9 @@ router.post('/users/register/employer/documents', memoryUploadForEMP, (req, res)
   userData.contact_person_fullname = contactName.trim();
   userData.contact_person_job_title = jobTitle.trim();
   userData.contact_person_phone = phoneNumber.trim();
+
+  // Store the verification code and last resend time if needed
+  userData.verificationCode = code;
 
   tempEmpUser.set(email, userData);
 
@@ -249,26 +224,34 @@ router.post('/users/register/employer/documents', memoryUploadForEMP, (req, res)
     contact_person_job_title: userData.contact_person_job_title,
     contact_person_phone: userData.contact_person_phone
   });
-  return res.status(200).json({
-    message: 'Employer documents and information uploaded successfully.',
-    success: true,
-    data: {
-      businessRegistration: userData.businessRegistration ? userData.businessRegistration.map(file => file.originalname) : [],
-      governmentId: userData.governmentId ? userData.governmentId.map(file => file.originalname) : [],
-      taxDocuments: userData.taxDocuments ? userData.taxDocuments.map(file => file.originalname) : [],
-      company_website: userData.company_website,
-      LinkedIn_profile: userData.LinkedIn_profile,
-      other_social_media: userData.other_social_media,
-      contact_person_fullname: userData.contact_person_fullname,
-      contact_person_job_title: userData.contact_person_job_title,
-      contact_person_phone_number: userData.contact_person_phone
-    }
-  });
+  // Send verification code padong email
+  try {
+    await transporter.sendMail({
+      from: 'PWDe App',
+      to: email,
+      subject: 'Your PWDe Verification Code',
+      html: `
+        <p>Hello ${userData.companyName},</p><p>Your verification code is <b>${code}</b>.</p>
+        <p>This code is valid for 15 minutes.</p>
+        <p>If you did not request this, please ignore this email.</p>
+      `
+    });
+    res.json({ message: 'Verification code sent to your email.', data: userData, success: true });
+    console.log(`Verification code sent to ${email}: ${code}`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to send verification email.' });
+  }
 });
 
 // Verify and register the user
 router.post('/users/register/verify', async (req, res) => {
   const { email, code } = req.body;
+
+  const result = verifyCode(email, code);
+  if (!result.valid) {
+    return res.status(400).json({ error: result.message, message: 'Incorrect verification code.' });
+  }
 
   const dateToday = new Date();
   const formattedDate = dateToday.toLocaleString('en-US', {
@@ -283,10 +266,6 @@ router.post('/users/register/verify', async (req, res) => {
   const userData = tempPwdUser.get(email) || tempEmpUser.get(email);
   if(!userData) {
     return res.status(404).json({ message: 'User not found or session expired.' });
-  }
-
-  if (userData.code !== code) {
-    return res.status(400).json({ message: 'Incorrect verification code.', success: false });
   }
 
   const user = await prisma.users.create({
@@ -335,7 +314,7 @@ router.post('/users/register/verify', async (req, res) => {
     })
 
     tempPwdUser.delete(email);
-    res.status(201).json({ message: 'Account verified and registered successfully.', user, pwd });
+    res.status(201).json({ message: 'Account verified and registered successfully.', user, pwd, success: true});
   } else if (userData.userType === 'Employer') {
     console.log('Registering Employer profile for user:', user);
     const newFolder = path.join('./Documents/Employer', String(user.user_id));
@@ -388,32 +367,57 @@ router.post('/users/register/verify', async (req, res) => {
       }
     })
     tempEmpUser.delete(email);
-    res.status(201).json({ message: 'Account verified and registered successfully.', user, emp });
+    res.status(201).json({ message: 'Account verified and registered successfully.', user, emp, success: true});
   }
 });
 
 // Resend verification code (wapa mahoman)
 router.post('/users/register/verify/resend', async (req, res) => {
   const { email } = req.body;
-  const userData = tempPwdUser.get(email);
 
+  if (!email) {
+    return res.status(400).json({ error: "Email is required." });
+  }
+
+  const identifier = email || companyEmail;
+  const userData = tempPwdUser.get(identifier) || tempEmpUser.get(identifier);
   if (!userData) {
     return res.status(404).json({ message: 'User not found or session expired.' });
   }
-  const code = generateCode();
-  userData.code = code;
-  tempPwdUser.set(email, userData);
+
+  const now = Date.now();
+  const cooldown = 30 * 1000; // 30 seconds cooldown for resending code
+
+  // Check cooldown
+  if (userData.lastResendTime && now - userData.lastResendTime < cooldown) {
+    const waitTime = Math.ceil((cooldown - (now - userData.lastResendTime)) / 1000);
+    return res.status(429).json({
+      message: `Please wait ${waitTime} seconds before requesting another code.`,
+    });
+  }
+
   try {
+    const newCode = generateVerificationCode(email);
+
+    userData.verificationCode = newCode;
+    userData.lastResendTime = now;
+    tempPwdUser.set(email, userData);
+
     await transporter.sendMail({
       from: 'PWDe App',
       to: email,
       subject: 'Your PWDe Verification Code',
-      html: `<p>Hello ${userData.first_name} ${userData.last_name},</p><p>Your verification code is <b>${code}</b>.</p>`
+      html: `
+        <p>Hello ${userData.firstName} ${userData.lastName}, You requested to resend a verification code.</p>
+        <p>Your new verification code is <b>${newCode}</b>.</p>
+        <p>This code is valid for 15 minutes.</p>
+        <p>If you did not request this, please ignore this email.</p>
+      `
     });
-    res.json({ message: 'Verification code resent successfully.', code });
-    console.log(`Verification code resent to ${email}: ${code}`);
+    res.json({ message: 'New verification code sent successfully.', newCode, success: true });
+    console.log(`Verification code resent to ${email}: ${newCode}`);
   } catch (error) {
-    console.error(error);
+    console.error("Error resending verification code:", error);
     res.status(500).json({ message: 'Failed to resend verification email.' });
   }
 });
@@ -469,6 +473,8 @@ router.post('/users/login', async (req, res) => {
 
   const payload = {
     userId: user.user_id,
+    pwd_id: profile && user.user_type === 'PWD' ? profile.pwd_id : null,
+    emp_id: profile && user.user_type === 'Employer' ? profile.emp_id : null,
     userType: user.user_type,
   }
 
@@ -477,6 +483,7 @@ router.post('/users/login', async (req, res) => {
   // GENERATE TOKEN EXPIRATION 3 HOURS
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn });
 
+  console.log(`Login successful for user: ${payload.userId} with role: ${payload.userType}, ${payload.userType === 'PWD' ? 'PWD ID: ' + payload.pwd_id : 'Employer ID: ' + payload.emp_id}`);
   res.json({ message: 'Login successful.', success: true, token, user, profile, role });
 });
 module.exports = router;

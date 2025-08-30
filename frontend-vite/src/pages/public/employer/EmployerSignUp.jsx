@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Logo from '../../../components/ui/Logo.jsx';
 
 const EmployerSignUp = () => {
@@ -40,7 +41,14 @@ const EmployerSignUp = () => {
       console.log(data);
 
       if(data.success) {
-        alert('Registration successful! Please proceed to verification.');
+        Swal.fire({
+          icon: 'success',
+          title: 'First phase registration successful!',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        })
         // Redirect to employer verification page
         navigate('/employer/verification');
       } else {

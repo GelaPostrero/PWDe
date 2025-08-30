@@ -28,7 +28,7 @@ const Landing = () => {
 
         {/* Action Buttons */}
         <div className="flex items-center space-x-4">
-          <Link to="/chooseuser" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+          <Link to="/signin" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
             Sign In
           </Link>
           <Link to="/chooseuser" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors shadow-lg">

@@ -33,15 +33,42 @@ const routeForStep = (key) => {
 
 const JobseekerOnboardingEducation = () => {
   const navigate = useNavigate();
-
-  const [graduationStatus, setGraduationStatus] = useState('graduated');
+  const [institutionName, setinstitutionName] = useState('');
+  const [location, setLocation] = useState('');
+  const [fieldOfStudy, setFieldOfStudy] = useState('');
+  const [degree, setDegree] = useState('');
+  const [highestLevel, setHighestLevel] = useState('');
+  const [graduationStatus, setGraduationStatus] = useState('Graduated');
+  const [graduationYear, setGraduationYear] = useState('');
 
   const handleStepClick = (key) => {
     navigate(routeForStep(key));
   };
 
   const goBack = () => navigate(routeForStep('skills'));
-  const handleNext = () => navigate(routeForStep('experience'));
+
+  const handleChange = (e) => {
+    
+    
+    
+    
+    
+    
+    
+  };
+  const handleNext = () => {
+    const educationData = {
+      highestLevel,
+      institutionName,
+      location,
+      fieldOfStudy,
+      degree,
+      graduationStatus,
+      graduationYear,
+    };
+    console.log('Submitting education data:', educationData);
+    navigate(routeForStep('experience'))
+  };
   const handleSkip = () => {
     const ok = window.confirm('Education details help us match you with the right roles. Skip for now?');
     if (ok) handleNext();
@@ -71,13 +98,13 @@ const JobseekerOnboardingEducation = () => {
             <div className="mt-4">
               <label className="block text-sm text-gray-700 mb-1">Highest Level of Education Completed</label>
               <div className="relative">
-                <select className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                  <option>Choose your highest level of education</option>
-                  <option>High School</option>
-                  <option>Vocational/Technical</option>
-                  <option>Bachelor's Degree</option>
-                  <option>Master's Degree</option>
-                  <option>Doctorate</option>
+                <select value={highestLevel} onChange={(e) =>setHighestLevel(e.target.value)} className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <option value='' disabled hidden>Choose your highest level of education</option>
+                  <option value='High School'>High School</option>
+                  <option value='Vocational/Technical'>Vocational/Technical</option>
+                  <option value="Bachelor's Degree">Bachelor's Degree</option>
+                  <option value="Master's Degree">Master's Degree</option>
+                  <option value='Doctorate'>Doctorate</option>
                 </select>
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
               </div>
@@ -87,26 +114,26 @@ const JobseekerOnboardingEducation = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm text-gray-700 mb-1">Institution Name*</label>
-                  <input className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., University of the Philippines Cebu" />
+                  <input value={institutionName} onChange={(e) =>setinstitutionName(e.target.value)} className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., University of the Philippines Cebu" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-1">Location*</label>
-                  <input className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Cebu City, Philippines" />
+                  <input value={location} onChange={(e) =>setLocation(e.target.value)} className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Cebu City, Philippines" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-1">Field of Study/Major*</label>
-                  <input className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Computer Science" />
+                  <input value={fieldOfStudy} onChange={(e) =>setFieldOfStudy(e.target.value)} className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Computer Science" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-1">Degree/Certificate*</label>
                   <div className="relative">
-                    <select className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                      <option>Select degree type</option>
-                      <option>Certificate</option>
-                      <option>Diploma</option>
-                      <option>Bachelor's</option>
-                      <option>Master's</option>
-                      <option>Doctorate</option>
+                    <select value={degree} onChange={(e) =>setDegree(e.target.value)} className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                      <option value='' disabled hidden>Select degree type</option>
+                      <option value="Certificate">Certificate</option>
+                      <option value="Diploma">Diploma</option>
+                      <option value="Bachelor's">Bachelor's</option>
+                      <option value="Master's">Master's</option>
+                      <option value="Doctorate">Doctorate</option>
                     </select>
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
                   </div>
@@ -115,24 +142,24 @@ const JobseekerOnboardingEducation = () => {
                   <label className="block text-sm text-gray-700 mb-2">Graduation Details</label>
                   <div className="flex items-center gap-4 text-sm text-gray-700">
                     <label className="inline-flex items-center gap-2">
-                      <input type="radio" name="grad" checked={graduationStatus==='graduated'} onChange={() => setGraduationStatus('graduated')} /> Graduated
+                      <input type="radio" name="grad" checked={graduationStatus==='Graduated'} onChange={() => setGraduationStatus('Graduated')} /> Graduated
                     </label>
                     <label className="inline-flex items-center gap-2">
-                      <input type="radio" name="grad" checked={graduationStatus==='current'} onChange={() => setGraduationStatus('current')} /> Currently Studying
+                      <input type="radio" name="grad" checked={graduationStatus==='Currently Studying'} onChange={() => setGraduationStatus('Currently Studying')} /> Currently Studying
                     </label>
                     <label className="inline-flex items-center gap-2">
-                      <input type="radio" name="grad" checked={graduationStatus==='incomplete'} onChange={() => setGraduationStatus('incomplete')} /> Did not complete
+                      <input type="radio" name="grad" checked={graduationStatus==='Did not complete'} onChange={() => setGraduationStatus('Did not complete')} /> Did not complete
                     </label>
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-1">Graduation Year</label>
                   <div className="relative">
-                    <select className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                      <option>Select graduation year</option>
+                    <select value={graduationYear} onChange={(e) =>setGraduationYear(e.target.value)} className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                      <option value="" hidden>Select graduation year</option>
                       {Array.from({ length: 60 }).map((_, idx) => {
                         const year = 2025 - idx;
-                        return <option key={year}>{year}</option>;
+                        return <option value={year} key={year}>{year}</option>;
                       })}
                     </select>
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">▾</span>

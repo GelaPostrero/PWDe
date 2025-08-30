@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';4
+import Swal from 'sweetalert2';
 import Logo from '../../components/ui/Logo.jsx';
 
 // Add your image import here - replace with your actual file name
@@ -45,16 +46,6 @@ const SignIn = () => {
 
       const data = await response.json();
       if (data.success) {
-        console.log('Sign in successful:', data);
-        console.log('User role:', data.role);
-        alert('Sign in successful!');
-
-        if(rememberMe) {
-          localStorage.setItem('authToken', data.token);
-        } else {
-          sessionStorage.setItem('authToken', data.token);
-        }
-
         switch(data.role) {
           case 'PWD':
             setUserRole('jobseeker');
@@ -67,6 +58,22 @@ const SignIn = () => {
           default:
             setUserRole('administrator');
             break;
+        }
+        console.log('Sign in successful:', data);
+        console.log('User role:', data.role);
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Sign in successful!',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        })
+
+        if(rememberMe) {
+          localStorage.setItem('authToken', data.token);
+        } else {
+          sessionStorage.setItem('authToken', data.token);
         }
       } else {
         console.error('Sign in failed:', data.message);
@@ -85,6 +92,7 @@ const SignIn = () => {
 
   const handleForgotPassword = () => {
     // Handle forgot password
+    
     console.log('Forgot password clicked');
   };
 

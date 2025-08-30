@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Logo from '../../../components/ui/Logo.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 
@@ -229,16 +230,25 @@ const JobseekerVerification = () => {
         body: formData,
       });
       
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Upload successful:', result);
-        navigate('/signup/jobseeker/activation');
-      } else {
-        throw new Error('Upload failed');
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Server error: ${response.status} - ${text}`);
       }
       
-      alert('Documents submitted successfully! (Demo mode - connect to your backend API)');
-      navigate('/signup/jobseeker/activation');
+      const data = await response.json();
+      if (data.success) {
+        Swal.fire({
+          icon: 'success',
+          html: '<b>Verification documents submitted successfully!</b> \n<p>Please check your email for the verification code.</p>',
+          timer: 5000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
+        navigate('/signup/jobseeker/activation');
+      } else {
+        alert(`Submission failed: ${data.message || data.error}`);
+      }
     } catch (error) {
       console.error('Error submitting documents:', error);
       alert('Error submitting documents. Please try again.');

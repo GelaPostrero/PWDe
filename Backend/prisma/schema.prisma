@@ -16,6 +16,7 @@ model Users {
   account_status        AccountStatus         @default(Active)
   is_verified           Boolean               @default(false)
   user_id               Int                   @id @default(autoincrement())
+  password_reset_token  String?
   created_at            String
   messages              Chat_Message[]        @relation("SenderMessages")
   employer_Profile      Employer_Profile?     @relation("UserToEmployer")
