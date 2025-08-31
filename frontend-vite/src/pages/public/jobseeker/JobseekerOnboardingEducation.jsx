@@ -76,7 +76,7 @@ const JobseekerOnboardingEducation = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <JobseekerHeader />
+      <JobseekerHeader disabled={true} />
 
       <main className="flex-1 py-8">
         <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 space-y-6">

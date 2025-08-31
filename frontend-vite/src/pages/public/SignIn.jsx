@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';4
-import Swal from 'sweetalert2';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import 'sweetalert2/dist/sweetalert2.css';
 import Logo from '../../components/ui/Logo.jsx';
 
 // Add your image import here - replace with your actual file name
@@ -91,9 +92,8 @@ const SignIn = () => {
   };
 
   const handleForgotPassword = () => {
-    // Handle forgot password
-    
-    console.log('Forgot password clicked');
+    // Navigate to forgot password page with user role
+    navigate('/forgot-password', { state: { role: userRole } });
   };
 
   return (
