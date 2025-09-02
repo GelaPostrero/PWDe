@@ -93,6 +93,18 @@ const JobseekerProfile = () => {
     hearingSupport: false
   });
 
+  // Toggle functions
+  const toggleSection = (section) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+
+  const toggleVisibility = (setting) => {
+    handleToggleVisibility(setting);
+  };
+
   // API Functions - Ready for backend integration
   const api = {
     // Fetch user profile data
@@ -181,7 +193,7 @@ const JobseekerProfile = () => {
             preferredLocations: ['Remote', 'Cebu City']
           },
           profileVisibility: {
-            searchable: true,
+            searchable: false,
             hourlyRate: true,
             personalInfo: true,
             portfolioLinks: true,
@@ -282,12 +294,6 @@ const JobseekerProfile = () => {
   };
 
   // Event handlers
-  const handleToggleSection = (section) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
-  };
 
   const handleToggleVisibility = async (setting) => {
     try {
@@ -438,35 +444,31 @@ const JobseekerProfile = () => {
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Profile Completion</h3>
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">{calculateCompletion()}% Complete</span>
-                    <span className="text-sm text-gray-500">
-                      {Object.values(profileData.profileCompletion).filter(Boolean).length} of {Object.keys(profileData.profileCompletion).length} completed
-                    </span>
+                    <span className="text-sm font-medium text-gray-700">75% Complete</span>
+                    <span className="text-sm text-gray-500">3 items left</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${calculateCompletion()}%` }}></div>
+                    <div className="bg-blue-600 h-2 rounded-full" style={{ width: '75%' }}></div>
                   </div>
                 </div>
                 <div className="space-y-3">
                   {[
-                    { key: 'basicInfo', text: 'Basic information' },
-                    { key: 'professionalInfo', text: 'Professional information' },
-                    { key: 'skills', text: 'Skills & expertise' },
-                    { key: 'education', text: 'Education' },
-                    { key: 'workExperience', text: 'Work experience' },
-                    { key: 'portfolio', text: 'Portfolio items' },
-                    { key: 'accessibility', text: 'Accessibility preferences' },
-                    { key: 'preferences', text: 'Employment preferences' }
-                  ].map((item) => (
-                    <div key={item.key} className="flex items-center space-x-3">
-                      {profileData.profileCompletion[item.key] ? (
+                    { text: 'Basic information', completed: true },
+                    { text: 'Professional experience', completed: true },
+                    { text: 'Education', completed: true },
+                    { text: 'Add portfolio items', completed: false },
+                    { text: 'Complete skills assessment', completed: false },
+                    { text: 'Set accessibility preferences', completed: false }
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-center space-x-3">
+                      {item.completed ? (
                         <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
                       ) : (
                         <div className="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
                       )}
-                      <span className={`text-sm ${profileData.profileCompletion[item.key] ? 'text-gray-900' : 'text-gray-600'}`}>
+                      <span className={`text-sm ${item.completed ? 'text-gray-900' : 'text-gray-600'}`}>
                         {item.text}
                       </span>
                     </div>
@@ -582,12 +584,12 @@ const JobseekerProfile = () => {
                       <button
                         onClick={() => toggleVisibility(setting.key)}
                         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                          profileVisibility[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
+                          profileData.profileVisibility[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
                         }`}
                       >
                         <span
                           className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                            profileVisibility[setting.key] ? 'translate-x-6' : 'translate-x-1'
+                            profileData.profileVisibility[setting.key] ? 'translate-x-6' : 'translate-x-1'
                           }`}
                         />
                       </button>

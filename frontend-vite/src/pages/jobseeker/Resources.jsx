@@ -143,7 +143,7 @@ const Resources = () => {
         <div className="mx-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-16">
           
           {/* Page Header */}
-          <div className="mb-6">
+          <div className="bg-white rounded-lg shadow p-4 sm:p-6 mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
               Resource Library
             </h1>

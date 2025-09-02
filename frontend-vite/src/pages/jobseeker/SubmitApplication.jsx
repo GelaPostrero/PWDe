@@ -13,19 +13,11 @@ const SubmitApplication = () => {
     coverLetter: null,
     portfolio: []
   });
-  const [coverLetter, setCoverLetter] = useState(`Dear Hiring Manager,
 
-I am writing to express my strong interest in the Senior Software Developer position at TechCorp Solutions Inc. With over 5 years of experience in React, TypeScript, and modern web technologies, I am excited about the opportunity to contribute to your team's mission of creating accessible software solutions.
 
-My background includes developing inclusive applications that meet WCAG 2.1 AA standards, and I bring a unique perspective on accessibility due to my experience with visual impairment. I believe this combination of technical expertise and personal understanding of accessibility challenges would be valuable to your team.
+  const [coverLetter, setCoverLetter] = useState('');
 
-I am particularly drawn to TechCorp's commitment to creating software for diverse users, including individuals with disabilities. Your focus on accessibility aligns perfectly with my professional goals and personal values.
-
-Thank you for considering my application. I look forward to discussing how I can contribute to your team.
-
-Best regards,
-Sarah Chen`);
-
+  
   // Mock job data - in real app, fetch this based on jobId
   const jobData = {
     id: "TC-2024-SD-001",
