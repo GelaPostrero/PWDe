@@ -629,7 +629,7 @@ const EmployerJob = () => {
                     </div>
                   </div>
 
-                                        {/* Action Buttons */}
+                                 {/* Action Buttons */}
                       <div className="flex items-center justify-between gap-2">
                         <button
                           onClick={() => handleViewJob(job.id)}
