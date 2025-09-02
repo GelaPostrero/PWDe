@@ -25,6 +25,9 @@ import EmployerOnboardingCompletion from './pages/public/employer/EmployerOnboar
 
 // Dashboard components
 import EmployerDashboard from './pages/employer/EmployerDashboard.jsx';
+import EmployerJob from './pages/employer/EmployerJob.jsx';
+import PostJob from './pages/employer/PostJob.jsx';
+import PostedJobView from './pages/employer/PostedJobView.jsx';
 import JobseekerDashboard from './pages/jobseeker/JobseekerDashboard.jsx';
 import JobDetails from './pages/jobseeker/JobDetails.jsx';
 import Resume from './pages/jobseeker/Resume.jsx';
@@ -82,7 +85,19 @@ function App() {
         <Route path="/find-job/saved" element={<SavedJobs />} />
         <Route path="/jobseeker/saved-jobs" element={<SavedJobs />} />
         <Route path="/find-job/applied" element={<Applications />} />
+        <Route path="/jobseeker/applications" element={<Applications />} />
         <Route path="/jobseeker/submit-application/:jobId" element={<SubmitApplication />} />
+        
+        {/* Employer routes */}
+        <Route path="/employer/jobs" element={<EmployerJob />} />
+        <Route path="/employer/post-job" element={<PostJob />} />
+        <Route path="/employer/job/:jobId" element={<EmployerJob />} />
+        <Route path="/employer/job/:jobId/posted" element={<PostedJobView />} />
+        <Route path="/employer/applications" element={<EmployerDashboard />} />
+        <Route path="/employer/applicant/:applicantId" element={<EmployerDashboard />} />
+        <Route path="/employer/candidates" element={<EmployerDashboard />} />
+        <Route path="/employer/messages" element={<EmployerDashboard />} />
+        <Route path="/employer/profile" element={<EmployerDashboard />} />
         
         {/* Additional jobseeker routes */}
         <Route path="/resume" element={<Resume />} />

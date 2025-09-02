@@ -328,6 +328,8 @@ const JobseekerDashboard = () => {
     }
   };
 
+  // Handle job view details - using Link component instead
+
   const profileCompletion = {
     percentage: 75,
     completed: ["Basic information", "Professional experience", "Education"],
@@ -351,13 +353,13 @@ const JobseekerDashboard = () => {
       title: "View Applications",
       icon: "📋",
       subtitle: "3 in progress",
-      href: "/applications"
+      href: "/jobseeker/applications"
     },
     {
       title: "Edit Profile",
       icon: "👤",
       subtitle: "Complete missing sections",
-      href: "/profile"
+      href: "/jobseeker/profile"
     }
   ];
 
@@ -414,9 +416,9 @@ const JobseekerDashboard = () => {
                     </div>
                   </div>
 
-                  {/* Key Metrics - Now inline with profile */}
+                  {/* Key Metrics - inline with profile */}
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-1">
-                   <div className="flex-1 p-3 bg-slate-50 rounded-lg">
+                   <Link to="/jobseeker/profile" className="flex-1 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
                       <div className="flex items-center justify-between h-full">
                         <div className="flex flex-col items-start">
                           <span className="text-xs font-medium text-gray-600 mb-1">Profile Views</span>
@@ -429,8 +431,8 @@ const JobseekerDashboard = () => {
                           </svg>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex-1 p-3 bg-slate-50 rounded-lg">
+                    </Link>
+                    <Link to="/jobseeker/applications" className="flex-1 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
                       <div className="flex items-center justify-between h-full">
                         <div className="flex flex-col items-start">
                           <span className="text-xs font-medium text-gray-600 mb-1">Applications</span>
@@ -442,8 +444,8 @@ const JobseekerDashboard = () => {
                           </svg>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex-1 p-3 bg-slate-50 rounded-lg">
+                    </Link>
+                    <Link to="/jobseeker/applications" className="flex-1 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
                       <div className="flex items-center justify-between h-full">
                         <div className="flex flex-col items-start">
                           <span className="text-xs font-medium text-gray-600 mb-1">Interviews</span>
@@ -455,8 +457,8 @@ const JobseekerDashboard = () => {
                           </svg>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex-1 p-3 bg-slate-50 rounded-lg">
+                    </Link>
+                    <Link to="/find-job/saved" className="flex-1 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
                       <div className="flex items-center justify-between h-full">
                         <div className="flex flex-col items-start">
                           <span className="text-xs font-medium text-gray-600 mb-1">Saved Jobs</span>
@@ -468,7 +470,7 @@ const JobseekerDashboard = () => {
                           </svg>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -649,9 +651,12 @@ const JobseekerDashboard = () => {
                   ))}
                 </div>
                 
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors text-sm sm:text-base">
+                <Link 
+                  to="/jobseeker/profile"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors text-sm sm:text-base text-center block"
+                >
                   Complete Your Profile
-                </button>
+                </Link>
               </div>
 
               {/* Quick Actions */}

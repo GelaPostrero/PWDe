@@ -25,6 +25,12 @@ const EmployerHeader = ({ disabled = false }) => {
   ];
 
   const isActiveLink = (path) => {
+    if (path === '/employer/jobs') {
+      return location.pathname === '/employer/jobs' || 
+             location.pathname === '/employer/post-job' ||
+             location.pathname.startsWith('/employer/job/') ||
+             location.pathname.startsWith('/employer/edit-job/');
+    }
     return location.pathname === path;
   };
 
@@ -116,10 +122,10 @@ const EmployerHeader = ({ disabled = false }) => {
             
             {/* User Profile Image */}
             <div className={`relative ${disabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}`}>
-              <div className={`w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-semibold border-2 border-blue-100 ${
-                disabled ? '' : 'hover:border-blue-300'
+              <div className={`w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white text-xs font-semibold border-2 border-purple-100 ${
+                disabled ? '' : 'hover:border-purple-300'
               } transition-colors`}>
-                EC
+                TECH
               </div>
               {/* Online status indicator */}
               {!disabled && (
