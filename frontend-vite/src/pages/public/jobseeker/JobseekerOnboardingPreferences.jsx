@@ -43,7 +43,7 @@ const JobseekerOnboardingPreferences = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <JobseekerHeader />
+      <JobseekerHeader disabled={true} />
 
       <main className="flex-1 py-8">
         <div className="mx-full px-6 space-y-6">

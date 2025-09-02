@@ -26,6 +26,20 @@ import EmployerOnboardingCompletion from './pages/public/employer/EmployerOnboar
 // Dashboard components
 import EmployerDashboard from './pages/employer/EmployerDashboard.jsx';
 import JobseekerDashboard from './pages/jobseeker/JobseekerDashboard.jsx';
+import JobDetails from './pages/jobseeker/JobDetails.jsx';
+import Resume from './pages/jobseeker/Resume.jsx';
+import JobRecommendations from './pages/jobseeker/JobRecommendations.jsx';
+import SavedJobs from './pages/jobseeker/SavedJobs.jsx';
+import AppliedJobs from './pages/jobseeker/AppliedJobs.jsx';
+import Applications from './pages/jobseeker/Applications.jsx';
+import SubmitApplication from './pages/jobseeker/SubmitApplication.jsx';
+import Transactions from './pages/jobseeker/Transactions.jsx';
+import Resources from './pages/jobseeker/Resources.jsx';
+import Messages from './pages/jobseeker/Messages.jsx';
+import JobseekerProfile from './pages/jobseeker/JobseekerProfile.jsx';
+import ForgotPassword from './pages/public/ForgotPassword.jsx';
+//import ResumeBuilder from './pages/jobseeker/ResumeBuilder.jsx';
+
 
 import './App.css';
 
@@ -35,7 +49,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/landing" element={<Landing />} />
+        <Route path="/dashboard" element={<JobseekerDashboard />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/chooseuser" element={<ChooseUser />} />
         <Route path="/signup/jobseeker" element={<JobseekerSignUp />} />
         <Route path="/signup/employer" element={<EmployerSignUp />} />
@@ -60,6 +76,21 @@ function App() {
         {/* Dashboard routes */}
         <Route path="/employer/dashboard" element={<EmployerDashboard />} />
         <Route path="/jobseeker/dashboard" element={<JobseekerDashboard />} />
+        <Route path="/jobseeker/job/:jobId" element={<JobDetails />} />
+        <Route path="/find-job" element={<JobRecommendations />} />
+        <Route path="/find-job/recommended" element={<JobRecommendations />} />
+        <Route path="/find-job/saved" element={<SavedJobs />} />
+        <Route path="/jobseeker/saved-jobs" element={<SavedJobs />} />
+        <Route path="/find-job/applied" element={<Applications />} />
+        <Route path="/jobseeker/submit-application/:jobId" element={<SubmitApplication />} />
+        
+        {/* Additional jobseeker routes */}
+        <Route path="/resume" element={<Resume />} />
+       {/*<Route path="/resume-builder" element={<ResumeBuilder />} />*/}
+        <Route path="/transactions" element={<Transactions />} />
+        <Route path="/resources" element={<Resources />} />
+        <Route path="/messages" element={<Messages />} />
+        <Route path="/jobseeker/profile" element={<JobseekerProfile />} />
       </Routes>
     </Router>
   );

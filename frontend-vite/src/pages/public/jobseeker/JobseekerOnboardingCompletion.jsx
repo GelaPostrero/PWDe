@@ -271,7 +271,7 @@ const JobseekerOnboardingCompletion = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <JobseekerHeader />
+      <JobseekerHeader disabled={true} />
 
       <main className="flex-1 py-8">
         <div className="max-w-6xl mx-auto px-6 space-y-6">

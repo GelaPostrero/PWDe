@@ -81,7 +81,7 @@ const EmployerOnboardingSkills = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <EmployerHeader />
+      <EmployerHeader disabled={true} />
 
       <main className="flex-1 py-8">
         <div className="max-w-6xl mx-auto px-6">

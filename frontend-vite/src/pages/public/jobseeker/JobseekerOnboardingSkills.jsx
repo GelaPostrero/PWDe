@@ -82,7 +82,7 @@ const JobseekerOnboardingSkills = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <JobseekerHeader />
+      <JobseekerHeader disabled={true} />
 
       <main className="flex-5 py-10">
         {/* Consistent margin with header - matching max-w-15xl */}
