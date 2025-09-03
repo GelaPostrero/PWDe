@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 
@@ -37,7 +38,63 @@ const JobseekerOnboardingExperience = () => {
 
   const handleStepClick = (key) => navigate(routeForStep(key));
   const goBack = () => navigate(routeForStep('education'));
-  const handleNext = () => navigate(routeForStep('accessibility'));
+
+  const [jobTitle, setJobTitle] = useState('');
+  const [company, setCompany] = useState('');
+  const [location, setLocation] = useState('');
+  const [country, setCountry] = useState('Philippines');
+  const [startMonth, setStartMonth] = useState('January');
+  const [startYear, setStartYear] = useState(new Date().getFullYear());
+  const [endMonth, setEndMonth] = useState('January');
+  const [endYear, setEndYear] = useState(new Date().getFullYear());
+  const [employmentType, setEmploymentType] = useState('Full-time');
+  const [description, setDescription] = useState('');
+
+  const handleNext = async () => {
+    const token = localStorage.getItem('authToken');
+    const experienceData = {
+      jobTitle,
+      company,
+      location,
+      country,
+      startMonth,
+      startYear,
+      endMonth,
+      endYear,
+      isCurrent,
+      employmentType,
+      description,
+    };
+
+    try {
+      var url = "http://localhost:4000/onboard/pwd/onboard/work-experience";
+      var headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(experienceData)
+      });
+
+      const data = await response.json();
+      if(data.success) {
+        Swal.fire({
+          icon: 'success',
+          html: '<h5><b>Work Experience</b></h5>\n<h6>You may now fillup your Accessibility needs.</h6>',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        })
+        navigate(routeForStep('accessibility'))
+      }
+    } catch(error) {
+      console.error("Server error: ", error)
+    }
+  };
   const handleSkip = () => {
     const ok = window.confirm('Adding your work history improves matching quality. Skip for now?');
     if (ok) handleNext();
@@ -67,20 +124,20 @@ const JobseekerOnboardingExperience = () => {
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm text-gray-700 mb-1">Job Title*</label>
-                <input className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Software Developer" />
+                <input value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Software Developer" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1">Company*</label>
-                <input className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Cebu City, Philippines" />
+                <input value={company} onChange={(e) => setCompany(e.target.value)} className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Cebu City, Philippines" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1">Location*</label>
-                <input className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Cebu City, Manila, Makati" />
+                <input value={location} onChange={(e) => setLocation(e.target.value)} className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Cebu City, Manila, Makati" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1">Country*</label>
                 <div className="relative">
-                  <select className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <select value={country} onChange={(e) => setCountry(e.target.value)} className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     <option>Philippines</option>
                   </select>
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
@@ -95,13 +152,13 @@ const JobseekerOnboardingExperience = () => {
                 <label className="block text-sm text-gray-700 mb-1">Start Date*</label>
                 <div className="grid grid-cols-2 gap-2">
                   <div className="relative">
-                    <select className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-8 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <select value={startMonth} onChange={(e) => setStartMonth(e.target.value)} className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-8 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                       {['January','February','March','April','May','June','July','August','September','October','November','December'].map(m=> <option key={m}>{m}</option>)}
                     </select>
                     <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
                   </div>
                   <div className="relative">
-                    <select className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-8 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <select value={startYear} onChange={(e) => setStartYear(e.target.value)} className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-8 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                       {Array.from({length: 60}).map((_,i)=>{ const y=2025-i; return <option key={y}>{y}</option>;})}
                     </select>
                     <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
@@ -112,13 +169,13 @@ const JobseekerOnboardingExperience = () => {
                 <label className="block text-sm text-gray-700 mb-1">End Date*</label>
                 <div className="grid grid-cols-2 gap-2">
                   <div className="relative">
-                    <select disabled={isCurrent} className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-8 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <select value={endMonth} onChange={(e) => setEndMonth(e.target.value)} disabled={isCurrent} className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-8 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                       {['January','February','March','April','May','June','July','August','September','October','November','December'].map(m=> <option key={m}>{m}</option>)}
                     </select>
                     <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
                   </div>
                   <div className="relative">
-                    <select disabled={isCurrent} className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-8 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <select value={endYear} onChange={(e) => setEndYear(e.target.value)} disabled={isCurrent} className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-8 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                       {Array.from({length: 60}).map((_,i)=>{ const y=2025-i; return <option key={y}>{y}</option>;})}
                     </select>
                     <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
@@ -128,7 +185,7 @@ const JobseekerOnboardingExperience = () => {
               <div>
                 <label className="block text-sm text-gray-700 mb-1">Employment Type</label>
                 <div className="relative">
-                  <select className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <select value={employmentType} onChange={(e) => setEmploymentType(e.target.value)} className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     <option>Full-time</option>
                     <option>Part-time</option>
                     <option>Contract</option>
@@ -140,7 +197,7 @@ const JobseekerOnboardingExperience = () => {
               </div>
               <div className="md:col-span-2">
                 <label className="block text-sm text-gray-700 mb-1">Description</label>
-                <textarea rows="4" className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Describe your responsibilities, achievements, and key accomplishments in this role." />
+                <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows="4" className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Describe your responsibilities, achievements, and key accomplishments in this role." />
               </div>
             </div>
 

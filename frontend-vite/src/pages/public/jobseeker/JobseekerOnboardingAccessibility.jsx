@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 
@@ -31,9 +33,26 @@ const routeForStep = (key) => {
   }
 };
 
-const CheckboxItem = ({ children }) => (
-  <label className="flex items-start gap-3 text-gray-700"><input type="checkbox" className="mt-1" /> <span>{children}</span></label>
+const CheckboxItem = ({ value, checked, onChange, children }) => (
+  <label className="flex items-start gap-3 text-gray-700">
+    <input 
+      type="checkbox" 
+      value={value}
+      checked={checked}
+      onChange={onChange}
+      className="mt-1" 
+    /> 
+    <span>{children}</span>
+  </label>
 );
+
+const handleCheckboxChange = (setter, currentValues, value) => {
+  if (currentValues.includes(value)) {
+    setter(currentValues.filter(v => v !== value)); // remove
+  } else {
+    setter([...currentValues, value]); // add
+  }
+};
 
 const Section = ({ title, children }) => (
   <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
@@ -44,12 +63,56 @@ const Section = ({ title, children }) => (
 
 const JobseekerOnboardingAccessibility = () => {
   const navigate = useNavigate();
+  const [visualNeeds, setVisualNeeds] = useState([]);
+  const [hearingNeeds, setHearingNeeds] = useState([]);
+  const [mobilityNeeds, setMobilityNeeds] = useState([]);
+  const [cognitiveNeeds, setCognitiveNeeds] = useState([]);
+  const [additionalInfo, setAdditionalInfo] = useState('');
+
   const handleStepClick = (key) => navigate(routeForStep(key));
   const goBack = () => navigate(routeForStep('experience'));
-  const handleNext = () => navigate(routeForStep('preferences'));
+  const handleNext = async () => {
+    const token = localStorage.getItem('authToken');
+    const accessibilityData = {
+      visualNeeds,
+      hearingNeeds,
+      mobilityNeeds,
+      cognitiveNeeds,
+      additionalInfo
+    }
+    
+    try {
+      var url = "http://localhost:4000/onboard/pwd/onboard/accessibility-needs";
+      var headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(accessibilityData)
+      });
+
+      const data = await response.json();
+      if(data.success) {
+        Swal.fire({
+          icon: 'success',
+          html: '<h5><b>Accessibility Needs</b></h5>\n<h6>You may now fillup Job Preferences & Requirements.</h6>',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
+        navigate(routeForStep('preferences'))
+      }
+    } catch(error) {
+      console.error("Server error: ", error);
+    }
+  };
   const handleSkip = () => {
     const ok = window.confirm('Capturing accessibility needs helps us tailor inclusive opportunities. Skip for now?');
-    if (ok) handleNext();
+    if (ok) navigate(routeForStep('preferences'));;
   };
 
   return (
@@ -74,53 +137,97 @@ const JobseekerOnboardingAccessibility = () => {
             <p className="text-gray-600">Help us understand your accessibility needs to ensure the best job matches. <button className="text-blue-600">Select all that apply</button>.</p>
 
             <Section title="Visual Support Needs">
-              <CheckboxItem>Screen reader compatibility required</CheckboxItem>
-              <CheckboxItem>High contrast display support</CheckboxItem>
-              <CheckboxItem>Large text/font size options</CheckboxItem>
-              <CheckboxItem>Color-blind friendly interfaces</CheckboxItem>
-              <CheckboxItem>Magnification software support</CheckboxItem>
-              <CheckboxItem>Braille display compatibility</CheckboxItem>
-              <CheckboxItem>Audio descriptions for visual content</CheckboxItem>
-              <CheckboxItem>None of the above</CheckboxItem>
+              {[
+                "Screen reader compatibility required",
+                "High contrast display support",
+                "Large text/font size options",
+                "Color-blind friendly interfaces",
+                "Magnification software support",
+                "Braille display compatibility",
+                "Audio descriptions for visual content",
+                "None of the above"
+              ].map(option => (
+                <CheckboxItem
+                  key={option}
+                  value={option}
+                  checked={visualNeeds.includes(option)}
+                  onChange={() => handleCheckboxChange(setVisualNeeds, visualNeeds, option)}
+                >
+                  {option}
+                </CheckboxItem>
+              ))}
             </Section>
 
             <Section title="Hearing Support Needs">
-              <CheckboxItem>Sign language interpretation</CheckboxItem>
-              <CheckboxItem>Real-time captioning/subtitles</CheckboxItem>
-              <CheckboxItem>Written communication preference</CheckboxItem>
-              <CheckboxItem>Video relay services</CheckboxItem>
-              <CheckboxItem>Hearing loop systems</CheckboxItem>
-              <CheckboxItem>Visual alerts instead of audio</CheckboxItem>
-              <CheckboxItem>TTY/TDD communication support</CheckboxItem>
-              <CheckboxItem>None of the above</CheckboxItem>
+              {[
+                "Sign language interpretation",
+                "Real-time captioning/subtitles",
+                "Written communication preference",
+                "Video relay services",
+                "Hearing loop systems",
+                "Visual alerts instead of audio",
+                "TTY/TDD communication support",
+                "None of the above"
+              ].map(option => (
+                <CheckboxItem
+                  key={option}
+                  value={option}
+                  checked={hearingNeeds.includes(option)}
+                  onChange={() => handleCheckboxChange(setHearingNeeds, hearingNeeds, option)}
+                >
+                  {option}
+                </CheckboxItem>
+              ))}
             </Section>
 
             <Section title="Mobility Support Needs">
-              <CheckboxItem>Wheelchair accessible workspace</CheckboxItem>
-              <CheckboxItem>Adjustable desk/workstation</CheckboxItem>
-              <CheckboxItem>Voice recognition software</CheckboxItem>
-              <CheckboxItem>Alternative keyboard/mouse options</CheckboxItem>
-              <CheckboxItem>Flexible work positioning</CheckboxItem>
-              <CheckboxItem>Ergonomic equipment</CheckboxItem>
-              <CheckboxItem>Reduced physical demands</CheckboxItem>
-              <CheckboxItem>None of the above</CheckboxItem>
+              {[
+                "Wheelchair accessible workspace",
+                "Adjustable desk/workstation",
+                "Voice recognition software",
+                "Alternative keyboard/mouse options",
+                "Flexible work positioning",
+                "Ergonomic equipment",
+                "Reduced physical demands",
+                "None of the above"
+              ].map(option => (
+                <CheckboxItem
+                  key={option}
+                  value={option}
+                  checked={mobilityNeeds.includes(option)}
+                  onChange={() => handleCheckboxChange(setMobilityNeeds, mobilityNeeds, option)}
+                >
+                  {option}
+                </CheckboxItem>
+              ))}
             </Section>
 
             <Section title="Cognitive Support Needs">
-              <CheckboxItem>Extended time for tasks</CheckboxItem>
-              <CheckboxItem>Quiet work environment</CheckboxItem>
-              <CheckboxItem>Structured work routines</CheckboxItem>
-              <CheckboxItem>Written instructions preference</CheckboxItem>
-              <CheckboxItem>Flexible scheduling</CheckboxItem>
-              <CheckboxItem>Memory aids/reminders</CheckboxItem>
-              <CheckboxItem>Reduced multitasking</CheckboxItem>
-              <CheckboxItem>None of the above</CheckboxItem>
+              {[
+                "Extended time for tasks",
+                "Quiet work environment",
+                "Structured work routines",
+                "Written instructions preference",
+                "Flexible scheduling",
+                "Memory aids/reminders",
+                "Reduced multitasking",
+                "None of the above"
+              ].map(option => (
+                <CheckboxItem
+                  key={option}
+                  value={option}
+                  checked={cognitiveNeeds.includes(option)}
+                  onChange={() => handleCheckboxChange(setCognitiveNeeds, cognitiveNeeds, option)}
+                >
+                  {option}
+                </CheckboxItem>
+              ))}
             </Section>
 
             <div className="bg-white">
               <div className="bg-white rounded-xl border border-gray-200 p-4">
                 <div className="text-gray-900 font-medium mb-2">Additional Information</div>
-                <textarea rows="4" className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Please share any other specific accommodation needs..." />
+                <textarea value={additionalInfo} onChange={(e) => setAdditionalInfo(e.target.value)} rows="4" className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Please share any other specific accommodation needs..." />
                 <div className="mt-3 text-xs text-blue-700 bg-blue-50 border border-blue-100 rounded-lg p-3">This information is used only for job matching and accommodation purposes. Employers will only see relevant accommodation needs if you choose to share them.</div>
               </div>
             </div>

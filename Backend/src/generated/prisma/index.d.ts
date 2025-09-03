@@ -3015,8 +3015,10 @@ export namespace Prisma {
 
   export type Pwd_ProfileCountOutputType = {
     applications: number
+    accessibility_needs: number
     educations: number
     experiences: number
+    job_preferences: number
     resumes: number
     ai_match_results: number
     transactions: number
@@ -3024,8 +3026,10 @@ export namespace Prisma {
 
   export type Pwd_ProfileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | Pwd_ProfileCountOutputTypeCountApplicationsArgs
+    accessibility_needs?: boolean | Pwd_ProfileCountOutputTypeCountAccessibility_needsArgs
     educations?: boolean | Pwd_ProfileCountOutputTypeCountEducationsArgs
     experiences?: boolean | Pwd_ProfileCountOutputTypeCountExperiencesArgs
+    job_preferences?: boolean | Pwd_ProfileCountOutputTypeCountJob_preferencesArgs
     resumes?: boolean | Pwd_ProfileCountOutputTypeCountResumesArgs
     ai_match_results?: boolean | Pwd_ProfileCountOutputTypeCountAi_match_resultsArgs
     transactions?: boolean | Pwd_ProfileCountOutputTypeCountTransactionsArgs
@@ -3052,6 +3056,13 @@ export namespace Prisma {
   /**
    * Pwd_ProfileCountOutputType without action
    */
+  export type Pwd_ProfileCountOutputTypeCountAccessibility_needsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Pwd_Accessibility_NeedsWhereInput
+  }
+
+  /**
+   * Pwd_ProfileCountOutputType without action
+   */
   export type Pwd_ProfileCountOutputTypeCountEducationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Pwd_EducationWhereInput
   }
@@ -3061,6 +3072,13 @@ export namespace Prisma {
    */
   export type Pwd_ProfileCountOutputTypeCountExperiencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Pwd_ExperienceWhereInput
+  }
+
+  /**
+   * Pwd_ProfileCountOutputType without action
+   */
+  export type Pwd_ProfileCountOutputTypeCountJob_preferencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Pwd_Job_Preferences_RequirementsWhereInput
   }
 
   /**
@@ -4797,6 +4815,8 @@ export namespace Prisma {
     date_of_birth: string | null
     address: string | null
     profession: string | null
+    portfolio_url: string | null
+    github_url: string | null
     professional_role: string | null
     professional_summary: string | null
     profile_visibility: string | null
@@ -4820,6 +4840,8 @@ export namespace Prisma {
     date_of_birth: string | null
     address: string | null
     profession: string | null
+    portfolio_url: string | null
+    github_url: string | null
     professional_role: string | null
     professional_summary: string | null
     profile_visibility: string | null
@@ -4845,7 +4867,9 @@ export namespace Prisma {
     pwd_document: number
     profession: number
     skills: number
-    portfolio_links: number
+    portfolio_url: number
+    github_url: number
+    otherPlatform: number
     professional_role: number
     professional_summary: number
     profile_visibility: number
@@ -4883,6 +4907,8 @@ export namespace Prisma {
     date_of_birth?: true
     address?: true
     profession?: true
+    portfolio_url?: true
+    github_url?: true
     professional_role?: true
     professional_summary?: true
     profile_visibility?: true
@@ -4906,6 +4932,8 @@ export namespace Prisma {
     date_of_birth?: true
     address?: true
     profession?: true
+    portfolio_url?: true
+    github_url?: true
     professional_role?: true
     professional_summary?: true
     profile_visibility?: true
@@ -4931,7 +4959,9 @@ export namespace Prisma {
     pwd_document?: true
     profession?: true
     skills?: true
-    portfolio_links?: true
+    portfolio_url?: true
+    github_url?: true
+    otherPlatform?: true
     professional_role?: true
     professional_summary?: true
     profile_visibility?: true
@@ -5044,7 +5074,9 @@ export namespace Prisma {
     pwd_document: string[]
     profession: string | null
     skills: string[]
-    portfolio_links: string[]
+    portfolio_url: string | null
+    github_url: string | null
+    otherPlatform: string[]
     professional_role: string | null
     professional_summary: string | null
     profile_visibility: string | null
@@ -5089,7 +5121,9 @@ export namespace Prisma {
     pwd_document?: boolean
     profession?: boolean
     skills?: boolean
-    portfolio_links?: boolean
+    portfolio_url?: boolean
+    github_url?: boolean
+    otherPlatform?: boolean
     professional_role?: boolean
     professional_summary?: boolean
     profile_visibility?: boolean
@@ -5125,7 +5159,9 @@ export namespace Prisma {
     pwd_document?: boolean
     profession?: boolean
     skills?: boolean
-    portfolio_links?: boolean
+    portfolio_url?: boolean
+    github_url?: boolean
+    otherPlatform?: boolean
     professional_role?: boolean
     professional_summary?: boolean
     profile_visibility?: boolean
@@ -5152,7 +5188,9 @@ export namespace Prisma {
     pwd_document?: boolean
     profession?: boolean
     skills?: boolean
-    portfolio_links?: boolean
+    portfolio_url?: boolean
+    github_url?: boolean
+    otherPlatform?: boolean
     professional_role?: boolean
     professional_summary?: boolean
     profile_visibility?: boolean
@@ -5179,14 +5217,16 @@ export namespace Prisma {
     pwd_document?: boolean
     profession?: boolean
     skills?: boolean
-    portfolio_links?: boolean
+    portfolio_url?: boolean
+    github_url?: boolean
+    otherPlatform?: boolean
     professional_role?: boolean
     professional_summary?: boolean
     profile_visibility?: boolean
     resume_cv?: boolean
   }
 
-  export type Pwd_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"first_name" | "last_name" | "middle_name" | "profile_picture" | "bio" | "disability_Type" | "disability_severity" | "gender" | "rating" | "created_at" | "updated_at" | "pwd_id" | "user_id" | "date_of_birth" | "address" | "pwd_document" | "profession" | "skills" | "portfolio_links" | "professional_role" | "professional_summary" | "profile_visibility" | "resume_cv", ExtArgs["result"]["pwd_Profile"]>
+  export type Pwd_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"first_name" | "last_name" | "middle_name" | "profile_picture" | "bio" | "disability_Type" | "disability_severity" | "gender" | "rating" | "created_at" | "updated_at" | "pwd_id" | "user_id" | "date_of_birth" | "address" | "pwd_document" | "profession" | "skills" | "portfolio_url" | "github_url" | "otherPlatform" | "professional_role" | "professional_summary" | "profile_visibility" | "resume_cv", ExtArgs["result"]["pwd_Profile"]>
   export type Pwd_ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | Pwd_Profile$applicationsArgs<ExtArgs>
     accessibility_needs?: boolean | Pwd_Profile$accessibility_needsArgs<ExtArgs>
@@ -5210,10 +5250,10 @@ export namespace Prisma {
     name: "Pwd_Profile"
     objects: {
       applications: Prisma.$ApplicationsPayload<ExtArgs>[]
-      accessibility_needs: Prisma.$Pwd_Accessibility_NeedsPayload<ExtArgs> | null
+      accessibility_needs: Prisma.$Pwd_Accessibility_NeedsPayload<ExtArgs>[]
       educations: Prisma.$Pwd_EducationPayload<ExtArgs>[]
       experiences: Prisma.$Pwd_ExperiencePayload<ExtArgs>[]
-      job_preferences: Prisma.$Pwd_Job_Preferences_RequirementsPayload<ExtArgs> | null
+      job_preferences: Prisma.$Pwd_Job_Preferences_RequirementsPayload<ExtArgs>[]
       user: Prisma.$UsersPayload<ExtArgs>
       resumes: Prisma.$ResumesPayload<ExtArgs>[]
       ai_match_results: Prisma.$ai_match_resultsPayload<ExtArgs>[]
@@ -5238,7 +5278,9 @@ export namespace Prisma {
       pwd_document: string[]
       profession: string | null
       skills: string[]
-      portfolio_links: string[]
+      portfolio_url: string | null
+      github_url: string | null
+      otherPlatform: string[]
       professional_role: string | null
       professional_summary: string | null
       profile_visibility: string | null
@@ -5638,10 +5680,10 @@ export namespace Prisma {
   export interface Prisma__Pwd_ProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     applications<T extends Pwd_Profile$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    accessibility_needs<T extends Pwd_Profile$accessibility_needsArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$accessibility_needsArgs<ExtArgs>>): Prisma__Pwd_Accessibility_NeedsClient<$Result.GetResult<Prisma.$Pwd_Accessibility_NeedsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    accessibility_needs<T extends Pwd_Profile$accessibility_needsArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$accessibility_needsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Pwd_Accessibility_NeedsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     educations<T extends Pwd_Profile$educationsArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$educationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Pwd_EducationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     experiences<T extends Pwd_Profile$experiencesArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$experiencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Pwd_ExperiencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    job_preferences<T extends Pwd_Profile$job_preferencesArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$job_preferencesArgs<ExtArgs>>): Prisma__Pwd_Job_Preferences_RequirementsClient<$Result.GetResult<Prisma.$Pwd_Job_Preferences_RequirementsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    job_preferences<T extends Pwd_Profile$job_preferencesArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$job_preferencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Pwd_Job_Preferences_RequirementsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user<T extends UsersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsersDefaultArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     resumes<T extends Pwd_Profile$resumesArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$resumesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ai_match_results<T extends Pwd_Profile$ai_match_resultsArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$ai_match_resultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ai_match_resultsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5693,7 +5735,9 @@ export namespace Prisma {
     readonly pwd_document: FieldRef<"Pwd_Profile", 'String[]'>
     readonly profession: FieldRef<"Pwd_Profile", 'String'>
     readonly skills: FieldRef<"Pwd_Profile", 'String[]'>
-    readonly portfolio_links: FieldRef<"Pwd_Profile", 'String[]'>
+    readonly portfolio_url: FieldRef<"Pwd_Profile", 'String'>
+    readonly github_url: FieldRef<"Pwd_Profile", 'String'>
+    readonly otherPlatform: FieldRef<"Pwd_Profile", 'String[]'>
     readonly professional_role: FieldRef<"Pwd_Profile", 'String'>
     readonly professional_summary: FieldRef<"Pwd_Profile", 'String'>
     readonly profile_visibility: FieldRef<"Pwd_Profile", 'String'>
@@ -6134,6 +6178,11 @@ export namespace Prisma {
      */
     include?: Pwd_Accessibility_NeedsInclude<ExtArgs> | null
     where?: Pwd_Accessibility_NeedsWhereInput
+    orderBy?: Pwd_Accessibility_NeedsOrderByWithRelationInput | Pwd_Accessibility_NeedsOrderByWithRelationInput[]
+    cursor?: Pwd_Accessibility_NeedsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Pwd_Accessibility_NeedsScalarFieldEnum | Pwd_Accessibility_NeedsScalarFieldEnum[]
   }
 
   /**
@@ -6201,6 +6250,11 @@ export namespace Prisma {
      */
     include?: Pwd_Job_Preferences_RequirementsInclude<ExtArgs> | null
     where?: Pwd_Job_Preferences_RequirementsWhereInput
+    orderBy?: Pwd_Job_Preferences_RequirementsOrderByWithRelationInput | Pwd_Job_Preferences_RequirementsOrderByWithRelationInput[]
+    cursor?: Pwd_Job_Preferences_RequirementsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Pwd_Job_Preferences_RequirementsScalarFieldEnum | Pwd_Job_Preferences_RequirementsScalarFieldEnum[]
   }
 
   /**
@@ -28719,7 +28773,9 @@ export namespace Prisma {
     pwd_document: 'pwd_document',
     profession: 'profession',
     skills: 'skills',
-    portfolio_links: 'portfolio_links',
+    portfolio_url: 'portfolio_url',
+    github_url: 'github_url',
+    otherPlatform: 'otherPlatform',
     professional_role: 'professional_role',
     professional_summary: 'professional_summary',
     profile_visibility: 'profile_visibility',
@@ -29492,16 +29548,18 @@ export namespace Prisma {
     pwd_document?: StringNullableListFilter<"Pwd_Profile">
     profession?: StringNullableFilter<"Pwd_Profile"> | string | null
     skills?: StringNullableListFilter<"Pwd_Profile">
-    portfolio_links?: StringNullableListFilter<"Pwd_Profile">
+    portfolio_url?: StringNullableFilter<"Pwd_Profile"> | string | null
+    github_url?: StringNullableFilter<"Pwd_Profile"> | string | null
+    otherPlatform?: StringNullableListFilter<"Pwd_Profile">
     professional_role?: StringNullableFilter<"Pwd_Profile"> | string | null
     professional_summary?: StringNullableFilter<"Pwd_Profile"> | string | null
     profile_visibility?: StringNullableFilter<"Pwd_Profile"> | string | null
     resume_cv?: StringNullableFilter<"Pwd_Profile"> | string | null
     applications?: ApplicationsListRelationFilter
-    accessibility_needs?: XOR<Pwd_Accessibility_NeedsNullableScalarRelationFilter, Pwd_Accessibility_NeedsWhereInput> | null
+    accessibility_needs?: Pwd_Accessibility_NeedsListRelationFilter
     educations?: Pwd_EducationListRelationFilter
     experiences?: Pwd_ExperienceListRelationFilter
-    job_preferences?: XOR<Pwd_Job_Preferences_RequirementsNullableScalarRelationFilter, Pwd_Job_Preferences_RequirementsWhereInput> | null
+    job_preferences?: Pwd_Job_Preferences_RequirementsListRelationFilter
     user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
     resumes?: ResumesListRelationFilter
     ai_match_results?: Ai_match_resultsListRelationFilter
@@ -29527,16 +29585,18 @@ export namespace Prisma {
     pwd_document?: SortOrder
     profession?: SortOrderInput | SortOrder
     skills?: SortOrder
-    portfolio_links?: SortOrder
+    portfolio_url?: SortOrderInput | SortOrder
+    github_url?: SortOrderInput | SortOrder
+    otherPlatform?: SortOrder
     professional_role?: SortOrderInput | SortOrder
     professional_summary?: SortOrderInput | SortOrder
     profile_visibility?: SortOrderInput | SortOrder
     resume_cv?: SortOrderInput | SortOrder
     applications?: ApplicationsOrderByRelationAggregateInput
-    accessibility_needs?: Pwd_Accessibility_NeedsOrderByWithRelationInput
+    accessibility_needs?: Pwd_Accessibility_NeedsOrderByRelationAggregateInput
     educations?: Pwd_EducationOrderByRelationAggregateInput
     experiences?: Pwd_ExperienceOrderByRelationAggregateInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsOrderByWithRelationInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsOrderByRelationAggregateInput
     user?: UsersOrderByWithRelationInput
     resumes?: ResumesOrderByRelationAggregateInput
     ai_match_results?: ai_match_resultsOrderByRelationAggregateInput
@@ -29565,16 +29625,18 @@ export namespace Prisma {
     pwd_document?: StringNullableListFilter<"Pwd_Profile">
     profession?: StringNullableFilter<"Pwd_Profile"> | string | null
     skills?: StringNullableListFilter<"Pwd_Profile">
-    portfolio_links?: StringNullableListFilter<"Pwd_Profile">
+    portfolio_url?: StringNullableFilter<"Pwd_Profile"> | string | null
+    github_url?: StringNullableFilter<"Pwd_Profile"> | string | null
+    otherPlatform?: StringNullableListFilter<"Pwd_Profile">
     professional_role?: StringNullableFilter<"Pwd_Profile"> | string | null
     professional_summary?: StringNullableFilter<"Pwd_Profile"> | string | null
     profile_visibility?: StringNullableFilter<"Pwd_Profile"> | string | null
     resume_cv?: StringNullableFilter<"Pwd_Profile"> | string | null
     applications?: ApplicationsListRelationFilter
-    accessibility_needs?: XOR<Pwd_Accessibility_NeedsNullableScalarRelationFilter, Pwd_Accessibility_NeedsWhereInput> | null
+    accessibility_needs?: Pwd_Accessibility_NeedsListRelationFilter
     educations?: Pwd_EducationListRelationFilter
     experiences?: Pwd_ExperienceListRelationFilter
-    job_preferences?: XOR<Pwd_Job_Preferences_RequirementsNullableScalarRelationFilter, Pwd_Job_Preferences_RequirementsWhereInput> | null
+    job_preferences?: Pwd_Job_Preferences_RequirementsListRelationFilter
     user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
     resumes?: ResumesListRelationFilter
     ai_match_results?: Ai_match_resultsListRelationFilter
@@ -29600,7 +29662,9 @@ export namespace Prisma {
     pwd_document?: SortOrder
     profession?: SortOrderInput | SortOrder
     skills?: SortOrder
-    portfolio_links?: SortOrder
+    portfolio_url?: SortOrderInput | SortOrder
+    github_url?: SortOrderInput | SortOrder
+    otherPlatform?: SortOrder
     professional_role?: SortOrderInput | SortOrder
     professional_summary?: SortOrderInput | SortOrder
     profile_visibility?: SortOrderInput | SortOrder
@@ -29634,7 +29698,9 @@ export namespace Prisma {
     pwd_document?: StringNullableListFilter<"Pwd_Profile">
     profession?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     skills?: StringNullableListFilter<"Pwd_Profile">
-    portfolio_links?: StringNullableListFilter<"Pwd_Profile">
+    portfolio_url?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
+    github_url?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
+    otherPlatform?: StringNullableListFilter<"Pwd_Profile">
     professional_role?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     professional_summary?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     profile_visibility?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
@@ -29762,10 +29828,10 @@ export namespace Prisma {
 
   export type Pwd_Accessibility_NeedsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    pwd_id?: number
     AND?: Pwd_Accessibility_NeedsWhereInput | Pwd_Accessibility_NeedsWhereInput[]
     OR?: Pwd_Accessibility_NeedsWhereInput[]
     NOT?: Pwd_Accessibility_NeedsWhereInput | Pwd_Accessibility_NeedsWhereInput[]
+    pwd_id?: IntFilter<"Pwd_Accessibility_Needs"> | number
     visual_support?: StringNullableListFilter<"Pwd_Accessibility_Needs">
     hearing_support?: StringNullableListFilter<"Pwd_Accessibility_Needs">
     mobility_support?: StringNullableListFilter<"Pwd_Accessibility_Needs">
@@ -29773,7 +29839,7 @@ export namespace Prisma {
     additional_information?: StringNullableFilter<"Pwd_Accessibility_Needs"> | string | null
     updated_at?: DateTimeFilter<"Pwd_Accessibility_Needs"> | Date | string
     pwd_profile?: XOR<Pwd_ProfileScalarRelationFilter, Pwd_ProfileWhereInput>
-  }, "id" | "pwd_id">
+  }, "id">
 
   export type Pwd_Accessibility_NeedsOrderByWithAggregationInput = {
     id?: SortOrder
@@ -29914,17 +29980,17 @@ export namespace Prisma {
 
   export type Pwd_Job_Preferences_RequirementsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    pwd_id?: number
     AND?: Pwd_Job_Preferences_RequirementsWhereInput | Pwd_Job_Preferences_RequirementsWhereInput[]
     OR?: Pwd_Job_Preferences_RequirementsWhereInput[]
     NOT?: Pwd_Job_Preferences_RequirementsWhereInput | Pwd_Job_Preferences_RequirementsWhereInput[]
+    pwd_id?: IntFilter<"Pwd_Job_Preferences_Requirements"> | number
     updated_at?: DateTimeFilter<"Pwd_Job_Preferences_Requirements"> | Date | string
     employment_types?: StringNullableListFilter<"Pwd_Job_Preferences_Requirements">
     experience_level?: StringNullableFilter<"Pwd_Job_Preferences_Requirements"> | string | null
     salary_range?: StringNullableFilter<"Pwd_Job_Preferences_Requirements"> | string | null
     work_arrangement?: StringNullableFilter<"Pwd_Job_Preferences_Requirements"> | string | null
     pwd_profile?: XOR<Pwd_ProfileScalarRelationFilter, Pwd_ProfileWhereInput>
-  }, "id" | "pwd_id">
+  }, "id">
 
   export type Pwd_Job_Preferences_RequirementsOrderByWithAggregationInput = {
     id?: SortOrder
@@ -31369,16 +31435,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedManyWithoutPwd_profileInput
     user: UsersCreateNestedOneWithoutPwd_ProfileInput
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
@@ -31404,16 +31472,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
@@ -31436,16 +31506,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateManyWithoutPwd_profileNestedInput
     user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
@@ -31471,16 +31543,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
@@ -31505,7 +31579,9 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
@@ -31529,7 +31605,9 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31555,7 +31633,9 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33519,9 +33599,10 @@ export namespace Prisma {
     none?: ApplicationsWhereInput
   }
 
-  export type Pwd_Accessibility_NeedsNullableScalarRelationFilter = {
-    is?: Pwd_Accessibility_NeedsWhereInput | null
-    isNot?: Pwd_Accessibility_NeedsWhereInput | null
+  export type Pwd_Accessibility_NeedsListRelationFilter = {
+    every?: Pwd_Accessibility_NeedsWhereInput
+    some?: Pwd_Accessibility_NeedsWhereInput
+    none?: Pwd_Accessibility_NeedsWhereInput
   }
 
   export type Pwd_EducationListRelationFilter = {
@@ -33536,9 +33617,10 @@ export namespace Prisma {
     none?: Pwd_ExperienceWhereInput
   }
 
-  export type Pwd_Job_Preferences_RequirementsNullableScalarRelationFilter = {
-    is?: Pwd_Job_Preferences_RequirementsWhereInput | null
-    isNot?: Pwd_Job_Preferences_RequirementsWhereInput | null
+  export type Pwd_Job_Preferences_RequirementsListRelationFilter = {
+    every?: Pwd_Job_Preferences_RequirementsWhereInput
+    some?: Pwd_Job_Preferences_RequirementsWhereInput
+    none?: Pwd_Job_Preferences_RequirementsWhereInput
   }
 
   export type UsersScalarRelationFilter = {
@@ -33568,11 +33650,19 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type Pwd_Accessibility_NeedsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type Pwd_EducationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type Pwd_ExperienceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Pwd_Job_Preferences_RequirementsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -33607,7 +33697,9 @@ export namespace Prisma {
     pwd_document?: SortOrder
     profession?: SortOrder
     skills?: SortOrder
-    portfolio_links?: SortOrder
+    portfolio_url?: SortOrder
+    github_url?: SortOrder
+    otherPlatform?: SortOrder
     professional_role?: SortOrder
     professional_summary?: SortOrder
     profile_visibility?: SortOrder
@@ -33637,6 +33729,8 @@ export namespace Prisma {
     date_of_birth?: SortOrder
     address?: SortOrder
     profession?: SortOrder
+    portfolio_url?: SortOrder
+    github_url?: SortOrder
     professional_role?: SortOrder
     professional_summary?: SortOrder
     profile_visibility?: SortOrder
@@ -33660,6 +33754,8 @@ export namespace Prisma {
     date_of_birth?: SortOrder
     address?: SortOrder
     profession?: SortOrder
+    portfolio_url?: SortOrder
+    github_url?: SortOrder
     professional_role?: SortOrder
     professional_summary?: SortOrder
     profile_visibility?: SortOrder
@@ -35523,7 +35619,7 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type Pwd_ProfileCreateportfolio_linksInput = {
+  export type Pwd_ProfileCreateotherPlatformInput = {
     set: string[]
   }
 
@@ -35534,10 +35630,11 @@ export namespace Prisma {
     connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
   }
 
-  export type Pwd_Accessibility_NeedsCreateNestedOneWithoutPwd_profileInput = {
-    create?: XOR<Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput, Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput>
-    connectOrCreate?: Pwd_Accessibility_NeedsCreateOrConnectWithoutPwd_profileInput
-    connect?: Pwd_Accessibility_NeedsWhereUniqueInput
+  export type Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput = {
+    create?: XOR<Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput, Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput> | Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput[] | Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput[]
+    connectOrCreate?: Pwd_Accessibility_NeedsCreateOrConnectWithoutPwd_profileInput | Pwd_Accessibility_NeedsCreateOrConnectWithoutPwd_profileInput[]
+    createMany?: Pwd_Accessibility_NeedsCreateManyPwd_profileInputEnvelope
+    connect?: Pwd_Accessibility_NeedsWhereUniqueInput | Pwd_Accessibility_NeedsWhereUniqueInput[]
   }
 
   export type Pwd_EducationCreateNestedManyWithoutPwd_profileInput = {
@@ -35554,10 +35651,11 @@ export namespace Prisma {
     connect?: Pwd_ExperienceWhereUniqueInput | Pwd_ExperienceWhereUniqueInput[]
   }
 
-  export type Pwd_Job_Preferences_RequirementsCreateNestedOneWithoutPwd_profileInput = {
-    create?: XOR<Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput>
-    connectOrCreate?: Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput
-    connect?: Pwd_Job_Preferences_RequirementsWhereUniqueInput
+  export type Pwd_Job_Preferences_RequirementsCreateNestedManyWithoutPwd_profileInput = {
+    create?: XOR<Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput> | Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput[] | Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput[]
+    connectOrCreate?: Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput | Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput[]
+    createMany?: Pwd_Job_Preferences_RequirementsCreateManyPwd_profileInputEnvelope
+    connect?: Pwd_Job_Preferences_RequirementsWhereUniqueInput | Pwd_Job_Preferences_RequirementsWhereUniqueInput[]
   }
 
   export type UsersCreateNestedOneWithoutPwd_ProfileInput = {
@@ -35594,10 +35692,11 @@ export namespace Prisma {
     connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
   }
 
-  export type Pwd_Accessibility_NeedsUncheckedCreateNestedOneWithoutPwd_profileInput = {
-    create?: XOR<Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput, Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput>
-    connectOrCreate?: Pwd_Accessibility_NeedsCreateOrConnectWithoutPwd_profileInput
-    connect?: Pwd_Accessibility_NeedsWhereUniqueInput
+  export type Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput = {
+    create?: XOR<Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput, Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput> | Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput[] | Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput[]
+    connectOrCreate?: Pwd_Accessibility_NeedsCreateOrConnectWithoutPwd_profileInput | Pwd_Accessibility_NeedsCreateOrConnectWithoutPwd_profileInput[]
+    createMany?: Pwd_Accessibility_NeedsCreateManyPwd_profileInputEnvelope
+    connect?: Pwd_Accessibility_NeedsWhereUniqueInput | Pwd_Accessibility_NeedsWhereUniqueInput[]
   }
 
   export type Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput = {
@@ -35614,10 +35713,11 @@ export namespace Prisma {
     connect?: Pwd_ExperienceWhereUniqueInput | Pwd_ExperienceWhereUniqueInput[]
   }
 
-  export type Pwd_Job_Preferences_RequirementsUncheckedCreateNestedOneWithoutPwd_profileInput = {
-    create?: XOR<Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput>
-    connectOrCreate?: Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput
-    connect?: Pwd_Job_Preferences_RequirementsWhereUniqueInput
+  export type Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput = {
+    create?: XOR<Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput> | Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput[] | Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput[]
+    connectOrCreate?: Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput | Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput[]
+    createMany?: Pwd_Job_Preferences_RequirementsCreateManyPwd_profileInputEnvelope
+    connect?: Pwd_Job_Preferences_RequirementsWhereUniqueInput | Pwd_Job_Preferences_RequirementsWhereUniqueInput[]
   }
 
   export type ResumesUncheckedCreateNestedManyWithoutPwd_profileInput = {
@@ -35671,7 +35771,7 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type Pwd_ProfileUpdateportfolio_linksInput = {
+  export type Pwd_ProfileUpdateotherPlatformInput = {
     set?: string[]
     push?: string | string[]
   }
@@ -35690,14 +35790,18 @@ export namespace Prisma {
     deleteMany?: ApplicationsScalarWhereInput | ApplicationsScalarWhereInput[]
   }
 
-  export type Pwd_Accessibility_NeedsUpdateOneWithoutPwd_profileNestedInput = {
-    create?: XOR<Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput, Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput>
-    connectOrCreate?: Pwd_Accessibility_NeedsCreateOrConnectWithoutPwd_profileInput
-    upsert?: Pwd_Accessibility_NeedsUpsertWithoutPwd_profileInput
-    disconnect?: Pwd_Accessibility_NeedsWhereInput | boolean
-    delete?: Pwd_Accessibility_NeedsWhereInput | boolean
-    connect?: Pwd_Accessibility_NeedsWhereUniqueInput
-    update?: XOR<XOR<Pwd_Accessibility_NeedsUpdateToOneWithWhereWithoutPwd_profileInput, Pwd_Accessibility_NeedsUpdateWithoutPwd_profileInput>, Pwd_Accessibility_NeedsUncheckedUpdateWithoutPwd_profileInput>
+  export type Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput = {
+    create?: XOR<Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput, Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput> | Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput[] | Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput[]
+    connectOrCreate?: Pwd_Accessibility_NeedsCreateOrConnectWithoutPwd_profileInput | Pwd_Accessibility_NeedsCreateOrConnectWithoutPwd_profileInput[]
+    upsert?: Pwd_Accessibility_NeedsUpsertWithWhereUniqueWithoutPwd_profileInput | Pwd_Accessibility_NeedsUpsertWithWhereUniqueWithoutPwd_profileInput[]
+    createMany?: Pwd_Accessibility_NeedsCreateManyPwd_profileInputEnvelope
+    set?: Pwd_Accessibility_NeedsWhereUniqueInput | Pwd_Accessibility_NeedsWhereUniqueInput[]
+    disconnect?: Pwd_Accessibility_NeedsWhereUniqueInput | Pwd_Accessibility_NeedsWhereUniqueInput[]
+    delete?: Pwd_Accessibility_NeedsWhereUniqueInput | Pwd_Accessibility_NeedsWhereUniqueInput[]
+    connect?: Pwd_Accessibility_NeedsWhereUniqueInput | Pwd_Accessibility_NeedsWhereUniqueInput[]
+    update?: Pwd_Accessibility_NeedsUpdateWithWhereUniqueWithoutPwd_profileInput | Pwd_Accessibility_NeedsUpdateWithWhereUniqueWithoutPwd_profileInput[]
+    updateMany?: Pwd_Accessibility_NeedsUpdateManyWithWhereWithoutPwd_profileInput | Pwd_Accessibility_NeedsUpdateManyWithWhereWithoutPwd_profileInput[]
+    deleteMany?: Pwd_Accessibility_NeedsScalarWhereInput | Pwd_Accessibility_NeedsScalarWhereInput[]
   }
 
   export type Pwd_EducationUpdateManyWithoutPwd_profileNestedInput = {
@@ -35728,14 +35832,18 @@ export namespace Prisma {
     deleteMany?: Pwd_ExperienceScalarWhereInput | Pwd_ExperienceScalarWhereInput[]
   }
 
-  export type Pwd_Job_Preferences_RequirementsUpdateOneWithoutPwd_profileNestedInput = {
-    create?: XOR<Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput>
-    connectOrCreate?: Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput
-    upsert?: Pwd_Job_Preferences_RequirementsUpsertWithoutPwd_profileInput
-    disconnect?: Pwd_Job_Preferences_RequirementsWhereInput | boolean
-    delete?: Pwd_Job_Preferences_RequirementsWhereInput | boolean
-    connect?: Pwd_Job_Preferences_RequirementsWhereUniqueInput
-    update?: XOR<XOR<Pwd_Job_Preferences_RequirementsUpdateToOneWithWhereWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUpdateWithoutPwd_profileInput>, Pwd_Job_Preferences_RequirementsUncheckedUpdateWithoutPwd_profileInput>
+  export type Pwd_Job_Preferences_RequirementsUpdateManyWithoutPwd_profileNestedInput = {
+    create?: XOR<Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput> | Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput[] | Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput[]
+    connectOrCreate?: Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput | Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput[]
+    upsert?: Pwd_Job_Preferences_RequirementsUpsertWithWhereUniqueWithoutPwd_profileInput | Pwd_Job_Preferences_RequirementsUpsertWithWhereUniqueWithoutPwd_profileInput[]
+    createMany?: Pwd_Job_Preferences_RequirementsCreateManyPwd_profileInputEnvelope
+    set?: Pwd_Job_Preferences_RequirementsWhereUniqueInput | Pwd_Job_Preferences_RequirementsWhereUniqueInput[]
+    disconnect?: Pwd_Job_Preferences_RequirementsWhereUniqueInput | Pwd_Job_Preferences_RequirementsWhereUniqueInput[]
+    delete?: Pwd_Job_Preferences_RequirementsWhereUniqueInput | Pwd_Job_Preferences_RequirementsWhereUniqueInput[]
+    connect?: Pwd_Job_Preferences_RequirementsWhereUniqueInput | Pwd_Job_Preferences_RequirementsWhereUniqueInput[]
+    update?: Pwd_Job_Preferences_RequirementsUpdateWithWhereUniqueWithoutPwd_profileInput | Pwd_Job_Preferences_RequirementsUpdateWithWhereUniqueWithoutPwd_profileInput[]
+    updateMany?: Pwd_Job_Preferences_RequirementsUpdateManyWithWhereWithoutPwd_profileInput | Pwd_Job_Preferences_RequirementsUpdateManyWithWhereWithoutPwd_profileInput[]
+    deleteMany?: Pwd_Job_Preferences_RequirementsScalarWhereInput | Pwd_Job_Preferences_RequirementsScalarWhereInput[]
   }
 
   export type UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput = {
@@ -35802,14 +35910,18 @@ export namespace Prisma {
     deleteMany?: ApplicationsScalarWhereInput | ApplicationsScalarWhereInput[]
   }
 
-  export type Pwd_Accessibility_NeedsUncheckedUpdateOneWithoutPwd_profileNestedInput = {
-    create?: XOR<Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput, Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput>
-    connectOrCreate?: Pwd_Accessibility_NeedsCreateOrConnectWithoutPwd_profileInput
-    upsert?: Pwd_Accessibility_NeedsUpsertWithoutPwd_profileInput
-    disconnect?: Pwd_Accessibility_NeedsWhereInput | boolean
-    delete?: Pwd_Accessibility_NeedsWhereInput | boolean
-    connect?: Pwd_Accessibility_NeedsWhereUniqueInput
-    update?: XOR<XOR<Pwd_Accessibility_NeedsUpdateToOneWithWhereWithoutPwd_profileInput, Pwd_Accessibility_NeedsUpdateWithoutPwd_profileInput>, Pwd_Accessibility_NeedsUncheckedUpdateWithoutPwd_profileInput>
+  export type Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput = {
+    create?: XOR<Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput, Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput> | Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput[] | Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput[]
+    connectOrCreate?: Pwd_Accessibility_NeedsCreateOrConnectWithoutPwd_profileInput | Pwd_Accessibility_NeedsCreateOrConnectWithoutPwd_profileInput[]
+    upsert?: Pwd_Accessibility_NeedsUpsertWithWhereUniqueWithoutPwd_profileInput | Pwd_Accessibility_NeedsUpsertWithWhereUniqueWithoutPwd_profileInput[]
+    createMany?: Pwd_Accessibility_NeedsCreateManyPwd_profileInputEnvelope
+    set?: Pwd_Accessibility_NeedsWhereUniqueInput | Pwd_Accessibility_NeedsWhereUniqueInput[]
+    disconnect?: Pwd_Accessibility_NeedsWhereUniqueInput | Pwd_Accessibility_NeedsWhereUniqueInput[]
+    delete?: Pwd_Accessibility_NeedsWhereUniqueInput | Pwd_Accessibility_NeedsWhereUniqueInput[]
+    connect?: Pwd_Accessibility_NeedsWhereUniqueInput | Pwd_Accessibility_NeedsWhereUniqueInput[]
+    update?: Pwd_Accessibility_NeedsUpdateWithWhereUniqueWithoutPwd_profileInput | Pwd_Accessibility_NeedsUpdateWithWhereUniqueWithoutPwd_profileInput[]
+    updateMany?: Pwd_Accessibility_NeedsUpdateManyWithWhereWithoutPwd_profileInput | Pwd_Accessibility_NeedsUpdateManyWithWhereWithoutPwd_profileInput[]
+    deleteMany?: Pwd_Accessibility_NeedsScalarWhereInput | Pwd_Accessibility_NeedsScalarWhereInput[]
   }
 
   export type Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput = {
@@ -35840,14 +35952,18 @@ export namespace Prisma {
     deleteMany?: Pwd_ExperienceScalarWhereInput | Pwd_ExperienceScalarWhereInput[]
   }
 
-  export type Pwd_Job_Preferences_RequirementsUncheckedUpdateOneWithoutPwd_profileNestedInput = {
-    create?: XOR<Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput>
-    connectOrCreate?: Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput
-    upsert?: Pwd_Job_Preferences_RequirementsUpsertWithoutPwd_profileInput
-    disconnect?: Pwd_Job_Preferences_RequirementsWhereInput | boolean
-    delete?: Pwd_Job_Preferences_RequirementsWhereInput | boolean
-    connect?: Pwd_Job_Preferences_RequirementsWhereUniqueInput
-    update?: XOR<XOR<Pwd_Job_Preferences_RequirementsUpdateToOneWithWhereWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUpdateWithoutPwd_profileInput>, Pwd_Job_Preferences_RequirementsUncheckedUpdateWithoutPwd_profileInput>
+  export type Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput = {
+    create?: XOR<Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput> | Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput[] | Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput[]
+    connectOrCreate?: Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput | Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput[]
+    upsert?: Pwd_Job_Preferences_RequirementsUpsertWithWhereUniqueWithoutPwd_profileInput | Pwd_Job_Preferences_RequirementsUpsertWithWhereUniqueWithoutPwd_profileInput[]
+    createMany?: Pwd_Job_Preferences_RequirementsCreateManyPwd_profileInputEnvelope
+    set?: Pwd_Job_Preferences_RequirementsWhereUniqueInput | Pwd_Job_Preferences_RequirementsWhereUniqueInput[]
+    disconnect?: Pwd_Job_Preferences_RequirementsWhereUniqueInput | Pwd_Job_Preferences_RequirementsWhereUniqueInput[]
+    delete?: Pwd_Job_Preferences_RequirementsWhereUniqueInput | Pwd_Job_Preferences_RequirementsWhereUniqueInput[]
+    connect?: Pwd_Job_Preferences_RequirementsWhereUniqueInput | Pwd_Job_Preferences_RequirementsWhereUniqueInput[]
+    update?: Pwd_Job_Preferences_RequirementsUpdateWithWhereUniqueWithoutPwd_profileInput | Pwd_Job_Preferences_RequirementsUpdateWithWhereUniqueWithoutPwd_profileInput[]
+    updateMany?: Pwd_Job_Preferences_RequirementsUpdateManyWithWhereWithoutPwd_profileInput | Pwd_Job_Preferences_RequirementsUpdateManyWithWhereWithoutPwd_profileInput[]
+    deleteMany?: Pwd_Job_Preferences_RequirementsScalarWhereInput | Pwd_Job_Preferences_RequirementsScalarWhereInput[]
   }
 
   export type ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput = {
@@ -37414,16 +37530,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedManyWithoutPwd_profileInput
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsCreateNestedManyWithoutPayeeInput
@@ -37447,16 +37565,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
@@ -37858,16 +37978,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateManyWithoutPwd_profileNestedInput
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUpdateManyWithoutPayeeNestedInput
@@ -37891,16 +38013,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
@@ -38166,6 +38290,11 @@ export namespace Prisma {
     create: XOR<Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput, Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput>
   }
 
+  export type Pwd_Accessibility_NeedsCreateManyPwd_profileInputEnvelope = {
+    data: Pwd_Accessibility_NeedsCreateManyPwd_profileInput | Pwd_Accessibility_NeedsCreateManyPwd_profileInput[]
+    skipDuplicates?: boolean
+  }
+
   export type Pwd_EducationCreateWithoutPwd_profileInput = {
     highest_level: string
     institution: string
@@ -38256,6 +38385,11 @@ export namespace Prisma {
   export type Pwd_Job_Preferences_RequirementsCreateOrConnectWithoutPwd_profileInput = {
     where: Pwd_Job_Preferences_RequirementsWhereUniqueInput
     create: XOR<Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput>
+  }
+
+  export type Pwd_Job_Preferences_RequirementsCreateManyPwd_profileInputEnvelope = {
+    data: Pwd_Job_Preferences_RequirementsCreateManyPwd_profileInput | Pwd_Job_Preferences_RequirementsCreateManyPwd_profileInput[]
+    skipDuplicates?: boolean
   }
 
   export type UsersCreateWithoutPwd_ProfileInput = {
@@ -38444,34 +38578,34 @@ export namespace Prisma {
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
   }
 
-  export type Pwd_Accessibility_NeedsUpsertWithoutPwd_profileInput = {
+  export type Pwd_Accessibility_NeedsUpsertWithWhereUniqueWithoutPwd_profileInput = {
+    where: Pwd_Accessibility_NeedsWhereUniqueInput
     update: XOR<Pwd_Accessibility_NeedsUpdateWithoutPwd_profileInput, Pwd_Accessibility_NeedsUncheckedUpdateWithoutPwd_profileInput>
     create: XOR<Pwd_Accessibility_NeedsCreateWithoutPwd_profileInput, Pwd_Accessibility_NeedsUncheckedCreateWithoutPwd_profileInput>
-    where?: Pwd_Accessibility_NeedsWhereInput
   }
 
-  export type Pwd_Accessibility_NeedsUpdateToOneWithWhereWithoutPwd_profileInput = {
-    where?: Pwd_Accessibility_NeedsWhereInput
+  export type Pwd_Accessibility_NeedsUpdateWithWhereUniqueWithoutPwd_profileInput = {
+    where: Pwd_Accessibility_NeedsWhereUniqueInput
     data: XOR<Pwd_Accessibility_NeedsUpdateWithoutPwd_profileInput, Pwd_Accessibility_NeedsUncheckedUpdateWithoutPwd_profileInput>
   }
 
-  export type Pwd_Accessibility_NeedsUpdateWithoutPwd_profileInput = {
-    visual_support?: Pwd_Accessibility_NeedsUpdatevisual_supportInput | string[]
-    hearing_support?: Pwd_Accessibility_NeedsUpdatehearing_supportInput | string[]
-    mobility_support?: Pwd_Accessibility_NeedsUpdatemobility_supportInput | string[]
-    cognitive_support?: Pwd_Accessibility_NeedsUpdatecognitive_supportInput | string[]
-    additional_information?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type Pwd_Accessibility_NeedsUpdateManyWithWhereWithoutPwd_profileInput = {
+    where: Pwd_Accessibility_NeedsScalarWhereInput
+    data: XOR<Pwd_Accessibility_NeedsUpdateManyMutationInput, Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileInput>
   }
 
-  export type Pwd_Accessibility_NeedsUncheckedUpdateWithoutPwd_profileInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    visual_support?: Pwd_Accessibility_NeedsUpdatevisual_supportInput | string[]
-    hearing_support?: Pwd_Accessibility_NeedsUpdatehearing_supportInput | string[]
-    mobility_support?: Pwd_Accessibility_NeedsUpdatemobility_supportInput | string[]
-    cognitive_support?: Pwd_Accessibility_NeedsUpdatecognitive_supportInput | string[]
-    additional_information?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type Pwd_Accessibility_NeedsScalarWhereInput = {
+    AND?: Pwd_Accessibility_NeedsScalarWhereInput | Pwd_Accessibility_NeedsScalarWhereInput[]
+    OR?: Pwd_Accessibility_NeedsScalarWhereInput[]
+    NOT?: Pwd_Accessibility_NeedsScalarWhereInput | Pwd_Accessibility_NeedsScalarWhereInput[]
+    id?: IntFilter<"Pwd_Accessibility_Needs"> | number
+    pwd_id?: IntFilter<"Pwd_Accessibility_Needs"> | number
+    visual_support?: StringNullableListFilter<"Pwd_Accessibility_Needs">
+    hearing_support?: StringNullableListFilter<"Pwd_Accessibility_Needs">
+    mobility_support?: StringNullableListFilter<"Pwd_Accessibility_Needs">
+    cognitive_support?: StringNullableListFilter<"Pwd_Accessibility_Needs">
+    additional_information?: StringNullableFilter<"Pwd_Accessibility_Needs"> | string | null
+    updated_at?: DateTimeFilter<"Pwd_Accessibility_Needs"> | Date | string
   }
 
   export type Pwd_EducationUpsertWithWhereUniqueWithoutPwd_profileInput = {
@@ -38540,32 +38674,33 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Pwd_Experience"> | Date | string
   }
 
-  export type Pwd_Job_Preferences_RequirementsUpsertWithoutPwd_profileInput = {
+  export type Pwd_Job_Preferences_RequirementsUpsertWithWhereUniqueWithoutPwd_profileInput = {
+    where: Pwd_Job_Preferences_RequirementsWhereUniqueInput
     update: XOR<Pwd_Job_Preferences_RequirementsUpdateWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUncheckedUpdateWithoutPwd_profileInput>
     create: XOR<Pwd_Job_Preferences_RequirementsCreateWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUncheckedCreateWithoutPwd_profileInput>
-    where?: Pwd_Job_Preferences_RequirementsWhereInput
   }
 
-  export type Pwd_Job_Preferences_RequirementsUpdateToOneWithWhereWithoutPwd_profileInput = {
-    where?: Pwd_Job_Preferences_RequirementsWhereInput
+  export type Pwd_Job_Preferences_RequirementsUpdateWithWhereUniqueWithoutPwd_profileInput = {
+    where: Pwd_Job_Preferences_RequirementsWhereUniqueInput
     data: XOR<Pwd_Job_Preferences_RequirementsUpdateWithoutPwd_profileInput, Pwd_Job_Preferences_RequirementsUncheckedUpdateWithoutPwd_profileInput>
   }
 
-  export type Pwd_Job_Preferences_RequirementsUpdateWithoutPwd_profileInput = {
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    employment_types?: Pwd_Job_Preferences_RequirementsUpdateemployment_typesInput | string[]
-    experience_level?: NullableStringFieldUpdateOperationsInput | string | null
-    salary_range?: NullableStringFieldUpdateOperationsInput | string | null
-    work_arrangement?: NullableStringFieldUpdateOperationsInput | string | null
+  export type Pwd_Job_Preferences_RequirementsUpdateManyWithWhereWithoutPwd_profileInput = {
+    where: Pwd_Job_Preferences_RequirementsScalarWhereInput
+    data: XOR<Pwd_Job_Preferences_RequirementsUpdateManyMutationInput, Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileInput>
   }
 
-  export type Pwd_Job_Preferences_RequirementsUncheckedUpdateWithoutPwd_profileInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    employment_types?: Pwd_Job_Preferences_RequirementsUpdateemployment_typesInput | string[]
-    experience_level?: NullableStringFieldUpdateOperationsInput | string | null
-    salary_range?: NullableStringFieldUpdateOperationsInput | string | null
-    work_arrangement?: NullableStringFieldUpdateOperationsInput | string | null
+  export type Pwd_Job_Preferences_RequirementsScalarWhereInput = {
+    AND?: Pwd_Job_Preferences_RequirementsScalarWhereInput | Pwd_Job_Preferences_RequirementsScalarWhereInput[]
+    OR?: Pwd_Job_Preferences_RequirementsScalarWhereInput[]
+    NOT?: Pwd_Job_Preferences_RequirementsScalarWhereInput | Pwd_Job_Preferences_RequirementsScalarWhereInput[]
+    id?: IntFilter<"Pwd_Job_Preferences_Requirements"> | number
+    pwd_id?: IntFilter<"Pwd_Job_Preferences_Requirements"> | number
+    updated_at?: DateTimeFilter<"Pwd_Job_Preferences_Requirements"> | Date | string
+    employment_types?: StringNullableListFilter<"Pwd_Job_Preferences_Requirements">
+    experience_level?: StringNullableFilter<"Pwd_Job_Preferences_Requirements"> | string | null
+    salary_range?: StringNullableFilter<"Pwd_Job_Preferences_Requirements"> | string | null
+    work_arrangement?: StringNullableFilter<"Pwd_Job_Preferences_Requirements"> | string | null
   }
 
   export type UsersUpsertWithoutPwd_ProfileInput = {
@@ -38739,15 +38874,17 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedManyWithoutPwd_profileInput
     user: UsersCreateNestedOneWithoutPwd_ProfileInput
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
@@ -38773,15 +38910,17 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
@@ -38820,15 +38959,17 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateManyWithoutPwd_profileNestedInput
     user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
@@ -38854,15 +38995,17 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
@@ -38885,7 +39028,9 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
@@ -38893,7 +39038,7 @@ export namespace Prisma {
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedManyWithoutPwd_profileInput
     user: UsersCreateNestedOneWithoutPwd_ProfileInput
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
@@ -38919,7 +39064,9 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
@@ -38927,7 +39074,7 @@ export namespace Prisma {
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
@@ -38966,7 +39113,9 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38974,7 +39123,7 @@ export namespace Prisma {
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateManyWithoutPwd_profileNestedInput
     user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
@@ -39000,7 +39149,9 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39008,7 +39159,7 @@ export namespace Prisma {
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
@@ -39031,15 +39182,17 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedManyWithoutPwd_profileInput
     user: UsersCreateNestedOneWithoutPwd_ProfileInput
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
@@ -39065,15 +39218,17 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
@@ -39112,15 +39267,17 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateManyWithoutPwd_profileNestedInput
     user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
@@ -39146,15 +39303,17 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
@@ -39177,13 +39336,15 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
     user: UsersCreateNestedOneWithoutPwd_ProfileInput
@@ -39211,13 +39372,15 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -39258,13 +39421,15 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
     user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
@@ -39292,13 +39457,15 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -39614,16 +39781,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedManyWithoutPwd_profileInput
     user: UsersCreateNestedOneWithoutPwd_ProfileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsCreateNestedManyWithoutPayeeInput
@@ -39648,16 +39817,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
   }
@@ -39711,16 +39882,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateManyWithoutPwd_profileNestedInput
     user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUpdateManyWithoutPayeeNestedInput
@@ -39745,16 +39918,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
   }
@@ -40235,15 +40410,17 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
-    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedManyWithoutPwd_profileInput
     user: UsersCreateNestedOneWithoutPwd_ProfileInput
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
@@ -40269,15 +40446,17 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
@@ -40476,15 +40655,17 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
-    accessibility_needs?: Pwd_Accessibility_NeedsUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateManyWithoutPwd_profileNestedInput
     user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
@@ -40510,15 +40691,17 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
@@ -40921,16 +41104,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedManyWithoutPwd_profileInput
     user: UsersCreateNestedOneWithoutPwd_ProfileInput
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
@@ -40955,16 +41140,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
   }
@@ -41092,16 +41279,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateManyWithoutPwd_profileNestedInput
     user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
@@ -41126,16 +41315,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
   }
@@ -42016,16 +42207,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedManyWithoutPwd_profileInput
     user: UsersCreateNestedOneWithoutPwd_ProfileInput
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsCreateNestedManyWithoutPayeeInput
@@ -42050,16 +42243,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
     profession?: string | null
     skills?: Pwd_ProfileCreateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileCreateportfolio_linksInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
     profile_visibility?: string | null
     resume_cv?: string | null
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedOneWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedOneWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
   }
@@ -42155,16 +42350,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateManyWithoutPwd_profileNestedInput
     user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUpdateManyWithoutPayeeNestedInput
@@ -42189,16 +42386,18 @@ export namespace Prisma {
     pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
     profession?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: Pwd_ProfileUpdateskillsInput | string[]
-    portfolio_links?: Pwd_ProfileUpdateportfolio_linksInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
-    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
-    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateOneWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
   }
@@ -42726,6 +42925,16 @@ export namespace Prisma {
     status_changed_at: Date | string
   }
 
+  export type Pwd_Accessibility_NeedsCreateManyPwd_profileInput = {
+    id?: number
+    visual_support?: Pwd_Accessibility_NeedsCreatevisual_supportInput | string[]
+    hearing_support?: Pwd_Accessibility_NeedsCreatehearing_supportInput | string[]
+    mobility_support?: Pwd_Accessibility_NeedsCreatemobility_supportInput | string[]
+    cognitive_support?: Pwd_Accessibility_NeedsCreatecognitive_supportInput | string[]
+    additional_information?: string | null
+    updated_at?: Date | string
+  }
+
   export type Pwd_EducationCreateManyPwd_profileInput = {
     id?: number
     highest_level: string
@@ -42750,6 +42959,15 @@ export namespace Prisma {
     employment_type?: string | null
     description?: string | null
     updated_at?: Date | string
+  }
+
+  export type Pwd_Job_Preferences_RequirementsCreateManyPwd_profileInput = {
+    id?: number
+    updated_at?: Date | string
+    employment_types?: Pwd_Job_Preferences_RequirementsCreateemployment_typesInput | string[]
+    experience_level?: string | null
+    salary_range?: string | null
+    work_arrangement?: string | null
   }
 
   export type ResumesCreateManyPwd_profileInput = {
@@ -42826,6 +43044,35 @@ export namespace Prisma {
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Pwd_Accessibility_NeedsUpdateWithoutPwd_profileInput = {
+    visual_support?: Pwd_Accessibility_NeedsUpdatevisual_supportInput | string[]
+    hearing_support?: Pwd_Accessibility_NeedsUpdatehearing_supportInput | string[]
+    mobility_support?: Pwd_Accessibility_NeedsUpdatemobility_supportInput | string[]
+    cognitive_support?: Pwd_Accessibility_NeedsUpdatecognitive_supportInput | string[]
+    additional_information?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pwd_Accessibility_NeedsUncheckedUpdateWithoutPwd_profileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    visual_support?: Pwd_Accessibility_NeedsUpdatevisual_supportInput | string[]
+    hearing_support?: Pwd_Accessibility_NeedsUpdatehearing_supportInput | string[]
+    mobility_support?: Pwd_Accessibility_NeedsUpdatemobility_supportInput | string[]
+    cognitive_support?: Pwd_Accessibility_NeedsUpdatecognitive_supportInput | string[]
+    additional_information?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    visual_support?: Pwd_Accessibility_NeedsUpdatevisual_supportInput | string[]
+    hearing_support?: Pwd_Accessibility_NeedsUpdatehearing_supportInput | string[]
+    mobility_support?: Pwd_Accessibility_NeedsUpdatemobility_supportInput | string[]
+    cognitive_support?: Pwd_Accessibility_NeedsUpdatecognitive_supportInput | string[]
+    additional_information?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type Pwd_EducationUpdateWithoutPwd_profileInput = {
     highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
@@ -42900,6 +43147,32 @@ export namespace Prisma {
     employment_type?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Pwd_Job_Preferences_RequirementsUpdateWithoutPwd_profileInput = {
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    employment_types?: Pwd_Job_Preferences_RequirementsUpdateemployment_typesInput | string[]
+    experience_level?: NullableStringFieldUpdateOperationsInput | string | null
+    salary_range?: NullableStringFieldUpdateOperationsInput | string | null
+    work_arrangement?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Pwd_Job_Preferences_RequirementsUncheckedUpdateWithoutPwd_profileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    employment_types?: Pwd_Job_Preferences_RequirementsUpdateemployment_typesInput | string[]
+    experience_level?: NullableStringFieldUpdateOperationsInput | string | null
+    salary_range?: NullableStringFieldUpdateOperationsInput | string | null
+    work_arrangement?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    employment_types?: Pwd_Job_Preferences_RequirementsUpdateemployment_typesInput | string[]
+    experience_level?: NullableStringFieldUpdateOperationsInput | string | null
+    salary_range?: NullableStringFieldUpdateOperationsInput | string | null
+    work_arrangement?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ResumesUpdateWithoutPwd_profileInput = {

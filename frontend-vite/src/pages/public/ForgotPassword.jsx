@@ -76,6 +76,17 @@ const ForgotPassword = () => {
           toast: true,
           position: 'bottom-end'
         });
+      } else if(data.error.includes('No Email found.')) {
+        Swal.fire({
+          icon: 'error',
+          html: `
+            <p><b>Error!</b></p>\n <p>No <b>${email}</b> found in our database.</p>
+          `,
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
       } else {
         Swal.fire({
           icon: 'error',
@@ -148,16 +159,17 @@ const ForgotPassword = () => {
   };
 
   const handleResetPassword = async () => {
+    console.log("Code: ", code);
     if (newPassword !== confirmPassword) {
-              Swal.fire({
-          icon: 'error',
-          title: "Passwords Don't Match",
-          text: 'Please make sure your passwords match.',
-          timer: 4000,
-          showConfirmButton: false,
-          toast: true,
-          position: 'bottom-end'
-        });
+      Swal.fire({
+        icon: 'error',
+        title: "Passwords Don't Match",
+        text: 'Please make sure your passwords match.',
+        timer: 4000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'bottom-end'
+      });
       return;
     }
 
@@ -190,8 +202,10 @@ const ForgotPassword = () => {
       if (data.success) {
         Swal.fire({
           icon: 'success',
-          title: 'Password Reset Successful!',
-          text: 'Your password has been reset successfully.',
+          html: `
+            <p>Password Reset Successful!</p>\n
+            <p>Your password has been reset successfully.</p>
+          `,
           timer: 3000,
           showConfirmButton: false,
           toast: true,
@@ -202,7 +216,7 @@ const ForgotPassword = () => {
         Swal.fire({
           icon: 'error',
           title: 'Reset Failed',
-          text: data.message || 'Failed to reset password.',
+          text: data.error || 'Failed to reset password.',
           timer: 4000,
           showConfirmButton: false,
           toast: true,

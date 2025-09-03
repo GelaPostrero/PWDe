@@ -36,7 +36,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password, rememberMe } = formData;
-
+    console.log("Data: ", formData);
     try {
       var url = 'http://localhost:4000/accounts/users/login';
       const response = await fetch(url, {
@@ -46,6 +46,7 @@ const SignIn = () => {
       });
 
       const data = await response.json();
+
       if (data.success) {
         switch(data.role) {
           case 'PWD':
@@ -76,13 +77,46 @@ const SignIn = () => {
         } else {
           sessionStorage.setItem('authToken', data.token);
         }
+      } else if (data.message.includes('Email not found in database.')) {
+        Swal.fire({
+          icon: 'error',
+          html: `
+            <p>The Email <b>${email}</b> is not exist in our database.</p>\n
+            <p>Sign up and try again.</p>
+          `,
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'  
+        })
+        setFormData({
+          email: '',
+          password: '',
+          rememberMe: false
+        })
+      } else if (data.message.includes('Password did not match.')) {
+        Swal.fire({
+          icon: 'error',
+          html: `
+            <p><b>Incorrect password.</b></p>\n
+            <p>Please try again with the correct password.</p>
+          `,
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'  
+        })
+        setFormData({
+          email: '',
+          password: '',
+          rememberMe: false
+        })
       } else {
         console.error('Sign in failed:', data.message);
         alert(`Sign in failed: ${data.message}`);
       }
     } catch (error) {
-      console.error('Sign in failed:', error);
-      alert('Sign in failed. Please check your credentials and try again.');
+      console.error('Sign in failed: ', error);
     }
   };
 

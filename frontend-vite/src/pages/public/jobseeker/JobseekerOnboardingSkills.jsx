@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 
@@ -63,16 +64,43 @@ const JobseekerOnboardingSkills = () => {
     setProfession(e.target.value);
   };
 
-  const handleNext = () => {
-    // const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+  const handleNext = async () => {
+    const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
 
     const selectedSkill = selected.map((skillId) => {
       const skill = initialSkills.find(s => s.id === skillId);
       return skill ? `${skill.label} (${skill.category})` : null;
     })
 
-    console.log('Submitting skills and profession:', { selectedSkill, profession });
-    navigate(routeForStep('education'));
+    try {
+      var url = "http://localhost:4000/onboard/pwd/onboard/assessment";
+      var headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({selectedSkill, profession})
+      });
+
+      const data = await response.json();
+      if(data.success) {
+        Swal.fire({
+          icon: 'success',
+          html: '<h5><b>Professional Skills Assessment</b></h5>\n<h6>You may now fillup your education data.</h6>',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        })
+        navigate(routeForStep('education'));
+      }
+    } catch(error) {
+      console.error('Server error.', error);
+      alert("Failed to connect to the server. Please try again later.")
+    }
   };
 
   const handleSkip = () => {

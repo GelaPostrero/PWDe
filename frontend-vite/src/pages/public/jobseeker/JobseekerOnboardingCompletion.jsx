@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 
@@ -61,8 +62,9 @@ const JobseekerOnboardingCompletion = () => {
   const [summary, setSummary] = useState('');
   const [portfolioUrl, setPortfolioUrl] = useState('');
   const [githubUrl, setGithubUrl] = useState('');
-  const [otherPlatform, setOtherPlatform] = useState('');
-  const [otherUrl, setOtherUrl] = useState('');
+  const [otherPlatformName, setOtherPlatformName] = useState('');
+  const [otherPlatformUrl, setOtherPlatformUrl] = useState('');
+  const [otherPlatform, setOtherPlatform] = useState([]);
   const [visibility, setVisibility] = useState('public');
   const [agreeTos, setAgreeTos] = useState(false);
   const [agreeShare, setAgreeShare] = useState(false);
@@ -209,6 +211,9 @@ const JobseekerOnboardingCompletion = () => {
 
   // ---- submit (with backend placeholder) ----
   const finish = async () => {
+    const otherPlatform = [`${otherPlatformName}`, `${otherPlatformUrl}`];
+
+    console.log("Other platform: ", otherPlatform);
     // basic agreements check (adjust if you want to make them required)
     if (!agreeTos || !agreeTruthful) {
       alert('Please agree to the Terms and confirm information is truthful.');
@@ -217,52 +222,44 @@ const JobseekerOnboardingCompletion = () => {
 
     try {
       // Prepare payload
-      const formData = new FormData();
-      formData.append('role', role);
-      formData.append('summary', summary);
-      formData.append('portfolioUrl', portfolioUrl);
-      formData.append('githubUrl', githubUrl);
-      formData.append('otherPlatform', otherPlatform);
-      formData.append('otherUrl', otherUrl);
-      formData.append('visibility', visibility);
-      formData.append('agreeTos', String(agreeTos));
-      formData.append('agreeShare', String(agreeShare));
-      formData.append('agreeTruthful', String(agreeTruthful));
+      const token = localStorage.getItem('authToken');
+      const profileCompletion = new FormData();
+      profileCompletion.append('role', role);
+      profileCompletion.append('summary', summary);
+      profileCompletion.append('portfolioUrl', portfolioUrl);
+      profileCompletion.append('githubUrl', githubUrl);
+      profileCompletion.append('otherPlatform', JSON.stringify(otherPlatform)); 
+      profileCompletion.append('visibility', visibility);
 
+      // Append files if present
       if (photo?.file) {
-        formData.append('profilePhoto', photo.file, photo.name || 'profile-photo.jpg');
+        profileCompletion.append('profilePhoto', photo.file, photo.name || 'profile-photo.jpg');
       }
+
       if (resume?.file) {
-        formData.append('resume', resume.file, resume.name || 'resume.pdf');
+        profileCompletion.append('resume', resume.file, resume.name || 'resume.pdf');
       }
 
-      // ---- BACKEND INTEGRATION (commented for now) ----
-      // const resp = await fetch('/api/onboarding/complete', {
-      //   method: 'POST',
-      //   body: formData,
-      //   // Do NOT set Content-Type; the browser sets it for FormData
-      // });
-      // if (!resp.ok) throw new Error('Failed to submit onboarding data');
-      // const result = await resp.json();
-      // console.log('Onboarding completed:', result);
+      var url = "http://localhost:4000/onboard/pwd/complete-profile";
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { "Authorization": `Bearer ${token}` },
+        body: profileCompletion
+      })
 
-      console.log('[Demo] FormData ready:', {
-        role,
-        summary,
-        portfolioUrl,
-        githubUrl,
-        otherPlatform,
-        otherUrl,
-        visibility,
-        agreeTos,
-        agreeShare,
-        agreeTruthful,
-        hasPhoto: !!photo?.file,
-        hasResume: !!resume?.file,
-      });
-
-      alert('Profile saved! (Demo mode — connect to your backend API)');
-      navigate('/jobseeker/dashboard'); // Redirect to jobseeker dashboard after completion
+      const data = await response.json();
+      if(data.success) {
+        Swal.fire({
+          icon: 'success',
+          html: '<h5>You have finally completed your onboarding processes. \n<p><b>Welcome to your dashboard.</b></p></h6>',
+          timer: 5000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
+        navigate('/jobseeker/dashboard');
+      }
     } catch (err) {
       console.error(err);
       alert('Something went wrong. Please try again.');
@@ -466,18 +463,18 @@ const JobseekerOnboardingCompletion = () => {
                   </div>
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">Other Portfolio</label>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 mb-2">
                       <input
                         className="w-40 border rounded-lg px-3 py-3"
                         placeholder="Platform name"
-                        value={otherPlatform}
-                        onChange={(e) => setOtherPlatform(e.target.value)}
+                        value={otherPlatformName}
+                        onChange={(e) => setOtherPlatformName(e.target.value)}
                       />
                       <input
                         className="flex-1 border rounded-lg px-4 py-3"
                         placeholder="https://example.com/yourprofile"
-                        value={otherUrl}
-                        onChange={(e) => setOtherUrl(e.target.value)}
+                        value={otherPlatformUrl}
+                        onChange={(e) => setOtherPlatformUrl(e.target.value)}
                       />
                     </div>
                   </div>

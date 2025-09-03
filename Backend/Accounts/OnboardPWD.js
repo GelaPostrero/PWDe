@@ -4,44 +4,7 @@ const { PrismaClient } = require('../src/generated/prisma');
 const { withAccelerate } = require('../node_modules/@prisma/extension-accelerate');
 const prisma = new PrismaClient().$extends(withAccelerate());
 const authenticateToken = require('../Middlewares/auth');
-
-const path = require('path');
-const multer = require('multer');
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const userId = req.body.user_id
-
-    if (!userId) {
-      return cb(new Error('user_id is required in form-data'), false);
-    }
-
-    // Base folder
-    const baseDir = path.join(__dirname, '../Documents');
-
-    // User-specific folder
-    const userDir = path.join(baseDir, userId.toString());
-
-    cb(null, userDir);
-  },
-  filename: function (req, file, cb) {
-    const userId = req.body.user_id;
-
-    let filename;
-    if (file.fieldname === 'profile_picture') {
-      filename = `ProfilePicture-ID${userId}${path.extname(file.originalname)}`;
-    } else if (file.fieldname === 'resume_cv_file') {
-      filename = `Resume-ID${userId}${path.extname(file.originalname)}`;
-    } else {
-      // fallback just in case
-      filename = `${file.fieldname}-ID${userId}${path.extname(file.originalname)}`;
-    }
-
-    cb(null, filename);
-  }
-});
-
-const fileFilter = require('../Middlewares/fileFilterProfilePic');
+const profilePhoto = require('../Middlewares/multerProfilePhoto');
 
 // Professional Skills Assessment ni nga API for PWD
 const tempOnboardPWDs = new Map();
@@ -56,18 +19,13 @@ function mergeStepData(pwd_id, stepName, stepData) {
   });
 }
 
-const completeProfile = multer({ storage, fileFilter }).fields([
-    { name: 'profile_picture', maxCount: 1 },
-    { name: 'resume_cv_file', maxCount: 1 }
-]);
-
 router.post('/pwd/onboard/assessment', authenticateToken, async (req, res) => {
     console.log("Raw body:", req.body);
 
     const pwd_id = req.user?.pwd_id;
     const {
         profession,
-        skills
+        selectedSkill
     } = req.body;
 
     if (!pwd_id) {
@@ -77,12 +35,13 @@ router.post('/pwd/onboard/assessment', authenticateToken, async (req, res) => {
     try {
         mergeStepData(pwd_id, 'assessment', {
             profession,
-            skills: skills.split(',').map(skill => skill.trim())
+            skills: Array.isArray(selectedSkill) ? selectedSkill : [selectedSkill]
         });
         console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)))
         res.status(200).json({
             message: 'PWD onboarding assessment data received successfully.',
-            data: tempOnboardPWDs.get(String(pwd_id))
+            data: tempOnboardPWDs.get(String(pwd_id)),
+            success: true
         });
     } catch (error) {
         console.log('Error processing PWD onboarding assessment:', error);
@@ -93,13 +52,13 @@ router.post('/pwd/onboard/assessment', authenticateToken, async (req, res) => {
 router.post('/pwd/onboard/education', authenticateToken, async (req, res) => {
     const pwd_id = req.user.pwd_id;
     const {
-        highest_level,
-        institution_name,
+        highestLevel,
+        institutionName,
         location,
-        field_of_study,
-        degree_certificate_type,
-        graduation_details,
-        graduation_year
+        fieldOfStudy,
+        degree,
+        graduationStatus,
+        graduationYear,
     } = req.body;
 
     if (!pwd_id) {
@@ -109,28 +68,29 @@ router.post('/pwd/onboard/education', authenticateToken, async (req, res) => {
     try {
         const educationData = {
             pwd_id,
-            highest_level,
-            institution_name,
+            highestLevel,
+            institutionName,
             location,
-            field_of_study,
-            degree_certificate_type,
-            graduation_details,
-            graduation_year
+            fieldOfStudy,
+            degree,
+            graduationStatus,
+            graduationYear,
         };
 
         mergeStepData(pwd_id, 'education', {
-            highest_level,
-            institution_name,
+            highestLevel,
+            institutionName,
             location,
-            field_of_study,
-            degree_certificate_type,
-            graduation_details,
-            graduation_year
+            fieldOfStudy,
+            degree,
+            graduationStatus,
+            graduationYear,
         });
         console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
         res.status(200).json({
             message: 'PWD education data received successfully.',
-            data: tempOnboardPWDs.get(String(pwd_id))
+            data: tempOnboardPWDs.get(String(pwd_id)),
+            success: true
         });
     } catch (error) {
         console.log('Error processing PWD education data:', error);
@@ -138,18 +98,20 @@ router.post('/pwd/onboard/education', authenticateToken, async (req, res) => {
     }
 });
 // Work Experience ni nga API for PWD
-router.post('/pwd/onboard/work-experience', async (req, res) => {
+router.post('/pwd/onboard/work-experience', authenticateToken, async (req, res) => {
+    const pwd_id = req.user.pwd_id;
     const {
-        pwd_id,
-        company_name,
-        job_title,
+        jobTitle,
+        company,
         location,
         country,
-        currently_working_inthis_role,
-        start_date,
-        end_date,
+        startMonth,
+        startYear,
+        endMonth,
+        endYear,
+        isCurrent,
+        employmentType,
         description,
-        employment_type
     } = req.body;
 
     if (!pwd_id) {
@@ -158,33 +120,38 @@ router.post('/pwd/onboard/work-experience', async (req, res) => {
 
     try {
         const workExperienceData = {
-            pwd_id,
-            company_name,
-            job_title,
+            jobTitle,
+            company,
             location,
             country,
-            currently_working_inthis_role,
-            start_date,
-            end_date,
+            startMonth,
+            startYear,
+            endMonth,
+            endYear,
+            isCurrent,
+            employmentType,
             description,
-            employment_type
         };
 
         mergeStepData(pwd_id, 'workExperience', {
-            company_name,
-            job_title,
+            jobTitle,
+            company,
             location,
             country,
-            currently_working_inthis_role,
-            start_date,
-            end_date,
+            startMonth,
+            startYear,
+            endMonth,
+            endYear,
+            isCurrent,
+            employmentType,
             description,
-            employment_type
         });
 
+        console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
         res.status(200).json({
             message: 'PWD work experience data received successfully.',
-            data: tempOnboardPWDs.get(pwd_id)
+            data: tempOnboardPWDs.get(pwd_id),
+            success: true
         });
     } catch (error) {
         console.log('Error processing PWD work experience data:', error);
@@ -192,40 +159,34 @@ router.post('/pwd/onboard/work-experience', async (req, res) => {
     }
 });
 // Accessibility Needs ni nga API for PWD
-router.post('/pwd/onboard/accessibility-needs', async (req, res) => {
-    const { 
-        pwd_id,
-        visual_support_needs,
-        hearing_support_needs,
-        mobility_support_needs,
-        cognitive_support_needs,
-        additional_information
-    } = req.body;
-
+router.post('/pwd/onboard/accessibility-needs', authenticateToken, async (req, res) => {
+    const pwd_id = req.user.pwd_id;
     if (!pwd_id) {
         return res.status(400).json({ error: 'User not found!' });
     }
 
-    try {
-        const accessibilityNeedsData = {
-            pwd_id,
-            visual_support_needs,
-            hearing_support_needs,
-            mobility_support_needs,
-            cognitive_support_needs,
-            additional_information
-        };
+    const { 
+        visualNeeds,
+        hearingNeeds,
+        mobilityNeeds,
+        cognitiveNeeds,
+        additionalInfo
+    } = req.body;
 
+    try {
         mergeStepData(pwd_id, 'accessibilityNeeds', {
-            visual_support_needs,
-            hearing_support_needs,
-            mobility_support_needs,
-            cognitive_support_needs,
-            additional_information
+            visual_support_needs: visualNeeds || [],
+            hearing_support_needs: hearingNeeds || [],
+            mobility_support_needs: mobilityNeeds || [],
+            cognitive_support_needs: cognitiveNeeds || [],
+            additional_information: additionalInfo || ''
         });
 
+        console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
         res.status(200).json({
-            message: 'PWD accessibility needs data received successfully.'
+            message: 'PWD accessibility needs data received successfully.',
+            data: tempOnboardPWDs.get(pwd_id),
+            success: true
         });
     } catch (error) {
         console.log('Error processing PWD accessibility needs:', error);
@@ -233,13 +194,13 @@ router.post('/pwd/onboard/accessibility-needs', async (req, res) => {
     }
 });
 // Job Preferences ni nga API for PWD
-router.post('/pwd/onboard/job-preferences', async (req, res) => {
-    const { 
-        pwd_id,
-        work_arrangement,
-        employment_type,
-        experience_level,
-        salary_range
+router.post('/pwd/onboard/job-preferences', authenticateToken, async (req, res) => {
+    const pwd_id = req.user.pwd_id;
+    const {
+        workArrangement,
+        employmentTypes,
+        experienceLevel,
+        salaryRange,
     } = req.body;
 
     if (!pwd_id) {
@@ -247,22 +208,18 @@ router.post('/pwd/onboard/job-preferences', async (req, res) => {
     }
 
     try {
-        const jobPreferencesData = {
-            pwd_id,
-            work_arrangement,
-            employment_type,
-            experience_level,
-            salary_range
-        };
-
         mergeStepData(pwd_id, 'jobPreferences', {
-            work_arrangement,
-            employment_type,
-            experience_level,
-            salary_range
+            workArrangement,
+            employmentTypes,
+            experienceLevel,
+            salaryRange,
         });
+        
+        console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
         res.status(200).json({
-            message: 'PWD job preferences data received successfully.'
+            message: 'PWD job preferences data received successfully.',
+            data: tempOnboardPWDs.get(pwd_id),
+            success: true
         });
     } catch (error) {
         console.log('Error processing PWD job preferences:', error);
@@ -288,47 +245,55 @@ router.get('/pwd/onboard/temp-data/:pwd_id', (req, res) => {
     });
 });
 // Last onboarding step ni nga API for PWD
-router.post('/pwd/onboard/complete-profile', completeProfile, async (req, res) => {
+router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req, res) => {
+    const user_id = req.user.userId;
+    const pwd_id = req.user.pwd_id;
     const {
-        pwd_id,
-        professional_role,
-        professional_summary,
-        portfolio_links,
-        profile_visibility
+        role,
+        summary,
+        portfolioUrl,
+        githubUrl,
+        otherPlatform,
+        visibility
     } = req.body;
 
-    const profile_picture = req.files?.profile_picture?.[0] || null;
-    const resume_cv_file = req.files?.resume_cv_file?.[0] || null;
+    let parsedOtherPlatform;
+    try {
+        parsedOtherPlatform = JSON.parse(otherPlatform || '[]');
+    } catch (error) {
+        parsedOtherPlatform = [];
+    }
 
-    if (!pwd_id) {
+    const profilePhoto = req.files?.profilePhoto?.[0] || null;
+    const resume = req.files?.resume?.[0] || null;
+
+    if (!user_id || !pwd_id) {
         return res.status(400).json({ error: 'User not found!' });
     }
 
     try {
-        const data = {
-            professional_role,
-            professional_summary,
-            portfolio_links: portfolio_links ? portfolio_links.split(',').map(l => l.trim()) : [],
-            profile_visibility,
-            profile_picture: profile_picture ? profile_picture.filename : null,
-            resume_cv: resume_cv_file ? resume_cv_file.filename : null,
-        };
-
-        const tempdata = tempOnboardPWDs.get(pwd_id);
+        console.log("PWD ID: ", pwd_id);
+        console.log("USER ID: ", user_id);
+        const tempdata = tempOnboardPWDs.get(String(pwd_id));
 
         if (!tempdata) {
+            console.log("No temoporary data found!")
             return res.status(404).json({ error: 'No temporary data found for this PWD.' });
         }
 
-        const completeProfile = await prisma.pwd_Profile.update({
-            where: { pwd_id: parseInt(pwd_id, 10) },
-            data: data
-        });
+        console.log("Temp Data: ", tempOnboardPWDs.get(String(pwd_id)))
 
-        const assessmentData = await prisma.pwd_Profile.update({
-            where: { pwd_id: parseInt(pwd_id, 10) },
+        const profileCompletion = await prisma.pwd_Profile.updateMany({
+            where: { pwd_id: pwd_id },
             data: {
-                pwd_id: parseInt(pwd_id, 10),
+                professional_role: role,
+                professional_summary: summary,
+                portfolio_url: portfolioUrl,
+                github_url: githubUrl,
+                otherPlatform: parsedOtherPlatform,
+                profile_visibility: visibility,
+                profile_picture: profilePhoto ? profilePhoto.filename : null,
+                resume_cv: resume ? resume.filename : null,
                 profession: tempdata.assessment.profession,
                 skills: tempdata.assessment.skills
             }
@@ -336,35 +301,38 @@ router.post('/pwd/onboard/complete-profile', completeProfile, async (req, res) =
 
         const educationData = await prisma.pwd_Education.create({
             data: {
-                pwd_id: parseInt(pwd_id, 10),
-                highest_level: tempdata.education.highest_level,
-                institution: tempdata.education.institution_name,
+                pwd_id: pwd_id,
+                highest_level: tempdata.education.highestLevel,
+                institution: tempdata.education.institutionName,
                 location: tempdata.education.location,
-                field_of_study: tempdata.education.field_of_study,
-                degree: tempdata.education.degree_certificate_type,
-                graduation_details: tempdata.education.graduation_details,
-                year_graduated: tempdata.education.graduation_year
+                field_of_study: tempdata.education.fieldOfStudy,
+                degree: tempdata.education.degree,
+                graduation_details: tempdata.education.graduationStatus,
+                year_graduated: tempdata.education.graduationYear
             }
         });
 
+        const startDate = `${tempdata.workExperience.startMonth} ${tempdata.workExperience.startYear} `;
+        const endDate = `${tempdata.workExperience.endMonth} ${tempdata.workExperience.endYear}`;
+
         const workExperienceData = await prisma.pwd_Experience.create({
             data: {
-                pwd_id: parseInt(pwd_id, 10),
-                company: tempdata.workExperience.company_name,
-                job_title: tempdata.workExperience.job_title,
+                pwd_id: pwd_id,
+                company: tempdata.workExperience.company,
+                job_title: tempdata.workExperience.jobTitle,
                 location: tempdata.workExperience.location,
                 country: tempdata.workExperience.country,
                 currently_working_on_this_role: tempdata.workExperience.currently_working_inthis_role,
-                start_date: tempdata.workExperience.start_date,
-                end_date: tempdata.workExperience.end_date,
+                start_date: startDate,
+                end_date: endDate,
                 description: tempdata.workExperience.description,
-                employment_type: tempdata.workExperience.employment_type
+                employment_type: tempdata.workExperience.employmentType
             }
         });
 
         const accessibilityNeedsData = await prisma.pwd_Accessibility_Needs.create({
             data: {
-                pwd_id: parseInt(pwd_id, 10),
+                pwd_id: pwd_id,
                 visual_support: tempdata.accessibilityNeeds.visual_support_needs,
                 hearing_support: tempdata.accessibilityNeeds.hearing_support_needs,
                 mobility_support: tempdata.accessibilityNeeds.mobility_support_needs,
@@ -375,29 +343,21 @@ router.post('/pwd/onboard/complete-profile', completeProfile, async (req, res) =
 
         const jobPreferencesData = await prisma.pwd_Job_Preferences_Requirements.create({
             data: {
-                pwd_id: parseInt(pwd_id, 10),
-                work_arrangement: tempdata.jobPreferences.work_arrangement,
-                employment_types: tempdata.jobPreferences.employment_type,
-                experience_level: tempdata.jobPreferences.experience_level,
-                salary_range: tempdata.jobPreferences.salary_range
+                pwd_id: pwd_id,
+                work_arrangement: tempdata.jobPreferences.workArrangement,
+                employment_types: tempdata.jobPreferences.employmentTypes,
+                experience_level: tempdata.jobPreferences.experienceLevel,
+                salary_range: `${tempdata.jobPreferences.salaryRange.currency} ${tempdata.jobPreferences.salaryRange.min} - ${tempdata.jobPreferences.salaryRange.max}`
             }
         });
-
         res.status(200).json({
             message: 'Complete profile assembled successfully',
-            data: {
-                completeProfile,
-                assessmentData,
-                educationData,
-                workExperienceData,
-                accessibilityNeedsData,
-                jobPreferencesData
-            }
+            success: true
         });
     } catch (error) {
         console.log('Error completing PWD profile:', error);
         return res.status(500).json({ error: 'Failed to complete PWD profile.' });
     }
-}); 
+});
 
 module.exports = router;

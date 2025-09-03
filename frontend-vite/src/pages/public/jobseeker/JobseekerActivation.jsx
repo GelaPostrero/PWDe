@@ -66,6 +66,7 @@ const JobseekerActivation = () => {
           toast: true,
           position: 'bottom-end'
         });
+        localStorage.setItem('authToken', data.token);
         navigate('/onboarding/jobseeker/skills');
       } else if (data.message.includes('Incorrect verification')) {
         Swal.fire({
