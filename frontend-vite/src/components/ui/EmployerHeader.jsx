@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
+import AnimatedHamburger from './AnimatedHamburger.jsx';
 
 
 const Logo = ({ showText = false, to = '/', disabled = false }) => {
@@ -12,8 +13,37 @@ const Logo = ({ showText = false, to = '/', disabled = false }) => {
   );
 };
 
+const IconButton = ({
+  label,
+  children,
+  hasNotification = false,
+  notificationCount = 0,
+  disabled = false,
+}) => (
+  <div className="relative">
+    <button
+      className={`p-2 transition-colors rounded-lg ${
+        disabled 
+          ? 'text-gray-300 cursor-not-allowed opacity-60' 
+          : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+      }`}
+      aria-label={label}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+    {hasNotification && notificationCount > 0 && !disabled && (
+      <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-[10px] w-5 h-5 flex items-center justify-center font-medium">
+        {notificationCount}
+      </span>
+    )}
+  </div>
+);
+
 const EmployerHeader = ({ disabled = false }) => {
   const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
   const navigationLinks = [
     { name: 'Dashboard', path: '/employer/dashboard' },
@@ -34,10 +64,36 @@ const EmployerHeader = ({ disabled = false }) => {
     return location.pathname === path;
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.mobile-menu-container')) {
+        setIsMobileMenuOpen(false);
+      }
+      // Close profile dropdown when clicking outside
+      if (!event.target.closest('.profile-dropdown-container')) {
+        setIsProfileDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <header className="bg-white shadow-sm border-b border-gray-100">
       <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
-        <div className="flex justify-between items-center py-3">
+        <div className="flex justify-between items-center py-6">
           {/* Logo */}
           <Logo showText={true} to="/employer/dashboard" disabled={disabled} />
           
@@ -48,7 +104,7 @@ const EmployerHeader = ({ disabled = false }) => {
                 return (
                   <span
                     key={link.name}
-                    className="px-3 py-2 text-sm font-medium text-gray-400 cursor-not-allowed opacity-60"
+                    className="text-gray-400 cursor-not-allowed opacity-60 text-sm font-medium"
                   >
                     {link.name}
                   </span>
@@ -61,7 +117,7 @@ const EmployerHeader = ({ disabled = false }) => {
                   to={link.path}
                   className={`px-3 py-2 text-sm font-medium transition-colors ${
                     isActiveLink(link.path)
-                      ? 'text-blue-600 border-b-2 border-blue-600'
+                      ? 'text-blue-600 border-b-2 border-blue-600' 
                       : 'text-gray-600 hover:text-blue-600'
                   }`}
                 >
@@ -71,69 +127,155 @@ const EmployerHeader = ({ disabled = false }) => {
             })}
           </nav>
           
-          {/* Right Side Icons & Profile */}
-          <div className="flex items-center space-x-3">
-            {/* Dark Mode Toggle */}
-            <button 
-              className={`p-2 transition-all duration-200 rounded-lg ${
-                disabled 
-                  ? 'text-gray-300 cursor-not-allowed opacity-60' 
-                  : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-              }`}
-              disabled={disabled}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
-            </button>
-            
-            {/* Settings/Text Size */}
-            <button 
-              className={`p-2 transition-all duration-200 rounded-lg ${
-                disabled 
-                  ? 'text-gray-300 cursor-not-allowed opacity-60' 
-                  : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-              }`}
-              disabled={disabled}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-              </svg>
-            </button>
-            
-            {/* Notifications with badge */}
-            <button 
-              className={`p-2 transition-all duration-200 rounded-lg relative ${
-                disabled 
-                  ? 'text-gray-300 cursor-not-allowed opacity-60' 
-                  : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-              }`}
-              disabled={disabled}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-5 5v-5z" />
-              </svg>
-              {!disabled && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full min-w-[16px] h-4 flex items-center justify-center font-medium px-1">
-                  3
-                </span>
-              )}
-            </button>
+          {/* Right Side Icons & Menu */}
+          <div className="flex items-center space-x-4">
+            {/* Icons - Always visible */}
+            <div className="flex items-center space-x-3">
+              {/* Theme toggle */}
+              <IconButton label="Toggle theme" disabled={disabled}>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                  />
+                </svg>
+              </IconButton>
+
+              {/* Text size */}
+              <IconButton label="Text size" disabled={disabled}>
+                <span className="font-bold text-sm">Tt</span>
+              </IconButton>
+
+              {/* Notifications */}
+              <IconButton
+                label="Notifications"
+                hasNotification={true}
+                notificationCount={3}
+                disabled={disabled}
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                  />
+                </svg>
+              </IconButton>
+            </div>
             
             {/* User Profile Image */}
-            <div className={`relative ${disabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}`}>
-              <div className={`w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white text-xs font-semibold border-2 border-purple-100 ${
-                disabled ? '' : 'hover:border-purple-300'
-              } transition-colors`}>
-                TECH
-              </div>
+            <div className="relative profile-dropdown-container">
+              <button 
+                onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                className={`flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 hover:ring-2 hover:ring-blue-300 transition-all ${
+                  disabled ? 'cursor-not-allowed opacity-60' : ''
+                }`}
+                disabled={disabled}
+              >
+                <div className={`w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white text-xs font-semibold border-2 border-purple-100 ${
+                  disabled ? '' : 'hover:border-purple-300'
+                } transition-colors`}>
+                  TECH
+                </div>
+                <svg className="w-4 h-4 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {/* Profile Dropdown */}
+              {isProfileDropdownOpen && !disabled && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                  <Link
+                    to="/employer/profile"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                    onClick={() => setIsProfileDropdownOpen(false)}
+                  >
+                    View Profile
+                  </Link>
+                  <Link
+                    to="/employer/settings"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                    onClick={() => setIsProfileDropdownOpen(false)}
+                  >
+                    Account Settings
+                  </Link>
+                  <div className="border-t border-gray-200 my-1"></div>
+                  <button
+                    onClick={() => {
+                      // Handle logout
+                      setIsProfileDropdownOpen(false);
+                    }}
+                    className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+              
               {/* Online status indicator */}
               {!disabled && (
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
               )}
             </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden mobile-menu-container">
+              <AnimatedHamburger 
+                isOpen={isMobileMenuOpen} 
+                onClick={toggleMobileMenu}
+                disabled={disabled}
+              />
+            </div>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t border-gray-200 py-4 mobile-menu-container relative z-50">
+            <nav className="space-y-2 px-6">
+              {navigationLinks.map((link) => {
+                if (disabled) {
+                  return (
+                    <span
+                      key={link.name}
+                      className="block px-3 py-2 text-sm font-medium text-gray-400 cursor-not-allowed opacity-60 rounded-lg"
+                    >
+                      {link.name}
+                    </span>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    onClick={closeMobileMenu}
+                    className={`block px-3 py-2 text-sm font-medium transition-all duration-200 rounded-lg cursor-pointer ${
+                      isActiveLink(link.path)
+                        ? 'text-blue-600 bg-blue-50'
+                        : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );

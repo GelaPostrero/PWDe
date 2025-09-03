@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from './Logo.jsx';
+import AnimatedHamburger from './AnimatedHamburger.jsx';
 
 const NavLink = ({ to = '#', children, hasDropdown = false, disabled = false, isActive = false, onClick = null }) => {
   if (disabled) {
@@ -147,16 +148,16 @@ const JobseekerHeader = ({ disabled = false }) => {
   return (
     <header className="bg-white shadow-sm border-b border-gray-100">
       <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
-        <div className="flex items-center h-16">
-          {/* Logo and Text group - positioned with more left margin */}
-          <div className="flex items-center ml-4">
+        <div className="flex justify-between items-center py-6">
+          {/* Logo */}
+          <div className="flex items-center">
             <Link to="/jobseeker/dashboard" className="flex-shrink-0">
               <Logo showText={true} />
             </Link>
           </div>
 
-          {/* Navigation links - centered/flexible positioning */}
-          <nav className="hidden md:flex items-center gap-10 ml-32 flex-1">
+          {/* Navigation links */}
+          <nav className="hidden md:flex space-x-8">
             <NavLink to="/jobseeker/dashboard" disabled={disabled} isActive={isNavActive('/dashboard')}>Dashboard</NavLink>
             
             {/* Find Jobs Dropdown */}
@@ -227,10 +228,10 @@ const JobseekerHeader = ({ disabled = false }) => {
             <NavLink to="/messages" disabled={disabled} isActive={isNavActive('/messages')}>Messages</NavLink>
           </nav>
 
-          {/* Right side  */}
-          <div className="flex items-center mr-4">
-            {/* Action buttons group */}
-            <div className="hidden sm:flex items-center gap-2 mr-4">
+          {/* Right Side Icons & Menu */}
+          <div className="flex items-center space-x-4">
+            {/* Icons - Always visible */}
+            <div className="flex items-center space-x-3">
               {/* Theme toggle */}
               <IconButton label="Toggle theme" disabled={disabled}>
                 <svg
@@ -276,8 +277,8 @@ const JobseekerHeader = ({ disabled = false }) => {
               </IconButton>
             </div>
 
-            {/* Profile Avatar - separated */}
-            <div className="hidden sm:block relative profile-dropdown-container">
+            {/* Profile Avatar */}
+            <div className="relative profile-dropdown-container">
               <button 
                 onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
                 className={`flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 hover:ring-2 hover:ring-blue-300 transition-all ${
@@ -327,54 +328,42 @@ const JobseekerHeader = ({ disabled = false }) => {
             </div>
 
             {/* Mobile menu button */}
-            <button
-              onClick={toggleMobileMenu}
-              className="md:hidden p-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100"
-              aria-label="Toggle mobile menu"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {isMobileMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
+            <div className="md:hidden mobile-menu-container">
+              <AnimatedHamburger 
+                isOpen={isMobileMenuOpen} 
+                onClick={toggleMobileMenu}
+                disabled={disabled}
+              />
+            </div>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 py-4">
-            <nav className="space-y-2">
-              <NavLink to="/jobseeker/dashboard" disabled={disabled} isActive={isNavActive('/dashboard')} onClick={closeMobileMenu}>
+          <div className="md:hidden border-t border-gray-200 py-4 mobile-menu-container relative z-50">
+            <nav className="space-y-2 px-6">
+              {/* Dashboard Link */}
+              <Link
+                to="/jobseeker/dashboard"
+                onClick={closeMobileMenu}
+                className={`block px-3 py-2 text-sm font-medium transition-all duration-200 rounded-lg cursor-pointer ${
+                  isNavActive('/dashboard')
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                } ${disabled ? 'text-gray-400 cursor-not-allowed opacity-60' : ''}`}
+              >
                 Dashboard
-              </NavLink>
+              </Link>
               
               {/* Mobile Find Jobs Section */}
-              <div className="px-3 py-2">
+              <div>
                 <button
                   onClick={toggleFindJobs}
                   disabled={disabled}
-                  className={`w-full text-left px-3 py-2 text-sm font-medium transition-colors flex items-center justify-between ${
+                  className={`w-full text-left px-3 py-2 text-sm font-medium transition-colors flex items-center justify-between rounded-lg ${
                     isFindJobsOpen || isNavActive('/find-job')
-                      ? 'text-blue-600' 
-                      : 'text-gray-600'
+                      ? 'text-blue-600 bg-blue-50' 
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
                   } ${disabled ? 'text-gray-400 cursor-not-allowed opacity-60' : ''}`}
                 >
                   Find Jobs
@@ -398,28 +387,28 @@ const JobseekerHeader = ({ disabled = false }) => {
                   <div className="ml-4 mt-2 space-y-1" ref={dropdownRef}>
                     <Link
                       to="/find-job"
-                      className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600"
+                      className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200"
                       onClick={closeMobileMenu}
                     >
                       Browse All Jobs
                     </Link>
                     <Link
                       to="/find-job/recommended"
-                      className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600"
+                      className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200"
                       onClick={closeMobileMenu}
                     >
                       AI Recommended
                     </Link>
                     <Link
                       to="/find-job/saved"
-                      className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600"
+                      className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200"
                       onClick={closeMobileMenu}
                     >
                       Saved Jobs
                     </Link>
                     <Link
                       to="/find-job/applied"
-                      className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600"
+                      className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200"
                       onClick={closeMobileMenu}
                     >
                       Applied Jobs
@@ -428,90 +417,68 @@ const JobseekerHeader = ({ disabled = false }) => {
                 )}
               </div>
               
-              <NavLink to="/resume" disabled={disabled} isActive={isNavActive('/resume')} onClick={closeMobileMenu}>
+              {/* Resume Link */}
+              <Link
+                to="/resume"
+                onClick={closeMobileMenu}
+                className={`block px-3 py-2 text-sm font-medium transition-all duration-200 rounded-lg cursor-pointer ${
+                  isNavActive('/resume')
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                } ${disabled ? 'text-gray-400 cursor-not-allowed opacity-60' : ''}`}
+              >
                 Resume
-              </NavLink>
-              <NavLink to="/transactions" disabled={disabled} isActive={isNavActive('/transactions')} onClick={closeMobileMenu}>
+              </Link>
+              
+              {/* Transactions Link */}
+              <Link
+                to="/transactions"
+                onClick={closeMobileMenu}
+                className={`block px-3 py-2 text-sm font-medium transition-all duration-200 rounded-lg cursor-pointer ${
+                  isNavActive('/transactions')
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                } ${disabled ? 'text-gray-400 cursor-not-allowed opacity-60' : ''}`}
+              >
                 Transactions
-              </NavLink>
-              <NavLink to="/resources" disabled={disabled} isActive={isNavActive('/resources')} onClick={closeMobileMenu}>
+              </Link>
+              
+              {/* Resources Link */}
+              <Link
+                to="/resources"
+                onClick={closeMobileMenu}
+                className={`block px-3 py-2 text-sm font-medium transition-all duration-200 rounded-lg cursor-pointer ${
+                  isNavActive('/resources')
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                } ${disabled ? 'text-gray-400 cursor-not-allowed opacity-60' : ''}`}
+              >
                 Resources
-              </NavLink>
-              <NavLink to="/messages" disabled={disabled} isActive={isNavActive('/messages')} onClick={closeMobileMenu}>
+              </Link>
+              
+              {/* Messages Link */}
+              <Link
+                to="/messages"
+                onClick={closeMobileMenu}
+                className={`block px-3 py-2 text-sm font-medium transition-all duration-200 rounded-lg cursor-pointer ${
+                  isNavActive('/messages')
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                } ${disabled ? 'text-gray-400 cursor-not-allowed opacity-60' : ''}`}
+              >
                 Messages
-              </NavLink>
+              </Link>
             </nav>
-            
-            {/* Mobile Action Buttons */}
-            <div className="mt-4 pt-4 border-t border-gray-200">
-              <div className="flex items-center gap-2 px-3">
-                <IconButton label="Toggle theme" disabled={disabled}>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                    />
-                  </svg>
-                </IconButton>
-
-                <IconButton label="Text size" disabled={disabled}>
-                  <span className="font-bold text-sm">Tt</span>
-                </IconButton>
-
-                <IconButton
-                  label="Notifications"
-                  hasNotification={true}
-                  notificationCount={3}
-                  disabled={disabled}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                    />
-                  </svg>
-                </IconButton>
-                
-                {/* Mobile Profile */}
-                <Link 
-                  to="/jobseeker/profile"
-                  className={`flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
-                    disabled ? 'cursor-not-allowed opacity-60' : ''
-                  }`}
-                >
-                  <img
-                    className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
-                    src="https://i.pravatar.cc/64"
-                    alt="Profile"
-                  />
-                </Link>
-              </div>
-            </div>
           </div>
         )}
       </div>
       
-      {/* Click outside to close dropdowns */}
-      {(isFindJobsOpen || isMobileMenuOpen || isProfileDropdownOpen) && (
+      {/* Click outside to close dropdowns - only for desktop dropdowns */}
+      {(isFindJobsOpen || isProfileDropdownOpen) && (
         <div 
           className="fixed inset-0 z-40" 
           onClick={() => {
             setIsFindJobsOpen(false);
-            setIsMobileMenuOpen(false);
             setIsProfileDropdownOpen(false);
           }}
         />
