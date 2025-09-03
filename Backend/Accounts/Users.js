@@ -1,5 +1,6 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
 const router = express.Router();
 const { PrismaClient } = require('../src/generated/prisma')
 const { withAccelerate } = require('../node_modules/@prisma/extension-accelerate');
@@ -14,10 +15,12 @@ const fs = require('fs');
 
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const { error } = require('console');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const tempPwdUser = new Map();
 const tempEmpUser = new Map();
+const forgotPasswordCode = new Map();
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -141,20 +144,15 @@ router.post('/users/register/employer', async (req, res) => {
     password
   } = req.body;
 
-  const existingEmail = await prisma.users.findUnique({
-    where: { email: companyEmail }
+  const existingEmailPhoneNumber = await prisma.users.findUnique({
+    where: { 
+      email: companyEmail,
+      phone_number: companyPhone 
+    }
   });
   
-  if (existingEmail) {
-    return res.status(400).json({ error: 'This email is already registered.' });
-  }
-
-  const existingPhoneNumber = await prisma.users.findUnique({
-    where: { phone_number: companyPhone }
-  });
-
-  if (existingPhoneNumber) {
-    return res.status(400).json({ error: 'This phone number is already registered.' });
+  if (existingEmailPhoneNumber) {
+    return res.status(400).json({ error: 'This email or phone number is already registered.' });
   }
 
   const userData = {
@@ -210,6 +208,7 @@ router.post('/users/register/employer/documents', memoryUploadForEMP, async (req
 
   // Store the verification code and last resend time if needed
   userData.verificationCode = code;
+  userData.lastResendTime = Date.now();
 
   tempEmpUser.set(email, userData);
 
@@ -268,10 +267,12 @@ router.post('/users/register/verify', async (req, res) => {
     return res.status(404).json({ message: 'User not found or session expired.' });
   }
 
+  const hashedPassword = await bcrypt.hash(userData.password, 10);
+
   const user = await prisma.users.create({
       data: { 
         email: email, 
-        password_hash: userData.password, 
+        password_hash: hashedPassword, 
         phone_number: userData.phone || userData.companyPhone, 
         user_type: userData.userType,
         created_at: formattedDate,
@@ -313,8 +314,16 @@ router.post('/users/register/verify', async (req, res) => {
       }
     })
 
+    const payload = {
+      userId: user.user_id,
+      pwd_id: pwd.pwd_id,
+    }
+
+    // GENERATE TOKEN EXPIRATION 3 HOURS 
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '3h' });
+
     tempPwdUser.delete(email);
-    res.status(201).json({ message: 'Account verified and registered successfully.', user, pwd, success: true});
+    res.status(201).json({ message: 'Account verified and registered successfully.', user, pwd, token, success: true});
   } else if (userData.userType === 'Employer') {
     console.log('Registering Employer profile for user:', user);
     const newFolder = path.join('./Documents/Employer', String(user.user_id));
@@ -366,12 +375,21 @@ router.post('/users/register/verify', async (req, res) => {
         created_at: formattedDate,
       }
     })
+
+    const payload = {
+      user_id: emp.user_id,
+      emp_id: emp.emp_id
+    }
+
+    // GENERATE TOKEN EXPIRATION 3 HOURS 
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '3h' });
+
     tempEmpUser.delete(email);
-    res.status(201).json({ message: 'Account verified and registered successfully.', user, emp, success: true});
+    res.status(201).json({ message: 'Account verified and registered successfully.', user, emp, token, success: true});
   }
 });
 
-// Resend verification code (wapa mahoman)
+// Resend verification code
 router.post('/users/register/verify/resend', async (req, res) => {
   const { email } = req.body;
 
@@ -422,40 +440,23 @@ router.post('/users/register/verify/resend', async (req, res) => {
   }
 });
 
-/* // Get all PWD profiles with their documents (testing purposes)
-router.get('/pwd/documents', async (req, res) => {
-  try {
-    // Get all PWD profiles with their documents
-    const profiles = await prisma.pwd_Profile.findMany({
-      select: {
-        pwd_id: true,
-        first_name: true,
-        last_name: true,
-        pwd_document: true
-      }
-    });
-
-    res.json(profiles);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch PWD documents.' });
-  }
-}); */
-
 // Login with jsonebtoken
 router.post('/users/login', async (req, res) => {
   console.log('Login request body:', req.body);
   const { email, password, rememberMe } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password are required.' });
-  }
-
   const user = await prisma.users.findUnique({
     where: { email }
   });
 
-  if (!user || user.password_hash !== password) {
-    return res.status(401).json({ error: 'Invalid email or password.' });
+  if (!user) {
+    return res.status(401).json({ message: 'Email not found in database.' });
+  }
+
+  const matchPassword = await bcrypt.compare(password, user.password_hash);
+
+  if (!matchPassword) {
+    return res.status(401).json({ message: 'Password did not match.' });
   }
 
   let profile = null;
@@ -475,6 +476,7 @@ router.post('/users/login', async (req, res) => {
     userId: user.user_id,
     pwd_id: profile && user.user_type === 'PWD' ? profile.pwd_id : null,
     emp_id: profile && user.user_type === 'Employer' ? profile.emp_id : null,
+    email: user.email,
     userType: user.user_type,
   }
 
@@ -484,6 +486,189 @@ router.post('/users/login', async (req, res) => {
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn });
 
   console.log(`Login successful for user: ${payload.userId} with role: ${payload.userType}, ${payload.userType === 'PWD' ? 'PWD ID: ' + payload.pwd_id : 'Employer ID: ' + payload.emp_id}`);
-  res.json({ message: 'Login successful.', success: true, token, user, profile, role });
+  return res.status(200).json({ message: 'Login successful.', success: true, token, user, profile, role });
+});
+
+// Forgot Password
+router.post('/users/forgot-password', async (req, res) => {
+  const email = req.body.email;
+  const code = generateVerificationCode(email);
+
+  const userWithProfile = await prisma.users.findUnique({
+    where: {
+      email: req.body.email
+    },
+    select: {
+      user_type: true,
+      pwd_Profile: {
+        select: {
+          first_name: true,
+          last_name: true
+        }
+      },
+      employer_Profile: {
+        select: {
+          company_name: true
+        }
+      }
+    }
+  });
+
+  const userEmailNcode = {
+    email,
+    code,
+    first_name: userWithProfile.pwd_Profile?.first_name,
+    last_name: userWithProfile.pwd_Profile?.last_name,
+    company_name: userWithProfile.employer_Profile?.company_name,
+    userType: userWithProfile.user_type
+  }
+
+  
+  userEmailNcode.lastResendTime = Date.now();
+
+  console.log("Data: ", userEmailNcode);
+
+  forgotPasswordCode.set(email, userEmailNcode);
+
+  if (userWithProfile) {
+    console.log(`Usertype: ${userWithProfile.user_type}, Email Add: ${email}`);
+    if(userWithProfile.user_type == 'PWD') {
+      try {
+        await transporter.sendMail({
+          from: 'PWDe App',
+          to: email,
+          subject: 'PWDe Request to: Forgot Password',
+          html: `
+            <p>Hello <b>${userWithProfile.pwd_Profile?.first_name} ${userWithProfile.pwd_Profile?.last_name}</b>,</p>\n
+            <p>Your verification code for your request to renew your password is: <b>${code}</b>.</p>\n
+            <p>If you did not request this, please ignore this email.</p>
+          `
+        });
+        console.log(`Verification code for forgotten password sent to ${email}: ${code}`);
+        return res.status(200).json({ message: 'Verification code sent to your email.', success: true });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to send verification email.' });
+      }
+    } else {
+      try {
+        await transporter.sendMail({
+          from: 'PWDe App',
+          to: email,
+          subject: 'PWDe Request to: Forgot Password',
+          html: `
+            <p>Hello <b>${userWithProfile.employer_Profile?.company_name}</b>,</p>\n
+            <p>Your verification code for your request to renew your password is: <b>${code}</b>.</p>\n
+            <p>If you did not request this, please ignore this email.</p>
+          `
+        });
+        console.log(`Verification code for forgotten password sent to ${email}: ${code}`);
+        return res.status(200).json({ message: 'Verification code sent to your email.', success: true });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to send verification email.' });
+      }
+    }
+  } else {
+    console.log("No profile found for this email");
+    return res.status(400).json({ error: 'No Email found.' });
+  }
+});
+
+router.post('/users/reset-password', async (req, res) => {
+  const {
+    code,
+    email,
+    newPassword,
+    confirmNewPassword
+  } = req.body;
+
+  const userEmailNcode = forgotPasswordCode.get(email);
+
+  console.log("Data: ", userEmailNcode);
+
+  if(code === userEmailNcode.code) {
+    try {
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      await prisma.users.update({
+        where: {
+          email: userEmailNcode.email
+        },
+        data: {
+          password_hash: hashedPassword
+        }
+      })
+     console.log("Password Updated");
+     forgotPasswordCode.delete(email);
+     return res.status(200).json({ message: 'Password has been successfully changed.', success: true });
+    } catch(error) {
+      console.log('Error: ', error)
+      return res.status(500).json({ error: `Error: ${error}` })
+    }
+  } else {
+    return res.status(400).json({ error: 'Incorrect code.' })
+  }
+
+
+})
+
+router.post('/users/forgot-password/resend', async (req, res) => {
+  const email = req.body.email;
+
+  const userEmailNcode = forgotPasswordCode.get(email);
+  const now = Date.now();
+  const cooldown = 30 * 1000;
+
+  // Check cooldown
+  if (userEmailNcode.lastResendTime && now - userEmailNcode.lastResendTime < cooldown) {
+    const waitTime = Math.ceil((cooldown - (now - userEmailNcode.lastResendTime)) / 1000);
+    return res.status(429).json({
+      message: `Please wait ${waitTime} seconds before requesting another code.`,
+    });
+  }
+
+  try {
+    const newCode = generateVerificationCode(email);
+    userEmailNcode.code = newCode;
+    userEmailNcode.lastResendTime = now;
+    forgotPasswordCode.set(email, userEmailNcode);
+
+    if(userEmailNcode.userType == 'PWD') {
+      await transporter.sendMail({
+        from: 'PWDe App',
+        to: email,
+        subject: 'PWDe Request to: Forgot Password (Resend Code)',
+        html: `
+          <p>Hello ${userEmailNcode.first_name} ${userEmailNcode.last_name}, You requested to resend a verification code.</p>
+          <p>Your new code for your request to change password is <b>${newCode}</b>.</p>
+          <p>This code is valid for 15 minutes.</p>
+          <p>If you did not request this, please ignore this email.</p>
+        `
+      });
+      res.json({ message: 'New verification code sent successfully.', newCode, success: true });
+      console.log(`Verification code resent to ${email}: ${newCode}`);
+    } else {
+      await transporter.sendMail({
+        from: 'PWDe App',
+        to: email,
+        subject: 'PWDe Request to: Forgot Password (Resend Code)',
+        html: `
+          <p>Hello ${userEmailNcode.company_name}, You requested to resend a verification code.</p>
+          <p>Your new code for your request to change password is <b>${newCode}</b>.</p>
+          <p>This code is valid for 15 minutes.</p>
+          <p>If you did not request this, please ignore this email.</p>
+        `
+      });
+      res.json({ message: 'New verification code sent successfully.', newCode, success: true });
+      console.log(`Verification code resent to ${email}: ${newCode}`);
+    }
+  } catch (error) {
+    console.error("Error resending verification code:", error);
+    res.status(500).json({ message: 'Failed to resend verification email.' });
+  }
+
+  // AFTER SEND I-DELETE SA MAP ANG DATA
+  tempPwdUser.delete(email);
 });
 module.exports = router;

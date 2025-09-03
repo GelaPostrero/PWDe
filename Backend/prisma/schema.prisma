@@ -33,38 +33,40 @@ model Users {
 }
 
 model Pwd_Profile {
-  first_name           String                            @default("") @db.VarChar(20)
-  last_name            String                            @default("") @db.VarChar(20)
-  middle_name          String                            @default("") @db.VarChar(20)
+  first_name           String                             @default("") @db.VarChar(20)
+  last_name            String                             @default("") @db.VarChar(20)
+  middle_name          String                             @default("") @db.VarChar(20)
   profile_picture      String?
   bio                  String?
   disability_Type      String?
   disability_severity  Disability_Severity?
   gender               Gender?
-  rating               Float?                            @default(0.0)
+  rating               Float?                             @default(0.0)
   created_at           String?
-  updated_at           DateTime?                         @updatedAt
-  pwd_id               Int                               @id @default(autoincrement())
-  user_id              Int                               @unique
+  updated_at           DateTime?                          @updatedAt
+  pwd_id               Int                                @id @default(autoincrement())
+  user_id              Int                                @unique
   date_of_birth        String?
   address              String?
   pwd_document         String[]
   profession           String?
   skills               String[]
-  portfolio_links      String[]
+  portfolio_url        String?
+  github_url           String?
+  otherPlatform        String[]
   professional_role    String?
   professional_summary String?
-  profile_visibility   String?                           @default("Public")
+  profile_visibility   String?                            @default("Public")
   resume_cv            String?
   applications         Applications[]
-  accessibility_needs  Pwd_Accessibility_Needs?
+  accessibility_needs  Pwd_Accessibility_Needs[]
   educations           Pwd_Education[]
   experiences          Pwd_Experience[]
-  job_preferences      Pwd_Job_Preferences_Requirements?
-  user                 Users                             @relation("UserToPWD", fields: [user_id], references: [user_id], onDelete: Cascade)
+  job_preferences      Pwd_Job_Preferences_Requirements[]
+  user                 Users                              @relation("UserToPWD", fields: [user_id], references: [user_id], onDelete: Cascade)
   resumes              Resumes[]
   ai_match_results     ai_match_results[]
-  transactions         transactions[]                    @relation("TransactionPayee")
+  transactions         transactions[]                     @relation("TransactionPayee")
 }
 
 model Pwd_Experience {
@@ -85,7 +87,7 @@ model Pwd_Experience {
 
 model Pwd_Accessibility_Needs {
   id                     Int         @id @default(autoincrement())
-  pwd_id                 Int         @unique
+  pwd_id                 Int
   visual_support         String[]
   hearing_support        String[]
   mobility_support       String[]
@@ -111,7 +113,7 @@ model Pwd_Education {
 
 model Pwd_Job_Preferences_Requirements {
   id               Int         @id @default(autoincrement())
-  pwd_id           Int         @unique
+  pwd_id           Int
   updated_at       DateTime    @updatedAt
   employment_types String[]
   experience_level String?

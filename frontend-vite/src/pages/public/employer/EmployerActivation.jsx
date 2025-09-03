@@ -157,6 +157,7 @@ const EmployerActivation = () => {
             toast: true,
             position: 'bottom-end'
           });
+          localStorage.setItem('authToken', data.token);
           navigate('/onboarding/employer/skills');
         } else if (data.message.includes('Incorrect verification')) {
           Swal.fire({

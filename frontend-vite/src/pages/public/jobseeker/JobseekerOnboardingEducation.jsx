@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 
@@ -56,7 +57,8 @@ const JobseekerOnboardingEducation = () => {
     
     
   };
-  const handleNext = () => {
+  const handleNext = async () => {
+    const token = localStorage.getItem('authToken');
     const educationData = {
       highestLevel,
       institutionName,
@@ -67,7 +69,35 @@ const JobseekerOnboardingEducation = () => {
       graduationYear,
     };
     console.log('Submitting education data:', educationData);
-    navigate(routeForStep('experience'))
+
+    try {
+      var url = "http://localhost:4000/onboard/pwd/onboard/education";
+      var headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(educationData)
+      });
+
+      const data = await response.json();
+      if(data.success) {
+        Swal.fire({
+          icon: 'success',
+          html: '<h5><b>Education Background</b></h5>\n<h6>You may now fillup your work experience data.</h6>',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        })
+        navigate(routeForStep('experience'))
+      }
+    } catch(error) {
+      console.error("Server error: ", error)
+    }
   };
   const handleSkip = () => {
     const ok = window.confirm('Education details help us match you with the right roles. Skip for now?');
