@@ -2,9 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const router = express.Router();
-const { PrismaClient } = require('../src/generated/prisma')
-const { withAccelerate } = require('../node_modules/@prisma/extension-accelerate');
-const prisma = new PrismaClient().$extends(withAccelerate());
+const prisma = require('../prisma/prisma');
 
 const { generateVerificationCode, verifyCode } = require('../Middlewares/verificationCode');
 

@@ -91,8 +91,7 @@ const SignIn = () => {
         })
         setFormData({
           email: '',
-          password: '',
-          rememberMe: false
+          password: password
         })
       } else if (data.message.includes('Password did not match.')) {
         Swal.fire({
@@ -107,9 +106,8 @@ const SignIn = () => {
           position: 'bottom-end'  
         })
         setFormData({
-          email: '',
+          email: email,
           password: '',
-          rememberMe: false
         })
       } else {
         console.error('Sign in failed:', data.message);
