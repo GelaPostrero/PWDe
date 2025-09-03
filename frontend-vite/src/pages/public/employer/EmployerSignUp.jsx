@@ -11,6 +11,7 @@ const EmployerSignUp = () => {
     companyPhone: '',
     companyAddress: '',
     password: '',
+    confirmPassword: '',
   });
 
   const handleChange = (e) => {
@@ -22,6 +23,35 @@ const EmployerSignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate password confirmation
+    if (formData.password !== formData.confirmPassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Password Mismatch',
+        text: 'Passwords do not match. Please try again.',
+        timer: 4000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'bottom-end'
+      });
+      return;
+    }
+
+    // Validate password strength
+    if (formData.password.length < 6) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Weak Password',
+        text: 'Password must be at least 6 characters long.',
+        timer: 4000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'bottom-end'
+      });
+      return;
+    }
+
     console.log('Employer registration:', formData);
     localStorage.setItem('companyEmail', formData.companyEmail);
 
@@ -164,6 +194,18 @@ const EmployerSignUp = () => {
                   value={formData.password} 
                   onChange={handleChange} 
                   placeholder="Enter your password" 
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                <input 
+                  name="confirmPassword" 
+                  type="password" 
+                  value={formData.confirmPassword} 
+                  onChange={handleChange} 
+                  placeholder="Confirm your password" 
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                 />
               </div>

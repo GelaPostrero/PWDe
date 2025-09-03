@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from '../../components/ui/Logo.jsx';
 import { Link } from 'react-router-dom';
+import AnimatedHamburger from '../../components/ui/AnimatedHamburger.jsx';
 
 // CORRECTED PATHS - From src/pages/public/ to src/assets/
 import frame1 from '../../assets/Frame.png';        
@@ -10,10 +11,34 @@ import frame4 from '../../assets/Frame (3).png';
 import heroImg from '../../assets/img.png';
 
 const Landing = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.mobile-menu-container')) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="w-full">
       {/* Navigation Bar */}
-      <nav className="flex justify-between items-center px-24 py-6 w-full">
+      <nav className="flex justify-between items-center px-6 sm:px-12 lg:px-24 py-6 w-full">
         {/* Logo */}
         <Logo size="default" showText={true} />
 
@@ -28,14 +53,88 @@ const Landing = () => {
 
         {/* Action Buttons */}
         <div className="flex items-center space-x-4">
-          <Link to="/signin" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-            Sign In
-          </Link>
-          <Link to="/chooseuser" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors shadow-lg">
-            Sign Up
-          </Link>
+          {/* Desktop Action Buttons */}
+          <div className="hidden sm:flex items-center space-x-4">
+            <Link to="/signin" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+              Sign In
+            </Link>
+            <Link to="/chooseuser" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors shadow-lg">
+              Sign Up
+            </Link>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden mobile-menu-container">
+            <AnimatedHamburger 
+              isOpen={isMobileMenuOpen} 
+              onClick={toggleMobileMenu}
+            />
+          </div>
         </div>
       </nav>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t border-gray-200 py-4 mobile-menu-container">
+          <nav className="space-y-2 px-6">
+            <a 
+              href="#home" 
+              className="block px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg"
+              onClick={closeMobileMenu}
+            >
+              Home
+            </a>
+            <a 
+              href="#features" 
+              className="block px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg"
+              onClick={closeMobileMenu}
+            >
+              Features
+            </a>
+            <a 
+              href="#testimonials" 
+              className="block px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg"
+              onClick={closeMobileMenu}
+            >
+              Testimonials
+            </a>
+            <a 
+              href="#about" 
+              className="block px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg"
+              onClick={closeMobileMenu}
+            >
+              About Us
+            </a>
+            <a 
+              href="#contact" 
+              className="block px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg"
+              onClick={closeMobileMenu}
+            >
+              Contact Us
+            </a>
+          </nav>
+          
+          {/* Mobile Action Buttons */}
+          <div className="mt-4 pt-4 border-t border-gray-200 px-6">
+            <div className="flex flex-col space-y-3">
+              <Link 
+                to="/signin" 
+                className="text-center text-gray-700 hover:text-blue-600 transition-colors font-medium py-2"
+                onClick={closeMobileMenu}
+              >
+                Sign In
+              </Link>
+              <Link 
+                to="/chooseuser" 
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors shadow-lg text-center"
+                onClick={closeMobileMenu}
+              >
+                Sign Up
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <div className="w-full min-h-screen flex items-start bg-gradient-to-br from-blue-50 via-green-50 to-purple-50 px-10 lg:px-20 pt-40 pb-20">

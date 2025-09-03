@@ -62,6 +62,20 @@ const EmployerDashboard = () => {
       accessibilityFeatures: ["Accessible Office"],
       applications: 12,
       dueDate: "Dec 10"
+    },
+    {
+      id: 4,
+      title: "Tigluto",
+      status: "Active",
+      type: "Part-time",
+      location: "On-Site",
+      salary: "P5,000 - P10,000",
+      period: "monthly",
+      level: "Entry Level",
+      skills: ["Cleaning :)"],
+      accessibilityFeatures: ["Accessible Office"],
+      applications: 12,
+      dueDate: "Dec 5"
     }
   ];
 
@@ -238,7 +252,7 @@ const EmployerDashboard = () => {
                 </div>
 
                 {/* Job Postings Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                   {jobPostings.map((job) => (
                     <div key={job.id} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
                       

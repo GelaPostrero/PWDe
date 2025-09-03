@@ -18,6 +18,7 @@ const JobseekerSignUp = () => {
     disabilityType: '',
     address: '',
     password: '',
+    confirmPassword: '',
   });
 
   const handleChange = (e) => {
@@ -29,10 +30,40 @@ const JobseekerSignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if(!formData.email) {
       alert("Email is required.");
       return;
     }
+
+    // Validate password confirmation
+    if (formData.password !== formData.confirmPassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Password Mismatch',
+        text: 'Passwords do not match. Please try again.',
+        timer: 4000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'bottom-end'
+      });
+      return;
+    }
+
+    // Validate password strength
+    if (formData.password.length < 6) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Weak Password',
+        text: 'Password must be at least 6 characters long.',
+        timer: 4000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'bottom-end'
+      });
+      return;
+    }
+
     localStorage.setItem('userEmail', formData.email);
     
     try {
@@ -142,7 +173,11 @@ const JobseekerSignUp = () => {
                   <option value="other">Other</option>
                 </select>
                 <input name="address" value={formData.address} onChange={handleChange} placeholder="Enter complete address" className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input name="password" type="password" value={formData.password} onChange={handleChange} placeholder="Enter your password" className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                <input name="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} placeholder="Confirm your password" className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
               </div>
 
               <div className="pt-2">
