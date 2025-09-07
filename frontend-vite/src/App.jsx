@@ -28,6 +28,9 @@ import EmployerDashboard from './pages/employer/EmployerDashboard.jsx';
 import EmployerJob from './pages/employer/EmployerJob.jsx';
 import PostJob from './pages/employer/PostJob.jsx';
 import PostedJobView from './pages/employer/PostedJobView.jsx';
+import ApplicationView from './pages/employer/ApplicationView.jsx';
+import Analytics from './pages/employer/Analytics.jsx';
+import EmployerTransactions from './pages/employer/EmployerTransactions.jsx';
 import JobseekerDashboard from './pages/jobseeker/JobseekerDashboard.jsx';
 import JobDetails from './pages/jobseeker/JobDetails.jsx';
 import Resume from './pages/jobseeker/Resume.jsx';
@@ -77,7 +80,6 @@ function App() {
         <Route path="/onboarding/employer/completion" element={<EmployerOnboardingCompletion />} />
         
         {/* Dashboard routes */}
-        <Route path="/employer/dashboard" element={<EmployerDashboard />} />
         <Route path="/jobseeker/dashboard" element={<JobseekerDashboard />} />
         <Route path="/jobseeker/job/:jobId" element={<JobDetails />} />
         <Route path="/find-job" element={<JobRecommendations />} />
@@ -89,15 +91,20 @@ function App() {
         <Route path="/jobseeker/submit-application/:jobId" element={<SubmitApplication />} />
         
         {/* Employer routes */}
+        <Route path="/employer/dashboard" element={<EmployerDashboard />} />
         <Route path="/employer/jobs" element={<EmployerJob />} />
         <Route path="/employer/post-job" element={<PostJob />} />
         <Route path="/employer/job/:jobId" element={<EmployerJob />} />
         <Route path="/employer/job/:jobId/posted" element={<PostedJobView />} />
+        <Route path="/employer/job/:jobId/application/:applicantId" element={<ApplicationView />} />
+        <Route path="/employer/analytics" element={<Analytics />} />
+        <Route path="/employer/transactions" element={<EmployerTransactions />} />
         <Route path="/employer/applications" element={<EmployerDashboard />} />
         <Route path="/employer/applicant/:applicantId" element={<EmployerDashboard />} />
         <Route path="/employer/candidates" element={<EmployerDashboard />} />
         <Route path="/employer/messages" element={<EmployerDashboard />} />
         <Route path="/employer/profile" element={<EmployerDashboard />} />
+        <Route path="/employer/transactions" element={<EmployerTransactions />} />
         
         {/* Additional jobseeker routes */}
         <Route path="/resume" element={<Resume />} />
