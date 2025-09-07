@@ -466,7 +466,7 @@ const Landing = () => {
       </div>
 
       {/* Footer */}
-      <footer className="w-full bg-white text-white py-16">
+      <footer className="w-full bg-gray-900 text-white py-16">
         <div className="max-w-6xl mx-auto px-10 lg:px-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
             {/* Logo and Description */}

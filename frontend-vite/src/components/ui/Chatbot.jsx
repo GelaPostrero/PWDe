@@ -222,7 +222,7 @@ const Chatbot = ({
                 }`}>
                   {message.type === 'ai' && (
                     <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-blue-600 text-sm">🤖</span>
+                      <span className="text-sm">🤖</span>
                     </div>
                   )}
                   
@@ -236,7 +236,7 @@ const Chatbot = ({
 
                   {message.type === 'user' && (
                     <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-gray-600 text-sm">👤</span>
+                      <span className="text-sm">👤</span>
                     </div>
                   )}
                 </div>
@@ -320,7 +320,7 @@ const Chatbot = ({
             {/* Move indicator for draggable positions */}
             {isDraggable && (
               <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-400 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs">⋮</span>
+                <span className="text-xs">⋮</span>
               </div>
             )}
             

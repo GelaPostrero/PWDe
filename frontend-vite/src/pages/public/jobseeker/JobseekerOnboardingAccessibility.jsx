@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
@@ -67,72 +68,10 @@ const JobseekerOnboardingAccessibility = () => {
   const [mobilityNeeds, setMobilityNeeds] = useState([]);
   const [cognitiveNeeds, setCognitiveNeeds] = useState([]);
   const [additionalInfo, setAdditionalInfo] = useState('');
-  const [isFormValid, setIsFormValid] = useState(false);
 
-  // Validate form - at least one category should have selections
-  const validateForm = () => {
-    const hasSelections = visualNeeds.length > 0 || 
-                         hearingNeeds.length > 0 || 
-                         mobilityNeeds.length > 0 || 
-                         cognitiveNeeds.length > 0;
-    return hasSelections;
-  };
-
-  // Update form validity when selections change
-  useEffect(() => {
-    setIsFormValid(validateForm());
-  }, [visualNeeds, hearingNeeds, mobilityNeeds, cognitiveNeeds]);
-
-  const handleStepClick = (key) => {
-    const currentStepIndex = steps.findIndex(step => step.key === 'accessibility');
-    const targetStepIndex = steps.findIndex(step => step.key === key);
-    
-    // Allow going back, prevent going forward without completing form
-    if (targetStepIndex > currentStepIndex && !isFormValid) {
-      Swal.fire({
-        icon: 'info',
-        title: 'Complete Current Step',
-        text: 'Please complete the accessibility needs selection before proceeding.',
-        timer: 2000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-        toast: true,
-        position: 'bottom-end'
-      });
-      return;
-    }
-    
-    navigate(routeForStep(key));
-  };
-  
+  const handleStepClick = (key) => navigate(routeForStep(key));
   const goBack = () => navigate(routeForStep('experience'));
   const handleNext = async () => {
-    console.log('Next button clicked in Accessibility page');
-    console.log('Current form state:', { 
-      visualNeeds, 
-      hearingNeeds, 
-      mobilityNeeds, 
-      cognitiveNeeds,
-      isFormValid 
-    });
-    
-    if (!validateForm()) {
-      console.log('Form validation failed - no accessibility needs selected');
-      Swal.fire({
-        icon: 'warning',
-        title: 'Selection Required',
-        text: 'Please select at least one accessibility need before proceeding.',
-        timer: 2000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-        toast: true,
-        position: 'bottom-end'
-      });
-      return;
-    }
-
-    console.log('Form validation passed, proceeding...');
-
     const token = localStorage.getItem('authToken');
     const accessibilityData = {
       visualNeeds,
@@ -143,46 +82,18 @@ const JobseekerOnboardingAccessibility = () => {
     }
     
     try {
-      // Check if we have a valid token
-      if (!token) {
-        console.log('No auth token found, proceeding with mock data');
-        // Mock success for development
-        Swal.fire({
-          icon: 'success',
-          html: '<h5><b>Accessibility Needs</b></h5>\n<h6>You may now fillup Job Preferences & Requirements.</h6>',
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          toast: true,
-          position: 'bottom-end'
-        });
-        navigate(routeForStep('preferences'));
-        return;
-      }
-
       var url = "http://localhost:4000/onboard/pwd/onboard/accessibility-needs";
       var headers = {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       }
-      
-      console.log('Attempting to connect to:', url);
-      
       const response = await fetch(url, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(accessibilityData)
       });
 
-      console.log('Response status:', response.status);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const data = await response.json();
-      console.log('API response:', data);
-      
       if(data.success) {
         Swal.fire({
           icon: 'success',
@@ -194,30 +105,9 @@ const JobseekerOnboardingAccessibility = () => {
           position: 'bottom-end'
         });
         navigate(routeForStep('preferences'))
-      } else {
-        console.error('API returned success: false', data);
-        alert('Failed to save accessibility needs. Please try again.');
       }
     } catch(error) {
       console.error("Server error: ", error);
-      
-      // Check if it's a network error
-      if (error.name === 'TypeError' && error.message.includes('fetch')) {
-        console.log('Network error detected, proceeding with mock data');
-        Swal.fire({
-          icon: 'info',
-          title: 'Development Mode',
-          text: 'Server not available, proceeding with mock data.',
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          toast: true,
-          position: 'bottom-end'
-        });
-        navigate(routeForStep('preferences'));
-      } else {
-        alert('Failed to connect to the server. Please try again later.');
-      }
     }
   };
   const handleSkip = () => {
@@ -241,17 +131,7 @@ const JobseekerOnboardingAccessibility = () => {
           </div>
 
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
-            <Stepper 
-              steps={steps} 
-              currentKey="accessibility" 
-              onStepClick={handleStepClick}
-              validationStates={{
-                'skills': 'completed',
-                'education': 'completed', 
-                'experience': 'completed',
-                'accessibility': isFormValid ? 'valid' : 'active'
-              }}
-            />
+            <Stepper steps={steps} currentKey="accessibility" onStepClick={handleStepClick} />
 
             <h2 className="text-xl font-semibold text-gray-900">Accessibility Needs</h2>
             <p className="text-gray-600">Help us understand your accessibility needs to ensure the best job matches. <button className="text-blue-600">Select all that apply</button>.</p>
@@ -356,17 +236,7 @@ const JobseekerOnboardingAccessibility = () => {
               <button onClick={goBack} className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Back</button>
               <div className="flex items-center gap-3">
                 <button onClick={handleSkip} className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Skip for now</button>
-                <button 
-                  onClick={handleNext} 
-                  disabled={!isFormValid}
-                  className={`px-4 py-2 rounded-lg transition-all duration-200 ${
-                    isFormValid 
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg' 
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  }`}
-                >
-                  {isFormValid ? 'Next' : 'Select at least one need'}
-                </button>
+                <button onClick={handleNext} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">Next</button>
               </div>
             </div>
           </div>
