@@ -1,10 +1,15 @@
 # Dependencies
 node_modules/
 */node_modules/
+**/node_modules/
 
-# Production builds
+# Build outputs
 dist/
+*/dist/
+**/dist/
 build/
+*/build/
+**/build/
 
 # Environment variables
 .env
@@ -12,15 +17,19 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+*.env
 
 # Logs
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 lerna-debug.log*
 
 # Runtime data
-pids
+pids/
 *.pid
 *.seed
 *.pid.lock
@@ -35,17 +44,14 @@ coverage/
 # Dependency directories
 jspm_packages/
 
+# TypeScript cache
+*.tsbuildinfo
+
 # Optional npm cache directory
 .npm
 
 # Optional eslint cache
 .eslintcache
-
-# Microbundle cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
 
 # Optional REPL history
 .node_repl_history
@@ -95,8 +101,28 @@ ehthumbs.db
 Thumbs.db
 
 # Database
-*.db
 *.sqlite
+*.sqlite3
+*.db
 
 # Prisma
 prisma/migrations/
+!prisma/migrations/.gitkeep
+
+# Vite
+dist-ssr
+*.local
+
+# Local development
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+*.tgz
+*.tar.gz
