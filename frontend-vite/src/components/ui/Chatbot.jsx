@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Bot, Send, Minus, X, User, Move } from 'lucide-react';
 
 const Chatbot = ({ 
   position = "center", 
@@ -186,7 +185,7 @@ const Chatbot = ({
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-xl px-4 py-3 flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                <Bot className="w-5 h-5" />
+                <span className="text-lg">🤖</span>
               </div>
               <div>
                 <h3 className="font-semibold">PWDe AI Assistant</h3>
@@ -202,14 +201,14 @@ const Chatbot = ({
                 className="text-blue-100 hover:text-white transition-colors p-1 rounded"
                 aria-label="Minimize chat"
               >
-                <Minus className="w-4 h-4" />
+                <span className="text-sm">−</span>
               </button>
               <button
                 onClick={toggleChat}
                 className="text-blue-100 hover:text-white transition-colors p-1 rounded"
                 aria-label="Close chat"
               >
-                <X className="w-4 h-4" />
+                <span className="text-sm">×</span>
               </button>
             </div>
           </div>
@@ -223,7 +222,7 @@ const Chatbot = ({
                 }`}>
                   {message.type === 'ai' && (
                     <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Bot className="w-4 h-4 text-blue-600" />
+                      <span className="text-blue-600 text-sm">🤖</span>
                     </div>
                   )}
                   
@@ -237,7 +236,7 @@ const Chatbot = ({
 
                   {message.type === 'user' && (
                     <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
-                      <User className="w-4 h-4 text-gray-600" />
+                      <span className="text-gray-600 text-sm">👤</span>
                     </div>
                   )}
                 </div>
@@ -261,7 +260,7 @@ const Chatbot = ({
                 className="bg-blue-600 text-white rounded-lg px-3 py-2 hover:bg-blue-700 transition-colors flex items-center justify-center"
                 aria-label="Send message"
               >
-                <Send className="w-4 h-4" />
+                <span className="text-sm">➤</span>
               </button>
             </div>
           </div>
@@ -276,7 +275,7 @@ const Chatbot = ({
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg px-4 py-3 flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="w-6 h-6 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                <Bot className="w-4 h-4" />
+                <span className="text-sm">🤖</span>
               </div>
               <span className="font-medium text-sm">PWDe AI Assistant</span>
             </div>
@@ -295,7 +294,7 @@ const Chatbot = ({
                 className="text-blue-100 hover:text-white transition-colors p-1 rounded"
                 aria-label="Close chat"
               >
-                <X className="w-4 h-4" />
+                <span className="text-sm">×</span>
               </button>
             </div>
           </div>
@@ -316,12 +315,12 @@ const Chatbot = ({
             }`}
             aria-label="Open AI chat"
           >
-            <Bot className="w-6 h-6" />
+            <span className="text-xl">🤖</span>
             
             {/* Move indicator for draggable positions */}
             {isDraggable && (
               <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-400 rounded-full flex items-center justify-center">
-                <Move className="w-2 h-2 text-white" />
+                <span className="text-white text-xs">⋮</span>
               </div>
             )}
             

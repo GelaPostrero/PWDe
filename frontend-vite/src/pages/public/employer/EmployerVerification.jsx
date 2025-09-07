@@ -334,7 +334,7 @@ const EmployerVerification = () => {
         <div className="max-w-6xl mx-auto px-6">
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 md:p-10">
             <h1 className="text-2xl md:text-3xl font-bold text-center text-gray-900">Employer Verification</h1>
-            <p className="text-center text-gray-600 mt-2">Please upload your documents to verify your account</p>
+            <p className="text-center text-gray-600 mt-2">Please upload your PWD ID or certification documents to verify your account</p>
 
             {/* Progress Stepper */}
             <div className="mt-8 flex items-center justify-center">
@@ -377,59 +377,20 @@ const EmployerVerification = () => {
                 <p className="text-gray-600 mb-6">Upload required documents to verify your business</p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Left Column - Business Registration Documents */}
+                  {/* Left Upload */}
                   <div>
-                    <h3 className="font-medium text-gray-900 mb-4">Business Registration Documents</h3>
-                    <div className="space-y-4">
-                      <FileUploadArea 
-                        field="businessRegistration"
-                        label="Business registration certificate"
-                      />
-                      <FileUploadArea 
-                        field="taxDocuments"
-                        label="Tax identification documents"
-                      />
-                    </div>
+                    <FileUploadArea 
+                      field="businessRegistration"
+                      label="Upload business registration certificate"
+                    />
                   </div>
-
-                  {/* Right Column - Company Website & Social Media */}
+                  
+                  {/* Right Upload */}
                   <div>
-                    <h3 className="font-medium text-gray-900 mb-4">Company Website & Social Media</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Company Website</label>
-                        <input
-                          name="companyWebsite"
-                          type="url"
-                          value={formData.companyWebsite}
-                          onChange={handleChange}
-                          placeholder="https://yourcompany.com"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">LinkedIn Profile</label>
-                        <input
-                          name="linkedinProfile"
-                          type="url"
-                          value={formData.linkedinProfile}
-                          onChange={handleChange}
-                          placeholder="https://linkedin.com/company/yourcompany"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Other Social Media (Optional)</label>
-                        <input
-                          name="otherSocialMedia"
-                          type="url"
-                          value={formData.otherSocialMedia}
-                          onChange={handleChange}
-                          placeholder="https://twitter.com/yourcompany"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                    </div>
+                    <FileUploadArea 
+                      field="taxDocuments"
+                      label="Upload tax identification documents"
+                    />
                   </div>
                 </div>
               </div>
@@ -447,49 +408,49 @@ const EmployerVerification = () => {
                 <p className="text-gray-600 mb-6">Verify the authorized representative for hiring</p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Left Column - Contact Details */}
-                  <div>
-                    <h3 className="font-medium text-gray-900 mb-4">Contact Details</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                        <input
-                          name="contactName"
-                          type="text"
-                          value={formData.contactName}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Job Title</label>
-                        <input
-                          name="jobTitle"
-                          type="text"
-                          value={formData.jobTitle}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                        <input
-                          name="phoneNumber"
-                          type="tel"
-                          value={formData.phoneNumber}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
+                  {/* Left Side - Form Fields */}
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                      <input
+                        name="contactName"
+                        type="text"
+                        placeholder="John Doe"
+                        value={formData.contactName}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Job Title</label>
+                      <input
+                        name="jobTitle"
+                        type="text"
+                        placeholder="HR Manager"
+                        value={formData.jobTitle}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                      <input
+                        name="phoneNumber"
+                        type="tel"
+                        placeholder="+1 (555) 123-4567"
+                        value={formData.phoneNumber}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
                   </div>
 
-                  {/* Right Column - Identity Verification */}
+                  {/* Right Side - Identity Verification */}
                   <div>
                     <h3 className="font-medium text-gray-900 mb-4">Identity Verification</h3>
                     <FileUploadArea 
                       field="governmentId"
-                      label="Government-issued ID"
+                      label="Upload government-issued ID"
                     />
                   </div>
                 </div>
@@ -509,8 +470,8 @@ const EmployerVerification = () => {
 
                 <div className="bg-white rounded-lg p-6 mb-6">
                   <h3 className="font-medium text-gray-900 mb-4">Our Commitment to Equality</h3>
-                  <p className="text-gray-700 mb-4">
-                    We are committed to providing equal employment opportunities to all individuals regardless of race, color, religion, gender, sexual orientation, age, national origin, disability, or veteran status.
+                  <p className="text-gray-700 mb-4">  
+                    By using PWDe, you agree to provide equal employment opportunities to all qualified candidates regardless of race, color, religion, gender, sexual orientation, age, national origin, disability, or veteran status.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-center">
@@ -636,18 +597,18 @@ const EmployerVerification = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-4 pt-6">
+              <div className="flex justify-center gap-4 pt-6">
                 <button
                   type="button"
                   onClick={handleSkip}
-                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold transition-colors"
+                  className="bg-white border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-semibold transition-colors hover:bg-gray-50"
                 >
                   Skip for Now
                 </button>
                 <button
                   type="submit"
                   disabled={Object.values(isUploading).some(Boolean)}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center"
+                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center"
                 >
                   {Object.values(isUploading).some(Boolean) ? (
                     <>
@@ -657,7 +618,7 @@ const EmployerVerification = () => {
                   ) : (
                     <>
                       <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                       </svg>
                       Submit Documents
                     </>

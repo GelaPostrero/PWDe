@@ -272,7 +272,7 @@ const JobseekerOnboardingCompletion = () => {
 
       <main className="flex-1 py-8">
         <div className="max-w-6xl mx-auto px-6 space-y-6">
-          <div className="bg-white rounded-2xl border shadow-sm p-8 text-center">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
             <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600 text-lg mb-3">🛠️</div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Welcome to PWDe: AI-Powered Job Matching Platform</h1>
             <p className="text-gray-600 mt-2">Help us understand your skills and preferences to find the perfect job opportunities tailored for you.</p>
@@ -281,7 +281,7 @@ const JobseekerOnboardingCompletion = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border shadow-sm p-6 space-y-6">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
             <Stepper steps={steps} currentKey="completion" onStepClick={handleStepClick} />
 
             <h2 className="text-xl font-semibold text-gray-900">Complete Your Profile</h2>
@@ -301,7 +301,7 @@ const JobseekerOnboardingCompletion = () => {
 
             <div className="space-y-6">
               {/* Profile Photo */}
-              <div className="border rounded-xl p-6 text-center">
+              <div className="border border-gray-200 rounded-xl p-6 text-center">
                 <div className="text-sm text-gray-700 mb-3">Profile Photo (Optional)</div>
 
                 {photo ? (
@@ -353,7 +353,7 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Role */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 rounded-xl p-6">
                 <div className="font-medium text-gray-900 mb-2">Add a title to tell the world what you do</div>
                 <p className="text-sm text-gray-600 mb-3">It’s the very first thing employers see, so make it count. Stand out by describing your expertise in your own words.</p>
                 <label className="block text-sm text-gray-700 mb-1">Professional Role*</label>
@@ -367,7 +367,7 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Summary */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 rounded-xl p-6">
                 <label className="block font-medium text-gray-900 mb-2">Professional Summary*</label>
                 <textarea
                   rows="4"
@@ -379,11 +379,11 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Resume Upload */}
-              <div className="border rounded-xl p-6 text-center">
+              <div className="border border-gray-200 rounded-xl p-6 text-center">
                 <div className="font-medium text-gray-900 mb-2">Resume/CV Upload</div>
 
                 <div
-                  className={`border-2 border-dashed rounded-xl p-6 text-gray-600 transition-colors ${
+                  className={`border-2 border-dashed border-gray-200 rounded-xl p-6 text-gray-600 transition-colors ${
                     isDraggingResume ? 'border-blue-400 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
                   }`}
                   onDragOver={onResumeDragOver}
@@ -440,7 +440,7 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Portfolio Links */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 rounded-xl p-6">
                 <div className="font-medium text-gray-900 mb-2">Portfolio Links (Optional)</div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
@@ -482,7 +482,7 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Visibility */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 rounded-xl p-6">
                 <div className="font-medium text-gray-900 mb-2">Profile visibility</div>
                 <div className="space-y-2 text-sm text-gray-700">
                   <label className="flex items-center gap-2 cursor-pointer">
@@ -507,8 +507,8 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Agreements */}
-              <div className="border rounded-xl p-6">
-                <div className="font-medium text-gray-900 mb-3">Terms & Agreements</div>
+              <div className="border border-gray-200 border-gray-200 rounded-xl p-6">
+                <div className="font-medium text-gray-900 mb-3">Terms & Agreements* <span className="text-red-500">*</span></div>
                 <div className="space-y-2 text-sm text-gray-700">
                   <label className="flex items-start gap-2 cursor-pointer">
                     <input type="checkbox" checked={agreeTos} onChange={(e) => setAgreeTos(e.target.checked)} />
@@ -529,12 +529,12 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <button onClick={goBack} className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer">
+                <button onClick={goBack} className="px-4 py-2 border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer">
                   Back
                 </button>
                 <button
                   onClick={finish}
-                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg cursor-pointer"
+                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white border border-gray-200 rounded-lg cursor-pointer"
                 >
                   Complete Profile & Start Job Search
                 </button>

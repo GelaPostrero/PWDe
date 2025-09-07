@@ -9,3 +9,39 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Date input styling */
+input[type="month"] {
+  background-color: white !important;
+  color: #111827 !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 0.5rem !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
+}
+
+input[type="month"]:focus {
+  background-color: white !important;
+  color: #111827 !important;
+  border-color: #3b82f6 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+input[type="month"]:disabled {
+  background-color: #f3f4f6 !important;
+  color: #9ca3af !important;
+  cursor: not-allowed !important;
+}
+
+input[type="month"]::-webkit-calendar-picker-indicator {
+  background-color: #6b7280;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+input[type="month"]::-webkit-calendar-picker-indicator:hover {
+  background-color: #374151;
+}
