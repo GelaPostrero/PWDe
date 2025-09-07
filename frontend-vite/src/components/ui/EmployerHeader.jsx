@@ -61,6 +61,12 @@ const EmployerHeader = ({ disabled = false }) => {
              location.pathname.startsWith('/employer/job/') ||
              location.pathname.startsWith('/employer/edit-job/');
     }
+    if (path === '/employer/analytics') {
+      return location.pathname === '/employer/analytics';
+    }
+    if (path === '/employer/transactions') {
+      return location.pathname === '/employer/transactions';
+    }
     return location.pathname === path;
   };
 
@@ -91,7 +97,7 @@ const EmployerHeader = ({ disabled = false }) => {
   }, []);
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-100">
+    <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
       <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <div className="flex justify-between items-center py-6">
           {/* Logo */}
