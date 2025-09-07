@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { MonthYearPicker } from '../../../components/ui/date-picker';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 
@@ -359,12 +358,12 @@ const JobseekerOnboardingExperience = () => {
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1">Start Date*</label>
-                <MonthYearPicker
-                  date={startDate}
-                  setDate={setStartDate}
-                  placeholder="Select start date"
-                  className={`w-full ${
-                    errors.startDate ? 'border-red-500' : ''
+                <input 
+                  type="month"
+                  value={startDate ? startDate.toISOString().slice(0, 7) : ''} 
+                  onChange={(e) => setStartDate(e.target.value ? new Date(e.target.value + '-01') : null)} 
+                  className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    errors.startDate ? 'border-red-500' : 'border-gray-200'
                   }`}
                 />
                 {errors.startDate && (
@@ -373,14 +372,14 @@ const JobseekerOnboardingExperience = () => {
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1">End Date*</label>
-                <MonthYearPicker
-                  date={endDate}
-                  setDate={setEndDate}
-                  placeholder={isCurrent ? "Current position" : "Select end date"}
+                <input 
+                  type="month"
+                  value={endDate ? endDate.toISOString().slice(0, 7) : ''} 
+                  onChange={(e) => setEndDate(e.target.value ? new Date(e.target.value + '-01') : null)} 
                   disabled={isCurrent}
-                  className={`w-full ${
-                    errors.endDate ? 'border-red-500' : ''
-                  }`}
+                  className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    errors.endDate ? 'border-red-500' : 'border-gray-200'
+                  } ${isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : ''}`}
                 />
                 {errors.endDate && (
                   <p className="mt-1 text-sm text-red-600">{errors.endDate}</p>
@@ -500,21 +499,23 @@ const JobseekerOnboardingExperience = () => {
                   </div>
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">Start Date</label>
-                    <MonthYearPicker
-                      date={exp.startDate}
-                      setDate={(date) => updateAdditionalExperience(exp.id, 'startDate', date)}
-                      placeholder="Select start date"
-                      className="w-full"
+                    <input 
+                      type="month"
+                      value={exp.startDate ? exp.startDate.toISOString().slice(0, 7) : ''} 
+                      onChange={(e) => updateAdditionalExperience(exp.id, 'startDate', e.target.value ? new Date(e.target.value + '-01') : null)} 
+                      className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">End Date</label>
-                    <MonthYearPicker
-                      date={exp.endDate}
-                      setDate={(date) => updateAdditionalExperience(exp.id, 'endDate', date)}
-                      placeholder={exp.isCurrent ? "Current position" : "Select end date"}
+                    <input 
+                      type="month"
+                      value={exp.endDate ? exp.endDate.toISOString().slice(0, 7) : ''} 
+                      onChange={(e) => updateAdditionalExperience(exp.id, 'endDate', e.target.value ? new Date(e.target.value + '-01') : null)} 
                       disabled={exp.isCurrent}
-                      className="w-full"
+                      className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                        exp.isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : ''
+                      }`}
                     />
                   </div>
                   <div>
