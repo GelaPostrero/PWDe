@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
+import Spinner from '../../../components/ui/Spinner.jsx';
 
 const steps = [
   { key: 'skills', label: 'Skills' },
@@ -38,6 +39,7 @@ const JobseekerOnboardingExperience = () => {
   const [additionalExperiences, setAdditionalExperiences] = useState([]);
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleStepClick = (key) => {
     // Only allow navigation to previous steps or current step
@@ -238,7 +240,12 @@ const JobseekerOnboardingExperience = () => {
       return;
     }
 
+    setIsLoading(true);
+
     console.log('Form validation passed, proceeding...');
+
+    // Add minimum loading time to see spinner (remove this in production)
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
 
     const token = localStorage.getItem('authToken');
     const experienceData = {
@@ -262,6 +269,8 @@ const JobseekerOnboardingExperience = () => {
       // Check if we have a valid token
       if (!token) {
         console.log('No auth token found, proceeding with mock data');
+        // Wait for minimum loading time even for mock data
+        await minLoadingTime;
         // Mock success for development
         Swal.fire({
           icon: 'success',
@@ -273,6 +282,7 @@ const JobseekerOnboardingExperience = () => {
           position: 'bottom-end'
         });
         navigate(routeForStep('accessibility'));
+        setIsLoading(false);
         return;
       }
 
@@ -289,6 +299,9 @@ const JobseekerOnboardingExperience = () => {
         headers: headers,
         body: JSON.stringify(experienceData)
       });
+
+      // Wait for both API call and minimum loading time
+      await Promise.all([response, minLoadingTime]);
 
       console.log('Response status:', response.status);
       
@@ -320,6 +333,8 @@ const JobseekerOnboardingExperience = () => {
       // Check if it's a network error
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
         console.log('Network error detected, proceeding with mock data');
+        // Wait for minimum loading time even for network errors
+        await minLoadingTime;
         Swal.fire({
           icon: 'info',
           title: 'Development Mode',
@@ -334,6 +349,8 @@ const JobseekerOnboardingExperience = () => {
       } else {
         alert('Failed to connect to the server. Please try again later.');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
   const handleSkip = () => {
@@ -365,6 +382,8 @@ const JobseekerOnboardingExperience = () => {
                 experience: isFormValid ? 'valid' : (Object.keys(errors).length > 0 ? 'error' : 'pending')
               }}
             />
+          </div>
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
 
             <h2 className="text-xl font-semibold text-gray-900 mt-6">Experience</h2>
             <p className="text-gray-600 mt-1">Add your work experience starting with your most recent position</p>
@@ -375,7 +394,7 @@ const JobseekerOnboardingExperience = () => {
                 <input 
                   value={jobTitle} 
                   onChange={(e) => setJobTitle(e.target.value)} 
-                  className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     errors.jobTitle ? 'border-red-500' : 'border-gray-200'
                   }`}
                   placeholder="e.g., Software Developer" 
@@ -389,7 +408,7 @@ const JobseekerOnboardingExperience = () => {
                 <input 
                   value={company} 
                   onChange={(e) => setCompany(e.target.value)} 
-                  className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     errors.company ? 'border-red-500' : 'border-gray-200'
                   }`}
                   placeholder="e.g., Tech Solutions Inc." 
@@ -403,7 +422,7 @@ const JobseekerOnboardingExperience = () => {
                 <input 
                   value={location} 
                   onChange={(e) => setLocation(e.target.value)} 
-                  className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     errors.location ? 'border-red-500' : 'border-gray-200'
                   }`}
                   placeholder="e.g., Cebu City, Manila, Makati" 
@@ -418,7 +437,7 @@ const JobseekerOnboardingExperience = () => {
                   <select 
                     value={country} 
                     onChange={(e) => setCountry(e.target.value)} 
-                    className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   >
                     <option>Philippines</option>
                     <option>United States</option>
@@ -448,7 +467,7 @@ const JobseekerOnboardingExperience = () => {
                     onClick={() => setShowStartCalendar(true)}
                     readOnly
                     placeholder="Select start date"
-                    className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer ${
+                    className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer ${
                       errors.startDate ? 'border-red-500' : 'border-gray-200'
                     }`}
                   />
@@ -544,7 +563,7 @@ const JobseekerOnboardingExperience = () => {
                     readOnly
                     placeholder="Select end date"
                     disabled={isCurrent}
-                    className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                       errors.endDate ? 'border-red-500' : 'border-gray-200'
                     } ${isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'cursor-pointer'}`}
                   />
@@ -751,7 +770,9 @@ const JobseekerOnboardingExperience = () => {
                         onClick={() => updateAdditionalExperience(exp.id, 'showStartCalendar', true)}
                         readOnly
                         placeholder="Select start date"
-                        className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+                        className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer ${
+                          errors.startDate ? 'border-red-500' : 'border-gray-200'
+                        }`}
                       />
                       <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                         <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -769,7 +790,7 @@ const JobseekerOnboardingExperience = () => {
                         readOnly
                         placeholder="Select end date"
                         disabled={exp.isCurrent}
-                        className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                              className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                           exp.isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'cursor-pointer'
                         }`}
                       />
@@ -813,19 +834,46 @@ const JobseekerOnboardingExperience = () => {
             ))}
 
             <div className="mt-6 flex items-center justify-between">
-              <button onClick={goBack} className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Back</button>
+              <button 
+                onClick={goBack} 
+                disabled={isLoading}
+                className={`px-4 py-2 border rounded-lg transition-colors ${
+                  isLoading 
+                    ? 'text-gray-400 cursor-not-allowed' 
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                Back
+              </button>
               <div className="flex items-center gap-3">
-                <button onClick={handleSkip} className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Skip for now</button>
+                <button 
+                  onClick={handleSkip} 
+                  disabled={isLoading}
+                  className={`px-4 py-2 border rounded-lg transition-colors ${
+                    isLoading 
+                      ? 'text-gray-400 cursor-not-allowed' 
+                      : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Skip for now
+                </button>
                 <button 
                   onClick={handleNext} 
-                  disabled={!isFormValid}
-                  className={`px-4 py-2 text-white rounded-lg transition-all duration-200 ${
-                    isFormValid 
+                  disabled={!isFormValid || isLoading}
+                  className={`px-4 py-2 text-white rounded-lg transition-all duration-200 flex items-center gap-2 ${
+                    isFormValid && !isLoading
                       ? 'bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transform hover:scale-105' 
                       : 'bg-gray-400 cursor-not-allowed'
                   }`}
                 >
-                  {isFormValid ? 'Next' : 'Complete Form'}
+                  {isLoading ? (
+                    <>
+                      <Spinner size="sm" color="white" />
+                      Saving...
+                    </>
+                  ) : (
+                    isFormValid ? 'Next' : 'Complete Form'
+                  )}
                 </button>
               </div>
             </div>

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
+import Spinner from '../../../components/ui/Spinner.jsx';
 
 const steps = [
   { key: 'skills', label: 'Skills' },
@@ -39,6 +40,7 @@ const JobseekerOnboardingPreferences = () => {
   const [experienceLevel, setExperienceLevel] = useState('');
   const [salaryRange, setSalaryRange] = useState({ currency: 'PHP', min: '', max: '' });
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Validate form - work arrangement and experience level are required
   const validateForm = () => {
@@ -132,7 +134,11 @@ const JobseekerOnboardingPreferences = () => {
       return;
     }
 
+    setIsLoading(true);
     console.log('Form validation passed, proceeding...');
+
+    // Add minimum loading time to see spinner (remove this in production)
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
 
     const token = localStorage.getItem('authToken');
     const preferencesData = {
@@ -146,6 +152,8 @@ const JobseekerOnboardingPreferences = () => {
       // Check if we have a valid token
       if (!token) {
         console.log('No auth token found, proceeding with mock data');
+        // Wait for minimum loading time even for mock data
+        await minLoadingTime;
         // Mock success for development
         Swal.fire({
           icon: 'success',
@@ -157,6 +165,7 @@ const JobseekerOnboardingPreferences = () => {
           position: 'bottom-end'
         });
         navigate(routeForStep('completion'));
+        setIsLoading(false);
         return;
       }
 
@@ -173,6 +182,9 @@ const JobseekerOnboardingPreferences = () => {
         headers: headers,
         body: JSON.stringify(preferencesData)
       });
+
+      // Wait for both API call and minimum loading time
+      await Promise.all([response, minLoadingTime]);
 
       console.log('Response status:', response.status);
       
@@ -204,6 +216,8 @@ const JobseekerOnboardingPreferences = () => {
       // Check if it's a network error
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
         console.log('Network error detected, proceeding with mock data');
+        // Wait for minimum loading time even for network errors
+        await minLoadingTime;
         Swal.fire({
           icon: 'info',
           title: 'Development Mode',
@@ -218,6 +232,8 @@ const JobseekerOnboardingPreferences = () => {
       } else {
         alert('Failed to connect to the server. Please try again later.');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -231,7 +247,7 @@ const JobseekerOnboardingPreferences = () => {
       <JobseekerHeader disabled={true} />
 
       <main className="flex-1 py-8">
-        <div className="mx-full px-6 space-y-6">
+        <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 space-y-6">
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
             <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600 text-lg mb-3">🛠️</div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Welcome to PWDe: AI-Powered Job Matching Platform</h1>
@@ -241,7 +257,7 @@ const JobseekerOnboardingPreferences = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
             <Stepper 
               steps={steps} 
               currentKey="preferences" 
@@ -254,12 +270,14 @@ const JobseekerOnboardingPreferences = () => {
                 'preferences': isFormValid ? 'valid' : 'active'
               }}
             />
+          </div>
 
-            <h2 className="text-xl font-semibold text-gray-900 mt-2">Job Preferences & Requirements</h2>
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
+            <h2 className="text-xl font-semibold text-gray-900">Job Preferences & Requirements</h2>
             <p className="text-gray-600">Tell us about your ideal work environment and job requirements. <button className="text-blue-600">Select all that apply.</button></p>
 
             <div className="space-y-6">
-              <div className="border rounded-xl p-4">
+              <div className="border border-gray-200 rounded-xl p-4">
                 <div className="font-medium text-gray-900 mb-2">Work Arrangement <span className="text-red-500">*</span></div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-700">
                   {[
@@ -279,10 +297,10 @@ const JobseekerOnboardingPreferences = () => {
                       {option}
                     </label>
                   ))}
-                </div>
+                </div>  
               </div>
 
-              <div className="border rounded-xl p-4">
+              <div className="border border-gray-200 rounded-xl p-4">
                 <div className="font-medium text-gray-900 mb-2">Employment Type</div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-700">
                   {[
@@ -312,7 +330,7 @@ const JobseekerOnboardingPreferences = () => {
                 </div>
               </div>
 
-              <div className="border rounded-xl p-4">
+              <div className="border border-gray-200 rounded-xl p-4">
                 <div className="font-medium text-gray-900 mb-2">Experience Level <span className="text-red-500">*</span></div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-700">
                   {[
@@ -336,13 +354,13 @@ const JobseekerOnboardingPreferences = () => {
                 </div>
               </div>
 
-              <div className="border rounded-xl p-4">
+              <div className="border border-gray-200 rounded-xl p-4">
                 <div className="font-medium text-gray-900 mb-4">Salary Range (Optional)</div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">Currency</label>
                     <div className="relative">
-                      <select className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                      <select className="w-full appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         <option>PHP (Philippine Peso)</option>
                       </select>
                       <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
@@ -355,7 +373,7 @@ const JobseekerOnboardingPreferences = () => {
                       value={salaryRange.min} 
                       onChange={(e) => handleSalaryChange("min", e.target.value)}
                       onBlur={handleBlur}
-                      className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. 30,000" 
+                      className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. 30,000" 
                     />
                   </div>
                   <div>
@@ -365,7 +383,7 @@ const JobseekerOnboardingPreferences = () => {
                       value={salaryRange.max}
                       onChange={(e) => handleSalaryChange("max", e.target.value)}
                       onBlur={handleBlur}
-                      className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. 50,000" 
+                      className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. 50,000" 
                     />
                   </div>
                 </div>
@@ -373,19 +391,46 @@ const JobseekerOnboardingPreferences = () => {
             </div>
 
             <div className="mt-2 flex items-center justify-between">
-              <button onClick={goBack} className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Back</button>
+              <button 
+                onClick={goBack} 
+                disabled={isLoading}
+                className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors ${
+                  isLoading 
+                    ? 'text-gray-400 cursor-not-allowed' 
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                Back
+              </button>
               <div className="flex items-center gap-3">
-                <button onClick={handleSkip} className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Skip for now</button>
+                <button 
+                  onClick={handleSkip} 
+                  disabled={isLoading}
+                  className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors ${
+                    isLoading 
+                      ? 'text-gray-400 cursor-not-allowed' 
+                      : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Skip for now
+                </button>
                 <button 
                   onClick={handleNext} 
-                  disabled={!isFormValid}
-                  className={`px-4 py-2 rounded-lg transition-all duration-200 ${
-                    isFormValid 
+                  disabled={!isFormValid || isLoading}
+                  className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-all duration-200 flex items-center gap-2 ${
+                    isFormValid && !isLoading
                       ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg' 
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  {isFormValid ? 'Next' : 'Complete required fields'}
+                  {isLoading ? (
+                    <>
+                      <Spinner size="sm" color="white" />
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    isFormValid ? 'Next' : 'Complete required fields'
+                  )}
                 </button>
               </div>
             </div>
