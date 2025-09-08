@@ -87,6 +87,7 @@ const IconButton = ({
 const JobseekerHeader = ({ disabled = false }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [fetchedProfile, setFetchedProfile] = useState();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isFindJobsOpen, setIsFindJobsOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -151,6 +152,29 @@ const JobseekerHeader = ({ disabled = false }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+      const url = "http://localhost:4000/retrieve/header"
+      const headers = {
+        "Authorization": `Bearer ${token}`
+      }
+      try {
+        const response = await fetch(url, {
+          headers: headers
+        })
+        const data = await response.json();
+        if(data.success) {
+          setFetchedProfile(data.data);
+        }
+      } catch(error) {
+        console.error("Failed to load profile:", error);
+      }
+    };
+    
+    fetchProfile();
   }, []);
 
   return (
@@ -296,7 +320,7 @@ const JobseekerHeader = ({ disabled = false }) => {
               >
                 <img
                   className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
-                  src="https://i.pravatar.cc/64"
+                  src={fetchedProfile ? fetchedProfile.profile_picture : "https://i.pravatar.cc/64"}
                   alt="Profile"
                 />
                 <svg className="w-4 h-4 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

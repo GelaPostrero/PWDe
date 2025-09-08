@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
+import Spinner from '../../../components/ui/Spinner.jsx';
 
 const steps = [
   { key: 'skills', label: 'Skills' },
@@ -44,6 +45,7 @@ const JobseekerOnboardingEducation = () => {
   const [additionalEducations, setAdditionalEducations] = useState([]);
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleStepClick = (key) => {
     // Only allow navigation to previous steps or current step
@@ -132,12 +134,31 @@ const JobseekerOnboardingEducation = () => {
   };
 
   const handleNext = async () => {
+<<<<<<< HEAD
+=======
+    console.log('Next button clicked in Education page');
+    console.log('Current form state:', { 
+      highestLevel, 
+      institutionName, 
+      location, 
+      fieldOfStudy, 
+      degree, 
+      graduationStatus, 
+      graduationYear,
+      isFormValid
+    });
+    
+>>>>>>> ff4bcbebfd43416ec1151c78ff09850a66b9b226
     if (!validateForm()) {
       console.log('Form validation failed:', errors);
       return;
     }
 
+    setIsLoading(true);
     console.log('Form validation passed, proceeding...');
+
+    // Add minimum loading time to see spinner (remove this in production)
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
 
     const token = localStorage.getItem('authToken');
     const educationEntries = [{
@@ -158,6 +179,8 @@ const JobseekerOnboardingEducation = () => {
       // Check if we have a valid token
       if (!token) {
         console.log('No auth token found, proceeding with mock data');
+        // Wait for minimum loading time even for mock data
+        await minLoadingTime;
         // Mock success for development
         Swal.fire({
           icon: 'success',
@@ -169,6 +192,7 @@ const JobseekerOnboardingEducation = () => {
           position: 'bottom-end'
         });
         navigate(routeForStep('experience'));
+        setIsLoading(false);
         return;
       }
 
@@ -183,6 +207,14 @@ const JobseekerOnboardingEducation = () => {
         headers: headers,
         body: JSON.stringify(educationData)
       });
+<<<<<<< HEAD
+=======
+
+      // Wait for both API call and minimum loading time
+      await Promise.all([response, minLoadingTime]);
+
+      console.log('Response status:', response.status);
+>>>>>>> ff4bcbebfd43416ec1151c78ff09850a66b9b226
       
       const data = await response.json();
       console.log('API response:', data);
@@ -208,6 +240,8 @@ const JobseekerOnboardingEducation = () => {
       // Check if it's a network error
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
         console.log('Network error detected, proceeding with mock data');
+        // Wait for minimum loading time even for network errors
+        await minLoadingTime;
         Swal.fire({
           icon: 'info',
           title: 'Development Mode',
@@ -222,6 +256,8 @@ const JobseekerOnboardingEducation = () => {
       } else {
         alert('Failed to connect to the server. Please try again later.');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
   const handleSkip = () => {
@@ -253,7 +289,8 @@ const JobseekerOnboardingEducation = () => {
                 education: isFormValid ? 'valid' : (Object.keys(errors).length > 0 ? 'error' : 'pending')
               }}
             />
-
+          </div>
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
             <h2 className="text-xl font-semibold text-gray-900 mt-6">Education & Qualifications</h2>
             <p className="text-gray-600 mt-1">Tell us about your educational background.</p>
 
@@ -504,19 +541,46 @@ const JobseekerOnboardingEducation = () => {
             </div>
 
             <div className="mt-6 flex items-center justify-between">
-              <button onClick={goBack} className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Back</button>
+              <button 
+                onClick={goBack} 
+                disabled={isLoading}
+                className={`px-4 py-2 border rounded-lg transition-colors ${
+                  isLoading 
+                    ? 'text-gray-400 cursor-not-allowed' 
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                Back
+              </button>
               <div className="flex items-center gap-3">
-                <button onClick={handleSkip} className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Skip for now</button>
+                <button 
+                  onClick={handleSkip} 
+                  disabled={isLoading}
+                  className={`px-4 py-2 border rounded-lg transition-colors ${
+                    isLoading 
+                      ? 'text-gray-400 cursor-not-allowed' 
+                      : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Skip for now
+                </button>
                 <button 
                   onClick={handleNext} 
-                  disabled={!isFormValid}
-                  className={`px-4 py-2 text-white rounded-lg transition-all duration-200 ${
-                    isFormValid 
+                  disabled={!isFormValid || isLoading}
+                  className={`px-4 py-2 text-white rounded-lg transition-all duration-200 flex items-center gap-2 ${
+                    isFormValid && !isLoading
                       ? 'bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transform hover:scale-105' 
                       : 'bg-gray-400 cursor-not-allowed'
                   }`}
                 >
-                  {isFormValid ? 'Next' : 'Complete Form'}
+                  {isLoading ? (
+                    <>
+                      <Spinner size="sm" color="white" />
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    isFormValid ? 'Next' : 'Complete Form'
+                  )}
                 </button>
               </div>
             </div>

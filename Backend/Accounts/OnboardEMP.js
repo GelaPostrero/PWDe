@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { PrismaClient } = require('../src/generated/prisma');
-const { withAccelerate } = require('../node_modules/@prisma/extension-accelerate');
-const prisma = new PrismaClient().$extends(withAccelerate());
+const prisma = require('../prisma/prisma');
+
 const authenticateToken = require('../Middlewares/auth');
 const profilePhoto = require('../Middlewares/multerProfilePhoto');
 
