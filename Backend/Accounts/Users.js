@@ -265,6 +265,15 @@ router.post('/users/register/verify', async (req, res) => {
     return res.status(404).json({ message: 'User not found or session expired.' });
   }
 
+  // Double-check for duplicate email before creating user
+  const existingEmail = await prisma.users.findUnique({
+    where: { email }
+  });
+  
+  if (existingEmail) {
+    return res.status(400).json({ error: 'This email is already registered.' });
+  }
+
   const hashedPassword = await bcrypt.hash(userData.password, 10);
 
   const user = await prisma.users.create({

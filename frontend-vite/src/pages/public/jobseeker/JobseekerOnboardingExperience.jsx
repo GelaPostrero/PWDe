@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
@@ -71,6 +71,16 @@ const JobseekerOnboardingExperience = () => {
   const [employmentType, setEmploymentType] = useState('Full-time');
   const [description, setDescription] = useState('');
 
+  // Calendar state for start date
+  const [showStartCalendar, setShowStartCalendar] = useState(false);
+  const [startCalendarDate, setStartCalendarDate] = useState(new Date());
+  const startCalendarRef = useRef(null);
+
+  // Calendar state for end date
+  const [showEndCalendar, setShowEndCalendar] = useState(false);
+  const [endCalendarDate, setEndCalendarDate] = useState(new Date());
+  const endCalendarRef = useRef(null);
+
   // Form validation
   const validateForm = () => {
     const newErrors = {};
@@ -110,6 +120,76 @@ const JobseekerOnboardingExperience = () => {
     validateForm();
   }, [jobTitle, company, location, startDate, endDate, isCurrent]);
 
+  // Calendar helper functions
+  const changeStartMonth = (direction) => {
+    setStartCalendarDate(prev => {
+      const newDate = new Date(prev);
+      newDate.setMonth(prev.getMonth() + direction);
+      return newDate;
+    });
+  };
+
+  const changeEndMonth = (direction) => {
+    setEndCalendarDate(prev => {
+      const newDate = new Date(prev);
+      newDate.setMonth(prev.getMonth() + direction);
+      return newDate;
+    });
+  };
+
+  const getDaysInMonth = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+    
+    const days = [];
+    
+    // Add empty cells for days before the first day of the month
+    for (let i = 0; i < startingDayOfWeek; i++) {
+      days.push(null);
+    }
+    
+    // Add days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      days.push(new Date(year, month, day));
+    }
+    
+    return days;
+  };
+
+  const handleStartDateSelect = (selectedDate) => {
+    setStartDate(selectedDate);
+    setShowStartCalendar(false);
+  };
+
+  const handleEndDateSelect = (selectedDate) => {
+    setEndDate(selectedDate);
+    setShowEndCalendar(false);
+  };
+
+  // Handle click outside calendars
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (startCalendarRef.current && !startCalendarRef.current.contains(event.target)) {
+        setShowStartCalendar(false);
+      }
+      if (endCalendarRef.current && !endCalendarRef.current.contains(event.target)) {
+        setShowEndCalendar(false);
+      }
+    };
+
+    if (showStartCalendar || showEndCalendar) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showStartCalendar, showEndCalendar]);
+
   const addAdditionalExperience = () => {
     if (additionalExperiences.length < 5) {
       setAdditionalExperiences([...additionalExperiences, {
@@ -122,7 +202,11 @@ const JobseekerOnboardingExperience = () => {
         endDate: null,
         isCurrent: false,
         employmentType: 'Full-time',
-        description: ''
+        description: '',
+        showStartCalendar: false,
+        showEndCalendar: false,
+        startCalendarDate: new Date(),
+        endCalendarDate: new Date()
       }]);
     }
   };
@@ -358,29 +442,191 @@ const JobseekerOnboardingExperience = () => {
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1">Start Date*</label>
-                <input 
-                  type="month"
-                  value={startDate ? startDate.toISOString().slice(0, 7) : ''} 
-                  onChange={(e) => setStartDate(e.target.value ? new Date(e.target.value + '-01') : null)} 
-                  className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                    errors.startDate ? 'border-red-500' : 'border-gray-200'
-                  }`}
-                />
+                <div className="relative">
+                  <input 
+                    value={startDate ? startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
+                    onClick={() => setShowStartCalendar(true)}
+                    readOnly
+                    placeholder="Select start date"
+                    className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer ${
+                      errors.startDate ? 'border-red-500' : 'border-gray-200'
+                    }`}
+                  />
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  
+                  {showStartCalendar && (
+                    <div ref={startCalendarRef} className="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-50 p-4 w-80">
+                      {/* Calendar Header */}
+                      <div className="flex items-center justify-between mb-4">
+                        <button
+                          type="button"
+                          onClick={() => changeStartMonth(-1)}
+                          className="p-1 hover:bg-gray-100 rounded"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                          </svg>
+                        </button>
+                        <h3 className="text-lg font-semibold">
+                          {startCalendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                        </h3>
+                        <button
+                          type="button"
+                          onClick={() => changeStartMonth(1)}
+                          className="p-1 hover:bg-gray-100 rounded"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                      </div>
+
+                      {/* Days of week header */}
+                      <div className="grid grid-cols-7 gap-1 mb-2">
+                        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                          <div key={day} className="text-center text-sm font-medium text-gray-600 py-2">
+                            {day}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Calendar Days */}
+                      <div className="grid grid-cols-7 gap-1">
+                        {getDaysInMonth(startCalendarDate).map((day, index) => (
+                          <button
+                            key={index}
+                            type="button"
+                            onClick={() => day && handleStartDateSelect(day)}
+                            disabled={!day}
+                            className={`
+                              h-8 w-8 text-sm rounded hover:bg-blue-100 
+                              ${!day ? 'invisible' : ''}
+                              ${day && startDate && day.toDateString() === startDate.toDateString() 
+                                ? 'bg-blue-500 text-white hover:bg-blue-600' 
+                                : 'text-gray-700'
+                              }
+                            `}
+                          >
+                            {day?.getDate()}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Quick year navigation */}
+                      <div className="mt-4 flex justify-center space-x-2">
+                        <select
+                          value={startCalendarDate.getFullYear()}
+                          onChange={(e) => setStartCalendarDate(new Date(startCalendarDate.setFullYear(parseInt(e.target.value))))}
+                          className="text-sm border border-gray-300 rounded px-2 py-1"
+                        >
+                          {Array.from({length: 100}, (_, i) => new Date().getFullYear() - i).map(year => (
+                            <option key={year} value={year}>{year}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 {errors.startDate && (
                   <p className="mt-1 text-sm text-red-600">{errors.startDate}</p>
                 )}
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1">End Date*</label>
-                <input 
-                  type="month"
-                  value={endDate ? endDate.toISOString().slice(0, 7) : ''} 
-                  onChange={(e) => setEndDate(e.target.value ? new Date(e.target.value + '-01') : null)} 
-                  disabled={isCurrent}
-                  className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                    errors.endDate ? 'border-red-500' : 'border-gray-200'
-                  } ${isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : ''}`}
-                />
+                <div className="relative">
+                  <input 
+                    value={endDate ? endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
+                    onClick={() => !isCurrent && setShowEndCalendar(true)}
+                    readOnly
+                    placeholder="Select end date"
+                    disabled={isCurrent}
+                    className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      errors.endDate ? 'border-red-500' : 'border-gray-200'
+                    } ${isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'cursor-pointer'}`}
+                  />
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  
+                  {showEndCalendar && !isCurrent && (
+                    <div ref={endCalendarRef} className="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-50 p-4 w-80">
+                      {/* Calendar Header */}
+                      <div className="flex items-center justify-between mb-4">
+                        <button
+                          type="button"
+                          onClick={() => changeEndMonth(-1)}
+                          className="p-1 hover:bg-gray-100 rounded"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                          </svg>
+                        </button>
+                        <h3 className="text-lg font-semibold">
+                          {endCalendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                        </h3>
+                        <button
+                          type="button"
+                          onClick={() => changeEndMonth(1)}
+                          className="p-1 hover:bg-gray-100 rounded"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                      </div>
+
+                      {/* Days of week header */}
+                      <div className="grid grid-cols-7 gap-1 mb-2">
+                        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                          <div key={day} className="text-center text-sm font-medium text-gray-600 py-2">
+                            {day}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Calendar Days */}
+                      <div className="grid grid-cols-7 gap-1">
+                        {getDaysInMonth(endCalendarDate).map((day, index) => (
+                          <button
+                            key={index}
+                            type="button"
+                            onClick={() => day && handleEndDateSelect(day)}
+                            disabled={!day}
+                            className={`
+                              h-8 w-8 text-sm rounded hover:bg-blue-100 
+                              ${!day ? 'invisible' : ''}
+                              ${day && endDate && day.toDateString() === endDate.toDateString() 
+                                ? 'bg-blue-500 text-white hover:bg-blue-600' 
+                                : 'text-gray-700'
+                              }
+                            `}
+                          >
+                            {day?.getDate()}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Quick year navigation */}
+                      <div className="mt-4 flex justify-center space-x-2">
+                        <select
+                          value={endCalendarDate.getFullYear()}
+                          onChange={(e) => setEndCalendarDate(new Date(endCalendarDate.setFullYear(parseInt(e.target.value))))}
+                          className="text-sm border border-gray-300 rounded px-2 py-1"
+                        >
+                          {Array.from({length: 100}, (_, i) => new Date().getFullYear() - i).map(year => (
+                            <option key={year} value={year}>{year}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 {errors.endDate && (
                   <p className="mt-1 text-sm text-red-600">{errors.endDate}</p>
                 )}
@@ -499,24 +745,40 @@ const JobseekerOnboardingExperience = () => {
                   </div>
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">Start Date</label>
-                    <input 
-                      type="month"
-                      value={exp.startDate ? exp.startDate.toISOString().slice(0, 7) : ''} 
-                      onChange={(e) => updateAdditionalExperience(exp.id, 'startDate', e.target.value ? new Date(e.target.value + '-01') : null)} 
-                      className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
+                    <div className="relative">
+                      <input 
+                        value={exp.startDate ? exp.startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
+                        onClick={() => updateAdditionalExperience(exp.id, 'showStartCalendar', true)}
+                        readOnly
+                        placeholder="Select start date"
+                        className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+                      />
+                      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">End Date</label>
-                    <input 
-                      type="month"
-                      value={exp.endDate ? exp.endDate.toISOString().slice(0, 7) : ''} 
-                      onChange={(e) => updateAdditionalExperience(exp.id, 'endDate', e.target.value ? new Date(e.target.value + '-01') : null)} 
-                      disabled={exp.isCurrent}
-                      className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                        exp.isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : ''
-                      }`}
-                    />
+                    <div className="relative">
+                      <input 
+                        value={exp.endDate ? exp.endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
+                        onClick={() => !exp.isCurrent && updateAdditionalExperience(exp.id, 'showEndCalendar', true)}
+                        readOnly
+                        placeholder="Select end date"
+                        disabled={exp.isCurrent}
+                        className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                          exp.isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'cursor-pointer'
+                        }`}
+                      />
+                      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">Employment Type</label>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/dist/sweetalert2.css';
@@ -21,10 +21,98 @@ const JobseekerSignUp = () => {
     confirmPassword: '',
   });
 
+  // Calendar state
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [calendarDate, setCalendarDate] = useState(new Date());
+  const calendarRef = useRef(null);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  // Special handler for birthdate formatting
+  const handleBirthdateChange = (e) => {
+    const input = e.target.value;
+    
+    // Remove all non-numeric characters
+    const numbersOnly = input.replace(/\D/g, '');
+    
+    // Format as MM/DD/YY
+    let formatted = '';
+    
+    if (numbersOnly.length > 0) {
+      if (numbersOnly.length <= 2) {
+        formatted = numbersOnly;
+      } else if (numbersOnly.length <= 4) {
+        formatted = numbersOnly.slice(0, 2) + '/' + numbersOnly.slice(2);
+      } else if (numbersOnly.length <= 8) {
+        formatted = numbersOnly.slice(0, 2) + '/' + numbersOnly.slice(2, 4) + '/' + numbersOnly.slice(4, 8);
+      }
+    }
+    
+    // Limit to MM/DD/YYYY format (but we'll display as MM/DD/YY)
+    if (formatted.length > 10) {
+      formatted = formatted.slice(0, 10);
+    }
+    
+    setFormData((prev) => ({ ...prev, birthdate: formatted }));
+  };
+
+  // Calendar helper functions
+  const changeMonth = (direction) => {
+    setCalendarDate(prev => {
+      const newDate = new Date(prev);
+      newDate.setMonth(prev.getMonth() + direction);
+      return newDate;
+    });
+  };
+
+  const getDaysInMonth = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+    
+    const days = [];
+    
+    // Add empty cells for days before the first day of the month
+    for (let i = 0; i < startingDayOfWeek; i++) {
+      days.push(null);
+    }
+    
+    // Add days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      days.push(new Date(year, month, day));
+    }
+    
+    return days;
+  };
+
+  const handleDateSelect = (selectedDate) => {
+    const formattedDate = `${String(selectedDate.getMonth() + 1).padStart(2, '0')}/${String(selectedDate.getDate()).padStart(2, '0')}/${selectedDate.getFullYear()}`;
+    setFormData((prev) => ({ ...prev, birthdate: formattedDate }));
+    setShowCalendar(false);
+  };
+
+  // Handle click outside calendar
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+        setShowCalendar(false);
+      }
+    };
+
+    if (showCalendar) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showCalendar]);
 
   const navigate = useNavigate();
 
@@ -62,6 +150,46 @@ const JobseekerSignUp = () => {
         position: 'bottom-end'
       });
       return;
+    }
+
+    // Validate birthdate format and age
+    const birthdatePattern = /^\d{2}\/\d{2}\/\d{4}$/;
+    if (formData.birthdate && !birthdatePattern.test(formData.birthdate)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Date Format',
+        text: 'Please enter birthdate in MM/DD/YYYY format.',
+        timer: 4000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'bottom-end'
+      });
+      return;
+    }
+
+    // Validate age (must be at least 16 years old)
+    if (formData.birthdate) {
+      const birthDate = new Date(formData.birthdate);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      
+      if (age < 16) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Age Requirement',
+          text: 'You must be at least 16 years old to register.',
+          timer: 4000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
+        return;
+      }
     }
 
     localStorage.setItem('userEmail', formData.email);
@@ -153,7 +281,94 @@ const JobseekerSignUp = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input name="birthdate" value={formData.birthdate} onChange={handleChange} placeholder="mm/dd/yy" className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                <div className="relative">
+                  <input 
+                    name="birthdate" 
+                    value={formData.birthdate} 
+                    onClick={() => setShowCalendar(true)}
+                    readOnly
+                    placeholder="Select your birthdate"
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer w-full" 
+                  />
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  
+                  {showCalendar && (
+                    <div ref={calendarRef} className="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-50 p-4 w-80">
+                      {/* Calendar Header */}
+                      <div className="flex items-center justify-between mb-4">
+                        <button
+                          type="button"
+                          onClick={() => changeMonth(-1)}
+                          className="p-1 hover:bg-gray-100 rounded"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                          </svg>
+                        </button>
+                        <h3 className="text-lg font-semibold">
+                          {calendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                        </h3>
+                        <button
+                          type="button"
+                          onClick={() => changeMonth(1)}
+                          className="p-1 hover:bg-gray-100 rounded"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                      </div>
+
+                      {/* Days of week header */}
+                      <div className="grid grid-cols-7 gap-1 mb-2">
+                        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                          <div key={day} className="text-center text-sm font-medium text-gray-600 py-2">
+                            {day}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Calendar Days */}
+                      <div className="grid grid-cols-7 gap-1">
+                        {getDaysInMonth(calendarDate).map((day, index) => (
+                          <button
+                            key={index}
+                            type="button"
+                            onClick={() => day && handleDateSelect(day)}
+                            disabled={!day}
+                            className={`
+                              h-8 w-8 text-sm rounded hover:bg-blue-100 
+                              ${!day ? 'invisible' : ''}
+                              ${day && day.toDateString() === new Date(formData.birthdate).toDateString() 
+                                ? 'bg-blue-500 text-white hover:bg-blue-600' 
+                                : 'text-gray-700'
+                              }
+                            `}
+                          >
+                            {day?.getDate()}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Quick year navigation */}
+                      <div className="mt-4 flex justify-center space-x-2">
+                        <select
+                          value={calendarDate.getFullYear()}
+                          onChange={(e) => setCalendarDate(new Date(calendarDate.setFullYear(parseInt(e.target.value))))}
+                          className="text-sm border border-gray-300 rounded px-2 py-1"
+                        >
+                          {Array.from({length: 100}, (_, i) => new Date().getFullYear() - i).map(year => (
+                            <option key={year} value={year}>{year}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <select name="gender" value={formData.gender} onChange={handleChange} className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700">
                   <option value="" disabled>Choose your gender</option>
                   <option value="Male">Male</option>
@@ -205,5 +420,3 @@ const JobseekerSignUp = () => {
 };
 
 export default JobseekerSignUp;
-
-
