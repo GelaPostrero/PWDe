@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import EmployerHeader from '../../../components/ui/EmployerHeader.jsx';
 
 const EmployerOnboardingCompletion = () => {
   const navigate = useNavigate();
+  const [otherPlatform, setOtherPlatform] = useState([]);
   const [formData, setFormData] = useState({
     companyDescription: '',
     portfolioUrl: '',
     githubUrl: '',
-    otherPlatform: '',
-    otherUrl: ''
+    otherPortfolio: [],
   });
   const [agreements, setAgreements] = useState({
     termsOfService: false,
@@ -22,11 +23,27 @@ const EmployerOnboardingCompletion = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handlePlatformChange = (e) => {
+    const platform = e.target.value;
+    setFormData({
+      ...formData,
+      otherPortfolio: [platform, formData.otherPortfolio[1] || ""]
+    });
+  };
+
+  const handleUrlChange = (e) => {
+    const url = e.target.value;
+    setFormData({
+      ...formData,
+      otherPortfolio: [formData.otherPortfolio[0] || "", url]
+    });
+  };
+
   const handleAgreementChange = (agreement) => {
     setAgreements(prev => ({ ...prev, [agreement]: !prev[agreement] }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Check if all required agreements are accepted
@@ -34,9 +51,36 @@ const EmployerOnboardingCompletion = () => {
       alert('Please accept all required agreements to continue.');
       return;
     }
+    const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+    try {
+      var url = "http://localhost:4000/onboard/emp/onboard/complete-profile";
+      var headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
 
-    console.log('Company profile completed:', { formData, agreements });
-    navigate('/employer/dashboard');
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({formData})
+      });
+
+      const data = await response.json();
+      if(data.success) {
+        Swal.fire({
+          icon: 'success',
+          html: '<h5>You have finally completed your onboarding processes. \n<p><b>Welcome to your dashboard.</b></p></h6>',
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        })
+        navigate('/employer/dashboard');
+      }
+    } catch(error) {
+      console.error("Server error: " + error);
+    }
   };
 
   const handleBack = () => {
@@ -189,8 +233,8 @@ const EmployerOnboardingCompletion = () => {
                       <input
                         name="otherPlatform"
                         type="text"
-                        value={formData.otherPlatform}
-                        onChange={handleChange}
+                        value={formData.otherPortfolio[0] || ""}
+                        onChange={handlePlatformChange}
                         placeholder="Platform name"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
@@ -206,8 +250,8 @@ const EmployerOnboardingCompletion = () => {
                         <input
                           name="otherUrl"
                           type="url"
-                          value={formData.otherUrl}
-                          onChange={handleChange}
+                          value={formData.otherPortfolio[1] || ""}
+                          onChange={handleUrlChange}
                           placeholder="https://example.com/yourprofile"
                           className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />

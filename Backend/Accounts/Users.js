@@ -142,6 +142,14 @@ router.post('/users/register/employer', async (req, res) => {
     password
   } = req.body;
 
+  const existingEmail = await prisma.users.findUnique({
+    where: { email: companyEmail }
+  });
+  
+  if (existingEmail) {
+    return res.status(400).json({ error: 'This email is already registered.' });
+  }
+
   const existingEmailPhoneNumber = await prisma.users.findUnique({
     where: { 
       email: companyEmail,
@@ -172,9 +180,6 @@ router.post('/users/register/employer/documents', memoryUploadForEMP, async (req
   const email = req.body.companyEmail;
   const userData = tempEmpUser.get(email);
   const {
-    companyWebsite,
-    linkedinProfile,
-    otherSocialMedia,
     contactName,
     jobTitle,
     phoneNumber
@@ -197,9 +202,6 @@ router.post('/users/register/employer/documents', memoryUploadForEMP, async (req
   userData.taxDocuments = taxDocuments;
 
   // Store the rest of the employer data as before
-  userData.company_website = companyWebsite.trim();
-  userData.LinkedIn_profile = linkedinProfile.trim();
-  userData.other_social_media = otherSocialMedia ? otherSocialMedia.trim() : '';
   userData.contact_person_fullname = contactName.trim();
   userData.contact_person_job_title = jobTitle.trim();
   userData.contact_person_phone = phoneNumber.trim();
@@ -214,9 +216,6 @@ router.post('/users/register/employer/documents', memoryUploadForEMP, async (req
     businessRegistration: userData.businessRegistration ? userData.businessRegistration.map(file => file.originalname) : [],
     governmentId: userData.governmentId ? userData.governmentId.map(file => file.originalname) : [],
     taxDocuments: userData.taxDocuments ? userData.taxDocuments.map(file => file.originalname) : [],
-    company_website: userData.company_website,
-    LinkedIn_profile: userData.LinkedIn_profile,
-    other_social_media: userData.other_social_media,
     contact_person_fullname: userData.contact_person_fullname,
     contact_person_job_title: userData.contact_person_job_title,
     contact_person_phone: userData.contact_person_phone
@@ -314,6 +313,7 @@ router.post('/users/register/verify', async (req, res) => {
 
     const payload = {
       userId: user.user_id,
+      userType: userData.userType,
       pwd_id: pwd.pwd_id,
     }
 
@@ -375,8 +375,9 @@ router.post('/users/register/verify', async (req, res) => {
     })
 
     const payload = {
-      user_id: emp.user_id,
-      emp_id: emp.emp_id
+      userId: user.user_id,
+      userType: userData.userType,
+      emp_id: emp.employer_id
     }
 
     // GENERATE TOKEN EXPIRATION 3 HOURS 
@@ -473,7 +474,7 @@ router.post('/users/login', async (req, res) => {
   const payload = {
     userId: user.user_id,
     pwd_id: profile && user.user_type === 'PWD' ? profile.pwd_id : null,
-    emp_id: profile && user.user_type === 'Employer' ? profile.emp_id : null,
+    emp_id: profile && user.user_type === 'Employer' ? profile.employer_id : null,
     email: user.email,
     userType: user.user_type,
   }

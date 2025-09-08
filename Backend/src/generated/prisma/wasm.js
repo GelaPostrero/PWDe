@@ -217,20 +217,26 @@ exports.Prisma.Employer_ProfileScalarFieldEnum = {
   user_id: 'user_id',
   address: 'address',
   profile_picture: 'profile_picture',
-  LinkedIn_profile: 'LinkedIn_profile',
-  Other_Social_Media: 'Other_Social_Media',
   company_name: 'company_name',
   company_email: 'company_email',
   company_phone: 'company_phone',
   company_address: 'company_address',
-  company_website: 'company_website',
+  company_website_portfolio: 'company_website_portfolio',
+  company_github_profile: 'company_github_profile',
+  company_other_portfolio: 'company_other_portfolio',
+  company_description: 'company_description',
   contact_person_fullname: 'contact_person_fullname',
   contact_person_job_title: 'contact_person_job_title',
   contact_person_phone_number: 'contact_person_phone_number',
   date_of_birth: 'date_of_birth',
   businessRegistration: 'businessRegistration',
   governmentId: 'governmentId',
-  taxDocuments: 'taxDocuments'
+  taxDocuments: 'taxDocuments',
+  industryPreference: 'industryPreference',
+  jobRolesTypicallyHire: 'jobRolesTypicallyHire',
+  requiredPreferredSkills: 'requiredPreferredSkills',
+  workArrangement: 'workArrangement',
+  accessibilityFeatures: 'accessibilityFeatures'
 };
 
 exports.Prisma.ResumesScalarFieldEnum = {

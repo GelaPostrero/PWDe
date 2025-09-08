@@ -10965,13 +10965,13 @@ export namespace Prisma {
     user_id: number | null
     address: string | null
     profile_picture: string | null
-    LinkedIn_profile: string | null
-    Other_Social_Media: string | null
     company_name: string | null
     company_email: string | null
     company_phone: string | null
     company_address: string | null
-    company_website: string | null
+    company_website_portfolio: string | null
+    company_github_profile: string | null
+    company_description: string | null
     contact_person_fullname: string | null
     contact_person_job_title: string | null
     contact_person_phone_number: string | null
@@ -10979,6 +10979,7 @@ export namespace Prisma {
     businessRegistration: string | null
     governmentId: string | null
     taxDocuments: string | null
+    industryPreference: string | null
   }
 
   export type Employer_ProfileMaxAggregateOutputType = {
@@ -10989,13 +10990,13 @@ export namespace Prisma {
     user_id: number | null
     address: string | null
     profile_picture: string | null
-    LinkedIn_profile: string | null
-    Other_Social_Media: string | null
     company_name: string | null
     company_email: string | null
     company_phone: string | null
     company_address: string | null
-    company_website: string | null
+    company_website_portfolio: string | null
+    company_github_profile: string | null
+    company_description: string | null
     contact_person_fullname: string | null
     contact_person_job_title: string | null
     contact_person_phone_number: string | null
@@ -11003,6 +11004,7 @@ export namespace Prisma {
     businessRegistration: string | null
     governmentId: string | null
     taxDocuments: string | null
+    industryPreference: string | null
   }
 
   export type Employer_ProfileCountAggregateOutputType = {
@@ -11013,13 +11015,14 @@ export namespace Prisma {
     user_id: number
     address: number
     profile_picture: number
-    LinkedIn_profile: number
-    Other_Social_Media: number
     company_name: number
     company_email: number
     company_phone: number
     company_address: number
-    company_website: number
+    company_website_portfolio: number
+    company_github_profile: number
+    company_other_portfolio: number
+    company_description: number
     contact_person_fullname: number
     contact_person_job_title: number
     contact_person_phone_number: number
@@ -11027,6 +11030,11 @@ export namespace Prisma {
     businessRegistration: number
     governmentId: number
     taxDocuments: number
+    industryPreference: number
+    jobRolesTypicallyHire: number
+    requiredPreferredSkills: number
+    workArrangement: number
+    accessibilityFeatures: number
     _all: number
   }
 
@@ -11051,13 +11059,13 @@ export namespace Prisma {
     user_id?: true
     address?: true
     profile_picture?: true
-    LinkedIn_profile?: true
-    Other_Social_Media?: true
     company_name?: true
     company_email?: true
     company_phone?: true
     company_address?: true
-    company_website?: true
+    company_website_portfolio?: true
+    company_github_profile?: true
+    company_description?: true
     contact_person_fullname?: true
     contact_person_job_title?: true
     contact_person_phone_number?: true
@@ -11065,6 +11073,7 @@ export namespace Prisma {
     businessRegistration?: true
     governmentId?: true
     taxDocuments?: true
+    industryPreference?: true
   }
 
   export type Employer_ProfileMaxAggregateInputType = {
@@ -11075,13 +11084,13 @@ export namespace Prisma {
     user_id?: true
     address?: true
     profile_picture?: true
-    LinkedIn_profile?: true
-    Other_Social_Media?: true
     company_name?: true
     company_email?: true
     company_phone?: true
     company_address?: true
-    company_website?: true
+    company_website_portfolio?: true
+    company_github_profile?: true
+    company_description?: true
     contact_person_fullname?: true
     contact_person_job_title?: true
     contact_person_phone_number?: true
@@ -11089,6 +11098,7 @@ export namespace Prisma {
     businessRegistration?: true
     governmentId?: true
     taxDocuments?: true
+    industryPreference?: true
   }
 
   export type Employer_ProfileCountAggregateInputType = {
@@ -11099,13 +11109,14 @@ export namespace Prisma {
     user_id?: true
     address?: true
     profile_picture?: true
-    LinkedIn_profile?: true
-    Other_Social_Media?: true
     company_name?: true
     company_email?: true
     company_phone?: true
     company_address?: true
-    company_website?: true
+    company_website_portfolio?: true
+    company_github_profile?: true
+    company_other_portfolio?: true
+    company_description?: true
     contact_person_fullname?: true
     contact_person_job_title?: true
     contact_person_phone_number?: true
@@ -11113,6 +11124,11 @@ export namespace Prisma {
     businessRegistration?: true
     governmentId?: true
     taxDocuments?: true
+    industryPreference?: true
+    jobRolesTypicallyHire?: true
+    requiredPreferredSkills?: true
+    workArrangement?: true
+    accessibilityFeatures?: true
     _all?: true
   }
 
@@ -11210,13 +11226,14 @@ export namespace Prisma {
     user_id: number
     address: string
     profile_picture: string | null
-    LinkedIn_profile: string | null
-    Other_Social_Media: string | null
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website: string | null
+    company_website_portfolio: string | null
+    company_github_profile: string | null
+    company_other_portfolio: string[]
+    company_description: string | null
     contact_person_fullname: string | null
     contact_person_job_title: string | null
     contact_person_phone_number: string | null
@@ -11224,6 +11241,11 @@ export namespace Prisma {
     businessRegistration: string | null
     governmentId: string | null
     taxDocuments: string | null
+    industryPreference: string | null
+    jobRolesTypicallyHire: string[]
+    requiredPreferredSkills: string[]
+    workArrangement: string[]
+    accessibilityFeatures: string[]
     _count: Employer_ProfileCountAggregateOutputType | null
     _avg: Employer_ProfileAvgAggregateOutputType | null
     _sum: Employer_ProfileSumAggregateOutputType | null
@@ -11253,13 +11275,14 @@ export namespace Prisma {
     user_id?: boolean
     address?: boolean
     profile_picture?: boolean
-    LinkedIn_profile?: boolean
-    Other_Social_Media?: boolean
     company_name?: boolean
     company_email?: boolean
     company_phone?: boolean
     company_address?: boolean
-    company_website?: boolean
+    company_website_portfolio?: boolean
+    company_github_profile?: boolean
+    company_other_portfolio?: boolean
+    company_description?: boolean
     contact_person_fullname?: boolean
     contact_person_job_title?: boolean
     contact_person_phone_number?: boolean
@@ -11267,6 +11290,11 @@ export namespace Prisma {
     businessRegistration?: boolean
     governmentId?: boolean
     taxDocuments?: boolean
+    industryPreference?: boolean
+    jobRolesTypicallyHire?: boolean
+    requiredPreferredSkills?: boolean
+    workArrangement?: boolean
+    accessibilityFeatures?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
     job_listings?: boolean | Employer_Profile$job_listingsArgs<ExtArgs>
     transactions?: boolean | Employer_Profile$transactionsArgs<ExtArgs>
@@ -11281,13 +11309,14 @@ export namespace Prisma {
     user_id?: boolean
     address?: boolean
     profile_picture?: boolean
-    LinkedIn_profile?: boolean
-    Other_Social_Media?: boolean
     company_name?: boolean
     company_email?: boolean
     company_phone?: boolean
     company_address?: boolean
-    company_website?: boolean
+    company_website_portfolio?: boolean
+    company_github_profile?: boolean
+    company_other_portfolio?: boolean
+    company_description?: boolean
     contact_person_fullname?: boolean
     contact_person_job_title?: boolean
     contact_person_phone_number?: boolean
@@ -11295,6 +11324,11 @@ export namespace Prisma {
     businessRegistration?: boolean
     governmentId?: boolean
     taxDocuments?: boolean
+    industryPreference?: boolean
+    jobRolesTypicallyHire?: boolean
+    requiredPreferredSkills?: boolean
+    workArrangement?: boolean
+    accessibilityFeatures?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["employer_Profile"]>
 
@@ -11306,13 +11340,14 @@ export namespace Prisma {
     user_id?: boolean
     address?: boolean
     profile_picture?: boolean
-    LinkedIn_profile?: boolean
-    Other_Social_Media?: boolean
     company_name?: boolean
     company_email?: boolean
     company_phone?: boolean
     company_address?: boolean
-    company_website?: boolean
+    company_website_portfolio?: boolean
+    company_github_profile?: boolean
+    company_other_portfolio?: boolean
+    company_description?: boolean
     contact_person_fullname?: boolean
     contact_person_job_title?: boolean
     contact_person_phone_number?: boolean
@@ -11320,6 +11355,11 @@ export namespace Prisma {
     businessRegistration?: boolean
     governmentId?: boolean
     taxDocuments?: boolean
+    industryPreference?: boolean
+    jobRolesTypicallyHire?: boolean
+    requiredPreferredSkills?: boolean
+    workArrangement?: boolean
+    accessibilityFeatures?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["employer_Profile"]>
 
@@ -11331,13 +11371,14 @@ export namespace Prisma {
     user_id?: boolean
     address?: boolean
     profile_picture?: boolean
-    LinkedIn_profile?: boolean
-    Other_Social_Media?: boolean
     company_name?: boolean
     company_email?: boolean
     company_phone?: boolean
     company_address?: boolean
-    company_website?: boolean
+    company_website_portfolio?: boolean
+    company_github_profile?: boolean
+    company_other_portfolio?: boolean
+    company_description?: boolean
     contact_person_fullname?: boolean
     contact_person_job_title?: boolean
     contact_person_phone_number?: boolean
@@ -11345,9 +11386,14 @@ export namespace Prisma {
     businessRegistration?: boolean
     governmentId?: boolean
     taxDocuments?: boolean
+    industryPreference?: boolean
+    jobRolesTypicallyHire?: boolean
+    requiredPreferredSkills?: boolean
+    workArrangement?: boolean
+    accessibilityFeatures?: boolean
   }
 
-  export type Employer_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"rating" | "created_at" | "updated_at" | "employer_id" | "user_id" | "address" | "profile_picture" | "LinkedIn_profile" | "Other_Social_Media" | "company_name" | "company_email" | "company_phone" | "company_address" | "company_website" | "contact_person_fullname" | "contact_person_job_title" | "contact_person_phone_number" | "date_of_birth" | "businessRegistration" | "governmentId" | "taxDocuments", ExtArgs["result"]["employer_Profile"]>
+  export type Employer_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"rating" | "created_at" | "updated_at" | "employer_id" | "user_id" | "address" | "profile_picture" | "company_name" | "company_email" | "company_phone" | "company_address" | "company_website_portfolio" | "company_github_profile" | "company_other_portfolio" | "company_description" | "contact_person_fullname" | "contact_person_job_title" | "contact_person_phone_number" | "date_of_birth" | "businessRegistration" | "governmentId" | "taxDocuments" | "industryPreference" | "jobRolesTypicallyHire" | "requiredPreferredSkills" | "workArrangement" | "accessibilityFeatures", ExtArgs["result"]["employer_Profile"]>
   export type Employer_ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UsersDefaultArgs<ExtArgs>
     job_listings?: boolean | Employer_Profile$job_listingsArgs<ExtArgs>
@@ -11376,13 +11422,14 @@ export namespace Prisma {
       user_id: number
       address: string
       profile_picture: string | null
-      LinkedIn_profile: string | null
-      Other_Social_Media: string | null
       company_name: string
       company_email: string
       company_phone: string
       company_address: string
-      company_website: string | null
+      company_website_portfolio: string | null
+      company_github_profile: string | null
+      company_other_portfolio: string[]
+      company_description: string | null
       contact_person_fullname: string | null
       contact_person_job_title: string | null
       contact_person_phone_number: string | null
@@ -11390,6 +11437,11 @@ export namespace Prisma {
       businessRegistration: string | null
       governmentId: string | null
       taxDocuments: string | null
+      industryPreference: string | null
+      jobRolesTypicallyHire: string[]
+      requiredPreferredSkills: string[]
+      workArrangement: string[]
+      accessibilityFeatures: string[]
     }, ExtArgs["result"]["employer_Profile"]>
     composites: {}
   }
@@ -11823,13 +11875,14 @@ export namespace Prisma {
     readonly user_id: FieldRef<"Employer_Profile", 'Int'>
     readonly address: FieldRef<"Employer_Profile", 'String'>
     readonly profile_picture: FieldRef<"Employer_Profile", 'String'>
-    readonly LinkedIn_profile: FieldRef<"Employer_Profile", 'String'>
-    readonly Other_Social_Media: FieldRef<"Employer_Profile", 'String'>
     readonly company_name: FieldRef<"Employer_Profile", 'String'>
     readonly company_email: FieldRef<"Employer_Profile", 'String'>
     readonly company_phone: FieldRef<"Employer_Profile", 'String'>
     readonly company_address: FieldRef<"Employer_Profile", 'String'>
-    readonly company_website: FieldRef<"Employer_Profile", 'String'>
+    readonly company_website_portfolio: FieldRef<"Employer_Profile", 'String'>
+    readonly company_github_profile: FieldRef<"Employer_Profile", 'String'>
+    readonly company_other_portfolio: FieldRef<"Employer_Profile", 'String[]'>
+    readonly company_description: FieldRef<"Employer_Profile", 'String'>
     readonly contact_person_fullname: FieldRef<"Employer_Profile", 'String'>
     readonly contact_person_job_title: FieldRef<"Employer_Profile", 'String'>
     readonly contact_person_phone_number: FieldRef<"Employer_Profile", 'String'>
@@ -11837,6 +11890,11 @@ export namespace Prisma {
     readonly businessRegistration: FieldRef<"Employer_Profile", 'String'>
     readonly governmentId: FieldRef<"Employer_Profile", 'String'>
     readonly taxDocuments: FieldRef<"Employer_Profile", 'String'>
+    readonly industryPreference: FieldRef<"Employer_Profile", 'String'>
+    readonly jobRolesTypicallyHire: FieldRef<"Employer_Profile", 'String[]'>
+    readonly requiredPreferredSkills: FieldRef<"Employer_Profile", 'String[]'>
+    readonly workArrangement: FieldRef<"Employer_Profile", 'String[]'>
+    readonly accessibilityFeatures: FieldRef<"Employer_Profile", 'String[]'>
   }
     
 
@@ -28854,20 +28912,26 @@ export namespace Prisma {
     user_id: 'user_id',
     address: 'address',
     profile_picture: 'profile_picture',
-    LinkedIn_profile: 'LinkedIn_profile',
-    Other_Social_Media: 'Other_Social_Media',
     company_name: 'company_name',
     company_email: 'company_email',
     company_phone: 'company_phone',
     company_address: 'company_address',
-    company_website: 'company_website',
+    company_website_portfolio: 'company_website_portfolio',
+    company_github_profile: 'company_github_profile',
+    company_other_portfolio: 'company_other_portfolio',
+    company_description: 'company_description',
     contact_person_fullname: 'contact_person_fullname',
     contact_person_job_title: 'contact_person_job_title',
     contact_person_phone_number: 'contact_person_phone_number',
     date_of_birth: 'date_of_birth',
     businessRegistration: 'businessRegistration',
     governmentId: 'governmentId',
-    taxDocuments: 'taxDocuments'
+    taxDocuments: 'taxDocuments',
+    industryPreference: 'industryPreference',
+    jobRolesTypicallyHire: 'jobRolesTypicallyHire',
+    requiredPreferredSkills: 'requiredPreferredSkills',
+    workArrangement: 'workArrangement',
+    accessibilityFeatures: 'accessibilityFeatures'
   };
 
   export type Employer_ProfileScalarFieldEnum = (typeof Employer_ProfileScalarFieldEnum)[keyof typeof Employer_ProfileScalarFieldEnum]
@@ -30031,13 +30095,14 @@ export namespace Prisma {
     user_id?: IntFilter<"Employer_Profile"> | number
     address?: StringFilter<"Employer_Profile"> | string
     profile_picture?: StringNullableFilter<"Employer_Profile"> | string | null
-    LinkedIn_profile?: StringNullableFilter<"Employer_Profile"> | string | null
-    Other_Social_Media?: StringNullableFilter<"Employer_Profile"> | string | null
     company_name?: StringFilter<"Employer_Profile"> | string
     company_email?: StringFilter<"Employer_Profile"> | string
     company_phone?: StringFilter<"Employer_Profile"> | string
     company_address?: StringFilter<"Employer_Profile"> | string
-    company_website?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_website_portfolio?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_github_profile?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_other_portfolio?: StringNullableListFilter<"Employer_Profile">
+    company_description?: StringNullableFilter<"Employer_Profile"> | string | null
     contact_person_fullname?: StringNullableFilter<"Employer_Profile"> | string | null
     contact_person_job_title?: StringNullableFilter<"Employer_Profile"> | string | null
     contact_person_phone_number?: StringNullableFilter<"Employer_Profile"> | string | null
@@ -30045,6 +30110,11 @@ export namespace Prisma {
     businessRegistration?: StringNullableFilter<"Employer_Profile"> | string | null
     governmentId?: StringNullableFilter<"Employer_Profile"> | string | null
     taxDocuments?: StringNullableFilter<"Employer_Profile"> | string | null
+    industryPreference?: StringNullableFilter<"Employer_Profile"> | string | null
+    jobRolesTypicallyHire?: StringNullableListFilter<"Employer_Profile">
+    requiredPreferredSkills?: StringNullableListFilter<"Employer_Profile">
+    workArrangement?: StringNullableListFilter<"Employer_Profile">
+    accessibilityFeatures?: StringNullableListFilter<"Employer_Profile">
     user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
     job_listings?: Job_ListingsListRelationFilter
     transactions?: TransactionsListRelationFilter
@@ -30058,13 +30128,14 @@ export namespace Prisma {
     user_id?: SortOrder
     address?: SortOrder
     profile_picture?: SortOrderInput | SortOrder
-    LinkedIn_profile?: SortOrderInput | SortOrder
-    Other_Social_Media?: SortOrderInput | SortOrder
     company_name?: SortOrder
     company_email?: SortOrder
     company_phone?: SortOrder
     company_address?: SortOrder
-    company_website?: SortOrderInput | SortOrder
+    company_website_portfolio?: SortOrderInput | SortOrder
+    company_github_profile?: SortOrderInput | SortOrder
+    company_other_portfolio?: SortOrder
+    company_description?: SortOrderInput | SortOrder
     contact_person_fullname?: SortOrderInput | SortOrder
     contact_person_job_title?: SortOrderInput | SortOrder
     contact_person_phone_number?: SortOrderInput | SortOrder
@@ -30072,6 +30143,11 @@ export namespace Prisma {
     businessRegistration?: SortOrderInput | SortOrder
     governmentId?: SortOrderInput | SortOrder
     taxDocuments?: SortOrderInput | SortOrder
+    industryPreference?: SortOrderInput | SortOrder
+    jobRolesTypicallyHire?: SortOrder
+    requiredPreferredSkills?: SortOrder
+    workArrangement?: SortOrder
+    accessibilityFeatures?: SortOrder
     user?: UsersOrderByWithRelationInput
     job_listings?: Job_ListingsOrderByRelationAggregateInput
     transactions?: transactionsOrderByRelationAggregateInput
@@ -30089,12 +30165,13 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Employer_Profile"> | Date | string
     address?: StringFilter<"Employer_Profile"> | string
     profile_picture?: StringNullableFilter<"Employer_Profile"> | string | null
-    LinkedIn_profile?: StringNullableFilter<"Employer_Profile"> | string | null
-    Other_Social_Media?: StringNullableFilter<"Employer_Profile"> | string | null
     company_name?: StringFilter<"Employer_Profile"> | string
     company_phone?: StringFilter<"Employer_Profile"> | string
     company_address?: StringFilter<"Employer_Profile"> | string
-    company_website?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_website_portfolio?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_github_profile?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_other_portfolio?: StringNullableListFilter<"Employer_Profile">
+    company_description?: StringNullableFilter<"Employer_Profile"> | string | null
     contact_person_fullname?: StringNullableFilter<"Employer_Profile"> | string | null
     contact_person_job_title?: StringNullableFilter<"Employer_Profile"> | string | null
     contact_person_phone_number?: StringNullableFilter<"Employer_Profile"> | string | null
@@ -30102,6 +30179,11 @@ export namespace Prisma {
     businessRegistration?: StringNullableFilter<"Employer_Profile"> | string | null
     governmentId?: StringNullableFilter<"Employer_Profile"> | string | null
     taxDocuments?: StringNullableFilter<"Employer_Profile"> | string | null
+    industryPreference?: StringNullableFilter<"Employer_Profile"> | string | null
+    jobRolesTypicallyHire?: StringNullableListFilter<"Employer_Profile">
+    requiredPreferredSkills?: StringNullableListFilter<"Employer_Profile">
+    workArrangement?: StringNullableListFilter<"Employer_Profile">
+    accessibilityFeatures?: StringNullableListFilter<"Employer_Profile">
     user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
     job_listings?: Job_ListingsListRelationFilter
     transactions?: TransactionsListRelationFilter
@@ -30115,13 +30197,14 @@ export namespace Prisma {
     user_id?: SortOrder
     address?: SortOrder
     profile_picture?: SortOrderInput | SortOrder
-    LinkedIn_profile?: SortOrderInput | SortOrder
-    Other_Social_Media?: SortOrderInput | SortOrder
     company_name?: SortOrder
     company_email?: SortOrder
     company_phone?: SortOrder
     company_address?: SortOrder
-    company_website?: SortOrderInput | SortOrder
+    company_website_portfolio?: SortOrderInput | SortOrder
+    company_github_profile?: SortOrderInput | SortOrder
+    company_other_portfolio?: SortOrder
+    company_description?: SortOrderInput | SortOrder
     contact_person_fullname?: SortOrderInput | SortOrder
     contact_person_job_title?: SortOrderInput | SortOrder
     contact_person_phone_number?: SortOrderInput | SortOrder
@@ -30129,6 +30212,11 @@ export namespace Prisma {
     businessRegistration?: SortOrderInput | SortOrder
     governmentId?: SortOrderInput | SortOrder
     taxDocuments?: SortOrderInput | SortOrder
+    industryPreference?: SortOrderInput | SortOrder
+    jobRolesTypicallyHire?: SortOrder
+    requiredPreferredSkills?: SortOrder
+    workArrangement?: SortOrder
+    accessibilityFeatures?: SortOrder
     _count?: Employer_ProfileCountOrderByAggregateInput
     _avg?: Employer_ProfileAvgOrderByAggregateInput
     _max?: Employer_ProfileMaxOrderByAggregateInput
@@ -30147,13 +30235,14 @@ export namespace Prisma {
     user_id?: IntWithAggregatesFilter<"Employer_Profile"> | number
     address?: StringWithAggregatesFilter<"Employer_Profile"> | string
     profile_picture?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
-    LinkedIn_profile?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
-    Other_Social_Media?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
     company_name?: StringWithAggregatesFilter<"Employer_Profile"> | string
     company_email?: StringWithAggregatesFilter<"Employer_Profile"> | string
     company_phone?: StringWithAggregatesFilter<"Employer_Profile"> | string
     company_address?: StringWithAggregatesFilter<"Employer_Profile"> | string
-    company_website?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
+    company_website_portfolio?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
+    company_github_profile?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
+    company_other_portfolio?: StringNullableListFilter<"Employer_Profile">
+    company_description?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
     contact_person_fullname?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
     contact_person_job_title?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
     contact_person_phone_number?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
@@ -30161,6 +30250,11 @@ export namespace Prisma {
     businessRegistration?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
     governmentId?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
     taxDocuments?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
+    industryPreference?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
+    jobRolesTypicallyHire?: StringNullableListFilter<"Employer_Profile">
+    requiredPreferredSkills?: StringNullableListFilter<"Employer_Profile">
+    workArrangement?: StringNullableListFilter<"Employer_Profile">
+    accessibilityFeatures?: StringNullableListFilter<"Employer_Profile">
   }
 
   export type ResumesWhereInput = {
@@ -31975,13 +32069,14 @@ export namespace Prisma {
     updated_at?: Date | string
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -31989,6 +32084,11 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
     user: UsersCreateNestedOneWithoutEmployer_ProfileInput
     job_listings?: Job_ListingsCreateNestedManyWithoutEmployerInput
     transactions?: transactionsCreateNestedManyWithoutPayerInput
@@ -32002,13 +32102,14 @@ export namespace Prisma {
     user_id: number
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -32016,6 +32117,11 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
     job_listings?: Job_ListingsUncheckedCreateNestedManyWithoutEmployerInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayerInput
   }
@@ -32026,13 +32132,14 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32040,6 +32147,11 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
     user?: UsersUpdateOneRequiredWithoutEmployer_ProfileNestedInput
     job_listings?: Job_ListingsUpdateManyWithoutEmployerNestedInput
     transactions?: transactionsUpdateManyWithoutPayerNestedInput
@@ -32053,13 +32165,14 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32067,6 +32180,11 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
     job_listings?: Job_ListingsUncheckedUpdateManyWithoutEmployerNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayerNestedInput
   }
@@ -32079,13 +32197,14 @@ export namespace Prisma {
     user_id: number
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -32093,6 +32212,11 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
   }
 
   export type Employer_ProfileUpdateManyMutationInput = {
@@ -32101,13 +32225,14 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32115,6 +32240,11 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
   }
 
   export type Employer_ProfileUncheckedUpdateManyInput = {
@@ -32125,13 +32255,14 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32139,6 +32270,11 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
   }
 
   export type ResumesCreateInput = {
@@ -34054,13 +34190,14 @@ export namespace Prisma {
     user_id?: SortOrder
     address?: SortOrder
     profile_picture?: SortOrder
-    LinkedIn_profile?: SortOrder
-    Other_Social_Media?: SortOrder
     company_name?: SortOrder
     company_email?: SortOrder
     company_phone?: SortOrder
     company_address?: SortOrder
-    company_website?: SortOrder
+    company_website_portfolio?: SortOrder
+    company_github_profile?: SortOrder
+    company_other_portfolio?: SortOrder
+    company_description?: SortOrder
     contact_person_fullname?: SortOrder
     contact_person_job_title?: SortOrder
     contact_person_phone_number?: SortOrder
@@ -34068,6 +34205,11 @@ export namespace Prisma {
     businessRegistration?: SortOrder
     governmentId?: SortOrder
     taxDocuments?: SortOrder
+    industryPreference?: SortOrder
+    jobRolesTypicallyHire?: SortOrder
+    requiredPreferredSkills?: SortOrder
+    workArrangement?: SortOrder
+    accessibilityFeatures?: SortOrder
   }
 
   export type Employer_ProfileAvgOrderByAggregateInput = {
@@ -34084,13 +34226,13 @@ export namespace Prisma {
     user_id?: SortOrder
     address?: SortOrder
     profile_picture?: SortOrder
-    LinkedIn_profile?: SortOrder
-    Other_Social_Media?: SortOrder
     company_name?: SortOrder
     company_email?: SortOrder
     company_phone?: SortOrder
     company_address?: SortOrder
-    company_website?: SortOrder
+    company_website_portfolio?: SortOrder
+    company_github_profile?: SortOrder
+    company_description?: SortOrder
     contact_person_fullname?: SortOrder
     contact_person_job_title?: SortOrder
     contact_person_phone_number?: SortOrder
@@ -34098,6 +34240,7 @@ export namespace Prisma {
     businessRegistration?: SortOrder
     governmentId?: SortOrder
     taxDocuments?: SortOrder
+    industryPreference?: SortOrder
   }
 
   export type Employer_ProfileMinOrderByAggregateInput = {
@@ -34108,13 +34251,13 @@ export namespace Prisma {
     user_id?: SortOrder
     address?: SortOrder
     profile_picture?: SortOrder
-    LinkedIn_profile?: SortOrder
-    Other_Social_Media?: SortOrder
     company_name?: SortOrder
     company_email?: SortOrder
     company_phone?: SortOrder
     company_address?: SortOrder
-    company_website?: SortOrder
+    company_website_portfolio?: SortOrder
+    company_github_profile?: SortOrder
+    company_description?: SortOrder
     contact_person_fullname?: SortOrder
     contact_person_job_title?: SortOrder
     contact_person_phone_number?: SortOrder
@@ -34122,6 +34265,7 @@ export namespace Prisma {
     businessRegistration?: SortOrder
     governmentId?: SortOrder
     taxDocuments?: SortOrder
+    industryPreference?: SortOrder
   }
 
   export type Employer_ProfileSumOrderByAggregateInput = {
@@ -36113,6 +36257,26 @@ export namespace Prisma {
     update?: XOR<XOR<Pwd_ProfileUpdateToOneWithWhereWithoutJob_preferencesInput, Pwd_ProfileUpdateWithoutJob_preferencesInput>, Pwd_ProfileUncheckedUpdateWithoutJob_preferencesInput>
   }
 
+  export type Employer_ProfileCreatecompany_other_portfolioInput = {
+    set: string[]
+  }
+
+  export type Employer_ProfileCreatejobRolesTypicallyHireInput = {
+    set: string[]
+  }
+
+  export type Employer_ProfileCreaterequiredPreferredSkillsInput = {
+    set: string[]
+  }
+
+  export type Employer_ProfileCreateworkArrangementInput = {
+    set: string[]
+  }
+
+  export type Employer_ProfileCreateaccessibilityFeaturesInput = {
+    set: string[]
+  }
+
   export type UsersCreateNestedOneWithoutEmployer_ProfileInput = {
     create?: XOR<UsersCreateWithoutEmployer_ProfileInput, UsersUncheckedCreateWithoutEmployer_ProfileInput>
     connectOrCreate?: UsersCreateOrConnectWithoutEmployer_ProfileInput
@@ -36153,6 +36317,31 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type Employer_ProfileUpdatecompany_other_portfolioInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type Employer_ProfileUpdatejobRolesTypicallyHireInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type Employer_ProfileUpdaterequiredPreferredSkillsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type Employer_ProfileUpdateworkArrangementInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type Employer_ProfileUpdateaccessibilityFeaturesInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type UsersUpdateOneRequiredWithoutEmployer_ProfileNestedInput = {
@@ -37436,13 +37625,14 @@ export namespace Prisma {
     updated_at?: Date | string
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -37450,6 +37640,11 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
     job_listings?: Job_ListingsCreateNestedManyWithoutEmployerInput
     transactions?: transactionsCreateNestedManyWithoutPayerInput
   }
@@ -37461,13 +37656,14 @@ export namespace Prisma {
     employer_id?: number
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -37475,6 +37671,11 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
     job_listings?: Job_ListingsUncheckedCreateNestedManyWithoutEmployerInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayerInput
   }
@@ -37877,13 +38078,14 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37891,6 +38093,11 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
     job_listings?: Job_ListingsUpdateManyWithoutEmployerNestedInput
     transactions?: transactionsUpdateManyWithoutPayerNestedInput
   }
@@ -37902,13 +38109,14 @@ export namespace Prisma {
     employer_id?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37916,6 +38124,11 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
     job_listings?: Job_ListingsUncheckedUpdateManyWithoutEmployerNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayerNestedInput
   }
@@ -41167,13 +41380,14 @@ export namespace Prisma {
     updated_at?: Date | string
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -41181,6 +41395,11 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
     user: UsersCreateNestedOneWithoutEmployer_ProfileInput
     job_listings?: Job_ListingsCreateNestedManyWithoutEmployerInput
   }
@@ -41193,13 +41412,14 @@ export namespace Prisma {
     user_id: number
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -41207,6 +41427,11 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
     job_listings?: Job_ListingsUncheckedCreateNestedManyWithoutEmployerInput
   }
 
@@ -41348,13 +41573,14 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41362,6 +41588,11 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
     user?: UsersUpdateOneRequiredWithoutEmployer_ProfileNestedInput
     job_listings?: Job_ListingsUpdateManyWithoutEmployerNestedInput
   }
@@ -41374,13 +41605,14 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41388,6 +41620,11 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
     job_listings?: Job_ListingsUncheckedUpdateManyWithoutEmployerNestedInput
   }
 
@@ -41627,13 +41864,14 @@ export namespace Prisma {
     updated_at?: Date | string
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -41641,6 +41879,11 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
     user: UsersCreateNestedOneWithoutEmployer_ProfileInput
     transactions?: transactionsCreateNestedManyWithoutPayerInput
   }
@@ -41653,13 +41896,14 @@ export namespace Prisma {
     user_id: number
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -41667,6 +41911,11 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayerInput
   }
 
@@ -41761,13 +42010,14 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41775,6 +42025,11 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
     user?: UsersUpdateOneRequiredWithoutEmployer_ProfileNestedInput
     transactions?: transactionsUpdateManyWithoutPayerNestedInput
   }
@@ -41787,13 +42042,14 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41801,6 +42057,11 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
     transactions?: transactionsUncheckedUpdateManyWithoutPayerNestedInput
   }
 

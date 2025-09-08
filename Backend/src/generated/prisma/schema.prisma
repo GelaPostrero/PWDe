@@ -130,13 +130,14 @@ model Employer_Profile {
   user_id                     Int            @unique
   address                     String
   profile_picture             String?
-  LinkedIn_profile            String?
-  Other_Social_Media          String?
   company_name                String
   company_email               String         @unique
   company_phone               String
   company_address             String
-  company_website             String?
+  company_website_portfolio   String?
+  company_github_profile      String?
+  company_other_portfolio     String[]
+  company_description         String?
   contact_person_fullname     String?
   contact_person_job_title    String?
   contact_person_phone_number String?
@@ -144,6 +145,11 @@ model Employer_Profile {
   businessRegistration        String?
   governmentId                String?
   taxDocuments                String?
+  industryPreference          String?
+  jobRolesTypicallyHire       String[]
+  requiredPreferredSkills     String[]
+  workArrangement             String[]
+  accessibilityFeatures       String[]
   user                        Users          @relation("UserToEmployer", fields: [user_id], references: [user_id], onDelete: Cascade)
   job_listings                Job_Listings[]
   transactions                transactions[] @relation("TransactionPayer")

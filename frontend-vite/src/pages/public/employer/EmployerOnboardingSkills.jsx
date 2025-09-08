@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import EmployerHeader from '../../../components/ui/EmployerHeader.jsx';
 
 const EmployerOnboardingSkills = () => {
@@ -61,6 +62,7 @@ const EmployerOnboardingSkills = () => {
     } else {
       setSelectedSkills([...selectedSkills, skill.name + ' (' + skill.category + ')']);
     }
+    console.log("Selected Skill: " + selectedSkills);
   };
 
   const removeRole = (role) => {
@@ -71,8 +73,41 @@ const EmployerOnboardingSkills = () => {
     setSelectedSkills(selectedSkills.filter(s => s !== skill));
   };
 
-  const handleNext = () => {
-    navigate('/onboarding/employer/education');
+  const handleNext = async () => {
+    const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+    const cleanSkills = selectedSkills.map(skill => skill.split(" (")[0]);
+    console.log(`Selected Industry: ${selectedIndustry} \nSelected Role: ${selectedRoles} \nSelected SKill: ${cleanSkills}`); //debu
+
+    try {
+      var url = "http://localhost:4000/onboard/emp/onboard/jobroles-requirements";
+      var headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({selectedIndustry, selectedRoles, cleanSkills})
+      });
+
+      const data = await response.json();
+      console.log("Errpr: ", data.error);
+      if(data.success) {
+        Swal.fire({
+          icon: 'success',
+          html: '<h5><b>Job Roles & Requirements</b></h5>\n<h6>You may now fillup your Work Environment.</h6>',
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        })
+        navigate('/onboarding/employer/education');
+      }
+    } catch (error) {
+      console.error('Server error.', error);
+    }
   };
 
   const handleBack = () => {

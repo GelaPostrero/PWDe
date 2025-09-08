@@ -5,13 +5,14 @@ const fileFilter = require('./fileFilterProfilePic');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const userId = req.user.userId
+    const userId = req.user?.userId
+    const userType = req.user?.userType
 
-    if (!userId) {
-      return cb(new Error('user_id is required in form-data'), false);
+    if (!userId || !userType) {
+      return cb(new Error('userId and userType is required in form-data'), false);
     }
 
-    const baseDir = path.join(__dirname, '../Documents/PWDs');
+    const baseDir = path.join(__dirname, `../Documents/${userType === 'PWD' ? 'PWDs' : 'Employer'}`);
     const userDir = path.join(baseDir, userId.toString());
 
     if (!fs.existsSync(userDir)) {

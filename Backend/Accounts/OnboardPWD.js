@@ -51,41 +51,23 @@ router.post('/pwd/onboard/assessment', authenticateToken, async (req, res) => {
 // Education & Qualification ni nga API for PWD
 router.post('/pwd/onboard/education', authenticateToken, async (req, res) => {
     const pwd_id = req.user.pwd_id;
-    const {
-        highestLevel,
-        institutionName,
-        location,
-        fieldOfStudy,
-        degree,
-        graduationStatus,
-        graduationYear,
-    } = req.body;
+    const { educations, highestLevel } = req.body; // expects array
 
     if (!pwd_id) {
         return res.status(400).json({ error: 'User not found!' });
     }
 
-    try {
-        const educationData = {
-            pwd_id,
-            highestLevel,
-            institutionName,
-            location,
-            fieldOfStudy,
-            degree,
-            graduationStatus,
-            graduationYear,
-        };
+    if (!Array.isArray(educations)) {
+        return res.status(400).json({ error: 'Education must be an array.' });
+    }
 
-        mergeStepData(pwd_id, 'education', {
-            highestLevel,
-            institutionName,
-            location,
-            fieldOfStudy,
-            degree,
-            graduationStatus,
-            graduationYear,
-        });
+    if (educations.length >= 5) {
+        return res.status(400).json({ error: 'You can only add up to 5 education entries.' });
+    }
+
+    try {
+        mergeStepData(pwd_id, 'education', { educations, highestLevel });
+
         console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
         res.status(200).json({
             message: 'PWD education data received successfully.',
@@ -100,53 +82,22 @@ router.post('/pwd/onboard/education', authenticateToken, async (req, res) => {
 // Work Experience ni nga API for PWD
 router.post('/pwd/onboard/work-experience', authenticateToken, async (req, res) => {
     const pwd_id = req.user.pwd_id;
-    const {
-        jobTitle,
-        company,
-        location,
-        country,
-        startMonth,
-        startYear,
-        endMonth,
-        endYear,
-        isCurrent,
-        employmentType,
-        description,
-    } = req.body;
+    const {experience} = req.body; //expeccts array
 
     if (!pwd_id) {
         return res.status(400).json({ error: 'User not found!' });
     }
 
+    if (!Array.isArray(experience)) {
+        return res.status(400).json({ error: 'Education must be an array.' });
+    }
+
+    if (experience.length >= 5) {
+        return res.status(400).json({ error: 'You can only add up to 5 education entries.' });
+    }
+
     try {
-        const workExperienceData = {
-            jobTitle,
-            company,
-            location,
-            country,
-            startMonth,
-            startYear,
-            endMonth,
-            endYear,
-            isCurrent,
-            employmentType,
-            description,
-        };
-
-        mergeStepData(pwd_id, 'workExperience', {
-            jobTitle,
-            company,
-            location,
-            country,
-            startMonth,
-            startYear,
-            endMonth,
-            endYear,
-            isCurrent,
-            employmentType,
-            description,
-        });
-
+        mergeStepData(pwd_id, 'workExperience', experience);
         console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
         res.status(200).json({
             message: 'PWD work experience data received successfully.',
@@ -226,7 +177,7 @@ router.post('/pwd/onboard/job-preferences', authenticateToken, async (req, res) 
         return res.status(500).json({ error: 'Failed to process PWD job preferences.' });
     }
 });
-// MIC TEST MIC TEST
+// TEST TEST 
 router.get('/pwd/onboard/temp-data/:pwd_id', (req, res) => {
     const { pwd_id } = req.params;
 
@@ -247,6 +198,7 @@ router.get('/pwd/onboard/temp-data/:pwd_id', (req, res) => {
 // Last onboarding step ni nga API for PWD
 router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req, res) => {
     const user_id = req.user.userId;
+    const userType = req.user.userType;
     const pwd_id = req.user.pwd_id;
     const {
         role,
@@ -275,10 +227,16 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
         console.log("PWD ID: ", pwd_id);
         console.log("USER ID: ", user_id);
         const tempdata = tempOnboardPWDs.get(String(pwd_id));
+        let { educations, highestLevel } = tempdata?.education || {};
+        const workExperiences = tempdata?.workExperience || [];
 
         if (!tempdata) {
             console.log("No temoporary data found!")
             return res.status(404).json({ error: 'No temporary data found for this PWD.' });
+        }
+
+        if (!Array.isArray(educations)) {
+            return res.status(400).json({ error: 'Education must be an array.' });
         }
 
         console.log("Temp Data: ", tempOnboardPWDs.get(String(pwd_id)))
@@ -294,60 +252,64 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
                 profile_visibility: visibility,
                 profile_picture: profilePhoto ? profilePhoto.filename : null,
                 resume_cv: resume ? resume.filename : null,
-                profession: tempdata.assessment.profession,
-                skills: tempdata.assessment.skills
+                profession: tempdata.assessment?.profession,
+                skills: tempdata.assessment?.skills || []
             }
         });
 
-        const educationData = await prisma.pwd_Education.create({
-            data: {
-                pwd_id: pwd_id,
-                highest_level: tempdata.education.highestLevel,
-                institution: tempdata.education.institutionName,
-                location: tempdata.education.location,
-                field_of_study: tempdata.education.fieldOfStudy,
-                degree: tempdata.education.degree,
-                graduation_details: tempdata.education.graduationStatus,
-                year_graduated: tempdata.education.graduationYear
-            }
+        const educationRecords = educations.map((edu) => ({
+            pwd_id,
+            highest_level: highestLevel,
+            institution: edu?.institutionName,
+            location: edu?.location,
+            field_of_study: edu?.fieldOfStudy,
+            degree: edu?.degree,
+            graduation_details: edu?.graduationStatus,
+            year_graduated: edu?.graduationYear
+        }));
+
+        const educationData = await prisma.pwd_Education.createMany({
+            data: educationRecords
         });
 
-        const startDate = `${tempdata.workExperience.startMonth} ${tempdata.workExperience.startYear} `;
-        const endDate = `${tempdata.workExperience.endMonth} ${tempdata.workExperience.endYear}`;
+        const startDate = `${tempdata.workExperience?.startMonth} ${tempdata.workExperience?.startYear} `;
+        const endDate = `${tempdata.workExperience?.endMonth} ${tempdata.workExperience?.endYear}`;
 
-        const workExperienceData = await prisma.pwd_Experience.create({
-            data: {
-                pwd_id: pwd_id,
-                company: tempdata.workExperience.company,
-                job_title: tempdata.workExperience.jobTitle,
-                location: tempdata.workExperience.location,
-                country: tempdata.workExperience.country,
-                currently_working_on_this_role: tempdata.workExperience.currently_working_inthis_role,
-                start_date: startDate,
-                end_date: endDate,
-                description: tempdata.workExperience.description,
-                employment_type: tempdata.workExperience.employmentType
-            }
+        const workExperienceRecords = workExperiences.map((exp) => ({
+            pwd_id,
+            company: exp?.company || '',
+            job_title: exp?.jobTitle || '',
+            location: exp?.location || '',
+            country: exp?.country || '',
+            currently_working_on_this_role: exp?.isCurrent || false,
+            start_date: exp?.startDate ? new Date(exp.startDate).toISOString() : null,
+            end_date: exp?.endDate ? new Date(exp.endDate).toISOString() : null,
+            description: exp?.description || '',
+            employment_type: exp?.employmentType || ''
+        }));
+
+        const workExperienceData = await prisma.pwd_Experience.createMany({
+            data: workExperienceRecords
         });
 
         const accessibilityNeedsData = await prisma.pwd_Accessibility_Needs.create({
             data: {
                 pwd_id: pwd_id,
-                visual_support: tempdata.accessibilityNeeds.visual_support_needs,
-                hearing_support: tempdata.accessibilityNeeds.hearing_support_needs,
-                mobility_support: tempdata.accessibilityNeeds.mobility_support_needs,
-                cognitive_support: tempdata.accessibilityNeeds.cognitive_support_needs,
-                additional_information: tempdata.accessibilityNeeds.additional_information
+                visual_support: tempdata.accessibilityNeeds?.visual_support_needs || [],
+                hearing_support: tempdata.accessibilityNeeds?.hearing_support_needs || [],
+                mobility_support: tempdata.accessibilityNeeds?.mobility_support_needs || [],
+                cognitive_support: tempdata.accessibilityNeeds?.cognitive_support_needs || [],
+                additional_information: tempdata.accessibilityNeeds?.additional_information || ''
             }
         });
 
         const jobPreferencesData = await prisma.pwd_Job_Preferences_Requirements.create({
             data: {
                 pwd_id: pwd_id,
-                work_arrangement: tempdata.jobPreferences.workArrangement,
-                employment_types: tempdata.jobPreferences.employmentTypes,
-                experience_level: tempdata.jobPreferences.experienceLevel,
-                salary_range: `${tempdata.jobPreferences.salaryRange.currency} ${tempdata.jobPreferences.salaryRange.min} - ${tempdata.jobPreferences.salaryRange.max}`
+                work_arrangement: tempdata.jobPreferences?.workArrangement || '',
+                employment_types: tempdata.jobPreferences?.employmentTypes || [],
+                experience_level: tempdata.jobPreferences?.experienceLevel || '',
+                salary_range: `${tempdata.jobPreferences?.salaryRange.currency || ''} ${tempdata.jobPreferences?.salaryRange.min || ''} - ${tempdata.jobPreferences?.salaryRange.max || ''}`
             }
         });
         res.status(200).json({

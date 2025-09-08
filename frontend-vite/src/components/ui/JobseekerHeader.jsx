@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from './Logo.jsx';
 import AnimatedHamburger from './AnimatedHamburger.jsx';
 
@@ -86,6 +86,7 @@ const IconButton = ({
 
 const JobseekerHeader = ({ disabled = false }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isFindJobsOpen, setIsFindJobsOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -126,6 +127,13 @@ const JobseekerHeader = ({ disabled = false }) => {
     setIsMobileMenuOpen(false);
     setIsFindJobsOpen(false);
   };
+
+  // handle signout
+  const signOut = () => {
+    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
+    navigate('/signin');
+  }
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -317,6 +325,7 @@ const JobseekerHeader = ({ disabled = false }) => {
                   <button
                     onClick={() => {
                       // Handle logout
+                      signOut();
                       setIsProfileDropdownOpen(false);
                     }}
                     className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50"

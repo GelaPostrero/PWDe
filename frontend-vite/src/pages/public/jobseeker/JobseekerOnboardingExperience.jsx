@@ -113,7 +113,6 @@ const JobseekerOnboardingExperience = () => {
   const addAdditionalExperience = () => {
     if (additionalExperiences.length < 5) {
       setAdditionalExperiences([...additionalExperiences, {
-        id: Date.now(),
         jobTitle: '',
         company: '',
         location: '',
@@ -157,7 +156,7 @@ const JobseekerOnboardingExperience = () => {
     console.log('Form validation passed, proceeding...');
 
     const token = localStorage.getItem('authToken');
-    const experienceData = {
+    const experienceEntries = [{
       jobTitle,
       company,
       location,
@@ -166,12 +165,12 @@ const JobseekerOnboardingExperience = () => {
       endDate: isCurrent ? null : (endDate && endDate instanceof Date ? endDate.toISOString() : null),
       isCurrent,
       employmentType,
-      description,
-      additionalExperiences: additionalExperiences.filter(exp => 
-        exp.jobTitle.trim() && exp.company.trim() && exp.location.trim()
-      )
-    };
+      description
+    },
+      ...additionalExperiences
+    ];
 
+    const experienceData = {experience: experienceEntries}
     console.log('Sending experience data:', experienceData);
 
     try {

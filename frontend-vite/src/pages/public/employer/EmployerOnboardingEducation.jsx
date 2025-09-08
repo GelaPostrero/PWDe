@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import EmployerHeader from '../../../components/ui/EmployerHeader.jsx';
 
 const EmployerOnboardingEducation = () => {
@@ -22,11 +23,6 @@ const EmployerOnboardingEducation = () => {
     { name: 'Screen reader compatible systems', category: 'Technology' },
     { name: 'Assistive technology support', category: 'Technology' },
     { name: 'Flexible work arrangements', category: 'Policy' },
-    { name: 'Assistive technology support', category: 'Technology' },
-    { name: 'Screen reader compatible systems', category: 'Technology' },
-    { name: 'Wheelchair accessible facilities', category: 'Physical' },
-    { name: 'Screen reader compatible systems', category: 'Technology' },
-    { name: 'Assistive technology support', category: 'Technology' }
   ];
 
   const handleWorkArrangementToggle = (option) => {
@@ -49,8 +45,39 @@ const EmployerOnboardingEducation = () => {
     setSelectedAccessibilityFeatures(selectedAccessibilityFeatures.filter(f => f !== feature));
   };
 
-  const handleNext = () => {
-    navigate('/onboarding/employer/completion');
+  const handleNext = async () => {
+    const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+
+    console.log(`Work Arrangement: ${workArrangement} \nAccessbility Feature: ${selectedAccessibilityFeatures}`)
+    try {
+      var url = "http://localhost:4000/onboard/emp/onboard/work-environment";
+      var headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({workArrangement, selectedAccessibilityFeatures})
+      });
+
+      const data = await response.json();
+      if(data.success) {
+        Swal.fire({
+          icon: 'success',
+          html: '<h5><b>Work Environment</b></h5>\n<h6>You may now fillup your Company Profile.</h6>',
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        })
+        navigate('/onboarding/employer/completion');
+      }
+    } catch (error) {
+      console.error('Server error.', error);
+    }
   };
 
   const handleBack = () => {

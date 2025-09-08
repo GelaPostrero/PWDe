@@ -69,15 +69,6 @@ const JobseekerOnboardingEducation = () => {
 
   const goBack = () => navigate(routeForStep('skills'));
 
-  const handleChange = (e) => {
-    
-    
-    
-    
-    
-    
-    
-  };
   // Form validation
   const validateForm = () => {
     const newErrors = {};
@@ -120,7 +111,6 @@ const JobseekerOnboardingEducation = () => {
   const addAdditionalEducation = () => {
     if (additionalEducations.length < 5) {
       setAdditionalEducations([...additionalEducations, {
-        id: Date.now(),
         institutionName: '',
         location: '',
         fieldOfStudy: '',
@@ -142,18 +132,6 @@ const JobseekerOnboardingEducation = () => {
   };
 
   const handleNext = async () => {
-    console.log('Next button clicked in Education page');
-    console.log('Current form state:', { 
-      highestLevel, 
-      institutionName, 
-      location, 
-      fieldOfStudy, 
-      degree, 
-      graduationStatus, 
-      graduationYear,
-      isFormValid 
-    });
-    
     if (!validateForm()) {
       console.log('Form validation failed:', errors);
       return;
@@ -162,18 +140,18 @@ const JobseekerOnboardingEducation = () => {
     console.log('Form validation passed, proceeding...');
 
     const token = localStorage.getItem('authToken');
-    const educationData = {
-      highestLevel,
-      institutionName,
-      location,
-      fieldOfStudy,
-      degree,
-      graduationStatus,
-      graduationYear,
-      additionalEducations: additionalEducations.filter(edu => 
-        edu.institutionName.trim() && edu.location.trim() && edu.fieldOfStudy.trim()
-      )
-    };
+    const educationEntries = [{
+        institutionName,
+        location,
+        fieldOfStudy,
+        degree,
+        graduationStatus,
+        graduationYear,
+      },
+      ...additionalEducations
+    ];
+
+    const educationData = { educations: educationEntries, highestLevel: highestLevel };
     console.log('Submitting education data:', educationData);
 
     try {
@@ -200,20 +178,12 @@ const JobseekerOnboardingEducation = () => {
         "Authorization": `Bearer ${token}`
       }
       
-      console.log('Attempting to connect to:', url);
-      
       const response = await fetch(url, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(educationData)
       });
-
-      console.log('Response status:', response.status);
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const data = await response.json();
       console.log('API response:', data);
       
