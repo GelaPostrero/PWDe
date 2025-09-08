@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
+import Spinner from '../../../components/ui/Spinner.jsx';
 
 const steps = [
   { key: 'skills', label: 'Skills' },
@@ -68,6 +69,7 @@ const JobseekerOnboardingAccessibility = () => {
   const [cognitiveNeeds, setCognitiveNeeds] = useState([]);
   const [additionalInfo, setAdditionalInfo] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Validate form - at least one category should have selections
   const validateForm = () => {
@@ -131,7 +133,11 @@ const JobseekerOnboardingAccessibility = () => {
       return;
     }
 
+    setIsLoading(true);
     console.log('Form validation passed, proceeding...');
+
+    // Add minimum loading time to see spinner (remove this in production)
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
 
     const token = localStorage.getItem('authToken');
     const accessibilityData = {
@@ -146,6 +152,8 @@ const JobseekerOnboardingAccessibility = () => {
       // Check if we have a valid token
       if (!token) {
         console.log('No auth token found, proceeding with mock data');
+        // Wait for minimum loading time even for mock data
+        await minLoadingTime;
         // Mock success for development
         Swal.fire({
           icon: 'success',
@@ -157,6 +165,7 @@ const JobseekerOnboardingAccessibility = () => {
           position: 'bottom-end'
         });
         navigate(routeForStep('preferences'));
+        setIsLoading(false);
         return;
       }
 
@@ -173,6 +182,9 @@ const JobseekerOnboardingAccessibility = () => {
         headers: headers,
         body: JSON.stringify(accessibilityData)
       });
+
+      // Wait for both API call and minimum loading time
+      await Promise.all([response, minLoadingTime]);
 
       console.log('Response status:', response.status);
       
@@ -204,6 +216,8 @@ const JobseekerOnboardingAccessibility = () => {
       // Check if it's a network error
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
         console.log('Network error detected, proceeding with mock data');
+        // Wait for minimum loading time even for network errors
+        await minLoadingTime;
         Swal.fire({
           icon: 'info',
           title: 'Development Mode',
@@ -218,6 +232,8 @@ const JobseekerOnboardingAccessibility = () => {
       } else {
         alert('Failed to connect to the server. Please try again later.');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
   const handleSkip = () => {
@@ -240,7 +256,7 @@ const JobseekerOnboardingAccessibility = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
             <Stepper 
               steps={steps} 
               currentKey="accessibility" 
@@ -252,7 +268,9 @@ const JobseekerOnboardingAccessibility = () => {
                 'accessibility': isFormValid ? 'valid' : 'active'
               }}
             />
+          </div>
 
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
             <h2 className="text-xl font-semibold text-gray-900">Accessibility Needs</h2>
             <p className="text-gray-600">Help us understand your accessibility needs to ensure the best job matches. <button className="text-blue-600">Select all that apply</button>.</p>
 
@@ -344,28 +362,53 @@ const JobseekerOnboardingAccessibility = () => {
               ))}
             </Section>
 
-            <div className="bg-white">
-              <div className="bg-white rounded-xl border border-gray-200 p-4">
-                <div className="text-gray-900 font-medium mb-2">Additional Information</div>
-                <textarea value={additionalInfo} onChange={(e) => setAdditionalInfo(e.target.value)} rows="4" className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Please share any other specific accommodation needs..." />
-                <div className="mt-3 text-xs text-blue-700 bg-blue-50 border border-blue-100 rounded-lg p-3">This information is used only for job matching and accommodation purposes. Employers will only see relevant accommodation needs if you choose to share them.</div>
-              </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-4">
+              <div className="text-gray-900 font-medium mb-2">Additional Information</div>
+              <textarea value={additionalInfo} onChange={(e) => setAdditionalInfo(e.target.value)} rows="4" className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Please share any other specific accommodation needs..." />
+              <div className="mt-3 text-xs text-blue-700 bg-blue-50 border border-blue-100 rounded-lg p-3">This information is used only for job matching and accommodation purposes. Employers will only see relevant accommodation needs if you choose to share them.</div>
             </div>
 
             <div className="mt-2 flex items-center justify-between">
-              <button onClick={goBack} className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Back</button>
+              <button 
+                onClick={goBack} 
+                disabled={isLoading}
+                className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors ${
+                  isLoading 
+                    ? 'text-gray-400 cursor-not-allowed' 
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                Back
+              </button>
               <div className="flex items-center gap-3">
-                <button onClick={handleSkip} className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Skip for now</button>
+                <button 
+                  onClick={handleSkip} 
+                  disabled={isLoading}
+                  className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors ${
+                    isLoading 
+                      ? 'text-gray-400 cursor-not-allowed' 
+                      : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Skip for now
+                </button>
                 <button 
                   onClick={handleNext} 
-                  disabled={!isFormValid}
-                  className={`px-4 py-2 rounded-lg transition-all duration-200 ${
-                    isFormValid 
+                  disabled={!isFormValid || isLoading}
+                  className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-all duration-200 flex items-center gap-2 ${
+                    isFormValid && !isLoading
                       ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg' 
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  {isFormValid ? 'Next' : 'Select at least one need'}
+                  {isLoading ? (
+                    <>
+                      <Spinner size="sm" color="white" />
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    isFormValid ? 'Next' : 'Select at least one need'
+                  )}
                 </button>
               </div>
             </div>

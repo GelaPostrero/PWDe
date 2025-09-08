@@ -4,6 +4,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/dist/sweetalert2.css';
 import Logo from '../../../components/ui/Logo.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
+import Spinner from '../../../components/ui/Spinner.jsx';
 
 const JobseekerSignUp = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,9 @@ const JobseekerSignUp = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [calendarDate, setCalendarDate] = useState(new Date());
   const calendarRef = useRef(null);
+
+  // Loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -119,8 +123,12 @@ const JobseekerSignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Set loading state
+    setIsLoading(true);
+    
     if(!formData.email) {
       alert("Email is required.");
+      setIsLoading(false);
       return;
     }
 
@@ -135,6 +143,7 @@ const JobseekerSignUp = () => {
         toast: true,
         position: 'bottom-end'
       });
+      setIsLoading(false);
       return;
     }
 
@@ -149,6 +158,7 @@ const JobseekerSignUp = () => {
         toast: true,
         position: 'bottom-end'
       });
+      setIsLoading(false);
       return;
     }
 
@@ -164,6 +174,7 @@ const JobseekerSignUp = () => {
         toast: true,
         position: 'bottom-end'
       });
+      setIsLoading(false);
       return;
     }
 
@@ -188,6 +199,7 @@ const JobseekerSignUp = () => {
           toast: true,
           position: 'bottom-end'
         });
+        setIsLoading(false);
         return;
       }
     }
@@ -195,6 +207,9 @@ const JobseekerSignUp = () => {
     localStorage.setItem('userEmail', formData.email);
     
     try {
+      // Add minimum loading time to see spinner (remove this in production)
+      const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
+      
       const url = "http://localhost:4000/accounts/users/register/pwd";
       const headers = {
         "Accept": "application/json",
@@ -205,6 +220,9 @@ const JobseekerSignUp = () => {
         headers: headers,
         body: JSON.stringify(formData)
       });
+      
+      // Wait for both API call and minimum loading time
+      await Promise.all([response, minLoadingTime]);
 
       const data = await response.json();
       if(data.success) {
@@ -223,6 +241,8 @@ const JobseekerSignUp = () => {
     } catch (error) {
       console.error("Error:", error);
       alert("Failed to connect to the server. Please try again later.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -396,7 +416,24 @@ const JobseekerSignUp = () => {
               </div>
 
               <div className="pt-2">
-                <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">Continue to Verification</button>
+                <button 
+                  type="submit" 
+                  disabled={isLoading}
+                  className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 ${
+                    isLoading 
+                      ? 'bg-blue-400 cursor-not-allowed' 
+                      : 'bg-blue-600 hover:bg-blue-700'
+                  } text-white`}
+                >
+                  {isLoading ? (
+                    <>
+                      <Spinner size="sm" color="white" />
+                      Creating Account...
+                    </>
+                  ) : (
+                    'Continue to Verification'
+                  )}
+                </button>
               </div>
             </form>
           </div>

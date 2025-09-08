@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
+import Spinner from '../../../components/ui/Spinner.jsx';
 
 const steps = [
   { key: 'skills', label: 'Skills' },
@@ -56,6 +57,7 @@ const JobseekerOnboardingSkills = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleSkill = (id) => {
     setSelected((prev) => (prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]));
@@ -142,7 +144,11 @@ const JobseekerOnboardingSkills = () => {
       return;
     }
 
+    setIsLoading(true);
     console.log('Form validation passed, proceeding...');
+
+    // Add minimum loading time to see spinner (remove this in production)
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
 
     const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
 
@@ -157,6 +163,8 @@ const JobseekerOnboardingSkills = () => {
       // Check if we have a valid token
       if (!token) {
         console.log('No auth token found, proceeding with mock data');
+        // Wait for minimum loading time even for mock data
+        await minLoadingTime;
         // Mock success for development
         Swal.fire({
           icon: 'success',
@@ -168,6 +176,7 @@ const JobseekerOnboardingSkills = () => {
           position: 'bottom-end'
         });
         navigate(routeForStep('education'));
+        setIsLoading(false);
         return;
       }
 
@@ -184,6 +193,9 @@ const JobseekerOnboardingSkills = () => {
         headers: headers,
         body: JSON.stringify({selectedSkill, profession})
       });
+
+      // Wait for both API call and minimum loading time
+      await Promise.all([response, minLoadingTime]);
 
       console.log('Response status:', response.status);
       
@@ -215,6 +227,8 @@ const JobseekerOnboardingSkills = () => {
       // Check if it's a network error
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
         console.log('Network error detected, proceeding with mock data');
+        // Wait for minimum loading time even for network errors
+        await minLoadingTime;
         Swal.fire({
           icon: 'info',
           title: 'Development Mode',
@@ -229,6 +243,8 @@ const JobseekerOnboardingSkills = () => {
       } else {
         alert("Failed to connect to the server. Please try again later.")
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -470,23 +486,37 @@ const JobseekerOnboardingSkills = () => {
                 <div className="flex items-center gap-3">
                   <button 
                     onClick={handleSkip} 
-                    className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                    disabled={isLoading}
+                    className={`px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium transition-colors ${
+                      isLoading 
+                        ? 'text-gray-400 cursor-not-allowed' 
+                        : 'text-gray-700 bg-white hover:bg-gray-50'
+                    }`}
                   >
                     Skip for now
                   </button>
                   <button 
                     onClick={handleNext} 
-                    disabled={!isFormValid}
+                    disabled={!isFormValid || isLoading}
                     className={`inline-flex items-center px-6 py-2 text-white text-sm font-medium rounded-lg transition-all duration-200 ${
-                      isFormValid 
+                      isFormValid && !isLoading
                         ? 'bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transform hover:scale-105' 
                         : 'bg-gray-400 cursor-not-allowed'
                     }`}
                   >
-                    {isFormValid ? 'Next' : 'Complete Form'}
-                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+                    {isLoading ? (
+                      <>
+                        <Spinner size="sm" color="white" />
+                        <span className="ml-2">Saving...</span>
+                      </>
+                    ) : (
+                      <>
+                        {isFormValid ? 'Next' : 'Complete Form'}
+                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </>
+                    )}
                   </button>
                 </div>
               </div>

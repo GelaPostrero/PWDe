@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
+import Spinner from '../../../components/ui/Spinner.jsx';
 
 const steps = [
   { key: 'skills', label: 'Skills' },
@@ -81,6 +82,7 @@ const JobseekerOnboardingCompletion = () => {
 
   // drag state (resume)
   const [isDraggingResume, setIsDraggingResume] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);  
 
   // ---- validators ----
   const validatePhoto = (file) => {
@@ -220,6 +222,12 @@ const JobseekerOnboardingCompletion = () => {
       return;
     }
 
+    setIsLoading(true);
+    console.log('Form validation passed, proceeding...');
+
+    // Add minimum loading time to see spinner (remove this in production)
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
+
     try {
       // Prepare payload
       const token = localStorage.getItem('authToken');
@@ -245,7 +253,10 @@ const JobseekerOnboardingCompletion = () => {
         method: 'POST',
         headers: { "Authorization": `Bearer ${token}` },
         body: profileCompletion
-      })
+      });
+
+      // Wait for both API call and minimum loading time
+      await Promise.all([response, minLoadingTime]);
 
       const data = await response.json();
       if(data.success) {
@@ -263,6 +274,8 @@ const JobseekerOnboardingCompletion = () => {
     } catch (err) {
       console.error(err);
       alert('Something went wrong. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -272,7 +285,7 @@ const JobseekerOnboardingCompletion = () => {
 
       <main className="flex-1 py-8">
         <div className="max-w-6xl mx-auto px-6 space-y-6">
-          <div className="bg-white rounded-2xl border shadow-sm p-8 text-center">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
             <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600 text-lg mb-3">🛠️</div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Welcome to PWDe: AI-Powered Job Matching Platform</h1>
             <p className="text-gray-600 mt-2">Help us understand your skills and preferences to find the perfect job opportunities tailored for you.</p>
@@ -281,9 +294,11 @@ const JobseekerOnboardingCompletion = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border shadow-sm p-6 space-y-6">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
             <Stepper steps={steps} currentKey="completion" onStepClick={handleStepClick} />
+          </div>
 
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
             <h2 className="text-xl font-semibold text-gray-900">Complete Your Profile</h2>
             <p className="text-gray-600">Add final details to help us find better match for you.</p>
 
@@ -301,7 +316,7 @@ const JobseekerOnboardingCompletion = () => {
 
             <div className="space-y-6">
               {/* Profile Photo */}
-              <div className="border rounded-xl p-6 text-center">
+              <div className="border border-gray-200 rounded-xl p-6 text-center">
                 <div className="text-sm text-gray-700 mb-3">Profile Photo (Optional)</div>
 
                 {photo ? (
@@ -338,7 +353,7 @@ const JobseekerOnboardingCompletion = () => {
                 <div className="mt-3 flex items-center justify-center gap-2">
                   <button
                     onClick={onClickPhoto}
-                    className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer"
+                    className="px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer"
                   >
                     {photo ? 'Change Photo' : 'Upload Photo'}
                   </button>
@@ -353,12 +368,12 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Role */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 rounded-xl p-6">
                 <div className="font-medium text-gray-900 mb-2">Add a title to tell the world what you do</div>
                 <p className="text-sm text-gray-600 mb-3">It’s the very first thing employers see, so make it count. Stand out by describing your expertise in your own words.</p>
                 <label className="block text-sm text-gray-700 mb-1">Professional Role*</label>
                 <input
-                  className="w-full border rounded-lg px-4 py-3"
+                  className="w-full border border-gray-200 rounded-lg px-4 py-3"
                   placeholder="e.g., Full-Stack Developer | UI/UX Designer | Digital Marketing Specialist"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
@@ -367,11 +382,11 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Summary */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 rounded-xl p-6">
                 <label className="block font-medium text-gray-900 mb-2">Professional Summary*</label>
                 <textarea
                   rows="4"
-                  className="w-full border rounded-lg px-4 py-3"
+                  className="w-full border border-gray-200 rounded-lg px-4 py-3"
                   placeholder="Write a brief summary highlighting your key skills, experience, and what makes you a great candidate."
                   value={summary}
                   onChange={(e) => setSummary(e.target.value)}
@@ -379,11 +394,11 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Resume Upload */}
-              <div className="border rounded-xl p-6 text-center">
+              <div className="border border-gray-200 rounded-xl p-6 text-center">
                 <div className="font-medium text-gray-900 mb-2">Resume/CV Upload</div>
 
                 <div
-                  className={`border-2 border-dashed rounded-xl p-6 text-gray-600 transition-colors ${
+                  className={`border-2 border-dashed border-gray-200 rounded-xl p-6 text-gray-600 transition-colors ${
                     isDraggingResume ? 'border-blue-400 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
                   }`}
                   onDragOver={onResumeDragOver}
@@ -403,7 +418,7 @@ const JobseekerOnboardingCompletion = () => {
                       />
                       <button
                         onClick={onClickResume}
-                        className="mt-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg cursor-pointer"
+                        className="mt-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg cursor-pointer"
                       >
                         Upload Resume
                       </button>
@@ -417,19 +432,19 @@ const JobseekerOnboardingCompletion = () => {
                         <a
                           href={resume.objectUrl}
                           download={resume.name}
-                          className="px-3 py-2 border rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer"
+                          className="px-3 py-2 border border-gray-200 hover:border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer"
                         >
                           Download
                         </a>
                         <button
                           onClick={onClickResume}
-                          className="px-3 py-2 border rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer"
+                          className="px-3 py-2 border border-gray-200 hover:border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer"
                         >
                           Replace
                         </button>
                         <button
                           onClick={removeResume}
-                          className="px-3 py-2 border rounded-lg text-red-600 hover:bg-red-50 cursor-pointer"
+                          className="px-3 py-2 border border-gray-200 hover:border-gray-300 rounded-lg text-red-600 hover:bg-red-50 cursor-pointer"
                         >
                           Remove
                         </button>
@@ -440,13 +455,13 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Portfolio Links */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 rounded-xl p-6">
                 <div className="font-medium text-gray-900 mb-2">Portfolio Links (Optional)</div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">Website/Portfolio URL</label>
                     <input
-                      className="w-full border rounded-lg px-4 py-3"
+                      className="w-full border border-gray-200 rounded-lg px-4 py-3"
                       placeholder="https://yourportfolio.com"
                       value={portfolioUrl}
                       onChange={(e) => setPortfolioUrl(e.target.value)}
@@ -455,7 +470,7 @@ const JobseekerOnboardingCompletion = () => {
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">GitHub Profile</label>
                     <input
-                      className="w-full border rounded-lg px-4 py-3"
+                      className="w-full border border-gray-200 rounded-lg px-4 py-3"
                       placeholder="https://github.com/yourusername"
                       value={githubUrl}
                       onChange={(e) => setGithubUrl(e.target.value)}
@@ -465,13 +480,13 @@ const JobseekerOnboardingCompletion = () => {
                     <label className="block text-sm text-gray-700 mb-1">Other Portfolio</label>
                     <div className="flex gap-2 mb-2">
                       <input
-                        className="w-40 border rounded-lg px-3 py-3"
+                        className="w-40 border border-gray-200 hover:border-gray-300 rounded-lg px-3 py-3"
                         placeholder="Platform name"
                         value={otherPlatformName}
                         onChange={(e) => setOtherPlatformName(e.target.value)}
                       />
                       <input
-                        className="flex-1 border rounded-lg px-4 py-3"
+                        className="flex-1 border border-gray-200 hover:border-gray-300 rounded-lg px-4 py-3"
                         placeholder="https://example.com/yourprofile"
                         value={otherPlatformUrl}
                         onChange={(e) => setOtherPlatformUrl(e.target.value)}
@@ -482,7 +497,7 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Visibility */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 rounded-xl p-6">
                 <div className="font-medium text-gray-900 mb-2">Profile visibility</div>
                 <div className="space-y-2 text-sm text-gray-700">
                   <label className="flex items-center gap-2 cursor-pointer">
@@ -507,7 +522,7 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Agreements */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 rounded-xl p-6">
                 <div className="font-medium text-gray-900 mb-3">Terms & Agreements</div>
                 <div className="space-y-2 text-sm text-gray-700">
                   <label className="flex items-start gap-2 cursor-pointer">
@@ -529,14 +544,34 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <button onClick={goBack} className="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer">
+                <button 
+                  onClick={goBack} 
+                  disabled={isLoading}
+                  className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors ${
+                    isLoading 
+                      ? 'text-gray-400 cursor-not-allowed' 
+                      : 'text-gray-700 hover:bg-gray-50 cursor-pointer'
+                  }`}
+                >
                   Back
                 </button>
                 <button
                   onClick={finish}
-                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg cursor-pointer"
+                  disabled={isLoading}
+                  className={`px-6 py-3 border border-gray-200 hover:border-gray-300 rounded-lg transition-all duration-200 flex items-center gap-2 ${
+                    isLoading
+                      ? 'bg-gray-400 text-gray-500 cursor-not-allowed'
+                      : 'bg-blue-600 hover:bg-blue-700 text-white cursor-pointer'
+                  }`}
                 >
-                  Complete Profile & Start Job Search
+                  {isLoading ? (
+                    <>
+                      <Spinner size="sm" color="white" />
+                      <span>Completing Profile...</span>
+                    </>
+                  ) : (
+                    'Complete Profile & Start Job Search'
+                  )}
                 </button>
               </div>
             </div>
