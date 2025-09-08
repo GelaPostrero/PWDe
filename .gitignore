@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-# ----------------------
-# Node.js dependencies
-# ----------------------
-node_modules/
-**/node_modules/
-
-# ----------------------
-# Build outputs
-# ----------------------
-dist/
-**/dist/
-build/
-**/build/
-
-# ----------------------
-# Environment files
-# ----------------------
-.env
-.env.*    # includes .env.local, .env.development, etc.
-Backend/.env
-
-# ----------------------
-# Logs
-# ----------------------
-=======
 # Dependencies
 node_modules/
 */node_modules/
@@ -46,7 +20,6 @@ build/
 *.env
 
 # Logs
->>>>>>> a9bd725712ee985bad51d91b1aed4fb46cf646f2
 logs/
 *.log
 npm-debug.log*
@@ -55,29 +28,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-<<<<<<< HEAD
-# ----------------------
-# Cache / temp
-# ----------------------
-.cache/
-.parcel-cache/
-.next/
-.nuxt/
-out/
-tmp/
-temp/
-
-# ----------------------
-# Coverage & testing
-# ----------------------
-coverage/
-.nyc_output/
-*.lcov
-
-# ----------------------
-# Editor / IDE files
-# ----------------------
-=======
 # Runtime data
 pids/
 *.pid
@@ -124,7 +74,7 @@ jspm_packages/
 
 # Gatsby files
 .cache/
-public
+/public
 
 # Storybook build outputs
 .out
@@ -135,21 +85,13 @@ tmp/
 temp/
 
 # Editor directories and files
->>>>>>> a9bd725712ee985bad51d91b1aed4fb46cf646f2
 .vscode/
 .idea/
 *.swp
 *.swo
-<<<<<<< HEAD
-
-# ----------------------
-# OS generated files
-# ----------------------
-=======
 *~
 
 # OS generated files
->>>>>>> a9bd725712ee985bad51d91b1aed4fb46cf646f2
 .DS_Store
 .DS_Store?
 ._*
@@ -158,16 +100,6 @@ temp/
 ehthumbs.db
 Thumbs.db
 
-<<<<<<< HEAD
-# ----------------------
-# Misc
-# ----------------------
-*.tgz
-*.tar.gz
-*.pid
-*.seed
-*.pid.lock
-=======
 # Database
 *.sqlite
 *.sqlite3
@@ -194,4 +126,3 @@ coverage/
 # Misc
 *.tgz
 *.tar.gz
->>>>>>> a9bd725712ee985bad51d91b1aed4fb46cf646f2
