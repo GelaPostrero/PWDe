@@ -376,59 +376,35 @@ const EmployerVerification = () => {
                 </div>
                 <p className="text-gray-600 mb-6">Upload required documents to verify your business</p>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Left Column - Business Registration Documents */}
+                <div className="space-y-6">
+                  {/* Business Registration Documents - Horizontal Layout */}
                   <div>
                     <h3 className="font-medium text-gray-900 mb-4">Business Registration Documents</h3>
-                    <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <FileUploadArea 
                         field="businessRegistration"
-                        label="Business registration certificate"
+                        label="Upload business registration certificate"
                       />
                       <FileUploadArea 
                         field="taxDocuments"
-                        label="Tax identification documents"
+                        label="Upload tax identification documents"
                       />
                     </div>
                   </div>
 
-                  {/* Right Column - Company Website & Social Media */}
+                  {/* Social Media - Optional */}
                   <div>
-                    <h3 className="font-medium text-gray-900 mb-4">Company Website & Social Media</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Company Website</label>
-                        <input
-                          name="companyWebsite"
-                          type="url"
-                          value={formData.companyWebsite}
-                          onChange={handleChange}
-                          placeholder="https://yourcompany.com"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">LinkedIn Profile</label>
-                        <input
-                          name="linkedinProfile"
-                          type="url"
-                          value={formData.linkedinProfile}
-                          onChange={handleChange}
-                          placeholder="https://linkedin.com/company/yourcompany"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Other Social Media (Optional)</label>
-                        <input
-                          name="otherSocialMedia"
-                          type="url"
-                          value={formData.otherSocialMedia}
-                          onChange={handleChange}
-                          placeholder="https://twitter.com/yourcompany"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
+                    <h3 className="font-medium text-gray-900 mb-4">Social Media (Optional)</h3>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Other Social Media</label>
+                      <input
+                        name="otherSocialMedia"
+                        type="url"
+                        value={formData.otherSocialMedia}
+                        onChange={handleChange}
+                        placeholder="https://twitter.com/yourcompany"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
                     </div>
                   </div>
                 </div>
@@ -489,7 +465,7 @@ const EmployerVerification = () => {
                     <h3 className="font-medium text-gray-900 mb-4">Identity Verification</h3>
                     <FileUploadArea 
                       field="governmentId"
-                      label="Government-issued ID"
+                      label="Upload government-issued ID"
                     />
                   </div>
                 </div>
@@ -510,7 +486,7 @@ const EmployerVerification = () => {
                 <div className="bg-white rounded-lg p-6 mb-6">
                   <h3 className="font-medium text-gray-900 mb-4">Our Commitment to Equality</h3>
                   <p className="text-gray-700 mb-4">
-                    We are committed to providing equal employment opportunities to all individuals regardless of race, color, religion, gender, sexual orientation, age, national origin, disability, or veteran status.
+                    By using PWDe, you agree to provide equal employment opportunities to all qualified candidates regardless of race, color, religion, gender, sexual orientation, age, national origin, disability, or veteran status.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-center">
@@ -556,7 +532,7 @@ const EmployerVerification = () => {
               </div>
 
               {/* Why We Verify Employers Section */}
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-sky-50 rounded-lg p-6">
                 <div className="flex items-center mb-4">
                   <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
                     <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -581,7 +557,7 @@ const EmployerVerification = () => {
                   <div className="bg-white rounded-lg p-6 text-center">
                     <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                       </svg>
                     </div>
                     <h3 className="font-medium text-gray-900 mb-2">Build Trust</h3>
