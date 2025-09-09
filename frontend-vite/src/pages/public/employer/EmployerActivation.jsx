@@ -246,13 +246,7 @@ const EmployerActivation = () => {
               </div>
 
               <div className="mt-8 flex gap-4">
-                <button 
-                  type="button"
-                  onClick={() => navigate('/onboarding/employer/skills')}
-                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold transition-colors"
-                >
-                  Skip & Continue to Onboarding
-                </button>
+              
                 <button 
                   onClick={handleSubmit}
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"

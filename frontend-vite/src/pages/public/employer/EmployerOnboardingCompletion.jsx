@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import EmployerHeader from '../../../components/ui/EmployerHeader.jsx';
+import Spinner from '../../../components/ui/Spinner.jsx';
 
 const EmployerOnboardingCompletion = () => {
   const navigate = useNavigate();
@@ -17,6 +18,14 @@ const EmployerOnboardingCompletion = () => {
     inclusiveHiring: false,
     compliance: false
   });
+  const [photo, setPhoto] = useState(null); // { file, previewUrl, size, type, name }
+  const [isLoading, setIsLoading] = useState(false);
+  const [uploadErrors, setUploadErrors] = useState([]);
+  const photoInputRef = useRef(null);
+
+  // Photo validation constants
+  const ALLOWED_PHOTO_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
+  const MAX_PHOTO_SIZE = 5 * 1024 * 1024; // 5MB
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,6 +52,50 @@ const EmployerOnboardingCompletion = () => {
     setAgreements(prev => ({ ...prev, [agreement]: !prev[agreement] }));
   };
 
+  // Photo validation
+  const validatePhoto = (file) => {
+    if (!ALLOWED_PHOTO_TYPES.includes(file.type)) {
+      return 'Profile photo must be JPG or PNG.';
+    }
+    if (file.size > MAX_PHOTO_SIZE) {
+      return 'Profile photo must be less than 5MB.';
+    }
+    return null;
+  };
+
+  // Photo handlers
+  const onClickPhoto = () => photoInputRef.current?.click();
+
+  const onChangePhoto = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const error = validatePhoto(file);
+    if (error) {
+      setUploadErrors((prev) => [...prev, `Profile Photo: ${error}`]);
+      return;
+    }
+
+    // Clean old preview
+    if (photo?.previewUrl) URL.revokeObjectURL(photo.previewUrl);
+
+    const previewUrl = URL.createObjectURL(file);
+    setPhoto({
+      file,
+      previewUrl,
+      size: file.size,
+      type: file.type,
+      name: file.name,
+    });
+    setUploadErrors([]); // Clear errors on successful upload
+  };
+
+  const removePhoto = () => {
+    if (photo?.previewUrl) URL.revokeObjectURL(photo.previewUrl);
+    setPhoto(null);
+    if (photoInputRef.current) photoInputRef.current.value = '';
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -51,35 +104,51 @@ const EmployerOnboardingCompletion = () => {
       alert('Please accept all required agreements to continue.');
       return;
     }
-    const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+
+    setIsLoading(true);
+    console.log('Form validation passed, proceeding...');
+
+    // Add minimum loading time to see spinner (remove this in production)
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
+
     try {
-      var url = "http://localhost:4000/onboard/emp/onboard/complete-profile";
-      var headers = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+      // Prepare payload
+      const token = localStorage.getItem('authToken');
+      const profileCompletion = new FormData();
+      profileCompletion.append('companyDescription', formData.companyDescription);
+      profileCompletion.append('portfolioUrl', formData.portfolioUrl);
+      profileCompletion.append('githubUrl', formData.githubUrl);
+      profileCompletion.append('otherPlatform', formData.otherPlatform);
+      profileCompletion.append('otherUrl', formData.otherUrl);
+      profileCompletion.append('agreements', JSON.stringify(agreements));
+
+      // Append photo if present
+      if (photo?.file) {
+        profileCompletion.append('profilePhoto', photo.file, photo.name || 'profile-photo.jpg');
       }
 
-      const response = await fetch(url, {
+      // Mock API call (replace with actual endpoint)
+      const response = await fetch('http://localhost:4000/onboard/employer/complete-profile', {
         method: 'POST',
-        headers: headers,
-        body: JSON.stringify({formData})
+        headers: { "Authorization": `Bearer ${token}` },
+        body: profileCompletion
       });
 
+      // Wait for both API call and minimum loading time
+      await Promise.all([response, minLoadingTime]);
+
       const data = await response.json();
-      if(data.success) {
-        Swal.fire({
-          icon: 'success',
-          html: '<h5>You have finally completed your onboarding processes. \n<p><b>Welcome to your dashboard.</b></p></h6>',
-          timer: 3000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          toast: true,
-          position: 'bottom-end'
-        })
+      if (data.success) {
+        console.log('Company profile completed successfully:', { formData, agreements, photo });
         navigate('/employer/dashboard');
+      } else {
+        throw new Error(data.message || 'Failed to complete profile');
       }
-    } catch(error) {
-      console.error("Server error: " + error);
+    } catch (error) {
+      console.error('Error completing profile:', error);
+      alert('Failed to complete profile. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -144,36 +213,96 @@ const EmployerOnboardingCompletion = () => {
           </div>
 
           {/* Complete Company Profile Form */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+          <div className="bg-white rounded-2xl shadow-sm p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Complete Company Profile</h2>
             <p className="text-gray-600 mb-8">Add final details to help us understand your company better.</p>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Upload Errors */}
+              {uploadErrors.length > 0 && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <h3 className="text-sm font-medium text-red-800">Upload Errors</h3>
+                      <div className="mt-2 text-sm text-red-700">
+                        <ul className="list-disc pl-5 space-y-1">
+                          {uploadErrors.map((error, index) => (
+                            <li key={index}>{error}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
               {/* Profile Photo */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 rounded-xl p-6">
                 <h3 className="font-medium text-gray-900 mb-3">Profile Photo (Optional)</h3>
                 <div className="text-center">
-                  <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
+                  {photo ? (
+                    <div className="relative mx-auto w-28 h-28">
+                      <img
+                        src={photo.previewUrl}
+                        alt="Profile preview"
+                        className="w-28 h-28 rounded-full object-cover border"
+                      />
+                      <button
+                        onClick={removePhoto}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs cursor-pointer"
+                        title="Remove photo"
+                        aria-label="Remove photo"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-28 h-28 mx-auto rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
+                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
+                  )}
+
+                  <div className="mt-2 text-xs text-gray-500">Supported formats: JPG, PNG (Max 5MB)</div>
+
+                  <input
+                    ref={photoInputRef}
+                    type="file"
+                    accept=".jpg,.jpeg,.png"
+                    className="hidden"
+                    onChange={onChangePhoto}
+                  />
+                  <div className="mt-3 flex items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      onClick={onClickPhoto}
+                      className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                      </svg>
+                      {photo ? 'Change Photo' : 'Upload Photo'}
+                    </button>
+                    {photo && (
+                      <button
+                        type="button"
+                        onClick={removePhoto}
+                        className="inline-flex items-center px-3 py-2 border border-red-300 rounded-md shadow-sm text-sm font-medium text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                      >
+                        Remove
+                      </button>
+                    )}
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">No photo</p>
-                  <button
-                    type="button"
-                    className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                  >
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                    </svg>
-                    Upload
-                  </button>
-                  <p className="text-xs text-gray-500 mt-2">Supported formats: JPG, PNG (Max 5MB)</p>
                 </div>
               </div>
 
               {/* Company Description */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 rounded-xl p-6">
                 <h3 className="font-medium text-gray-900 mb-3">Company Description</h3>
                 <textarea
                   name="companyDescription"
@@ -186,7 +315,7 @@ const EmployerOnboardingCompletion = () => {
               </div>
 
               {/* Company Portfolio */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 rounded-xl p-6">
                 <h3 className="font-medium text-gray-900 mb-3">Company Portfolio (Optional)</h3>
                 <div className="space-y-4">
                   <div>
@@ -262,7 +391,7 @@ const EmployerOnboardingCompletion = () => {
               </div>
 
               {/* Terms & Agreements */}
-              <div className="border rounded-xl p-6">
+              <div className="border border-gray-200 border-gray-200 rounded-xl p-6">
                 <h3 className="font-medium text-gray-900 mb-3">Terms & Agreements</h3>
                 <div className="space-y-3">
                   <label className="flex items-start gap-2 cursor-pointer">
@@ -312,7 +441,7 @@ const EmployerOnboardingCompletion = () => {
                 <button
                   type="button"
                   onClick={handleBack}
-                  className="flex items-center px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                  className="flex items-center px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-lg transition-colors"
                 >
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -321,12 +450,22 @@ const EmployerOnboardingCompletion = () => {
                 </button>
                 <button
                   type="submit"
-                  className="flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                  disabled={isLoading}
+                  className="flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white border border-gray-200 rounded-lg font-medium transition-colors"
                 >
-                  Complete Profile & Find Talent
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                  {isLoading ? (
+                    <>
+                      <Spinner size="sm" color="white" />
+                      <span className="ml-2">Completing Profile...</span>
+                    </>
+                  ) : (
+                    <>
+                      Complete Profile & Find Talent
+                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
