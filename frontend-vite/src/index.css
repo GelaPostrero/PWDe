@@ -9,3 +9,38 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Universal scrollbar hiding - except for chat messages */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* WebKit browsers (Chrome, Safari, Edge) */
+}
+
+/* Show scrollbar only for chat messages area */
+.chat-messages-scrollable {
+  scrollbar-width: thin; /* Firefox */
+  -ms-overflow-style: auto; /* Internet Explorer 10+ */
+}
+
+.chat-messages-scrollable::-webkit-scrollbar {
+  display: block; /* WebKit browsers */
+  width: 6px;
+}
+
+.chat-messages-scrollable::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.chat-messages-scrollable::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.chat-messages-scrollable::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
