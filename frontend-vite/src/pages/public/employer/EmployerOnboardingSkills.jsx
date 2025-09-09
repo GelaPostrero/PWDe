@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EmployerHeader from '../../../components/ui/EmployerHeader.jsx';
+import Spinner from '../../../components/ui/Spinner.jsx';
 
 const EmployerOnboardingSkills = () => {
   const navigate = useNavigate();
   const [selectedIndustry, setSelectedIndustry] = useState('');
   const [selectedRoles, setSelectedRoles] = useState(['Software Developer', 'Customer Support', 'Data Analyst']);
   const [selectedSkills, setSelectedSkills] = useState(['JavaScript (Programming)', 'UI/UX Design (Creative)', 'Project Management (Management)']);
+  const [roleSearch, setRoleSearch] = useState('');
+  const [skillSearch, setSkillSearch] = useState('');
+  const [showCustomRole, setShowCustomRole] = useState(false);
+  const [showAdditionalSkills, setShowAdditionalSkills] = useState(false);
+  const [customRole, setCustomRole] = useState('');
+  const [additionalSkill, setAdditionalSkill] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const industries = [
     'Technology',
@@ -63,6 +71,12 @@ const EmployerOnboardingSkills = () => {
     }
   };
 
+  const isSkillSelected = (skillName, skillCategory) => {
+    const regularSkill = `${skillName} (${skillCategory})`;
+    const customSkill = `${skillName} (Custom)`;
+    return selectedSkills.includes(regularSkill) || selectedSkills.includes(customSkill);
+  };
+
   const removeRole = (role) => {
     setSelectedRoles(selectedRoles.filter(r => r !== role));
   };
@@ -71,8 +85,85 @@ const EmployerOnboardingSkills = () => {
     setSelectedSkills(selectedSkills.filter(s => s !== skill));
   };
 
-  const handleNext = () => {
-    navigate('/onboarding/employer/education');
+  const addCustomRole = () => {
+    if (customRole.trim() && !selectedRoles.includes(customRole.trim())) {
+      setSelectedRoles([...selectedRoles, customRole.trim()]);
+      setCustomRole('');
+      setShowCustomRole(false);
+    }
+  };
+
+  const addAdditionalSkill = () => {
+    if (additionalSkill.trim()) {
+      const skillWithCategory = `${additionalSkill.trim()} (Custom)`;
+      if (!selectedSkills.includes(skillWithCategory)) {
+        setSelectedSkills([...selectedSkills, skillWithCategory]);
+        setAdditionalSkill('');
+        setShowAdditionalSkills(false);
+      }
+    }
+  };
+
+  const filteredRoles = suggestedRoles.filter(role =>
+    role.name.toLowerCase().includes(roleSearch.toLowerCase())
+  );
+
+  const filteredSkills = suggestedSkills.filter(skill =>
+    skill.name.toLowerCase().includes(skillSearch.toLowerCase())
+  );
+
+  const handleNext = async () => {
+    setIsLoading(true);
+    console.log('Skills form validation passed, proceeding...');
+
+    // Add minimum loading time to see spinner (remove this in production)
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 1500));
+
+    try {
+      // Try to save data (optional - will proceed even if this fails)
+      const token = localStorage.getItem('authToken');
+      const skillsData = {
+        industry: selectedIndustry,
+        roles: selectedRoles,
+        skills: selectedSkills
+      };
+
+      if (token) {
+        try {
+          const response = await fetch('http://localhost:4000/onboard/employer/skills', {
+            method: 'POST',
+            headers: { 
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(skillsData)
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.success) {
+              console.log('Skills data saved successfully:', skillsData);
+            }
+          }
+        } catch (apiError) {
+          console.log('API call failed, but continuing with navigation:', apiError);
+        }
+      }
+
+      // Wait for minimum loading time
+      await minLoadingTime;
+
+      // Always proceed to next step regardless of API result
+      console.log('Proceeding to education page with data:', skillsData);
+      navigate('/onboarding/employer/education');
+      
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      // Still proceed to next step even if there's an error
+      navigate('/onboarding/employer/education');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleBack = () => {
@@ -135,27 +226,43 @@ const EmployerOnboardingSkills = () => {
             {/* Industry Preference */}
             <div className="mb-8">
               <label className="block text-sm font-medium text-gray-700 mb-2">Industry Preference</label>
-              <select
-                value={selectedIndustry}
-                onChange={(e) => setSelectedIndustry(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">Choose industry preference</option>
-                {industries.map((industry) => (
-                  <option key={industry} value={industry}>{industry}</option>
-                ))}
-              </select>
+              <div className="relative">
+                <select
+                  value={selectedIndustry}
+                  onChange={(e) => setSelectedIndustry(e.target.value)}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white"
+                >
+                  <option value="">Choose industry preference</option>
+                  {industries.map((industry) => (
+                    <option key={industry} value={industry}>{industry}</option>
+                  ))}
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
             </div>
 
             {/* Job Roles */}
             <div className="mb-8">
               <label className="block text-sm font-medium text-gray-700 mb-2">Job Roles You Typically Hire For</label>
               <div className="mb-4">
-                <input
-                  type="text"
-                  placeholder="Search for job roles"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search for job roles"
+                    value={roleSearch}
+                    onChange={(e) => setRoleSearch(e.target.value)}
+                    className="w-full px-4 py-3 pl-10 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
               
               {/* Selected Roles */}
@@ -182,11 +289,11 @@ const EmployerOnboardingSkills = () => {
 
               {/* Suggested Roles Grid */}
               <div className="grid grid-cols-3 gap-3">
-                {suggestedRoles.map((role) => (
+                {filteredRoles.map((role) => (
                   <button
                     key={role.name}
                     onClick={() => handleRoleToggle(role)}
-                    className={`p-3 border rounded-lg text-left transition-colors ${
+                    className={`p-3 border-2 rounded-lg text-left transition-colors ${
                       selectedRoles.includes(role.name)
                         ? 'border-blue-500 bg-blue-50'
                         : 'border-gray-300 hover:border-gray-400'
@@ -210,77 +317,186 @@ const EmployerOnboardingSkills = () => {
                   </button>
                 ))}
               </div>
-              <div className="mt-3">
-                <a href="#" className="text-blue-600 hover:text-blue-700 text-sm">Add a custom role</a>
-              </div>
+
+              {/* Custom Role Input */}
+              {!showCustomRole ? (
+                <button 
+                  onClick={() => setShowCustomRole(true)}
+                  className="w-full mt-4 p-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-blue-300 hover:text-blue-600 transition-colors text-center"
+                >
+                  <svg className="w-5 h-5 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  Add a custom role
+                </button>
+              ) : (
+                <div className="mt-4 p-4 border-2 border-dashed border-blue-300 rounded-lg bg-blue-50">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={customRole}
+                      onChange={(e) => setCustomRole(e.target.value)}
+                      placeholder="Enter custom role name"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      onKeyPress={(e) => e.key === 'Enter' && addCustomRole()}
+                    />
+                    <button
+                      onClick={addCustomRole}
+                      disabled={!customRole.trim()}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Add
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowCustomRole(false);
+                        setCustomRole("");
+                      }}
+                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">
+                    💡 Tip: Add roles that are specific to your hiring needs and not already listed above
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Required & Preferred Skills */}
             <div className="mb-8">
               <label className="block text-sm font-medium text-gray-700 mb-2">Required & Preferred Skills</label>
               <div className="mb-4">
-                <input
-                  type="text"
-                  placeholder="Type to search skills (e.g., JavaScript, Project Management, Design)"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Type to search skills (e.g., JavaScript, Project Management, Design)"
+                    value={skillSearch}
+                    onChange={(e) => setSkillSearch(e.target.value)}
+                    className="w-full px-4 py-3 pl-10 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
               
               {/* Selected Skills */}
               {selectedSkills.length > 0 && (
                 <div className="mb-4">
                   <div className="flex flex-wrap gap-2">
-                    {selectedSkills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
-                      >
-                        {skill}
-                        <button
-                          onClick={() => removeSkill(skill)}
-                          className="ml-2 inline-flex items-center justify-center w-4 h-4 rounded-full text-blue-400 hover:bg-blue-200 hover:text-blue-500"
+                    {selectedSkills.map((skill) => {
+                      const isCustom = skill.includes('(Custom)');
+                      return (
+                        <span
+                          key={skill}
+                          className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
                         >
-                          ×
-                        </button>
-                      </span>
-                    ))}
+                          {skill.replace(' (Custom)', '')}
+                          {isCustom && <span className="ml-1 text-xs text-blue-600">(Custom)</span>}
+                          <button
+                            onClick={() => removeSkill(skill)}
+                            className="ml-2 inline-flex items-center justify-center w-4 h-4 rounded-full text-blue-400 hover:bg-blue-200 hover:text-blue-500"
+                          >
+                            ×
+                          </button>
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
               )}
 
               {/* Suggested Skills Grid */}
               <div className="grid grid-cols-4 gap-3">
-                {suggestedSkills.map((skill) => (
-                  <button
-                    key={skill.name}
-                    onClick={() => handleSkillToggle(skill)}
-                    className={`p-3 border rounded-lg text-left transition-colors ${
-                      selectedSkills.includes(skill.name + ' (' + skill.category + ')')
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-300 hover:border-gray-400'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="font-medium text-gray-900">{skill.name}</div>
-                        <div className="text-sm text-gray-500">({skill.category})</div>
+                {filteredSkills.map((skill) => {
+                  const isSelected = isSkillSelected(skill.name, skill.category);
+                  const isCustom = selectedSkills.includes(`${skill.name} (Custom)`);
+                  
+                  return (
+                    <button
+                      key={skill.name}
+                      onClick={() => handleSkillToggle(skill)}
+                      className={`p-3 border-2 rounded-lg text-left transition-colors ${
+                        isSelected
+                          ? 'border-blue-500 bg-blue-50'
+                          : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <div>
+                            <div className="font-medium text-gray-900 flex items-center">
+                              {skill.name}
+                              {isCustom && <span className="ml-1 text-xs text-blue-600">(Custom)</span>}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              ({skill.category})
+                            </div>
+                          </div>
+                        </div>
+                        {isSelected ? (
+                          <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                          </svg>
+                        )}
                       </div>
-                      {selectedSkills.includes(skill.name + ' (' + skill.category + ')') ? (
-                        <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
-                        </svg>
-                      ) : (
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                      )}
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
-              <div className="mt-3">
-                <a href="#" className="text-blue-600 hover:text-blue-700 text-sm">Add additional skills</a>
-              </div>
+
+              {/* Additional Skills Input */}
+              {!showAdditionalSkills ? (
+                <button 
+                  onClick={() => setShowAdditionalSkills(true)}
+                  className="w-full mt-4 p-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-blue-300 hover:text-blue-600 transition-colors text-center"
+                >
+                  <svg className="w-5 h-5 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  Add additional skills
+                </button>
+              ) : (
+                <div className="mt-4 p-4 border-2 border-dashed border-blue-300 rounded-lg bg-blue-50">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={additionalSkill}
+                      onChange={(e) => setAdditionalSkill(e.target.value)}
+                      placeholder="Enter additional skill name"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      onKeyPress={(e) => e.key === 'Enter' && addAdditionalSkill()}
+                    />
+                    <button
+                      onClick={addAdditionalSkill}
+                      disabled={!additionalSkill.trim()}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Add
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowAdditionalSkills(false);
+                        setAdditionalSkill("");
+                      }}
+                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">
+                    💡 Tip: Add skills that are specific to your hiring needs and not already listed above
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Navigation Buttons */}
@@ -300,12 +516,22 @@ const EmployerOnboardingSkills = () => {
                 </button>
                 <button
                   onClick={handleNext}
-                  className="flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                  disabled={isLoading}
+                  className="flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors"
                 >
-                  Next
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                  {isLoading ? (
+                    <>
+                      <Spinner size="sm" color="white" />
+                      <span className="ml-2">Saving...</span>
+                    </>
+                  ) : (
+                    <>
+                      Next
+                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </>
+                  )}
                 </button>
               </div>
             </div>
