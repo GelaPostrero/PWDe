@@ -10,38 +10,37 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Date input styling */
-input[type="month"] {
-  background-color: white !important;
-  color: #111827 !important;
-  border: 1px solid #d1d5db !important;
-  border-radius: 0.5rem !important;
-  padding: 0.75rem 1rem !important;
-  font-size: 1rem !important;
-  line-height: 1.5rem !important;
+/* Universal scrollbar hiding - except for chat messages */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
-input[type="month"]:focus {
-  background-color: white !important;
-  color: #111827 !important;
-  border-color: #3b82f6 !important;
-  outline: none !important;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+*::-webkit-scrollbar {
+  display: none; /* WebKit browsers (Chrome, Safari, Edge) */
 }
 
-input[type="month"]:disabled {
-  background-color: #f3f4f6 !important;
-  color: #9ca3af !important;
-  cursor: not-allowed !important;
+/* Show scrollbar only for chat messages area */
+.chat-messages-scrollable {
+  scrollbar-width: thin; /* Firefox */
+  -ms-overflow-style: auto; /* Internet Explorer 10+ */
 }
 
-input[type="month"]::-webkit-calendar-picker-indicator {
-  background-color: #6b7280;
-  border-radius: 0.25rem;
-  padding: 0.25rem;
-  cursor: pointer;
+.chat-messages-scrollable::-webkit-scrollbar {
+  display: block; /* WebKit browsers */
+  width: 6px;
 }
 
-input[type="month"]::-webkit-calendar-picker-indicator:hover {
-  background-color: #374151;
+.chat-messages-scrollable::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.chat-messages-scrollable::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.chat-messages-scrollable::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }

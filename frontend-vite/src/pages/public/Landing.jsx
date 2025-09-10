@@ -54,7 +54,7 @@ const Landing = () => {
         {/* Action Buttons */}
         <div className="flex items-center space-x-4">
           {/* Desktop Action Buttons */}
-          <div className="hidden sm:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-4">
             <Link to="/signin" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               Sign In
             </Link>

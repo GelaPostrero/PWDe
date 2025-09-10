@@ -338,13 +338,7 @@ const JobseekerHeader = ({ disabled = false }) => {
                   >
                     View Profile
                   </Link>
-                  <Link
-                    to="/jobseeker/settings"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600"
-                    onClick={() => setIsProfileDropdownOpen(false)}
-                  >
-                    Account Settings
-                  </Link>
+                 
                   <div className="border-t border-gray-200 my-1"></div>
                   <button
                     onClick={() => {
