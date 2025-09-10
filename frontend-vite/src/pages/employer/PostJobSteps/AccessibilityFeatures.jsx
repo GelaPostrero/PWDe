@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Spinner from '../../../components/ui/Spinner.jsx';
 
 const AccessibilityFeatures = ({ data, onDataChange, onNext, onBack }) => {
   const [formData, setFormData] = useState({
@@ -14,8 +15,23 @@ const AccessibilityFeatures = ({ data, onDataChange, onNext, onBack }) => {
     onDataChange(newData);
   };
 
-  const handleNext = () => {
-    onNext();
+  // Loading state
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleNext = async () => {
+    setIsLoading(true);
+    
+    // Add minimum loading time to see spinner (remove this in production)
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 1500));
+    
+    try {
+      await minLoadingTime;
+      onNext();
+    } catch (error) {
+      console.error('Error proceeding to next step:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const suggestedFeatures = [
@@ -77,7 +93,7 @@ const AccessibilityFeatures = ({ data, onDataChange, onNext, onBack }) => {
       {/* Workplace Accessibility Features */}
       <div className="mb-8">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Workplace Accessibility Features</h3>
-        
+
         {/* Feature Search */}
         <div className="relative mb-4">
           <input
@@ -153,36 +169,36 @@ const AccessibilityFeatures = ({ data, onDataChange, onNext, onBack }) => {
         </div>
       </div>
 
-      {/* Application Deadline */}
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Application Deadline</h3>
-        <div className="relative max-w-xs">
-          <input
-            type="text"
-            value={data.applicationDeadline || ''}
-            onChange={(e) => onDataChange({ applicationDeadline: e.target.value })}
-            placeholder="mm/dd/yy"
-            className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-          <svg className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-        </div>
-      </div>
-
       {/* Navigation Buttons */}
       <div className="flex justify-between">
         <button
           onClick={onBack}
-          className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+          disabled={isLoading}
+          className={`px-6 py-3 border border-gray-300 rounded-lg transition-colors ${
+            isLoading 
+              ? 'text-gray-400 cursor-not-allowed' 
+              : 'text-gray-700 hover:bg-gray-50'
+          }`}
         >
           ← Back
         </button>
         <button
           onClick={handleNext}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          disabled={isLoading}
+          className={`px-6 py-3 rounded-lg transition-all duration-200 flex items-center gap-2 ${
+            isLoading
+              ? 'bg-gray-400 text-gray-500 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-700 text-white'
+          }`}
         >
-          Next →
+          {isLoading ? (
+            <>
+              <Spinner size="sm" color="white" />
+              <span>Processing...</span>
+            </>
+          ) : (
+            'Next →'
+          )}
         </button>
       </div>
     </div>
