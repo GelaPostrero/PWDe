@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Spinner from '../../../components/ui/Spinner.jsx';
 
 const BasicInformation = ({ data, onDataChange, onNext, onBack }) => {
   const [formData, setFormData] = useState({
@@ -21,8 +22,23 @@ const BasicInformation = ({ data, onDataChange, onNext, onBack }) => {
     onDataChange(newData);
   };
 
-  const handleNext = () => {
-    onNext();
+  // Loading state
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleNext = async () => {
+    setIsLoading(true);
+    
+    // Add minimum loading time to see spinner (remove this in production)
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 1500));
+    
+    try {
+      await minLoadingTime;
+      onNext();
+    } catch (error) {
+      console.error('Error proceeding to next step:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const jobCategories = [
@@ -367,15 +383,32 @@ const BasicInformation = ({ data, onDataChange, onNext, onBack }) => {
       <div className="flex justify-between mt-8">
         <button
           onClick={onBack}
-          className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+          disabled={isLoading}
+          className={`px-6 py-3 border border-gray-300 rounded-lg transition-colors ${
+            isLoading 
+              ? 'text-gray-400 cursor-not-allowed' 
+              : 'text-gray-700 hover:bg-gray-50'
+          }`}
         >
           ← Back
         </button>
         <button
           onClick={handleNext}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          disabled={isLoading}
+          className={`px-6 py-3 rounded-lg transition-all duration-200 flex items-center gap-2 ${
+            isLoading
+              ? 'bg-gray-400 text-gray-500 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-700 text-white'
+          }`}
         >
-          Next →
+          {isLoading ? (
+            <>
+              <Spinner size="sm" color="white" />
+              <span>Processing...</span>
+            </>
+          ) : (
+            'Next →'
+          )}
         </button>
       </div>
     </div>

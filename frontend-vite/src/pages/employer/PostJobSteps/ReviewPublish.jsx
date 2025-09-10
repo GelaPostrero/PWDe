@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Spinner from '../../../components/ui/Spinner.jsx';
 
 const ReviewPublish = ({ data, onDataChange, onPublish, onBack }) => {
+  // Loading state
+  const [isLoading, setIsLoading] = useState(false);
+
   const formatSalary = () => {
     if (data.minimumSalary && data.maximumSalary && data.salaryType) {
       return `$${data.minimumSalary.toLocaleString()} - $${data.maximumSalary.toLocaleString()} CAD / ${data.salaryType.toLowerCase()}`;
     }
     return 'Not specified';
+  };
+
+  const handlePublish = async () => {
+    setIsLoading(true);
+    
+    // Add minimum loading time to see spinner (remove this in production)
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
+    
+    try {
+      await minLoadingTime;
+      onPublish();
+    } catch (error) {
+      console.error('Error publishing job:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const formatLocation = () => {
@@ -169,15 +189,32 @@ const ReviewPublish = ({ data, onDataChange, onPublish, onBack }) => {
       <div className="flex justify-between mt-8">
         <button
           onClick={onBack}
-          className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+          disabled={isLoading}
+          className={`px-6 py-3 border border-gray-300 rounded-lg transition-colors ${
+            isLoading 
+              ? 'text-gray-400 cursor-not-allowed' 
+              : 'text-gray-700 hover:bg-gray-50'
+          }`}
         >
           ← Back
         </button>
         <button
-          onClick={onPublish}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          onClick={handlePublish}
+          disabled={isLoading}
+          className={`px-6 py-3 rounded-lg transition-all duration-200 flex items-center gap-2 ${
+            isLoading
+              ? 'bg-gray-400 text-gray-500 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-700 text-white'
+          }`}
         >
-          Publish Job →
+          {isLoading ? (
+            <>
+              <Spinner size="sm" color="white" />
+              <span>Publishing...</span>
+            </>
+          ) : (
+            'Publish Job →'
+          )}
         </button>
       </div>
     </div>
