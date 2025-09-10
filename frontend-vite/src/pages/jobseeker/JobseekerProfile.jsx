@@ -2,6 +2,17 @@ import React, { useState, useEffect } from 'react';
 import JobseekerHeader from '../../components/ui/JobseekerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
+import ProfileModal from '../../components/ui/ProfileModal.jsx';
+import {
+  PersonalInfoModal,
+  ProfessionalSummaryModal,
+  SkillsModal,
+  EducationModal,
+  WorkExperienceModal,
+  PortfolioLinksModal,
+  AccessibilityNeedsModal,
+  EmploymentPreferencesModal
+} from '../../components/modals';
 
 const JobseekerProfile = () => {
   // Loading and error states
@@ -93,6 +104,11 @@ const JobseekerProfile = () => {
     hearingSupport: false
   });
 
+  // Modal states
+  const [activeModal, setActiveModal] = useState(null);
+  const [editingItem, setEditingItem] = useState(null);
+  const [formData, setFormData] = useState({});
+
   // Toggle functions
   const toggleSection = (section) => {
     setExpandedSections(prev => ({
@@ -103,6 +119,122 @@ const JobseekerProfile = () => {
 
   const toggleVisibility = (setting) => {
     handleToggleVisibility(setting);
+  };
+
+  // Modal functions
+  const openModal = (modalType, item = null) => {
+    setActiveModal(modalType);
+    setEditingItem(item);
+    
+    // Initialize form data based on modal type
+    switch (modalType) {
+      case 'personalInfo':
+        setFormData({
+          firstName: profileData.firstName,
+          lastName: profileData.lastName,
+          email: profileData.email,
+          phone: profileData.phone,
+          birthDate: profileData.birthDate,
+          disabilityType: profileData.disabilityType,
+          location: profileData.location
+        });
+        break;
+      case 'professionalSummary':
+        setFormData({
+          jobTitle: profileData.jobTitle,
+          professionalSummary: profileData.professionalSummary,
+          hourlyRate: profileData.hourlyRate
+        });
+        break;
+      case 'skills':
+        setFormData({
+          skills: [...profileData.skills]
+        });
+        break;
+      case 'education':
+        setFormData(item ? {
+          degree: item.degree,
+          institution: item.institution,
+          startYear: item.startYear,
+          endYear: item.endYear,
+          isCurrent: item.isCurrent
+        } : {
+          degree: '',
+          institution: '',
+          startYear: '',
+          endYear: '',
+          isCurrent: false
+        });
+        break;
+      case 'workExperience':
+        setFormData(item ? {
+          title: item.title,
+          company: item.company,
+          startMonth: item.startDate ? item.startDate.split('-')[1] : '',
+          startYear: item.startDate ? item.startDate.split('-')[0] : '',
+          endMonth: item.endDate ? item.endDate.split('-')[1] : '',
+          endYear: item.endDate ? item.endDate.split('-')[0] : '',
+          employmentType: item.employmentType,
+          location: item.location,
+          description: item.description
+        } : {
+          title: '',
+          company: '',
+          startMonth: '',
+          startYear: '',
+          endMonth: '',
+          endYear: '',
+          employmentType: 'Full-time',
+          location: '',
+          description: ''
+        });
+        break;
+      case 'portfolioLinks':
+        setFormData({ ...profileData.portfolioLinks });
+        break;
+      case 'accessibilityNeeds':
+        setFormData({ ...profileData.accessibilityNeeds });
+        break;
+      case 'employmentPreferences':
+        setFormData({ ...profileData.employmentPreferences });
+        break;
+      default:
+        setFormData({});
+    }
+  };
+
+  const closeModal = () => {
+    setActiveModal(null);
+    setEditingItem(null);
+    setFormData({});
+  };
+
+  const handleFormChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleArrayFormChange = (field, value, index) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: prev[field].map((item, i) => i === index ? value : item)
+    }));
+  };
+
+  const addArrayItem = (field, newItem) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: [...prev[field], newItem]
+    }));
+  };
+
+  const removeArrayItem = (field, index) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: prev[field].filter((_, i) => i !== index)
+    }));
   };
 
   // API Functions - Ready for backend integration
@@ -316,11 +448,106 @@ const JobseekerProfile = () => {
     }
   };
 
+  const handleSave = async () => {
+    try {
+      switch (activeModal) {
+        case 'personalInfo':
+          await handleUpdateProfile('personalInfo', formData);
+          break;
+        case 'professionalSummary':
+          await handleUpdateProfile('professionalInfo', formData);
+          break;
+        case 'skills':
+          await handleUpdateProfile('skills', formData.skills);
+          break;
+        case 'education':
+          if (editingItem) {
+            // Update existing education
+            const updatedEducation = profileData.education.map(item => 
+              item.id === editingItem.id ? { ...formData, id: editingItem.id } : item
+            );
+            await handleUpdateProfile('education', updatedEducation);
+          } else {
+            // Add new education
+            const newEducation = [...profileData.education, { ...formData, id: Date.now() }];
+            await handleUpdateProfile('education', newEducation);
+          }
+          break;
+        case 'workExperience':
+          if (editingItem) {
+            // Update existing work experience
+            const workData = {
+              ...formData,
+              id: editingItem.id,
+              startDate: formData.startYear && formData.startMonth ? `${formData.startYear}-${formData.startMonth.padStart(2, '0')}` : '',
+              endDate: formData.endYear && formData.endMonth ? `${formData.endYear}-${formData.endMonth.padStart(2, '0')}` : ''
+            };
+            const updatedExperience = profileData.workExperience.map(item => 
+              item.id === editingItem.id ? workData : item
+            );
+            await handleUpdateProfile('workExperience', updatedExperience);
+          } else {
+            // Add new work experience
+            const workData = {
+              ...formData,
+              id: Date.now(),
+              startDate: formData.startYear && formData.startMonth ? `${formData.startYear}-${formData.startMonth.padStart(2, '0')}` : '',
+              endDate: formData.endYear && formData.endMonth ? `${formData.endYear}-${formData.endMonth.padStart(2, '0')}` : ''
+            };
+            const newExperience = [...profileData.workExperience, workData];
+            await handleUpdateProfile('workExperience', newExperience);
+          }
+          break;
+        case 'portfolioLinks':
+          await handleUpdateProfile('portfolioLinks', formData);
+          break;
+        case 'accessibilityNeeds':
+          await handleUpdateProfile('accessibilityNeeds', formData);
+          break;
+        case 'employmentPreferences':
+          await handleUpdateProfile('employmentPreferences', formData);
+          break;
+      }
+      closeModal();
+    } catch (err) {
+      console.error('Error saving:', err);
+    }
+  };
+
+  const handleDelete = async (section, itemId) => {
+    try {
+      switch (section) {
+        case 'education':
+          const updatedEducation = profileData.education.filter(item => item.id !== itemId);
+          await handleUpdateProfile('education', updatedEducation);
+          break;
+        case 'workExperience':
+          const updatedExperience = profileData.workExperience.filter(item => item.id !== itemId);
+          await handleUpdateProfile('workExperience', updatedExperience);
+          break;
+      }
+    } catch (err) {
+      console.error('Error deleting:', err);
+    }
+  };
+
   // Calculate profile completion percentage
   const calculateCompletion = () => {
     const sections = Object.values(profileData.profileCompletion);
     const completed = sections.filter(Boolean).length;
     return Math.round((completed / sections.length) * 100);
+  };
+
+  // Calculate completion items dynamically
+  const getCompletionItems = () => {
+    return [
+      { text: 'Basic information', completed: profileData.profileCompletion.basicInfo },
+      { text: 'Professional experience', completed: profileData.profileCompletion.professionalInfo },
+      { text: 'Education', completed: profileData.profileCompletion.education },
+      { text: 'Add portfolio items', completed: profileData.profileCompletion.portfolio },
+      { text: 'Complete skills assessment', completed: profileData.profileCompletion.skills },
+      { text: 'Set accessibility preferences', completed: profileData.profileCompletion.accessibility }
+    ];
   };
 
   // Initialize data on component mount
@@ -424,7 +651,10 @@ const JobseekerProfile = () => {
                 <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
                   Preview Public Profile
                 </button>
-                <button className="px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-lg transition-colors flex items-center space-x-2">
+                <button 
+                  onClick={() => window.location.href = '/jobseeker/account-settings'}
+                  className="px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-lg transition-colors flex items-center space-x-2"
+                >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -444,22 +674,17 @@ const JobseekerProfile = () => {
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Profile Completion</h3>
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">75% Complete</span>
-                    <span className="text-sm text-gray-500">3 items left</span>
+                    <span className="text-sm font-medium text-gray-700">{calculateCompletion()}% Complete</span>
+                    <span className="text-sm text-gray-500">
+                      {getCompletionItems().filter(item => !item.completed).length} items left
+                    </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-blue-600 h-2 rounded-full" style={{ width: '75%' }}></div>
+                    <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${calculateCompletion()}%` }}></div>
                   </div>
                 </div>
                 <div className="space-y-3">
-                  {[
-                    { text: 'Basic information', completed: true },
-                    { text: 'Professional experience', completed: true },
-                    { text: 'Education', completed: true },
-                    { text: 'Add portfolio items', completed: false },
-                    { text: 'Complete skills assessment', completed: false },
-                    { text: 'Set accessibility preferences', completed: false }
-                  ].map((item, index) => (
+                  {getCompletionItems().map((item, index) => (
                     <div key={index} className="flex items-center space-x-3">
                       {item.completed ? (
                         <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
@@ -514,7 +739,7 @@ const JobseekerProfile = () => {
                   </div>
                 </div>
                 <button 
-                  onClick={() => handleUpdateProfile('personalInfo', profileData)}
+                  onClick={() => openModal('personalInfo')}
                   className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
                 >
                   Edit Personal Information
@@ -534,7 +759,10 @@ const JobseekerProfile = () => {
                     <span className="text-sm text-blue-600 ml-2">angelamartinez.dev</span>
                   </div>
                 </div>
-                <button className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
+                <button 
+                  onClick={() => openModal('portfolioLinks')}
+                  className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                >
                   Edit Portfolio Links
                 </button>
               </div>
@@ -606,34 +834,34 @@ const JobseekerProfile = () => {
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">Professional Summary</h3>
-                  <button className="p-1 text-gray-400 hover:text-gray-600">
+                  <button 
+                    onClick={() => openModal('professionalSummary')}
+                    className="p-1 text-gray-400 hover:text-gray-600"
+                  >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
                   </button>
                 </div>
                 <p className="text-gray-700 mb-4 leading-relaxed">
-                  Experienced Full Stack Developer and UX Designer specializing in accessible, user-centered digital solutions. 
-                  Proficient in React, Node.js, and inclusive design principles. Passionate about bridging technical excellence 
-                  and user experience for underserved communities. Track record of delivering high-quality projects that meet 
-                  accessibility standards. Strong advocate for WCAG 2.1 compliance and experienced in remote/agile environments.
+                  {profileData.professionalSummary}
                 </p>
-                <div className="text-sm text-gray-500">487/2000 characters</div>
+                <div className="text-sm text-gray-500">{profileData.professionalSummary.length}/2000 characters</div>
               </div>
 
               {/* Skills & Expertise */}
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">Skills & Expertise</h3>
-                  <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                  <button 
+                    onClick={() => openModal('skills')}
+                    className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                  >
                     Manage Skills
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {[
-                    'React.js', 'TypeScript', 'JavaScript', 'Frontend Architecture', 
-                    'Responsive Design', 'Redux', 'GraphQL', 'Webpack', 'Next.js'
-                  ].map((skill, index) => (
+                  {profileData.skills.map((skill, index) => (
                     <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
                       {skill}
                     </span>
@@ -651,26 +879,37 @@ const JobseekerProfile = () => {
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">Education</h3>
-                  <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                  <button 
+                    onClick={() => openModal('education')}
+                    className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                  >
                     + Add Education
                   </button>
                 </div>
                 <div className="space-y-4">
-                  {[1, 2].map((item) => (
-                    <div key={item} className="border border-gray-200 rounded-lg p-4">
+                  {profileData.education.map((item) => (
+                    <div key={item.id} className="border border-gray-200 rounded-lg p-4">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <h4 className="font-medium text-gray-900">Bachelor of Science in Computer Science</h4>
-                          <p className="text-sm text-gray-600">University of Cebu</p>
-                          <p className="text-sm text-gray-500">2022-2026</p>
+                          <h4 className="font-medium text-gray-900">{item.degree}</h4>
+                          <p className="text-sm text-gray-600">{item.institution}</p>
+                          <p className="text-sm text-gray-500">
+                            {item.startYear} - {item.isCurrent ? 'Present' : item.endYear}
+                          </p>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <button className="p-1 text-gray-400 hover:text-gray-600">
+                          <button 
+                            onClick={() => openModal('education', item)}
+                            className="p-1 text-gray-400 hover:text-gray-600"
+                          >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
                           </button>
-                          <button className="p-1 text-gray-400 hover:text-red-600">
+                          <button 
+                            onClick={() => handleDelete('education', item.id)}
+                            className="p-1 text-gray-400 hover:text-red-600"
+                          >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
@@ -686,66 +925,48 @@ const JobseekerProfile = () => {
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">Work Experience</h3>
-                  <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                  <button 
+                    onClick={() => openModal('workExperience')}
+                    className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                  >
                     + Add Experience
                   </button>
                 </div>
                 <div className="space-y-4">
-                  <div className="border border-gray-200 rounded-lg p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">Senior Frontend Developer</h4>
-                        <p className="text-sm text-gray-600">TechCorp Solutions</p>
-                        <p className="text-sm text-gray-500">Jan 2023 - Jan 2024 • Full-time</p>
-                        <p className="text-sm text-gray-500">Cebu City, Philippines</p>
-                        <ul className="mt-2 space-y-1">
-                          <li className="text-sm text-gray-700">• Led development of accessible e-commerce platform serving 100K+ users</li>
-                          <li className="text-sm text-gray-700">• Improved site performance by 45% through React optimization techniques</li>
-                          <li className="text-sm text-gray-700">• Mentored 3 junior developers and established accessibility testing protocols</li>
-                        </ul>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <button className="p-1 text-gray-400 hover:text-gray-600">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                          </svg>
-                        </button>
-                        <button className="p-1 text-gray-400 hover:text-red-600">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="border border-gray-200 rounded-lg p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">UX Designer</h4>
-                        <p className="text-sm text-gray-600">DesignHub Agency</p>
-                        <p className="text-sm text-gray-500">Jan 2023 - Jan 2024 • Part-Time</p>
-                        <p className="text-sm text-gray-500">Cebu City, Philippines</p>
-                        <ul className="mt-2 space-y-1">
-                          <li className="text-sm text-gray-700">• Designed user interfaces for 20+ client projects across healthcare and fintech</li>
-                          <li className="text-sm text-gray-700">• Conducted accessibility audits resulting in 100% WCAG AA compliance</li>
-                          <li className="text-sm text-gray-700">• Created design system used by 5+ development teams</li>
-                        </ul>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <button className="p-1 text-gray-400 hover:text-gray-600">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                          </svg>
-                        </button>
-                        <button className="p-1 text-gray-400 hover:text-red-600">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                        </button>
+                  {profileData.workExperience.map((item) => (
+                    <div key={item.id} className="border border-gray-200 rounded-lg p-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h4 className="font-medium text-gray-900">{item.title}</h4>
+                          <p className="text-sm text-gray-600">{item.company}</p>
+                          <p className="text-sm text-gray-500">
+                            {new Date(item.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - 
+                            {new Date(item.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} • {item.employmentType}
+                          </p>
+                          <p className="text-sm text-gray-500">{item.location}</p>
+                          <p className="text-sm text-gray-700 mt-2">{item.description}</p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <button 
+                            onClick={() => openModal('workExperience', item)}
+                            className="p-1 text-gray-400 hover:text-gray-600"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                          </button>
+                          <button 
+                            onClick={() => handleDelete('workExperience', item.id)}
+                            className="p-1 text-gray-400 hover:text-red-600"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
 
@@ -753,7 +974,10 @@ const JobseekerProfile = () => {
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">Accessibility & Accommodation Needs</h3>
-                  <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                  <button 
+                    onClick={() => openModal('accessibilityNeeds')}
+                    className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                  >
                     Update Requirements
                   </button>
                 </div>
@@ -799,26 +1023,31 @@ const JobseekerProfile = () => {
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">Employment Preferences</h3>
-                  <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                  <button 
+                    onClick={() => openModal('employmentPreferences')}
+                    className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                  >
                     Update Preferences
                   </button>
                 </div>
                 <div className="space-y-3">
                   <div>
                     <span className="text-sm font-medium text-gray-700">Work Arrangement:</span>
-                    <span className="text-sm text-gray-900 ml-2">Remote - Work from anywhere</span>
+                    <span className="text-sm text-gray-900 ml-2">{profileData.employmentPreferences.workArrangement}</span>
                   </div>
                   <div>
                     <span className="text-sm font-medium text-gray-700">Employment Type:</span>
-                    <span className="text-sm text-gray-900 ml-2">Full-time, Contract</span>
+                    <span className="text-sm text-gray-900 ml-2">{profileData.employmentPreferences.employmentType.join(', ')}</span>
                   </div>
                   <div>
                     <span className="text-sm font-medium text-gray-700">Experience Level:</span>
-                    <span className="text-sm text-gray-900 ml-2">Senior Level (6-5 years)</span>
+                    <span className="text-sm text-gray-900 ml-2">{profileData.employmentPreferences.experienceLevel}</span>
                   </div>
                   <div>
                     <span className="text-sm font-medium text-gray-700">Salary Range:</span>
-                    <span className="text-sm text-gray-900 ml-2">₱80,000 - ₱120,000/month</span>
+                    <span className="text-sm text-gray-900 ml-2">
+                      ₱{profileData.employmentPreferences.salaryRange.min} - ₱{profileData.employmentPreferences.salaryRange.max}/month
+                    </span>
                   </div>
                 </div>
               </div>
@@ -834,6 +1063,108 @@ const JobseekerProfile = () => {
         showNotification={true} 
         notificationCount={3}
       />
+
+      {/* Modals */}
+      <ProfileModal
+        isOpen={activeModal === 'personalInfo'}
+        onClose={closeModal}
+        title="Edit Personal Information"
+        description="Update your basic personal information"
+        onSave={handleSave}
+        isSaving={isSaving}
+      >
+        <PersonalInfoModal formData={formData} onFormChange={handleFormChange} />
+      </ProfileModal>
+
+      <ProfileModal
+        isOpen={activeModal === 'professionalSummary'}
+        onClose={closeModal}
+        title="Edit Professional Summary"
+        description="Tell us about your professional background"
+        onSave={handleSave}
+        isSaving={isSaving}
+      >
+        <ProfessionalSummaryModal formData={formData} onFormChange={handleFormChange} />
+      </ProfileModal>
+
+      <ProfileModal
+        isOpen={activeModal === 'skills'}
+        onClose={closeModal}
+        title="Manage Skills & Expertise"
+        description="Select and manage your professional skills"
+        onSave={handleSave}
+        isSaving={isSaving}
+      >
+        <SkillsModal 
+          formData={formData} 
+          onFormChange={handleFormChange}
+          onAddSkill={addArrayItem}
+          onRemoveSkill={removeArrayItem}
+        />
+      </ProfileModal>
+
+      <ProfileModal
+        isOpen={activeModal === 'education'}
+        onClose={closeModal}
+        title={editingItem ? 'Edit Education' : 'Add Education'}
+        description="Add or update your educational background"
+        onSave={handleSave}
+        isSaving={isSaving}
+      >
+        <EducationModal 
+          formData={formData} 
+          onFormChange={handleFormChange}
+          isEditing={!!editingItem}
+        />
+      </ProfileModal>
+
+      <ProfileModal
+        isOpen={activeModal === 'workExperience'}
+        onClose={closeModal}
+        title={editingItem ? 'Edit Work Experience' : 'Add Work Experience'}
+        description="Add or update your work experience"
+        onSave={handleSave}
+        isSaving={isSaving}
+      >
+        <WorkExperienceModal 
+          formData={formData} 
+          onFormChange={handleFormChange}
+          isEditing={!!editingItem}
+        />
+      </ProfileModal>
+
+      <ProfileModal
+        isOpen={activeModal === 'portfolioLinks'}
+        onClose={closeModal}
+        title="Edit Portfolio Links"
+        description="Update your portfolio and social links"
+        onSave={handleSave}
+        isSaving={isSaving}
+      >
+        <PortfolioLinksModal formData={formData} onFormChange={handleFormChange} />
+      </ProfileModal>
+
+      <ProfileModal
+        isOpen={activeModal === 'accessibilityNeeds'}
+        onClose={closeModal}
+        title="Update Accessibility Needs"
+        description="Specify your accessibility requirements"
+        onSave={handleSave}
+        isSaving={isSaving}
+      >
+        <AccessibilityNeedsModal formData={formData} onFormChange={handleFormChange} />
+      </ProfileModal>
+
+      <ProfileModal
+        isOpen={activeModal === 'employmentPreferences'}
+        onClose={closeModal}
+        title="Update Employment Preferences"
+        description="Set your employment preferences"
+        onSave={handleSave}
+        isSaving={isSaving}
+      >
+        <EmploymentPreferencesModal formData={formData} onFormChange={handleFormChange} />
+      </ProfileModal>
     </div>
   );
 };
