@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import api from '../../../utils/api.js'
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 import Spinner from '../../../components/ui/Spinner.jsx';
@@ -134,21 +135,6 @@ const JobseekerOnboardingEducation = () => {
   };
 
   const handleNext = async () => {
-<<<<<<< HEAD
-=======
-    console.log('Next button clicked in Education page');
-    console.log('Current form state:', { 
-      highestLevel, 
-      institutionName, 
-      location, 
-      fieldOfStudy, 
-      degree, 
-      graduationStatus, 
-      graduationYear,
-      isFormValid
-    });
-    
->>>>>>> ff4bcbebfd43416ec1151c78ff09850a66b9b226
     if (!validateForm()) {
       console.log('Form validation failed:', errors);
       return;
@@ -176,50 +162,12 @@ const JobseekerOnboardingEducation = () => {
     console.log('Submitting education data:', educationData);
 
     try {
-      // Check if we have a valid token
-      if (!token) {
-        console.log('No auth token found, proceeding with mock data');
-        // Wait for minimum loading time even for mock data
-        await minLoadingTime;
-        // Mock success for development
-        Swal.fire({
-          icon: 'success',
-          html: '<h5><b>Education Background</b></h5>\n<h6>You may now fillup your work experience data.</h6>',
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          toast: true,
-          position: 'bottom-end'
-        });
-        navigate(routeForStep('experience'));
-        setIsLoading(false);
-        return;
-      }
-
-      var url = "http://localhost:4000/onboard/pwd/onboard/education";
-      var headers = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-      
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(educationData)
-      });
-<<<<<<< HEAD
-=======
+      const response = await api.post('/onboard/pwd/onboard/education', educationData);
 
       // Wait for both API call and minimum loading time
       await Promise.all([response, minLoadingTime]);
-
-      console.log('Response status:', response.status);
->>>>>>> ff4bcbebfd43416ec1151c78ff09850a66b9b226
       
-      const data = await response.json();
-      console.log('API response:', data);
-      
-      if(data.success) {
+      if(response.data.success) {
         Swal.fire({
           icon: 'success',
           html: '<h5><b>Education Background</b></h5>\n<h6>You may now fillup your work experience data.</h6>',

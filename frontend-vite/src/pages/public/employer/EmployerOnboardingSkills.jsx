@@ -115,53 +115,47 @@ const EmployerOnboardingSkills = () => {
 
   const handleNext = async () => {
     setIsLoading(true);
-    console.log('Skills form validation passed, proceeding...');
 
     // Add minimum loading time to see spinner (remove this in production)
     const minLoadingTime = new Promise(resolve => setTimeout(resolve, 1500));
 
+    // Try to save data (optional - will proceed even if this fails)
+    const token = localStorage.getItem('authToken');
+    const skillsData = {
+      industry: selectedIndustry,
+      roles: selectedRoles,
+      skills: selectedSkills
+    };
+
     try {
-      // Try to save data (optional - will proceed even if this fails)
-      const token = localStorage.getItem('authToken');
-      const skillsData = {
-        industry: selectedIndustry,
-        roles: selectedRoles,
-        skills: selectedSkills
-      };
-
-      if (token) {
-        try {
-          const response = await fetch('http://localhost:4000/onboard/employer/skills', {
-            method: 'POST',
-            headers: { 
-              "Authorization": `Bearer ${token}`,
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(skillsData)
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            if (data.success) {
-              console.log('Skills data saved successfully:', skillsData);
-            }
-          }
-        } catch (apiError) {
-          console.log('API call failed, but continuing with navigation:', apiError);
-        }
-      }
+      const response = await fetch('http://localhost:4000/onboard/emp/onboard/jobroles-requirements', {
+        method: 'POST',
+        headers: { 
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(skillsData)
+      });
 
       // Wait for minimum loading time
       await minLoadingTime;
 
-      // Always proceed to next step regardless of API result
-      console.log('Proceeding to education page with data:', skillsData);
-      navigate('/onboarding/employer/education');
-      
-    } catch (error) {
-      console.error('Unexpected error:', error);
-      // Still proceed to next step even if there's an error
-      navigate('/onboarding/employer/education');
+      const data = await response.json();
+      if (data.success) {
+        console.log('Skills data saved successfully:', skillsData);
+        Swal.fire({
+          icon: 'success',
+          html: '<h5><b>Job Roles & Requirements</b></h5>\n<h6>You may now fillup your Work Environment data.</h6>',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
+        navigate('/onboarding/employer/education')
+      }
+    } catch (apiError) {
+      console.warn('API call failed, but continuing with navigation:', apiError);
     } finally {
       setIsLoading(false);
     }

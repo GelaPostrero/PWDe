@@ -1,5 +1,5 @@
 // utils/verification.js
-const verificationStore = require('./verificationStore');
+const verificationStore = new Map(); 
 
 function generateVerificationCode(email) {
   const code = Math.floor(100000 + Math.random() * 900000).toString();

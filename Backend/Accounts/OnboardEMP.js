@@ -20,9 +20,9 @@ function mergeStepData(emp_id, stepName, stepData) {
 router.post('/emp/onboard/jobroles-requirements', authenticateToken, async (req, res) => {
     const emp_id = req.user.emp_id;
     const { 
-        selectedIndustry,
-        selectedRoles, // expect array
-        cleanSkills // expect array
+        industry,
+        roles, // expect array
+        skills // expect array
     } = req.body;
 
     if(!emp_id) {
@@ -31,9 +31,10 @@ router.post('/emp/onboard/jobroles-requirements', authenticateToken, async (req,
 
     try {
         mergeStepData(emp_id, 'JobRolesRequirements', {
-            industryPreference: selectedIndustry,
-            jobRoles: Array.isArray(selectedRoles) ? selectedRoles : [selectedRoles],
-            requiredPreferredSkills: Array.isArray(cleanSkills) ? cleanSkills : [cleanSkills]
+            industryPreference: industry,
+            jobRoles: Array.isArray(roles) ? roles : [roles],
+            requiredPreferredSkills: Array.isArray(skills) ? skills : [skills],
+            set_jobRoles_requirements: true,
         });
         console.log('Temporary Onboard EMP Data:', tempOnboardEMP.get(String(emp_id)))
         res.status(200).json({
@@ -51,7 +52,7 @@ router.post('/emp/onboard/work-environment', authenticateToken, async (req, res)
     const emp_id = req.user?.emp_id;
     const {
         workArrangement, // expect arary
-        selectedAccessibilityFeatures // expect array
+        accessibilityFeatures // expect array
     } = req.body;
 
     if(!emp_id) {
@@ -61,7 +62,8 @@ router.post('/emp/onboard/work-environment', authenticateToken, async (req, res)
     try {
         mergeStepData(emp_id, 'WorkEnvironment', {
             workArrangement: Array.isArray(workArrangement) ? workArrangement : [workArrangement],
-            accessibilityFeature: Array.isArray(selectedAccessibilityFeatures) ? selectedAccessibilityFeatures : [selectedAccessibilityFeatures]
+            accessibilityFeature: Array.isArray(accessibilityFeatures) ? accessibilityFeatures : [accessibilityFeatures],
+            set_work_environment: true
         });
         console.log('Temporary Onboard EMP Data:', tempOnboardEMP.get(String(emp_id)))
         res.status(200).json({
@@ -82,14 +84,14 @@ router.post('/emp/onboard/complete-profile', authenticateToken, profilePhoto, as
 
     const {
         companyDescription,
-        companyPortfolioWebsite,
-        githubProfile,
-        otherPortfolioWebsite // expect array
+        portfolioUrl,
+        githubUrl,
+        otherPlatform // expect array
     } = req.body
 
     let parsedOtherPlatform;
     try {
-        parsedOtherPlatform = JSON.parse(otherPortfolioWebsite || '[]');
+        parsedOtherPlatform = JSON.parse(otherPlatform || '[]');
     } catch (error) {
         parsedOtherPlatform = [];
     }
@@ -110,6 +112,12 @@ router.post('/emp/onboard/complete-profile', authenticateToken, profilePhoto, as
 
         console.log("Temp Data: ", tempOnboardEMP.get(String(emp_id)))
 
+        const hasCompanyProfile =
+            (profilePhoto && profilePhoto.filename) ||
+            portfolioUrl?.trim() ||
+            githubUrl?.trim() ||
+            (Array.isArray(parsedOtherPlatform) && parsedOtherPlatform.length > 0);
+
         const updatedata = await prisma.employer_Profile.update({
             where: { employer_id: emp_id },
             data: {
@@ -120,9 +128,12 @@ router.post('/emp/onboard/complete-profile', authenticateToken, profilePhoto, as
                 accessibilityFeatures: tempdata.WorkEnvironment.accessibilityFeature || [],
                 profile_picture: profilePhoto ? profilePhoto.filename : null,
                 company_description: companyDescription || '',
-                company_website_portfolio: companyPortfolioWebsite || '',
-                company_github_profile: githubProfile || '',
-                company_other_portfolio: parsedOtherPlatform
+                company_website_portfolio: portfolioUrl || '',
+                company_github_profile: githubUrl || '',
+                company_other_portfolio: parsedOtherPlatform,
+                set_jobRoles_requirements: tempdata.JobRolesRequirements.set_jobRoles_requirements || false,
+                set_work_environment: tempdata.WorkEnvironment.set_work_environment || false,
+                set_company_profile: Boolean(hasCompanyProfile)
             }
         });
 

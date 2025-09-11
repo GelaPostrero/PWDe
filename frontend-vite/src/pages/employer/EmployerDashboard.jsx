@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../../utils/api.js'
 import EmployerHeader from '../../components/ui/EmployerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
@@ -7,16 +8,18 @@ import Chatbot from '../../components/ui/Chatbot.jsx';
 const EmployerDashboard = () => {
   const [highContrast, setHighContrast] = useState(false);
   const [largeText, setLargeText] = useState(true);
+  const [fetchedData, setFetchedData] = useState([]);
 
   // Mock company data
   const companyProfile = {
-    name: "TechCorp Inc.",
-    industry: "Technology",
-    rating: 4.8,
-    profileViews: 142,
-    applications: 12,
-    interviews: 5,
-    savedJobs: 24
+    companylogo: fetchedData.companylogo,
+    name: fetchedData.company_name,
+    industry: fetchedData.industryPreference,
+    rating: fetchedData.rating,
+    profileViews: fetchedData.profile_views,
+    applications: fetchedData.applications,
+    interviews: fetchedData.interviews,
+    savedJobs: fetchedData.saved_jobs
   };
 
   // Mock job postings data
@@ -97,11 +100,16 @@ const EmployerDashboard = () => {
     }
   ];
 
-  const profileCompletion = {
-    percentage: 75,
-    completed: ["Company Profile", "Job Roles & Requirements"],
-    remaining: ["Work Environment"]
-  };
+  const items = [
+    { text: 'Company Profile', completed: fetchedData.set_company_profile },
+    { text: 'Job Roles & Requirements', completed: fetchedData.set_jobRoles_requirements },
+    { text: 'Work Environment', completed: fetchedData.set_work_environment }
+  ];
+
+  const totalItems = items.length;
+  const completedItems = items.filter(item => item.completed).length;
+  const progressPercentage = Math.round((completedItems / totalItems) * 100);
+  const itemsLeft = totalItems - completedItems;
 
   const quickActions = [
     {
@@ -124,6 +132,20 @@ const EmployerDashboard = () => {
     }
   ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get("/retrieve/dashboard");
+        if (response.data.success) {
+          setFetchedData(response.data.data);
+        }
+      } catch (error) {
+        console.error("Failed to load profile:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
@@ -139,18 +161,27 @@ const EmployerDashboard = () => {
               {/* Company Profile Section */}
               <div className="bg-white rounded-lg shadow p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
-                  {/* Company Logo */}
                   <div className="relative flex-shrink-0 flex justify-center sm:justify-start">
-                    <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold text-lg">TECH</span>
-                    </div>
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
+                  {/* Company Logo */}
+                  {companyProfile.companylogo ?  (
+                      <img 
+                        src={fetchedData.companylogo} 
+                        alt="Company Logo"
+                        className="w-16 h-16 rounded-full object-cover border-4 border-blue-100"
+                      />
+                  ) : (
+                    <>
+                      <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">LOGO</span>
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
+                    </>
+                  )}
                   </div>
-
                   {/* Company Name and Rating */}
                   <div className="flex-shrink-0 text-center sm:text-left">
                     <h2 className="text-lg font-bold text-gray-900">{companyProfile.name}</h2>
-                    <p className="text-sm text-gray-600">Industry Preference</p>
+                    <p className="text-sm text-gray-600">{companyProfile.industry}</p>
                     <div className="flex items-center justify-center sm:justify-start mt-1">
                       <div className="flex items-center">
                         {[...Array(5)].map((_, i) => (
@@ -427,19 +458,33 @@ const EmployerDashboard = () => {
                 <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Profile Completion</h3>
                 <div className="mb-4">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">{profileCompletion.percentage}% Complete</span>
-                    <span className="text-xs sm:text-sm text-gray-500">{profileCompletion.remaining.length} item left</span>
+                    <span className="text-sm font-medium text-gray-700">{progressPercentage}% Complete</span>
+                    <span className="text-xs sm:text-sm text-gray-500">{itemsLeft} item{itemsLeft !== 1 ? 's' : ''} left</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div 
                       className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${profileCompletion.percentage}%` }}
+                      style={{ width: `${progressPercentage}%` }}
                     ></div>
                   </div>
                 </div>
 
                 <div className="space-y-3 mb-4">
-                  {profileCompletion.completed.map((item, index) => (
+                  {items.map((item, index) => (
+                    <div key={index} className="flex items-center space-x-2">
+                      {item.completed ? (
+                        <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      ) : (
+                        <div className="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
+                      )}
+                      <span className="text-xs sm:text-sm text-gray-700">{item.text}</span>
+                    </div>
+                  ))}
+                  {/* {profileCompletion.completed.map((item, index) => (
                     <div key={index} className="flex items-center space-x-2">
                       <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                         <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -454,7 +499,7 @@ const EmployerDashboard = () => {
                       <div className="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
                       <span className="text-xs sm:text-sm text-gray-500">{item}</span>
                     </div>
-                  ))}
+                  ))} */}
                 </div>
                 
                 <Link 

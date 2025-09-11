@@ -142,6 +142,8 @@ exports.Prisma.Pwd_ProfileScalarFieldEnum = {
   disability_severity: 'disability_severity',
   gender: 'gender',
   rating: 'rating',
+  profile_views: 'profile_views',
+  interviews: 'interviews',
   created_at: 'created_at',
   updated_at: 'updated_at',
   pwd_id: 'pwd_id',
@@ -156,8 +158,15 @@ exports.Prisma.Pwd_ProfileScalarFieldEnum = {
   otherPlatform: 'otherPlatform',
   professional_role: 'professional_role',
   professional_summary: 'professional_summary',
+  hourly_rate: 'hourly_rate',
   profile_visibility: 'profile_visibility',
-  resume_cv: 'resume_cv'
+  resume_cv: 'resume_cv',
+  basic_information: 'basic_information',
+  professional_experience: 'professional_experience',
+  education: 'education',
+  portfolio_items: 'portfolio_items',
+  skills_assessment: 'skills_assessment',
+  set_accessibility_preferences: 'set_accessibility_preferences'
 };
 
 exports.Prisma.Pwd_ExperienceScalarFieldEnum = {
@@ -217,10 +226,13 @@ exports.Prisma.Employer_ProfileScalarFieldEnum = {
   user_id: 'user_id',
   address: 'address',
   profile_picture: 'profile_picture',
+  profile_views: 'profile_views',
+  interviews: 'interviews',
   company_name: 'company_name',
   company_email: 'company_email',
   company_phone: 'company_phone',
   company_address: 'company_address',
+  company_social_media: 'company_social_media',
   company_website_portfolio: 'company_website_portfolio',
   company_github_profile: 'company_github_profile',
   company_other_portfolio: 'company_other_portfolio',
@@ -236,7 +248,10 @@ exports.Prisma.Employer_ProfileScalarFieldEnum = {
   jobRolesTypicallyHire: 'jobRolesTypicallyHire',
   requiredPreferredSkills: 'requiredPreferredSkills',
   workArrangement: 'workArrangement',
-  accessibilityFeatures: 'accessibilityFeatures'
+  accessibilityFeatures: 'accessibilityFeatures',
+  set_company_profile: 'set_company_profile',
+  set_jobRoles_requirements: 'set_jobRoles_requirements',
+  set_work_environment: 'set_work_environment'
 };
 
 exports.Prisma.ResumesScalarFieldEnum = {
@@ -286,6 +301,7 @@ exports.Prisma.ApplicationsScalarFieldEnum = {
   application_id: 'application_id',
   job_id: 'job_id',
   pwd_id: 'pwd_id',
+  employer_id: 'employer_id',
   resume_id: 'resume_id',
   custom_message: 'custom_message',
   proposed_salary: 'proposed_salary',
@@ -336,6 +352,13 @@ exports.Prisma.Job_CategoriesScalarFieldEnum = {
   category_id: 'category_id',
   name: 'name',
   description: 'description'
+};
+
+exports.Prisma.Saved_JobsScalarFieldEnum = {
+  savedJob_id: 'savedJob_id',
+  job_id: 'job_id',
+  pwd_id: 'pwd_id',
+  employer_id: 'employer_id'
 };
 
 exports.Prisma.Job_ListingsScalarFieldEnum = {
@@ -547,6 +570,7 @@ exports.Prisma.ModelName = {
   transactions: 'transactions',
   Notifications: 'Notifications',
   Job_Categories: 'Job_Categories',
+  Saved_Jobs: 'Saved_Jobs',
   Job_Listings: 'Job_Listings',
   support_tickets: 'support_tickets',
   resources: 'resources',

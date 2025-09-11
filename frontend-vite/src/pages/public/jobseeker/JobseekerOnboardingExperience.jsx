@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import api from '../../../utils/api.js'
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 import Spinner from '../../../components/ui/Spinner.jsx';
@@ -315,53 +316,12 @@ const JobseekerOnboardingExperience = () => {
     console.log('Sending experience data:', experienceData);
 
     try {
-      // Check if we have a valid token
-      if (!token) {
-        console.log('No auth token found, proceeding with mock data');
-        // Wait for minimum loading time even for mock data
-        await minLoadingTime;
-        // Mock success for development
-        Swal.fire({
-          icon: 'success',
-          html: '<h5><b>Work Experience</b></h5>\n<h6>You may now fillup your Accessibility needs.</h6>',
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          toast: true,
-          position: 'bottom-end'
-        });
-        navigate(routeForStep('accessibility'));
-        setIsLoading(false);
-        return;
-      }
-
-      var url = "http://localhost:4000/onboard/pwd/onboard/work-experience";
-      var headers = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-      
-      console.log('Attempting to connect to:', url);
-      
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(experienceData)
-      });
+      const response = await api.post('/onboard/pwd/onboard/work-experience', experienceData);
 
       // Wait for both API call and minimum loading time
       await Promise.all([response, minLoadingTime]);
-
-      console.log('Response status:', response.status);
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log('API response:', data);
-      
-      if(data.success) {
+      if(response.data.success) {
         Swal.fire({
           icon: 'success',
           html: '<h5><b>Work Experience</b></h5>\n<h6>You may now fillup your Accessibility needs.</h6>',
@@ -510,68 +470,6 @@ const JobseekerOnboardingExperience = () => {
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1">Start Date*</label>
-<<<<<<< HEAD
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <select 
-                      value={startDate ? startDate.getFullYear() : ''}
-                      onChange={(e) => {
-                        const year = parseInt(e.target.value);
-                        if (year && startDate) {
-                          const newDate = new Date(startDate);
-                          newDate.setFullYear(year);
-                          setStartDate(newDate);
-                        } else if (year) {
-                          setStartDate(new Date(year, 0, 1));
-                        } else {
-                          setStartDate(null);
-                        }
-                      }}
-                      className={`w-full border rounded-lg px-4 py-3 bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                        errors.startDate ? 'border-red-500' : 'border-gray-200'
-                      }`}
-                    >
-                      <option value="">Year</option>
-                      {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map(year => (
-                        <option key={year} value={year}>{year}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <select 
-                      value={startDate ? startDate.getMonth() + 1 : ''}
-                      onChange={(e) => {
-                        const month = parseInt(e.target.value);
-                        if (month && startDate) {
-                          const newDate = new Date(startDate);
-                          newDate.setMonth(month - 1);
-                          setStartDate(newDate);
-                        } else if (month) {
-                          setStartDate(new Date(new Date().getFullYear(), month - 1, 1));
-                        } else {
-                          setStartDate(null);
-                        }
-                      }}
-                      className={`w-full border rounded-lg px-4 py-3 bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                        errors.startDate ? 'border-red-500' : 'border-gray-200'
-                      }`}
-                    >
-                      <option value="">Month</option>
-                      <option value="1">January</option>
-                      <option value="2">February</option>
-                      <option value="3">March</option>
-                      <option value="4">April</option>
-                      <option value="5">May</option>
-                      <option value="6">June</option>
-                      <option value="7">July</option>
-                      <option value="8">August</option>
-                      <option value="9">September</option>
-                      <option value="10">October</option>
-                      <option value="11">November</option>
-                      <option value="12">December</option>
-                    </select>
-                  </div>
-=======
                 <div className="relative">
                   <input 
                     value={startDate ? startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
@@ -660,7 +558,6 @@ const JobseekerOnboardingExperience = () => {
                       </div>
                     </div>
                   )}
->>>>>>> ff4bcbebfd43416ec1151c78ff09850a66b9b226
                 </div>
                 {errors.startDate && (
                   <p className="mt-1 text-sm text-red-600">{errors.startDate}</p>
@@ -668,70 +565,6 @@ const JobseekerOnboardingExperience = () => {
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1">End Date*</label>
-<<<<<<< HEAD
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <select 
-                      value={endDate ? endDate.getFullYear() : ''}
-                      onChange={(e) => {
-                        const year = parseInt(e.target.value);
-                        if (year && endDate) {
-                          const newDate = new Date(endDate);
-                          newDate.setFullYear(year);
-                          setEndDate(newDate);
-                        } else if (year) {
-                          setEndDate(new Date(year, 0, 1));
-                        } else {
-                          setEndDate(null);
-                        }
-                      }}
-                      disabled={isCurrent}
-                      className={`w-full border rounded-lg px-4 py-3 bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                        errors.endDate ? 'border-red-500' : 'border-gray-200'
-                      } ${isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : ''}`}
-                    >
-                      <option value="">Year</option>
-                      {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map(year => (
-                        <option key={year} value={year}>{year}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <select 
-                      value={endDate ? endDate.getMonth() + 1 : ''}
-                      onChange={(e) => {
-                        const month = parseInt(e.target.value);
-                        if (month && endDate) {
-                          const newDate = new Date(endDate);
-                          newDate.setMonth(month - 1);
-                          setEndDate(newDate);
-                        } else if (month) {
-                          setEndDate(new Date(new Date().getFullYear(), month - 1, 1));
-                        } else {
-                          setEndDate(null);
-                        }
-                      }}
-                      disabled={isCurrent}
-                      className={`w-full border rounded-lg px-4 py-3 bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                        errors.endDate ? 'border-red-500' : 'border-gray-200'
-                      } ${isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : ''}`}
-                    >
-                      <option value="">Month</option>
-                      <option value="1">January</option>
-                      <option value="2">February</option>
-                      <option value="3">March</option>
-                      <option value="4">April</option>
-                      <option value="5">May</option>
-                      <option value="6">June</option>
-                      <option value="7">July</option>
-                      <option value="8">August</option>
-                      <option value="9">September</option>
-                      <option value="10">October</option>
-                      <option value="11">November</option>
-                      <option value="12">December</option>
-                    </select>
-                  </div>
-=======
                 <div className="relative">
                   <input 
                     value={endDate ? endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
@@ -821,7 +654,6 @@ const JobseekerOnboardingExperience = () => {
                       </div>
                     </div>
                   )}
->>>>>>> ff4bcbebfd43416ec1151c78ff09850a66b9b226
                 </div>
                 {errors.endDate && (
                   <p className="mt-1 text-sm text-red-600">{errors.endDate}</p>
@@ -941,68 +773,10 @@ const JobseekerOnboardingExperience = () => {
                   </div>
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">Start Date</label>
-<<<<<<< HEAD
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <select 
-                          value={exp.startDate ? exp.startDate.getFullYear() : ''}
-                          onChange={(e) => {
-                            const year = parseInt(e.target.value);
-                            if (year && exp.startDate) {
-                              const newDate = new Date(exp.startDate);
-                              newDate.setFullYear(year);
-                              updateAdditionalExperience(exp.id, 'startDate', newDate);
-                            } else if (year) {
-                              updateAdditionalExperience(exp.id, 'startDate', new Date(year, 0, 1));
-                            } else {
-                              updateAdditionalExperience(exp.id, 'startDate', null);
-                            }
-                          }}
-                          className="w-full border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                        >
-                          <option value="">Year</option>
-                          {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map(year => (
-                            <option key={year} value={year}>{year}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <select 
-                          value={exp.startDate ? exp.startDate.getMonth() + 1 : ''}
-                          onChange={(e) => {
-                            const month = parseInt(e.target.value);
-                            if (month && exp.startDate) {
-                              const newDate = new Date(exp.startDate);
-                              newDate.setMonth(month - 1);
-                              updateAdditionalExperience(exp.id, 'startDate', newDate);
-                            } else if (month) {
-                              updateAdditionalExperience(exp.id, 'startDate', new Date(new Date().getFullYear(), month - 1, 1));
-                            } else {
-                              updateAdditionalExperience(exp.id, 'startDate', null);
-                            }
-                          }}
-                          className="w-full border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                        >
-                          <option value="">Month</option>
-                          <option value="1">Jan</option>
-                          <option value="2">Feb</option>
-                          <option value="3">Mar</option>
-                          <option value="4">Apr</option>
-                          <option value="5">May</option>
-                          <option value="6">Jun</option>
-                          <option value="7">Jul</option>
-                          <option value="8">Aug</option>
-                          <option value="9">Sep</option>
-                          <option value="10">Oct</option>
-                          <option value="11">Nov</option>
-                          <option value="12">Dec</option>
-                        </select>
-=======
                     <div className="relative">
                       <input 
                         value={exp.startDate ? exp.startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
                         onClick={() => updateAdditionalExperience(exp.id, 'showStartCalendar', true)}
-                        readOnly
                         placeholder="Select start date"
                         className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer ${
                           errors.startDate ? 'border-red-500' : 'border-gray-200'
@@ -1012,7 +786,6 @@ const JobseekerOnboardingExperience = () => {
                         <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
->>>>>>> ff4bcbebfd43416ec1151c78ff09850a66b9b226
                       </div>
                       
                       {exp.showStartCalendar && (
@@ -1098,74 +871,10 @@ const JobseekerOnboardingExperience = () => {
                   </div>
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">End Date</label>
-<<<<<<< HEAD
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <select 
-                          value={exp.endDate ? exp.endDate.getFullYear() : ''}
-                          onChange={(e) => {
-                            const year = parseInt(e.target.value);
-                            if (year && exp.endDate) {
-                              const newDate = new Date(exp.endDate);
-                              newDate.setFullYear(year);
-                              updateAdditionalExperience(exp.id, 'endDate', newDate);
-                            } else if (year) {
-                              updateAdditionalExperience(exp.id, 'endDate', new Date(year, 0, 1));
-                            } else {
-                              updateAdditionalExperience(exp.id, 'endDate', null);
-                            }
-                          }}
-                          disabled={exp.isCurrent}
-                          className={`w-full border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
-                            exp.isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : ''
-                          }`}
-                        >
-                          <option value="">Year</option>
-                          {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map(year => (
-                            <option key={year} value={year}>{year}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <select 
-                          value={exp.endDate ? exp.endDate.getMonth() + 1 : ''}
-                          onChange={(e) => {
-                            const month = parseInt(e.target.value);
-                            if (month && exp.endDate) {
-                              const newDate = new Date(exp.endDate);
-                              newDate.setMonth(month - 1);
-                              updateAdditionalExperience(exp.id, 'endDate', newDate);
-                            } else if (month) {
-                              updateAdditionalExperience(exp.id, 'endDate', new Date(new Date().getFullYear(), month - 1, 1));
-                            } else {
-                              updateAdditionalExperience(exp.id, 'endDate', null);
-                            }
-                          }}
-                          disabled={exp.isCurrent}
-                          className={`w-full border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm ${
-                            exp.isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : ''
-                          }`}
-                        >
-                          <option value="">Month</option>
-                          <option value="1">Jan</option>
-                          <option value="2">Feb</option>
-                          <option value="3">Mar</option>
-                          <option value="4">Apr</option>
-                          <option value="5">May</option>
-                          <option value="6">Jun</option>
-                          <option value="7">Jul</option>
-                          <option value="8">Aug</option>
-                          <option value="9">Sep</option>
-                          <option value="10">Oct</option>
-                          <option value="11">Nov</option>
-                          <option value="12">Dec</option>
-                        </select>
-=======
                     <div className="relative">
                       <input 
                         value={exp.endDate ? exp.endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
                         onClick={() => !exp.isCurrent && updateAdditionalExperience(exp.id, 'showEndCalendar', true)}
-                        readOnly
                         placeholder="Select end date"
                         disabled={exp.isCurrent}
                         className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
@@ -1176,7 +885,6 @@ const JobseekerOnboardingExperience = () => {
                         <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
->>>>>>> ff4bcbebfd43416ec1151c78ff09850a66b9b226
                       </div>
                       
                       {exp.showEndCalendar && !exp.isCurrent && (

@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import api from '../../utils/api.js'
 import JobseekerHeader from '../../components/ui/JobseekerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
 
 const JobseekerDashboard = () => {
+  const navigate = useNavigate();
   const [highContrast, setHighContrast] = useState(false);
   const [largeText, setLargeText] = useState(true);
   const [aiRecommendedJobs, setAiRecommendedJobs] = useState([]);
   const [isLoadingJobs, setIsLoadingJobs] = useState(true);
+  const [fetchedData, setFetchedData] = useState([]);
 
   // Mock data - replace with real data from backend
   const userProfile = {
-    name: "Sarah Johnson",
-    role: "UX Designer",
-    rating: 4.8,
-    profileViews: 142,
-    applications: 12,
-    interviews: 5,
-    savedJobs: 24
+    name: fetchedData.fullname,
+    role: fetchedData.professional_role,
+    rating: fetchedData.rating,
+    profileViews: fetchedData.profile_views,
+    applications: fetchedData.applications,
+    interviews: fetchedData.interviews,
+    savedJobs: fetchedData.saved_jobs
   };
 
   // Structured job data model - matches your backend schema
@@ -328,14 +332,6 @@ const JobseekerDashboard = () => {
     }
   };
 
-  // Handle job view details - using Link component instead
-
-  const profileCompletion = {
-    percentage: 75,
-    completed: ["Basic information", "Professional experience", "Education"],
-    remaining: ["Add portfolio items", "Complete skills assessment", "Set accessibility preferences"]
-  };
-
   const quickActions = [
     {
       title: "Update Resume",
@@ -363,6 +359,34 @@ const JobseekerDashboard = () => {
     }
   ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get('/retrieve/dashboard');
+        if(response.data.success) {
+          setFetchedData(response.data.data);
+        }
+      } catch(error) {
+        console.error("Failed to load profile:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const items = [
+    { text: 'Basic information', completed: fetchedData.basic_information },
+    { text: 'Professional experience', completed: fetchedData.workexperience },
+    { text: 'Education', completed: fetchedData.education },
+    { text: 'Add portfolio items', completed: fetchedData.portfolio_items },
+    { text: 'Complete skills assessment', completed: fetchedData.skills },
+    { text: 'Set accessibility preferences', completed: fetchedData.set_accessibility_preferences }
+  ];
+
+  const totalItems = items.length;
+  const completedItems = items.filter(item => item.completed).length;
+  const progressPercentage = Math.round((completedItems / totalItems) * 100);
+  const itemsLeft = totalItems - completedItems;
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
@@ -381,11 +405,19 @@ const JobseekerDashboard = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
                   {/* Profile Avatar */}
                   <div className="relative flex-shrink-0 flex justify-center sm:justify-start">
-                    <img
-                      src="https://i.pravatar.cc/80?img=5"
-                      alt="Profile"
-                      className="w-16 h-16 rounded-full object-cover border-4 border-blue-100"
-                    />
+                    {fetchedData.profile_picture ? (
+                      <img
+                        src={fetchedData.profile_picture}
+                        alt="Profile"
+                        className="w-16 h-16 rounded-full object-cover border-4 border-blue-100"
+                      />
+                    ): (
+                      <img
+                        src="https://i.pravatar.cc/80?img=5"
+                        alt="Profile"
+                        className="w-16 h-16 rounded-full object-cover border-4 border-blue-100"
+                      />
+                    )}
                     <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
                   </div>
 
@@ -621,32 +653,30 @@ const JobseekerDashboard = () => {
                 <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Profile Completion</h3>
                 <div className="mb-4">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">{profileCompletion.percentage}% Complete</span>
-                    <span className="text-xs sm:text-sm text-gray-500">{profileCompletion.remaining.length} items left</span>
+                    <span className="text-sm font-medium text-gray-700">{progressPercentage}% Complete</span>
+                    <span className="text-xs sm:text-sm text-gray-500">{itemsLeft} item{itemsLeft !== 1 ? 's' : ''} left</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div 
                       className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${profileCompletion.percentage}%` }}
+                      style={{ width: `${progressPercentage}%` }}
                     ></div>
                   </div>
                 </div>
 
                 <div className="space-y-3 mb-4">
-                  {profileCompletion.completed.map((item, index) => (
-                    <div key={index} className="flex items-center space-x-2">
-                      <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  {items.map((item, index) => (
+                    <div key={index} className="flex items-center space-x-3">
+                      {item.completed ? (
+                        <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
-                      </div>
-                      <span className="text-xs sm:text-sm text-gray-700">{item}</span>
-                    </div>
-                  ))}
-                  {profileCompletion.remaining.map((item, index) => (
-                    <div key={index} className="flex items-center space-x-2">
-                      <div className="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
-                      <span className="text-xs sm:text-sm text-gray-500">{item}</span>
+                      ) : (
+                        <div className="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
+                      )}
+                      <span className={`text-sm ${item.completed ? 'text-gray-900' : 'text-gray-600'}`}>
+                        {item.text}
+                      </span>
                     </div>
                   ))}
                 </div>

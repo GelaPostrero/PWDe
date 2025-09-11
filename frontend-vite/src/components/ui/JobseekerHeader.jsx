@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import api from '../../utils/api.js'
 import Logo from './Logo.jsx';
 import AnimatedHamburger from './AnimatedHamburger.jsx';
 
@@ -156,24 +157,15 @@ const JobseekerHeader = ({ disabled = false }) => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
-      const url = "http://localhost:4000/retrieve/header"
-      const headers = {
-        "Authorization": `Bearer ${token}`
-      }
       try {
-        const response = await fetch(url, {
-          headers: headers
-        })
-        const data = await response.json();
-        if(data.success) {
-          setFetchedProfile(data.data);
+        const response = await api.get('/retrieve/header');
+        if(response.data.success) {
+          setFetchedProfile(response.data.data);
         }
       } catch(error) {
         console.error("Failed to load profile:", error);
       }
     };
-    
     fetchProfile();
   }, []);
 
@@ -318,11 +310,19 @@ const JobseekerHeader = ({ disabled = false }) => {
                 }`}
                 disabled={disabled}
               >
-                <img
-                  className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
-                  src={fetchedProfile ? fetchedProfile.profile_picture : "https://i.pravatar.cc/64"}
-                  alt="Profile"
-                />
+                {fetchedProfile?.profile_picture ? (
+                  <img
+                    className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
+                    src={fetchedProfile.profile_picture}
+                    alt="Profile"
+                  /> 
+                ) : (
+                  <img
+                    className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
+                    src="https://i.pravatar.cc/64"
+                    alt="Profile"
+                  />
+                )};
                 <svg className="w-4 h-4 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>

@@ -34,7 +34,8 @@ router.post('/pwd/onboard/assessment', authenticateToken, async (req, res) => {
     try {
         mergeStepData(pwd_id, 'assessment', {
             profession,
-            skills: Array.isArray(selectedSkill) ? selectedSkill : [selectedSkill]
+            skills: Array.isArray(selectedSkill) ? selectedSkill : [selectedSkill],
+            skills_assessment: true
         });
         console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)))
         res.status(200).json({
@@ -65,8 +66,7 @@ router.post('/pwd/onboard/education', authenticateToken, async (req, res) => {
     }
 
     try {
-        mergeStepData(pwd_id, 'education', { educations, highestLevel });
-
+        mergeStepData(pwd_id, 'education', { educations, highestLevel, education: true });
         console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
         res.status(200).json({
             message: 'PWD education data received successfully.',
@@ -97,6 +97,7 @@ router.post('/pwd/onboard/work-experience', authenticateToken, async (req, res) 
 
     try {
         mergeStepData(pwd_id, 'workExperience', experience);
+        mergeStepData(pwd_id, 'work_experience', {professional_experience: true});
         console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
         res.status(200).json({
             message: 'PWD work experience data received successfully.',
@@ -129,7 +130,8 @@ router.post('/pwd/onboard/accessibility-needs', authenticateToken, async (req, r
             hearing_support_needs: hearingNeeds || [],
             mobility_support_needs: mobilityNeeds || [],
             cognitive_support_needs: cognitiveNeeds || [],
-            additional_information: additionalInfo || ''
+            additional_information: additionalInfo || '',
+            accessibility_needs: true
         });
 
         console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
@@ -163,8 +165,8 @@ router.post('/pwd/onboard/job-preferences', authenticateToken, async (req, res) 
             employmentTypes,
             experienceLevel,
             salaryRange,
+            job_preferences: true
         });
-        
         console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
         res.status(200).json({
             message: 'PWD job preferences data received successfully.',
@@ -222,6 +224,10 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
         return res.status(400).json({ error: 'User not found!' });
     }
 
+    const hasPortfolioItems =
+        (portfolioUrl && portfolioUrl.trim() !== "") || // non empty string
+        (githubUrl && githubUrl.trim() !== "") ||       // non empty string
+        (Array.isArray(parsedOtherPlatform) && parsedOtherPlatform.length > 0);
     try {
         console.log("PWD ID: ", pwd_id);
         console.log("USER ID: ", user_id);
@@ -252,7 +258,14 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
                 profile_picture: profilePhoto ? profilePhoto.filename : null,
                 resume_cv: resume ? resume.filename : null,
                 profession: tempdata.assessment?.profession,
-                skills: tempdata.assessment?.skills || []
+                skills: tempdata.assessment?.skills || [],
+                professional_experience: tempdata.work_experience?.professional_experience || false,
+                education: tempdata.education?.education || false,
+                skills_assessment: tempdata.assessment?.skills_assessment || false,
+                set_accessibility_preferences: 
+                    (tempdata.accessibilityNeeds?.accessibility_needs || false) 
+                    && (tempdata.jobPreferences?.job_preferences || false),
+                portfolio_items: hasPortfolioItems
             }
         });
 
@@ -281,8 +294,8 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
             location: exp?.location || '',
             country: exp?.country || '',
             currently_working_on_this_role: exp?.isCurrent || false,
-            start_date: exp?.startDate ? new Date(exp.startDate).toISOString() : null,
-            end_date: exp?.endDate ? new Date(exp.endDate).toISOString() : null,
+            start_date: exp?.startDate || '',
+            end_date: exp?.endDate || '',
             description: exp?.description || '',
             employment_type: exp?.employmentType || ''
         }));
@@ -311,6 +324,8 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
                 salary_range: `${tempdata.jobPreferences?.salaryRange.currency || ''} ${tempdata.jobPreferences?.salaryRange.min || ''} - ${tempdata.jobPreferences?.salaryRange.max || ''}`
             }
         });
+
+
         res.status(200).json({
             message: 'Complete profile assembled successfully',
             success: true

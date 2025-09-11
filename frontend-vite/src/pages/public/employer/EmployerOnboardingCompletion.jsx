@@ -119,7 +119,6 @@ const EmployerOnboardingCompletion = () => {
       profileCompletion.append('portfolioUrl', formData.portfolioUrl);
       profileCompletion.append('githubUrl', formData.githubUrl);
       profileCompletion.append('otherPlatform', formData.otherPlatform);
-      profileCompletion.append('otherUrl', formData.otherUrl);
       profileCompletion.append('agreements', JSON.stringify(agreements));
 
       // Append photo if present
@@ -128,18 +127,27 @@ const EmployerOnboardingCompletion = () => {
       }
 
       // Mock API call (replace with actual endpoint)
-      const response = await fetch('http://localhost:4000/onboard/employer/complete-profile', {
+      const response = await fetch('http://localhost:4000/onboard/emp/onboard/complete-profile', {
         method: 'POST',
         headers: { "Authorization": `Bearer ${token}` },
         body: profileCompletion
       });
 
       // Wait for both API call and minimum loading time
-      await Promise.all([response, minLoadingTime]);
+      await minLoadingTime;
 
       const data = await response.json();
       if (data.success) {
-        console.log('Company profile completed successfully:', { formData, agreements, photo });
+        console.log('Company profile completed successfully:', { profileCompletion });
+        Swal.fire({
+          icon: 'success',
+          html: '<h5><b>Profile Completion</b></h5>\n<h6>Welcome to your dashboard.</h6>',
+          timer: 5000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
         navigate('/employer/dashboard');
       } else {
         throw new Error(data.message || 'Failed to complete profile');

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import api from '../../../utils/api.js'
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 import Spinner from '../../../components/ui/Spinner.jsx';
@@ -65,7 +66,6 @@ const JobseekerOnboardingCompletion = () => {
   const [githubUrl, setGithubUrl] = useState('');
   const [otherPlatformName, setOtherPlatformName] = useState('');
   const [otherPlatformUrl, setOtherPlatformUrl] = useState('');
-  const [otherPlatform, setOtherPlatform] = useState([]);
   const [visibility, setVisibility] = useState('public');
   const [agreeTos, setAgreeTos] = useState(false);
   const [agreeShare, setAgreeShare] = useState(false);
@@ -230,7 +230,6 @@ const JobseekerOnboardingCompletion = () => {
 
     try {
       // Prepare payload
-      const token = localStorage.getItem('authToken');
       const profileCompletion = new FormData();
       profileCompletion.append('role', role);
       profileCompletion.append('summary', summary);
@@ -248,18 +247,16 @@ const JobseekerOnboardingCompletion = () => {
         profileCompletion.append('resume', resume.file, resume.name || 'resume.pdf');
       }
 
-      var url = "http://localhost:4000/onboard/pwd/complete-profile";
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { "Authorization": `Bearer ${token}` },
-        body: profileCompletion
+      const response = await api.post('/onboard/pwd/complete-profile', profileCompletion, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
       });
 
       // Wait for both API call and minimum loading time
       await Promise.all([response, minLoadingTime]);
 
-      const data = await response.json();
-      if(data.success) {
+      if(response.data.success) {
         Swal.fire({
           icon: 'success',
           html: '<h5>You have finally completed your onboarding processes. \n<p><b>Welcome to your dashboard.</b></p></h6>',
@@ -294,11 +291,7 @@ const JobseekerOnboardingCompletion = () => {
             </div>
           </div>
 
-<<<<<<< HEAD
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
-=======
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
->>>>>>> ff4bcbebfd43416ec1151c78ff09850a66b9b226
             <Stepper steps={steps} currentKey="completion" onStepClick={handleStepClick} />
           </div>
 
@@ -526,13 +519,8 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               {/* Agreements */}
-<<<<<<< HEAD
-              <div className="border border-gray-200 border-gray-200 rounded-xl p-6">
-                <div className="font-medium text-gray-900 mb-3">Terms & Agreements* <span className="text-red-500">*</span></div>
-=======
               <div className="border border-gray-200 rounded-xl p-6">
                 <div className="font-medium text-gray-900 mb-3">Terms & Agreements</div>
->>>>>>> ff4bcbebfd43416ec1151c78ff09850a66b9b226
                 <div className="space-y-2 text-sm text-gray-700">
                   <label className="flex items-start gap-2 cursor-pointer">
                     <input type="checkbox" checked={agreeTos} onChange={(e) => setAgreeTos(e.target.checked)} />
@@ -553,9 +541,6 @@ const JobseekerOnboardingCompletion = () => {
               </div>
 
               <div className="flex items-center justify-between">
-<<<<<<< HEAD
-                <button onClick={goBack} className="px-4 py-2 border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer">
-=======
                 <button 
                   onClick={goBack} 
                   disabled={isLoading}
@@ -565,23 +550,18 @@ const JobseekerOnboardingCompletion = () => {
                       : 'text-gray-700 hover:bg-gray-50 cursor-pointer'
                   }`}
                 >
->>>>>>> ff4bcbebfd43416ec1151c78ff09850a66b9b226
                   Back
                 </button>
                 <button
                   onClick={finish}
-<<<<<<< HEAD
-                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white border border-gray-200 rounded-lg cursor-pointer"
-=======
                   disabled={isLoading}
                   className={`px-6 py-3 border border-gray-200 hover:border-gray-300 rounded-lg transition-all duration-200 flex items-center gap-2 ${
                     isLoading
                       ? 'bg-gray-400 text-gray-500 cursor-not-allowed'
                       : 'bg-blue-600 hover:bg-blue-700 text-white cursor-pointer'
                   }`}
->>>>>>> ff4bcbebfd43416ec1151c78ff09850a66b9b226
                 >
-                  {isLoading ? (
+                  {isLoading ? (  
                     <>
                       <Spinner size="sm" color="white" />
                       <span>Completing Profile...</span>
