@@ -34,6 +34,8 @@ import PostedJobView from './pages/employer/PostedJobView.jsx';
 import ApplicationView from './pages/employer/ApplicationView.jsx';
 import Analytics from './pages/employer/Analytics.jsx';
 import EmployerTransactions from './pages/employer/EmployerTransactions.jsx';
+import EmployerResources from './pages/employer/EmployerResources.jsx';
+import EmployerMessages from './pages/employer/EmployerMessages.jsx';
 import JobseekerDashboard from './pages/jobseeker/JobseekerDashboard.jsx';
 import JobDetails from './pages/jobseeker/JobDetails.jsx';
 import Resume from './pages/jobseeker/Resume.jsx';
@@ -116,10 +118,11 @@ function App() {
           <Route path="/employer/job/:jobId/application/:applicantId" element={<ApplicationView />} />
           <Route path="/employer/analytics" element={<Analytics />} />
           <Route path="/employer/transactions" element={<EmployerTransactions />} />
-          <Route path="/employer/applications" element={<EmployerDashboard />} />
+          <Route path="/employer/resources" element={<EmployerResources />} />
+        <Route path="/employer/applications" element={<EmployerDashboard />} />
           <Route path="/employer/applicant/:applicantId" element={<EmployerDashboard />} />
           <Route path="/employer/candidates" element={<EmployerDashboard />} />
-          <Route path="/employer/messages" element={<EmployerDashboard />} />
+          <Route path="/employer/messages" element={<EmployerMessages />} />
           <Route path="/employer/profile" element={<EmployerDashboard />} />
           <Route path="/employer/transactions" element={<EmployerTransactions />} />
           
