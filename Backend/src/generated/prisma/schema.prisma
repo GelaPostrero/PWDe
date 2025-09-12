@@ -288,13 +288,6 @@ model Notifications {
   user            Users     @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 }
 
-model Job_Categories {
-  category_id  Int            @id @default(autoincrement())
-  name         String         @unique
-  description  String
-  job_listings Job_Listings[]
-}
-
 model Saved_Jobs {
   savedJob_id      Int              @id @default(autoincrement())
   job_id           Int
@@ -306,31 +299,31 @@ model Saved_Jobs {
 }
 
 model Job_Listings {
-  job_id                 Int                @id @default(autoincrement())
-  employer_id            Int
-  category_id            Int
-  title                  String             @db.VarChar(255)
-  description            String
-  skills_required        String
-  employment_type        EmploymentType
-  work_arrangement       WorkArrangement
-  salary_min             Decimal            @db.Decimal(10, 2)
-  salary_max             Decimal            @db.Decimal(10, 2)
-  salary_type            SalaryType
-  location_city          String             @db.VarChar(100)
-  location_province      String             @db.VarChar(100)
-  location_country       String             @db.VarChar(100)
-  accessibility_features String
-  experience_level       ExperienceLevel
-  application_deadline   DateTime           @db.Date
-  applications_count     Int                @default(0)
-  created_at             DateTime           @default(now())
-  updated_at             DateTime           @updatedAt
-  applications           Applications[]
-  category               Job_Categories     @relation(fields: [category_id], references: [category_id], onDelete: Cascade)
-  employer               Employer_Profile   @relation(fields: [employer_id], references: [employer_id], onDelete: Cascade)
-  ai_match_results       ai_match_results[]
-  Saved_Jobs             Saved_Jobs[]
+  job_id                           Int                @id @default(autoincrement())
+  job_code                         String?            @unique
+  employer_id                      Int
+  jobtitle                         String             @db.VarChar(255)
+  jobCategory                      String
+  description                      String?
+  skills_required                  String[]
+  employment_type                  String             @db.VarChar(10)
+  work_arrangement                 String             @db.VarChar(10)
+  salary_min                       Int
+  salary_max                       Int
+  salary_type                      String             @db.VarChar(20)
+  location_city                    String             @db.VarChar(100)
+  location_province                String             @db.VarChar(100)
+  location_country                 String             @db.VarChar(100)
+  application_deadline             String?
+  workplace_accessibility_features String[]
+  experience_level                 String             @db.VarChar(20)
+  job_status                       String             @default("Active")
+  created_at                       DateTime           @default(now())
+  updated_at                       DateTime           @updatedAt
+  applications                     Applications[]
+  employer                         Employer_Profile   @relation(fields: [employer_id], references: [employer_id], onDelete: Cascade)
+  ai_match_results                 ai_match_results[]
+  Saved_Jobs                       Saved_Jobs[]
 }
 
 model support_tickets {
@@ -408,35 +401,6 @@ enum Gender {
   Male
   Female
   Other
-}
-
-enum EmploymentType {
-  Full_time
-  Part_time
-  Contract
-  Freelance
-  Internship
-}
-
-enum WorkArrangement {
-  On_site
-  Remote
-  Hybrid
-}
-
-enum SalaryType {
-  Hourly
-  Daily
-  Monthly
-  Annually
-  Milestone_based
-}
-
-enum ExperienceLevel {
-  Entry
-  Mid
-  Senior
-  Executive
 }
 
 enum TicketCategory {

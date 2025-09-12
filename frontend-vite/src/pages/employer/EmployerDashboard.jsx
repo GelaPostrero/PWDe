@@ -9,6 +9,7 @@ const EmployerDashboard = () => {
   const [highContrast, setHighContrast] = useState(false);
   const [largeText, setLargeText] = useState(true);
   const [fetchedData, setFetchedData] = useState([]);
+  const [fetchJob, setFetchJob] = useState([]);
 
   // Mock company data
   const companyProfile = {
@@ -145,6 +146,20 @@ const EmployerDashboard = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        const response = await api.get('/job/all');
+        if(response.data.success) {
+          setFetchJob(response.data.job);
+        }
+      } catch (error) {
+        console.error("Failed to load jobs:", error);
+      }
+    };
+    fetchJob();
+  }, [fetchJob]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -284,18 +299,18 @@ const EmployerDashboard = () => {
 
                 {/* Job Postings Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                  {jobPostings.map((job) => (
-                    <div key={job.id} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
+                  {fetchJob.map((job) => (
+                    <div key={job.job_id} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
                       
                       {/* Job Header */}
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
+                          <h3 className="text-lg font-semibold text-gray-900">{job.jobtitle}</h3>
                         </div>
                         <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${
-                          job.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                          job.job_status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                         }`}>
-                          {job.status}
+                          {job.job_status}
                         </span>
                       </div>
 
@@ -305,34 +320,34 @@ const EmployerDashboard = () => {
                           <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
-                          {job.type}
+                          {job.employment_type}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                           </svg>
-                          {job.location}
+                          {job.work_arrangement}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                           </svg>
-                          ₱{job.salary} / {job.period}
+                          ₱{job.salary_min} - ₱{job.salary_max} / {job.salary_type.toLowerCase()}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6z" />
                           </svg>
-                          {job.level}
+                          {job.experience_level}
                         </div>
                       </div>
 
                       {/* Skills */}
                       <div className="mb-4">
                         <div className="flex flex-wrap gap-1">
-                          {job.skills.slice(0, 3).map((skill, index) => (
+                          {job.skills_required.slice(0, 3).map((skill, index) => (
                             <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
-                              {skill}
+                              {skill.replace(/ \(.*\)$/, '')}
                             </span>
                           ))}
                         </div>
@@ -341,7 +356,7 @@ const EmployerDashboard = () => {
                       {/* Accessibility Features */}
                       <div className="mb-4">
                         <div className="flex flex-wrap gap-1">
-                          {job.accessibilityFeatures.map((feature, index) => (
+                          {job.workplace_accessibility_features.slice(0, 3).map((feature, index) => (
                             <span key={index} className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
                               {feature}
                             </span>
@@ -355,13 +370,18 @@ const EmployerDashboard = () => {
                           <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                           </svg>
-                          {job.applications} applications
+                          {job._count.applications} applications
                         </div>
                         <div className="flex items-center">
                           <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
-                          Due: {job.dueDate}
+                          Due: {job.application_deadline
+                                ? new Date(job.application_deadline).toLocaleDateString("en-US", {
+                                    month: "short",
+                                    day: "numeric",
+                                  })
+                                : "No deadline"}
                         </div>
                       </div>
 

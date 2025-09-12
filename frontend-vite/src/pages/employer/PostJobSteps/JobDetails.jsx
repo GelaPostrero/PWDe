@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import api from '../../../utils/api.js';
 import Spinner from '../../../components/ui/Spinner.jsx';
 
 const JobDetails = ({ data, onDataChange, onNext, onBack }) => {
@@ -32,8 +33,13 @@ const JobDetails = ({ data, onDataChange, onNext, onBack }) => {
     const minLoadingTime = new Promise(resolve => setTimeout(resolve, 1500));
     
     try {
+      const response = await api.post('/create/jobdetail-requirements', formData);
+
       await minLoadingTime;
-      onNext();
+
+      if(response.data.success) {
+        onNext();
+      }
     } catch (error) {
       console.error('Error proceeding to next step:', error);
     } finally {
@@ -61,25 +67,33 @@ const JobDetails = ({ data, onDataChange, onNext, onBack }) => {
     { name: 'Agile/Scrum', category: 'Management' }
   ];
 
-  const filteredSkills = suggestedSkills.filter(skill =>
-    skill.name.toLowerCase().includes(skillSearch.toLowerCase()) &&
-    !formData.requiredSkills.some(selected => selected.name === skill.name)
-  );
+  const filteredSkills = suggestedSkills.filter(skill => {
+    const formattedSkill = `${skill.name} (${skill.category})`;
+    return (
+      skill.name.toLowerCase().includes(skillSearch.toLowerCase()) &&
+      !formData.requiredSkills.includes(formattedSkill)
+    );
+  });
 
   const addSkill = (skill) => {
-    const newSkills = [...formData.requiredSkills, skill];
-    handleInputChange('requiredSkills', newSkills);
+    // skill will always have name + category from suggestedSkills or custom
+    const formattedSkill = `${skill.name} (${skill.category})`;
+    if (!formData.requiredSkills.includes(formattedSkill)) {
+      handleInputChange('requiredSkills', [...formData.requiredSkills, formattedSkill]);
+    }
   };
 
   const removeSkill = (skillToRemove) => {
-    const newSkills = formData.requiredSkills.filter(skill => skill.name !== skillToRemove.name);
+    const newSkills = formData.requiredSkills.filter(skill => skill !== skillToRemove);
     handleInputChange('requiredSkills', newSkills);
   };
 
   const addCustomSkill = () => {
     if (additionalSkill.trim()) {
-      const newSkill = { name: additionalSkill.trim(), category: 'Custom' };
-      addSkill(newSkill);
+      const formattedSkill = `${additionalSkill.trim()} (Custom)`;
+      if (!formData.requiredSkills.includes(formattedSkill)) {
+        handleInputChange('requiredSkills', [...formData.requiredSkills, formattedSkill]);
+      }
       setAdditionalSkill('');
     }
   };
@@ -234,7 +248,7 @@ const JobDetails = ({ data, onDataChange, onNext, onBack }) => {
                   key={index}
                   className="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
                 >
-                  {skill.name} ({skill.category})
+                  {skill}
                   <button
                     onClick={() => removeSkill(skill)}
                     className="ml-2 text-blue-600 hover:text-blue-800"

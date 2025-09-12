@@ -348,12 +348,6 @@ exports.Prisma.NotificationsScalarFieldEnum = {
   read_at: 'read_at'
 };
 
-exports.Prisma.Job_CategoriesScalarFieldEnum = {
-  category_id: 'category_id',
-  name: 'name',
-  description: 'description'
-};
-
 exports.Prisma.Saved_JobsScalarFieldEnum = {
   savedJob_id: 'savedJob_id',
   job_id: 'job_id',
@@ -363,9 +357,10 @@ exports.Prisma.Saved_JobsScalarFieldEnum = {
 
 exports.Prisma.Job_ListingsScalarFieldEnum = {
   job_id: 'job_id',
+  job_code: 'job_code',
   employer_id: 'employer_id',
-  category_id: 'category_id',
-  title: 'title',
+  jobtitle: 'jobtitle',
+  jobCategory: 'jobCategory',
   description: 'description',
   skills_required: 'skills_required',
   employment_type: 'employment_type',
@@ -376,10 +371,10 @@ exports.Prisma.Job_ListingsScalarFieldEnum = {
   location_city: 'location_city',
   location_province: 'location_province',
   location_country: 'location_country',
-  accessibility_features: 'accessibility_features',
-  experience_level: 'experience_level',
   application_deadline: 'application_deadline',
-  applications_count: 'applications_count',
+  workplace_accessibility_features: 'workplace_accessibility_features',
+  experience_level: 'experience_level',
+  job_status: 'job_status',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };
@@ -495,35 +490,6 @@ exports.TransactionStatus = exports.$Enums.TransactionStatus = {
   Cancelled: 'Cancelled'
 };
 
-exports.EmploymentType = exports.$Enums.EmploymentType = {
-  Full_time: 'Full_time',
-  Part_time: 'Part_time',
-  Contract: 'Contract',
-  Freelance: 'Freelance',
-  Internship: 'Internship'
-};
-
-exports.WorkArrangement = exports.$Enums.WorkArrangement = {
-  On_site: 'On_site',
-  Remote: 'Remote',
-  Hybrid: 'Hybrid'
-};
-
-exports.SalaryType = exports.$Enums.SalaryType = {
-  Hourly: 'Hourly',
-  Daily: 'Daily',
-  Monthly: 'Monthly',
-  Annually: 'Annually',
-  Milestone_based: 'Milestone_based'
-};
-
-exports.ExperienceLevel = exports.$Enums.ExperienceLevel = {
-  Entry: 'Entry',
-  Mid: 'Mid',
-  Senior: 'Senior',
-  Executive: 'Executive'
-};
-
 exports.TicketCategory = exports.$Enums.TicketCategory = {
   Technical: 'Technical',
   Account: 'Account',
@@ -569,7 +535,6 @@ exports.Prisma.ModelName = {
   reviews: 'reviews',
   transactions: 'transactions',
   Notifications: 'Notifications',
-  Job_Categories: 'Job_Categories',
   Saved_Jobs: 'Saved_Jobs',
   Job_Listings: 'Job_Listings',
   support_tickets: 'support_tickets',

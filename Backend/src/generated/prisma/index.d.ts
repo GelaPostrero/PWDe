@@ -89,11 +89,6 @@ export type transactions = $Result.DefaultSelection<Prisma.$transactionsPayload>
  */
 export type Notifications = $Result.DefaultSelection<Prisma.$NotificationsPayload>
 /**
- * Model Job_Categories
- * 
- */
-export type Job_Categories = $Result.DefaultSelection<Prisma.$Job_CategoriesPayload>
-/**
  * Model Saved_Jobs
  * 
  */
@@ -163,47 +158,6 @@ export const Gender: {
 };
 
 export type Gender = (typeof Gender)[keyof typeof Gender]
-
-
-export const EmploymentType: {
-  Full_time: 'Full_time',
-  Part_time: 'Part_time',
-  Contract: 'Contract',
-  Freelance: 'Freelance',
-  Internship: 'Internship'
-};
-
-export type EmploymentType = (typeof EmploymentType)[keyof typeof EmploymentType]
-
-
-export const WorkArrangement: {
-  On_site: 'On_site',
-  Remote: 'Remote',
-  Hybrid: 'Hybrid'
-};
-
-export type WorkArrangement = (typeof WorkArrangement)[keyof typeof WorkArrangement]
-
-
-export const SalaryType: {
-  Hourly: 'Hourly',
-  Daily: 'Daily',
-  Monthly: 'Monthly',
-  Annually: 'Annually',
-  Milestone_based: 'Milestone_based'
-};
-
-export type SalaryType = (typeof SalaryType)[keyof typeof SalaryType]
-
-
-export const ExperienceLevel: {
-  Entry: 'Entry',
-  Mid: 'Mid',
-  Senior: 'Senior',
-  Executive: 'Executive'
-};
-
-export type ExperienceLevel = (typeof ExperienceLevel)[keyof typeof ExperienceLevel]
 
 
 export const TicketCategory: {
@@ -301,22 +255,6 @@ export const Disability_Severity: typeof $Enums.Disability_Severity
 export type Gender = $Enums.Gender
 
 export const Gender: typeof $Enums.Gender
-
-export type EmploymentType = $Enums.EmploymentType
-
-export const EmploymentType: typeof $Enums.EmploymentType
-
-export type WorkArrangement = $Enums.WorkArrangement
-
-export const WorkArrangement: typeof $Enums.WorkArrangement
-
-export type SalaryType = $Enums.SalaryType
-
-export const SalaryType: typeof $Enums.SalaryType
-
-export type ExperienceLevel = $Enums.ExperienceLevel
-
-export const ExperienceLevel: typeof $Enums.ExperienceLevel
 
 export type TicketCategory = $Enums.TicketCategory
 
@@ -617,16 +555,6 @@ export class PrismaClient<
     * ```
     */
   get notifications(): Prisma.NotificationsDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.job_Categories`: Exposes CRUD operations for the **Job_Categories** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Job_Categories
-    * const job_Categories = await prisma.job_Categories.findMany()
-    * ```
-    */
-  get job_Categories(): Prisma.Job_CategoriesDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.saved_Jobs`: Exposes CRUD operations for the **Saved_Jobs** model.
@@ -1142,7 +1070,6 @@ export namespace Prisma {
     reviews: 'reviews',
     transactions: 'transactions',
     Notifications: 'Notifications',
-    Job_Categories: 'Job_Categories',
     Saved_Jobs: 'Saved_Jobs',
     Job_Listings: 'Job_Listings',
     support_tickets: 'support_tickets',
@@ -1167,7 +1094,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "users" | "pwd_Profile" | "pwd_Experience" | "pwd_Accessibility_Needs" | "pwd_Education" | "pwd_Job_Preferences_Requirements" | "employer_Profile" | "resumes" | "chat_Thread" | "chat_Message" | "withdrawal_requests" | "applications" | "reviews" | "transactions" | "notifications" | "job_Categories" | "saved_Jobs" | "job_Listings" | "support_tickets" | "resources" | "ai_match_results" | "chatbot_logs"
+      modelProps: "users" | "pwd_Profile" | "pwd_Experience" | "pwd_Accessibility_Needs" | "pwd_Education" | "pwd_Job_Preferences_Requirements" | "employer_Profile" | "resumes" | "chat_Thread" | "chat_Message" | "withdrawal_requests" | "applications" | "reviews" | "transactions" | "notifications" | "saved_Jobs" | "job_Listings" | "support_tickets" | "resources" | "ai_match_results" | "chatbot_logs"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2281,80 +2208,6 @@ export namespace Prisma {
           }
         }
       }
-      Job_Categories: {
-        payload: Prisma.$Job_CategoriesPayload<ExtArgs>
-        fields: Prisma.Job_CategoriesFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.Job_CategoriesFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.Job_CategoriesFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>
-          }
-          findFirst: {
-            args: Prisma.Job_CategoriesFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.Job_CategoriesFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>
-          }
-          findMany: {
-            args: Prisma.Job_CategoriesFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>[]
-          }
-          create: {
-            args: Prisma.Job_CategoriesCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>
-          }
-          createMany: {
-            args: Prisma.Job_CategoriesCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.Job_CategoriesCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>[]
-          }
-          delete: {
-            args: Prisma.Job_CategoriesDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>
-          }
-          update: {
-            args: Prisma.Job_CategoriesUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>
-          }
-          deleteMany: {
-            args: Prisma.Job_CategoriesDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.Job_CategoriesUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.Job_CategoriesUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>[]
-          }
-          upsert: {
-            args: Prisma.Job_CategoriesUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>
-          }
-          aggregate: {
-            args: Prisma.Job_CategoriesAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateJob_Categories>
-          }
-          groupBy: {
-            args: Prisma.Job_CategoriesGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Job_CategoriesGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.Job_CategoriesCountArgs<ExtArgs>
-            result: $Utils.Optional<Job_CategoriesCountAggregateOutputType> | number
-          }
-        }
-      }
       Saved_Jobs: {
         payload: Prisma.$Saved_JobsPayload<ExtArgs>
         fields: Prisma.Saved_JobsFieldRefs
@@ -2906,7 +2759,6 @@ export namespace Prisma {
     reviews?: reviewsOmit
     transactions?: transactionsOmit
     notifications?: NotificationsOmit
-    job_Categories?: Job_CategoriesOmit
     saved_Jobs?: Saved_JobsOmit
     job_Listings?: Job_ListingsOmit
     support_tickets?: support_ticketsOmit
@@ -3360,37 +3212,6 @@ export namespace Prisma {
    */
   export type ApplicationsCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: transactionsWhereInput
-  }
-
-
-  /**
-   * Count Type Job_CategoriesCountOutputType
-   */
-
-  export type Job_CategoriesCountOutputType = {
-    job_listings: number
-  }
-
-  export type Job_CategoriesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    job_listings?: boolean | Job_CategoriesCountOutputTypeCountJob_listingsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * Job_CategoriesCountOutputType without action
-   */
-  export type Job_CategoriesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_CategoriesCountOutputType
-     */
-    select?: Job_CategoriesCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * Job_CategoriesCountOutputType without action
-   */
-  export type Job_CategoriesCountOutputTypeCountJob_listingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: Job_ListingsWhereInput
   }
 
 
@@ -22174,1084 +21995,6 @@ export namespace Prisma {
 
 
   /**
-   * Model Job_Categories
-   */
-
-  export type AggregateJob_Categories = {
-    _count: Job_CategoriesCountAggregateOutputType | null
-    _avg: Job_CategoriesAvgAggregateOutputType | null
-    _sum: Job_CategoriesSumAggregateOutputType | null
-    _min: Job_CategoriesMinAggregateOutputType | null
-    _max: Job_CategoriesMaxAggregateOutputType | null
-  }
-
-  export type Job_CategoriesAvgAggregateOutputType = {
-    category_id: number | null
-  }
-
-  export type Job_CategoriesSumAggregateOutputType = {
-    category_id: number | null
-  }
-
-  export type Job_CategoriesMinAggregateOutputType = {
-    category_id: number | null
-    name: string | null
-    description: string | null
-  }
-
-  export type Job_CategoriesMaxAggregateOutputType = {
-    category_id: number | null
-    name: string | null
-    description: string | null
-  }
-
-  export type Job_CategoriesCountAggregateOutputType = {
-    category_id: number
-    name: number
-    description: number
-    _all: number
-  }
-
-
-  export type Job_CategoriesAvgAggregateInputType = {
-    category_id?: true
-  }
-
-  export type Job_CategoriesSumAggregateInputType = {
-    category_id?: true
-  }
-
-  export type Job_CategoriesMinAggregateInputType = {
-    category_id?: true
-    name?: true
-    description?: true
-  }
-
-  export type Job_CategoriesMaxAggregateInputType = {
-    category_id?: true
-    name?: true
-    description?: true
-  }
-
-  export type Job_CategoriesCountAggregateInputType = {
-    category_id?: true
-    name?: true
-    description?: true
-    _all?: true
-  }
-
-  export type Job_CategoriesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Job_Categories to aggregate.
-     */
-    where?: Job_CategoriesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Job_Categories to fetch.
-     */
-    orderBy?: Job_CategoriesOrderByWithRelationInput | Job_CategoriesOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: Job_CategoriesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Job_Categories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Job_Categories.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Job_Categories
-    **/
-    _count?: true | Job_CategoriesCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Job_CategoriesAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Job_CategoriesSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Job_CategoriesMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Job_CategoriesMaxAggregateInputType
-  }
-
-  export type GetJob_CategoriesAggregateType<T extends Job_CategoriesAggregateArgs> = {
-        [P in keyof T & keyof AggregateJob_Categories]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateJob_Categories[P]>
-      : GetScalarType<T[P], AggregateJob_Categories[P]>
-  }
-
-
-
-
-  export type Job_CategoriesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: Job_CategoriesWhereInput
-    orderBy?: Job_CategoriesOrderByWithAggregationInput | Job_CategoriesOrderByWithAggregationInput[]
-    by: Job_CategoriesScalarFieldEnum[] | Job_CategoriesScalarFieldEnum
-    having?: Job_CategoriesScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Job_CategoriesCountAggregateInputType | true
-    _avg?: Job_CategoriesAvgAggregateInputType
-    _sum?: Job_CategoriesSumAggregateInputType
-    _min?: Job_CategoriesMinAggregateInputType
-    _max?: Job_CategoriesMaxAggregateInputType
-  }
-
-  export type Job_CategoriesGroupByOutputType = {
-    category_id: number
-    name: string
-    description: string
-    _count: Job_CategoriesCountAggregateOutputType | null
-    _avg: Job_CategoriesAvgAggregateOutputType | null
-    _sum: Job_CategoriesSumAggregateOutputType | null
-    _min: Job_CategoriesMinAggregateOutputType | null
-    _max: Job_CategoriesMaxAggregateOutputType | null
-  }
-
-  type GetJob_CategoriesGroupByPayload<T extends Job_CategoriesGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<Job_CategoriesGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Job_CategoriesGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Job_CategoriesGroupByOutputType[P]>
-            : GetScalarType<T[P], Job_CategoriesGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type Job_CategoriesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    category_id?: boolean
-    name?: boolean
-    description?: boolean
-    job_listings?: boolean | Job_Categories$job_listingsArgs<ExtArgs>
-    _count?: boolean | Job_CategoriesCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["job_Categories"]>
-
-  export type Job_CategoriesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    category_id?: boolean
-    name?: boolean
-    description?: boolean
-  }, ExtArgs["result"]["job_Categories"]>
-
-  export type Job_CategoriesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    category_id?: boolean
-    name?: boolean
-    description?: boolean
-  }, ExtArgs["result"]["job_Categories"]>
-
-  export type Job_CategoriesSelectScalar = {
-    category_id?: boolean
-    name?: boolean
-    description?: boolean
-  }
-
-  export type Job_CategoriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"category_id" | "name" | "description", ExtArgs["result"]["job_Categories"]>
-  export type Job_CategoriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    job_listings?: boolean | Job_Categories$job_listingsArgs<ExtArgs>
-    _count?: boolean | Job_CategoriesCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type Job_CategoriesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type Job_CategoriesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $Job_CategoriesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Job_Categories"
-    objects: {
-      job_listings: Prisma.$Job_ListingsPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      category_id: number
-      name: string
-      description: string
-    }, ExtArgs["result"]["job_Categories"]>
-    composites: {}
-  }
-
-  type Job_CategoriesGetPayload<S extends boolean | null | undefined | Job_CategoriesDefaultArgs> = $Result.GetResult<Prisma.$Job_CategoriesPayload, S>
-
-  type Job_CategoriesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<Job_CategoriesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: Job_CategoriesCountAggregateInputType | true
-    }
-
-  export interface Job_CategoriesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Job_Categories'], meta: { name: 'Job_Categories' } }
-    /**
-     * Find zero or one Job_Categories that matches the filter.
-     * @param {Job_CategoriesFindUniqueArgs} args - Arguments to find a Job_Categories
-     * @example
-     * // Get one Job_Categories
-     * const job_Categories = await prisma.job_Categories.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends Job_CategoriesFindUniqueArgs>(args: SelectSubset<T, Job_CategoriesFindUniqueArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Job_Categories that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {Job_CategoriesFindUniqueOrThrowArgs} args - Arguments to find a Job_Categories
-     * @example
-     * // Get one Job_Categories
-     * const job_Categories = await prisma.job_Categories.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends Job_CategoriesFindUniqueOrThrowArgs>(args: SelectSubset<T, Job_CategoriesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Job_Categories that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesFindFirstArgs} args - Arguments to find a Job_Categories
-     * @example
-     * // Get one Job_Categories
-     * const job_Categories = await prisma.job_Categories.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends Job_CategoriesFindFirstArgs>(args?: SelectSubset<T, Job_CategoriesFindFirstArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Job_Categories that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesFindFirstOrThrowArgs} args - Arguments to find a Job_Categories
-     * @example
-     * // Get one Job_Categories
-     * const job_Categories = await prisma.job_Categories.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends Job_CategoriesFindFirstOrThrowArgs>(args?: SelectSubset<T, Job_CategoriesFindFirstOrThrowArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Job_Categories that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Job_Categories
-     * const job_Categories = await prisma.job_Categories.findMany()
-     * 
-     * // Get first 10 Job_Categories
-     * const job_Categories = await prisma.job_Categories.findMany({ take: 10 })
-     * 
-     * // Only select the `category_id`
-     * const job_CategoriesWithCategory_idOnly = await prisma.job_Categories.findMany({ select: { category_id: true } })
-     * 
-     */
-    findMany<T extends Job_CategoriesFindManyArgs>(args?: SelectSubset<T, Job_CategoriesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Job_Categories.
-     * @param {Job_CategoriesCreateArgs} args - Arguments to create a Job_Categories.
-     * @example
-     * // Create one Job_Categories
-     * const Job_Categories = await prisma.job_Categories.create({
-     *   data: {
-     *     // ... data to create a Job_Categories
-     *   }
-     * })
-     * 
-     */
-    create<T extends Job_CategoriesCreateArgs>(args: SelectSubset<T, Job_CategoriesCreateArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Job_Categories.
-     * @param {Job_CategoriesCreateManyArgs} args - Arguments to create many Job_Categories.
-     * @example
-     * // Create many Job_Categories
-     * const job_Categories = await prisma.job_Categories.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends Job_CategoriesCreateManyArgs>(args?: SelectSubset<T, Job_CategoriesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Job_Categories and returns the data saved in the database.
-     * @param {Job_CategoriesCreateManyAndReturnArgs} args - Arguments to create many Job_Categories.
-     * @example
-     * // Create many Job_Categories
-     * const job_Categories = await prisma.job_Categories.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Job_Categories and only return the `category_id`
-     * const job_CategoriesWithCategory_idOnly = await prisma.job_Categories.createManyAndReturn({
-     *   select: { category_id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends Job_CategoriesCreateManyAndReturnArgs>(args?: SelectSubset<T, Job_CategoriesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Job_Categories.
-     * @param {Job_CategoriesDeleteArgs} args - Arguments to delete one Job_Categories.
-     * @example
-     * // Delete one Job_Categories
-     * const Job_Categories = await prisma.job_Categories.delete({
-     *   where: {
-     *     // ... filter to delete one Job_Categories
-     *   }
-     * })
-     * 
-     */
-    delete<T extends Job_CategoriesDeleteArgs>(args: SelectSubset<T, Job_CategoriesDeleteArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Job_Categories.
-     * @param {Job_CategoriesUpdateArgs} args - Arguments to update one Job_Categories.
-     * @example
-     * // Update one Job_Categories
-     * const job_Categories = await prisma.job_Categories.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends Job_CategoriesUpdateArgs>(args: SelectSubset<T, Job_CategoriesUpdateArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Job_Categories.
-     * @param {Job_CategoriesDeleteManyArgs} args - Arguments to filter Job_Categories to delete.
-     * @example
-     * // Delete a few Job_Categories
-     * const { count } = await prisma.job_Categories.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends Job_CategoriesDeleteManyArgs>(args?: SelectSubset<T, Job_CategoriesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Job_Categories.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Job_Categories
-     * const job_Categories = await prisma.job_Categories.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends Job_CategoriesUpdateManyArgs>(args: SelectSubset<T, Job_CategoriesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Job_Categories and returns the data updated in the database.
-     * @param {Job_CategoriesUpdateManyAndReturnArgs} args - Arguments to update many Job_Categories.
-     * @example
-     * // Update many Job_Categories
-     * const job_Categories = await prisma.job_Categories.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Job_Categories and only return the `category_id`
-     * const job_CategoriesWithCategory_idOnly = await prisma.job_Categories.updateManyAndReturn({
-     *   select: { category_id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends Job_CategoriesUpdateManyAndReturnArgs>(args: SelectSubset<T, Job_CategoriesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Job_Categories.
-     * @param {Job_CategoriesUpsertArgs} args - Arguments to update or create a Job_Categories.
-     * @example
-     * // Update or create a Job_Categories
-     * const job_Categories = await prisma.job_Categories.upsert({
-     *   create: {
-     *     // ... data to create a Job_Categories
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Job_Categories we want to update
-     *   }
-     * })
-     */
-    upsert<T extends Job_CategoriesUpsertArgs>(args: SelectSubset<T, Job_CategoriesUpsertArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Job_Categories.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesCountArgs} args - Arguments to filter Job_Categories to count.
-     * @example
-     * // Count the number of Job_Categories
-     * const count = await prisma.job_Categories.count({
-     *   where: {
-     *     // ... the filter for the Job_Categories we want to count
-     *   }
-     * })
-    **/
-    count<T extends Job_CategoriesCountArgs>(
-      args?: Subset<T, Job_CategoriesCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Job_CategoriesCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Job_Categories.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Job_CategoriesAggregateArgs>(args: Subset<T, Job_CategoriesAggregateArgs>): Prisma.PrismaPromise<GetJob_CategoriesAggregateType<T>>
-
-    /**
-     * Group by Job_Categories.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends Job_CategoriesGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Job_CategoriesGroupByArgs['orderBy'] }
-        : { orderBy?: Job_CategoriesGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, Job_CategoriesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetJob_CategoriesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Job_Categories model
-   */
-  readonly fields: Job_CategoriesFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Job_Categories.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__Job_CategoriesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    job_listings<T extends Job_Categories$job_listingsArgs<ExtArgs> = {}>(args?: Subset<T, Job_Categories$job_listingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Job_ListingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Job_Categories model
-   */
-  interface Job_CategoriesFieldRefs {
-    readonly category_id: FieldRef<"Job_Categories", 'Int'>
-    readonly name: FieldRef<"Job_Categories", 'String'>
-    readonly description: FieldRef<"Job_Categories", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Job_Categories findUnique
-   */
-  export type Job_CategoriesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-    /**
-     * Filter, which Job_Categories to fetch.
-     */
-    where: Job_CategoriesWhereUniqueInput
-  }
-
-  /**
-   * Job_Categories findUniqueOrThrow
-   */
-  export type Job_CategoriesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-    /**
-     * Filter, which Job_Categories to fetch.
-     */
-    where: Job_CategoriesWhereUniqueInput
-  }
-
-  /**
-   * Job_Categories findFirst
-   */
-  export type Job_CategoriesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-    /**
-     * Filter, which Job_Categories to fetch.
-     */
-    where?: Job_CategoriesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Job_Categories to fetch.
-     */
-    orderBy?: Job_CategoriesOrderByWithRelationInput | Job_CategoriesOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Job_Categories.
-     */
-    cursor?: Job_CategoriesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Job_Categories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Job_Categories.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Job_Categories.
-     */
-    distinct?: Job_CategoriesScalarFieldEnum | Job_CategoriesScalarFieldEnum[]
-  }
-
-  /**
-   * Job_Categories findFirstOrThrow
-   */
-  export type Job_CategoriesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-    /**
-     * Filter, which Job_Categories to fetch.
-     */
-    where?: Job_CategoriesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Job_Categories to fetch.
-     */
-    orderBy?: Job_CategoriesOrderByWithRelationInput | Job_CategoriesOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Job_Categories.
-     */
-    cursor?: Job_CategoriesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Job_Categories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Job_Categories.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Job_Categories.
-     */
-    distinct?: Job_CategoriesScalarFieldEnum | Job_CategoriesScalarFieldEnum[]
-  }
-
-  /**
-   * Job_Categories findMany
-   */
-  export type Job_CategoriesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-    /**
-     * Filter, which Job_Categories to fetch.
-     */
-    where?: Job_CategoriesWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Job_Categories to fetch.
-     */
-    orderBy?: Job_CategoriesOrderByWithRelationInput | Job_CategoriesOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Job_Categories.
-     */
-    cursor?: Job_CategoriesWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Job_Categories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Job_Categories.
-     */
-    skip?: number
-    distinct?: Job_CategoriesScalarFieldEnum | Job_CategoriesScalarFieldEnum[]
-  }
-
-  /**
-   * Job_Categories create
-   */
-  export type Job_CategoriesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Job_Categories.
-     */
-    data: XOR<Job_CategoriesCreateInput, Job_CategoriesUncheckedCreateInput>
-  }
-
-  /**
-   * Job_Categories createMany
-   */
-  export type Job_CategoriesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Job_Categories.
-     */
-    data: Job_CategoriesCreateManyInput | Job_CategoriesCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Job_Categories createManyAndReturn
-   */
-  export type Job_CategoriesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * The data used to create many Job_Categories.
-     */
-    data: Job_CategoriesCreateManyInput | Job_CategoriesCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Job_Categories update
-   */
-  export type Job_CategoriesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Job_Categories.
-     */
-    data: XOR<Job_CategoriesUpdateInput, Job_CategoriesUncheckedUpdateInput>
-    /**
-     * Choose, which Job_Categories to update.
-     */
-    where: Job_CategoriesWhereUniqueInput
-  }
-
-  /**
-   * Job_Categories updateMany
-   */
-  export type Job_CategoriesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Job_Categories.
-     */
-    data: XOR<Job_CategoriesUpdateManyMutationInput, Job_CategoriesUncheckedUpdateManyInput>
-    /**
-     * Filter which Job_Categories to update
-     */
-    where?: Job_CategoriesWhereInput
-    /**
-     * Limit how many Job_Categories to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Job_Categories updateManyAndReturn
-   */
-  export type Job_CategoriesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * The data used to update Job_Categories.
-     */
-    data: XOR<Job_CategoriesUpdateManyMutationInput, Job_CategoriesUncheckedUpdateManyInput>
-    /**
-     * Filter which Job_Categories to update
-     */
-    where?: Job_CategoriesWhereInput
-    /**
-     * Limit how many Job_Categories to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Job_Categories upsert
-   */
-  export type Job_CategoriesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Job_Categories to update in case it exists.
-     */
-    where: Job_CategoriesWhereUniqueInput
-    /**
-     * In case the Job_Categories found by the `where` argument doesn't exist, create a new Job_Categories with this data.
-     */
-    create: XOR<Job_CategoriesCreateInput, Job_CategoriesUncheckedCreateInput>
-    /**
-     * In case the Job_Categories was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<Job_CategoriesUpdateInput, Job_CategoriesUncheckedUpdateInput>
-  }
-
-  /**
-   * Job_Categories delete
-   */
-  export type Job_CategoriesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-    /**
-     * Filter which Job_Categories to delete.
-     */
-    where: Job_CategoriesWhereUniqueInput
-  }
-
-  /**
-   * Job_Categories deleteMany
-   */
-  export type Job_CategoriesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Job_Categories to delete
-     */
-    where?: Job_CategoriesWhereInput
-    /**
-     * Limit how many Job_Categories to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Job_Categories.job_listings
-   */
-  export type Job_Categories$job_listingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Listings
-     */
-    select?: Job_ListingsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Listings
-     */
-    omit?: Job_ListingsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_ListingsInclude<ExtArgs> | null
-    where?: Job_ListingsWhereInput
-    orderBy?: Job_ListingsOrderByWithRelationInput | Job_ListingsOrderByWithRelationInput[]
-    cursor?: Job_ListingsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Job_ListingsScalarFieldEnum | Job_ListingsScalarFieldEnum[]
-  }
-
-  /**
-   * Job_Categories without action
-   */
-  export type Job_CategoriesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model Saved_Jobs
    */
 
@@ -24373,72 +23116,67 @@ export namespace Prisma {
   export type Job_ListingsAvgAggregateOutputType = {
     job_id: number | null
     employer_id: number | null
-    category_id: number | null
-    salary_min: Decimal | null
-    salary_max: Decimal | null
-    applications_count: number | null
+    salary_min: number | null
+    salary_max: number | null
   }
 
   export type Job_ListingsSumAggregateOutputType = {
     job_id: number | null
     employer_id: number | null
-    category_id: number | null
-    salary_min: Decimal | null
-    salary_max: Decimal | null
-    applications_count: number | null
+    salary_min: number | null
+    salary_max: number | null
   }
 
   export type Job_ListingsMinAggregateOutputType = {
     job_id: number | null
+    job_code: string | null
     employer_id: number | null
-    category_id: number | null
-    title: string | null
+    jobtitle: string | null
+    jobCategory: string | null
     description: string | null
-    skills_required: string | null
-    employment_type: $Enums.EmploymentType | null
-    work_arrangement: $Enums.WorkArrangement | null
-    salary_min: Decimal | null
-    salary_max: Decimal | null
-    salary_type: $Enums.SalaryType | null
+    employment_type: string | null
+    work_arrangement: string | null
+    salary_min: number | null
+    salary_max: number | null
+    salary_type: string | null
     location_city: string | null
     location_province: string | null
     location_country: string | null
-    accessibility_features: string | null
-    experience_level: $Enums.ExperienceLevel | null
-    application_deadline: Date | null
-    applications_count: number | null
+    application_deadline: string | null
+    experience_level: string | null
+    job_status: string | null
     created_at: Date | null
     updated_at: Date | null
   }
 
   export type Job_ListingsMaxAggregateOutputType = {
     job_id: number | null
+    job_code: string | null
     employer_id: number | null
-    category_id: number | null
-    title: string | null
+    jobtitle: string | null
+    jobCategory: string | null
     description: string | null
-    skills_required: string | null
-    employment_type: $Enums.EmploymentType | null
-    work_arrangement: $Enums.WorkArrangement | null
-    salary_min: Decimal | null
-    salary_max: Decimal | null
-    salary_type: $Enums.SalaryType | null
+    employment_type: string | null
+    work_arrangement: string | null
+    salary_min: number | null
+    salary_max: number | null
+    salary_type: string | null
     location_city: string | null
     location_province: string | null
     location_country: string | null
-    accessibility_features: string | null
-    experience_level: $Enums.ExperienceLevel | null
-    application_deadline: Date | null
-    applications_count: number | null
+    application_deadline: string | null
+    experience_level: string | null
+    job_status: string | null
     created_at: Date | null
     updated_at: Date | null
   }
 
   export type Job_ListingsCountAggregateOutputType = {
     job_id: number
+    job_code: number
     employer_id: number
-    category_id: number
-    title: number
+    jobtitle: number
+    jobCategory: number
     description: number
     skills_required: number
     employment_type: number
@@ -24449,10 +23187,10 @@ export namespace Prisma {
     location_city: number
     location_province: number
     location_country: number
-    accessibility_features: number
-    experience_level: number
     application_deadline: number
-    applications_count: number
+    workplace_accessibility_features: number
+    experience_level: number
+    job_status: number
     created_at: number
     updated_at: number
     _all: number
@@ -24462,28 +23200,24 @@ export namespace Prisma {
   export type Job_ListingsAvgAggregateInputType = {
     job_id?: true
     employer_id?: true
-    category_id?: true
     salary_min?: true
     salary_max?: true
-    applications_count?: true
   }
 
   export type Job_ListingsSumAggregateInputType = {
     job_id?: true
     employer_id?: true
-    category_id?: true
     salary_min?: true
     salary_max?: true
-    applications_count?: true
   }
 
   export type Job_ListingsMinAggregateInputType = {
     job_id?: true
+    job_code?: true
     employer_id?: true
-    category_id?: true
-    title?: true
+    jobtitle?: true
+    jobCategory?: true
     description?: true
-    skills_required?: true
     employment_type?: true
     work_arrangement?: true
     salary_min?: true
@@ -24492,21 +23226,20 @@ export namespace Prisma {
     location_city?: true
     location_province?: true
     location_country?: true
-    accessibility_features?: true
-    experience_level?: true
     application_deadline?: true
-    applications_count?: true
+    experience_level?: true
+    job_status?: true
     created_at?: true
     updated_at?: true
   }
 
   export type Job_ListingsMaxAggregateInputType = {
     job_id?: true
+    job_code?: true
     employer_id?: true
-    category_id?: true
-    title?: true
+    jobtitle?: true
+    jobCategory?: true
     description?: true
-    skills_required?: true
     employment_type?: true
     work_arrangement?: true
     salary_min?: true
@@ -24515,19 +23248,19 @@ export namespace Prisma {
     location_city?: true
     location_province?: true
     location_country?: true
-    accessibility_features?: true
-    experience_level?: true
     application_deadline?: true
-    applications_count?: true
+    experience_level?: true
+    job_status?: true
     created_at?: true
     updated_at?: true
   }
 
   export type Job_ListingsCountAggregateInputType = {
     job_id?: true
+    job_code?: true
     employer_id?: true
-    category_id?: true
-    title?: true
+    jobtitle?: true
+    jobCategory?: true
     description?: true
     skills_required?: true
     employment_type?: true
@@ -24538,10 +23271,10 @@ export namespace Prisma {
     location_city?: true
     location_province?: true
     location_country?: true
-    accessibility_features?: true
-    experience_level?: true
     application_deadline?: true
-    applications_count?: true
+    workplace_accessibility_features?: true
+    experience_level?: true
+    job_status?: true
     created_at?: true
     updated_at?: true
     _all?: true
@@ -24635,23 +23368,24 @@ export namespace Prisma {
 
   export type Job_ListingsGroupByOutputType = {
     job_id: number
+    job_code: string | null
     employer_id: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal
-    salary_max: Decimal
-    salary_type: $Enums.SalaryType
+    jobtitle: string
+    jobCategory: string
+    description: string | null
+    skills_required: string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date
-    applications_count: number
+    application_deadline: string | null
+    workplace_accessibility_features: string[]
+    experience_level: string
+    job_status: string
     created_at: Date
     updated_at: Date
     _count: Job_ListingsCountAggregateOutputType | null
@@ -24677,9 +23411,10 @@ export namespace Prisma {
 
   export type Job_ListingsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     job_id?: boolean
+    job_code?: boolean
     employer_id?: boolean
-    category_id?: boolean
-    title?: boolean
+    jobtitle?: boolean
+    jobCategory?: boolean
     description?: boolean
     skills_required?: boolean
     employment_type?: boolean
@@ -24690,14 +23425,13 @@ export namespace Prisma {
     location_city?: boolean
     location_province?: boolean
     location_country?: boolean
-    accessibility_features?: boolean
-    experience_level?: boolean
     application_deadline?: boolean
-    applications_count?: boolean
+    workplace_accessibility_features?: boolean
+    experience_level?: boolean
+    job_status?: boolean
     created_at?: boolean
     updated_at?: boolean
     applications?: boolean | Job_Listings$applicationsArgs<ExtArgs>
-    category?: boolean | Job_CategoriesDefaultArgs<ExtArgs>
     employer?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
     ai_match_results?: boolean | Job_Listings$ai_match_resultsArgs<ExtArgs>
     Saved_Jobs?: boolean | Job_Listings$Saved_JobsArgs<ExtArgs>
@@ -24706,9 +23440,10 @@ export namespace Prisma {
 
   export type Job_ListingsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     job_id?: boolean
+    job_code?: boolean
     employer_id?: boolean
-    category_id?: boolean
-    title?: boolean
+    jobtitle?: boolean
+    jobCategory?: boolean
     description?: boolean
     skills_required?: boolean
     employment_type?: boolean
@@ -24719,21 +23454,21 @@ export namespace Prisma {
     location_city?: boolean
     location_province?: boolean
     location_country?: boolean
-    accessibility_features?: boolean
-    experience_level?: boolean
     application_deadline?: boolean
-    applications_count?: boolean
+    workplace_accessibility_features?: boolean
+    experience_level?: boolean
+    job_status?: boolean
     created_at?: boolean
     updated_at?: boolean
-    category?: boolean | Job_CategoriesDefaultArgs<ExtArgs>
     employer?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["job_Listings"]>
 
   export type Job_ListingsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     job_id?: boolean
+    job_code?: boolean
     employer_id?: boolean
-    category_id?: boolean
-    title?: boolean
+    jobtitle?: boolean
+    jobCategory?: boolean
     description?: boolean
     skills_required?: boolean
     employment_type?: boolean
@@ -24744,21 +23479,21 @@ export namespace Prisma {
     location_city?: boolean
     location_province?: boolean
     location_country?: boolean
-    accessibility_features?: boolean
-    experience_level?: boolean
     application_deadline?: boolean
-    applications_count?: boolean
+    workplace_accessibility_features?: boolean
+    experience_level?: boolean
+    job_status?: boolean
     created_at?: boolean
     updated_at?: boolean
-    category?: boolean | Job_CategoriesDefaultArgs<ExtArgs>
     employer?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["job_Listings"]>
 
   export type Job_ListingsSelectScalar = {
     job_id?: boolean
+    job_code?: boolean
     employer_id?: boolean
-    category_id?: boolean
-    title?: boolean
+    jobtitle?: boolean
+    jobCategory?: boolean
     description?: boolean
     skills_required?: boolean
     employment_type?: boolean
@@ -24769,29 +23504,26 @@ export namespace Prisma {
     location_city?: boolean
     location_province?: boolean
     location_country?: boolean
-    accessibility_features?: boolean
-    experience_level?: boolean
     application_deadline?: boolean
-    applications_count?: boolean
+    workplace_accessibility_features?: boolean
+    experience_level?: boolean
+    job_status?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type Job_ListingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"job_id" | "employer_id" | "category_id" | "title" | "description" | "skills_required" | "employment_type" | "work_arrangement" | "salary_min" | "salary_max" | "salary_type" | "location_city" | "location_province" | "location_country" | "accessibility_features" | "experience_level" | "application_deadline" | "applications_count" | "created_at" | "updated_at", ExtArgs["result"]["job_Listings"]>
+  export type Job_ListingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"job_id" | "job_code" | "employer_id" | "jobtitle" | "jobCategory" | "description" | "skills_required" | "employment_type" | "work_arrangement" | "salary_min" | "salary_max" | "salary_type" | "location_city" | "location_province" | "location_country" | "application_deadline" | "workplace_accessibility_features" | "experience_level" | "job_status" | "created_at" | "updated_at", ExtArgs["result"]["job_Listings"]>
   export type Job_ListingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | Job_Listings$applicationsArgs<ExtArgs>
-    category?: boolean | Job_CategoriesDefaultArgs<ExtArgs>
     employer?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
     ai_match_results?: boolean | Job_Listings$ai_match_resultsArgs<ExtArgs>
     Saved_Jobs?: boolean | Job_Listings$Saved_JobsArgs<ExtArgs>
     _count?: boolean | Job_ListingsCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type Job_ListingsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    category?: boolean | Job_CategoriesDefaultArgs<ExtArgs>
     employer?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
   }
   export type Job_ListingsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    category?: boolean | Job_CategoriesDefaultArgs<ExtArgs>
     employer?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
   }
 
@@ -24799,30 +23531,30 @@ export namespace Prisma {
     name: "Job_Listings"
     objects: {
       applications: Prisma.$ApplicationsPayload<ExtArgs>[]
-      category: Prisma.$Job_CategoriesPayload<ExtArgs>
       employer: Prisma.$Employer_ProfilePayload<ExtArgs>
       ai_match_results: Prisma.$ai_match_resultsPayload<ExtArgs>[]
       Saved_Jobs: Prisma.$Saved_JobsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       job_id: number
+      job_code: string | null
       employer_id: number
-      category_id: number
-      title: string
-      description: string
-      skills_required: string
-      employment_type: $Enums.EmploymentType
-      work_arrangement: $Enums.WorkArrangement
-      salary_min: Prisma.Decimal
-      salary_max: Prisma.Decimal
-      salary_type: $Enums.SalaryType
+      jobtitle: string
+      jobCategory: string
+      description: string | null
+      skills_required: string[]
+      employment_type: string
+      work_arrangement: string
+      salary_min: number
+      salary_max: number
+      salary_type: string
       location_city: string
       location_province: string
       location_country: string
-      accessibility_features: string
-      experience_level: $Enums.ExperienceLevel
-      application_deadline: Date
-      applications_count: number
+      application_deadline: string | null
+      workplace_accessibility_features: string[]
+      experience_level: string
+      job_status: string
       created_at: Date
       updated_at: Date
     }, ExtArgs["result"]["job_Listings"]>
@@ -25220,7 +23952,6 @@ export namespace Prisma {
   export interface Prisma__Job_ListingsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     applications<T extends Job_Listings$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, Job_Listings$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    category<T extends Job_CategoriesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Job_CategoriesDefaultArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     employer<T extends Employer_ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Employer_ProfileDefaultArgs<ExtArgs>>): Prisma__Employer_ProfileClient<$Result.GetResult<Prisma.$Employer_ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     ai_match_results<T extends Job_Listings$ai_match_resultsArgs<ExtArgs> = {}>(args?: Subset<T, Job_Listings$ai_match_resultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ai_match_resultsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Saved_Jobs<T extends Job_Listings$Saved_JobsArgs<ExtArgs> = {}>(args?: Subset<T, Job_Listings$Saved_JobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -25254,23 +23985,24 @@ export namespace Prisma {
    */
   interface Job_ListingsFieldRefs {
     readonly job_id: FieldRef<"Job_Listings", 'Int'>
+    readonly job_code: FieldRef<"Job_Listings", 'String'>
     readonly employer_id: FieldRef<"Job_Listings", 'Int'>
-    readonly category_id: FieldRef<"Job_Listings", 'Int'>
-    readonly title: FieldRef<"Job_Listings", 'String'>
+    readonly jobtitle: FieldRef<"Job_Listings", 'String'>
+    readonly jobCategory: FieldRef<"Job_Listings", 'String'>
     readonly description: FieldRef<"Job_Listings", 'String'>
-    readonly skills_required: FieldRef<"Job_Listings", 'String'>
-    readonly employment_type: FieldRef<"Job_Listings", 'EmploymentType'>
-    readonly work_arrangement: FieldRef<"Job_Listings", 'WorkArrangement'>
-    readonly salary_min: FieldRef<"Job_Listings", 'Decimal'>
-    readonly salary_max: FieldRef<"Job_Listings", 'Decimal'>
-    readonly salary_type: FieldRef<"Job_Listings", 'SalaryType'>
+    readonly skills_required: FieldRef<"Job_Listings", 'String[]'>
+    readonly employment_type: FieldRef<"Job_Listings", 'String'>
+    readonly work_arrangement: FieldRef<"Job_Listings", 'String'>
+    readonly salary_min: FieldRef<"Job_Listings", 'Int'>
+    readonly salary_max: FieldRef<"Job_Listings", 'Int'>
+    readonly salary_type: FieldRef<"Job_Listings", 'String'>
     readonly location_city: FieldRef<"Job_Listings", 'String'>
     readonly location_province: FieldRef<"Job_Listings", 'String'>
     readonly location_country: FieldRef<"Job_Listings", 'String'>
-    readonly accessibility_features: FieldRef<"Job_Listings", 'String'>
-    readonly experience_level: FieldRef<"Job_Listings", 'ExperienceLevel'>
-    readonly application_deadline: FieldRef<"Job_Listings", 'DateTime'>
-    readonly applications_count: FieldRef<"Job_Listings", 'Int'>
+    readonly application_deadline: FieldRef<"Job_Listings", 'String'>
+    readonly workplace_accessibility_features: FieldRef<"Job_Listings", 'String[]'>
+    readonly experience_level: FieldRef<"Job_Listings", 'String'>
+    readonly job_status: FieldRef<"Job_Listings", 'String'>
     readonly created_at: FieldRef<"Job_Listings", 'DateTime'>
     readonly updated_at: FieldRef<"Job_Listings", 'DateTime'>
   }
@@ -30656,15 +29388,6 @@ export namespace Prisma {
   export type NotificationsScalarFieldEnum = (typeof NotificationsScalarFieldEnum)[keyof typeof NotificationsScalarFieldEnum]
 
 
-  export const Job_CategoriesScalarFieldEnum: {
-    category_id: 'category_id',
-    name: 'name',
-    description: 'description'
-  };
-
-  export type Job_CategoriesScalarFieldEnum = (typeof Job_CategoriesScalarFieldEnum)[keyof typeof Job_CategoriesScalarFieldEnum]
-
-
   export const Saved_JobsScalarFieldEnum: {
     savedJob_id: 'savedJob_id',
     job_id: 'job_id',
@@ -30677,9 +29400,10 @@ export namespace Prisma {
 
   export const Job_ListingsScalarFieldEnum: {
     job_id: 'job_id',
+    job_code: 'job_code',
     employer_id: 'employer_id',
-    category_id: 'category_id',
-    title: 'title',
+    jobtitle: 'jobtitle',
+    jobCategory: 'jobCategory',
     description: 'description',
     skills_required: 'skills_required',
     employment_type: 'employment_type',
@@ -30690,10 +29414,10 @@ export namespace Prisma {
     location_city: 'location_city',
     location_province: 'location_province',
     location_country: 'location_country',
-    accessibility_features: 'accessibility_features',
-    experience_level: 'experience_level',
     application_deadline: 'application_deadline',
-    applications_count: 'applications_count',
+    workplace_accessibility_features: 'workplace_accessibility_features',
+    experience_level: 'experience_level',
+    job_status: 'job_status',
     created_at: 'created_at',
     updated_at: 'updated_at'
   };
@@ -30974,62 +29698,6 @@ export namespace Prisma {
    * Reference to a field of type 'TransactionStatus[]'
    */
   export type ListEnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionStatus[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'EmploymentType'
-   */
-  export type EnumEmploymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentType'>
-    
-
-
-  /**
-   * Reference to a field of type 'EmploymentType[]'
-   */
-  export type ListEnumEmploymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentType[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'WorkArrangement'
-   */
-  export type EnumWorkArrangementFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorkArrangement'>
-    
-
-
-  /**
-   * Reference to a field of type 'WorkArrangement[]'
-   */
-  export type ListEnumWorkArrangementFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorkArrangement[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'SalaryType'
-   */
-  export type EnumSalaryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SalaryType'>
-    
-
-
-  /**
-   * Reference to a field of type 'SalaryType[]'
-   */
-  export type ListEnumSalaryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SalaryType[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'ExperienceLevel'
-   */
-  export type EnumExperienceLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExperienceLevel'>
-    
-
-
-  /**
-   * Reference to a field of type 'ExperienceLevel[]'
-   */
-  export type ListEnumExperienceLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExperienceLevel[]'>
     
 
 
@@ -32595,53 +31263,6 @@ export namespace Prisma {
     read_at?: DateTimeNullableWithAggregatesFilter<"Notifications"> | Date | string | null
   }
 
-  export type Job_CategoriesWhereInput = {
-    AND?: Job_CategoriesWhereInput | Job_CategoriesWhereInput[]
-    OR?: Job_CategoriesWhereInput[]
-    NOT?: Job_CategoriesWhereInput | Job_CategoriesWhereInput[]
-    category_id?: IntFilter<"Job_Categories"> | number
-    name?: StringFilter<"Job_Categories"> | string
-    description?: StringFilter<"Job_Categories"> | string
-    job_listings?: Job_ListingsListRelationFilter
-  }
-
-  export type Job_CategoriesOrderByWithRelationInput = {
-    category_id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    job_listings?: Job_ListingsOrderByRelationAggregateInput
-  }
-
-  export type Job_CategoriesWhereUniqueInput = Prisma.AtLeast<{
-    category_id?: number
-    name?: string
-    AND?: Job_CategoriesWhereInput | Job_CategoriesWhereInput[]
-    OR?: Job_CategoriesWhereInput[]
-    NOT?: Job_CategoriesWhereInput | Job_CategoriesWhereInput[]
-    description?: StringFilter<"Job_Categories"> | string
-    job_listings?: Job_ListingsListRelationFilter
-  }, "category_id" | "name">
-
-  export type Job_CategoriesOrderByWithAggregationInput = {
-    category_id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    _count?: Job_CategoriesCountOrderByAggregateInput
-    _avg?: Job_CategoriesAvgOrderByAggregateInput
-    _max?: Job_CategoriesMaxOrderByAggregateInput
-    _min?: Job_CategoriesMinOrderByAggregateInput
-    _sum?: Job_CategoriesSumOrderByAggregateInput
-  }
-
-  export type Job_CategoriesScalarWhereWithAggregatesInput = {
-    AND?: Job_CategoriesScalarWhereWithAggregatesInput | Job_CategoriesScalarWhereWithAggregatesInput[]
-    OR?: Job_CategoriesScalarWhereWithAggregatesInput[]
-    NOT?: Job_CategoriesScalarWhereWithAggregatesInput | Job_CategoriesScalarWhereWithAggregatesInput[]
-    category_id?: IntWithAggregatesFilter<"Job_Categories"> | number
-    name?: StringWithAggregatesFilter<"Job_Categories"> | string
-    description?: StringWithAggregatesFilter<"Job_Categories"> | string
-  }
-
   export type Saved_JobsWhereInput = {
     AND?: Saved_JobsWhereInput | Saved_JobsWhereInput[]
     OR?: Saved_JobsWhereInput[]
@@ -32705,27 +31326,27 @@ export namespace Prisma {
     OR?: Job_ListingsWhereInput[]
     NOT?: Job_ListingsWhereInput | Job_ListingsWhereInput[]
     job_id?: IntFilter<"Job_Listings"> | number
+    job_code?: StringNullableFilter<"Job_Listings"> | string | null
     employer_id?: IntFilter<"Job_Listings"> | number
-    category_id?: IntFilter<"Job_Listings"> | number
-    title?: StringFilter<"Job_Listings"> | string
-    description?: StringFilter<"Job_Listings"> | string
-    skills_required?: StringFilter<"Job_Listings"> | string
-    employment_type?: EnumEmploymentTypeFilter<"Job_Listings"> | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFilter<"Job_Listings"> | $Enums.WorkArrangement
-    salary_min?: DecimalFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFilter<"Job_Listings"> | $Enums.SalaryType
+    jobtitle?: StringFilter<"Job_Listings"> | string
+    jobCategory?: StringFilter<"Job_Listings"> | string
+    description?: StringNullableFilter<"Job_Listings"> | string | null
+    skills_required?: StringNullableListFilter<"Job_Listings">
+    employment_type?: StringFilter<"Job_Listings"> | string
+    work_arrangement?: StringFilter<"Job_Listings"> | string
+    salary_min?: IntFilter<"Job_Listings"> | number
+    salary_max?: IntFilter<"Job_Listings"> | number
+    salary_type?: StringFilter<"Job_Listings"> | string
     location_city?: StringFilter<"Job_Listings"> | string
     location_province?: StringFilter<"Job_Listings"> | string
     location_country?: StringFilter<"Job_Listings"> | string
-    accessibility_features?: StringFilter<"Job_Listings"> | string
-    experience_level?: EnumExperienceLevelFilter<"Job_Listings"> | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFilter<"Job_Listings"> | Date | string
-    applications_count?: IntFilter<"Job_Listings"> | number
+    application_deadline?: StringNullableFilter<"Job_Listings"> | string | null
+    workplace_accessibility_features?: StringNullableListFilter<"Job_Listings">
+    experience_level?: StringFilter<"Job_Listings"> | string
+    job_status?: StringFilter<"Job_Listings"> | string
     created_at?: DateTimeFilter<"Job_Listings"> | Date | string
     updated_at?: DateTimeFilter<"Job_Listings"> | Date | string
     applications?: ApplicationsListRelationFilter
-    category?: XOR<Job_CategoriesScalarRelationFilter, Job_CategoriesWhereInput>
     employer?: XOR<Employer_ProfileScalarRelationFilter, Employer_ProfileWhereInput>
     ai_match_results?: Ai_match_resultsListRelationFilter
     Saved_Jobs?: Saved_JobsListRelationFilter
@@ -32733,10 +31354,11 @@ export namespace Prisma {
 
   export type Job_ListingsOrderByWithRelationInput = {
     job_id?: SortOrder
+    job_code?: SortOrderInput | SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
+    jobtitle?: SortOrder
+    jobCategory?: SortOrder
+    description?: SortOrderInput | SortOrder
     skills_required?: SortOrder
     employment_type?: SortOrder
     work_arrangement?: SortOrder
@@ -32746,14 +31368,13 @@ export namespace Prisma {
     location_city?: SortOrder
     location_province?: SortOrder
     location_country?: SortOrder
-    accessibility_features?: SortOrder
+    application_deadline?: SortOrderInput | SortOrder
+    workplace_accessibility_features?: SortOrder
     experience_level?: SortOrder
-    application_deadline?: SortOrder
-    applications_count?: SortOrder
+    job_status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     applications?: ApplicationsOrderByRelationAggregateInput
-    category?: Job_CategoriesOrderByWithRelationInput
     employer?: Employer_ProfileOrderByWithRelationInput
     ai_match_results?: ai_match_resultsOrderByRelationAggregateInput
     Saved_Jobs?: Saved_JobsOrderByRelationAggregateInput
@@ -32761,41 +31382,42 @@ export namespace Prisma {
 
   export type Job_ListingsWhereUniqueInput = Prisma.AtLeast<{
     job_id?: number
+    job_code?: string
     AND?: Job_ListingsWhereInput | Job_ListingsWhereInput[]
     OR?: Job_ListingsWhereInput[]
     NOT?: Job_ListingsWhereInput | Job_ListingsWhereInput[]
     employer_id?: IntFilter<"Job_Listings"> | number
-    category_id?: IntFilter<"Job_Listings"> | number
-    title?: StringFilter<"Job_Listings"> | string
-    description?: StringFilter<"Job_Listings"> | string
-    skills_required?: StringFilter<"Job_Listings"> | string
-    employment_type?: EnumEmploymentTypeFilter<"Job_Listings"> | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFilter<"Job_Listings"> | $Enums.WorkArrangement
-    salary_min?: DecimalFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFilter<"Job_Listings"> | $Enums.SalaryType
+    jobtitle?: StringFilter<"Job_Listings"> | string
+    jobCategory?: StringFilter<"Job_Listings"> | string
+    description?: StringNullableFilter<"Job_Listings"> | string | null
+    skills_required?: StringNullableListFilter<"Job_Listings">
+    employment_type?: StringFilter<"Job_Listings"> | string
+    work_arrangement?: StringFilter<"Job_Listings"> | string
+    salary_min?: IntFilter<"Job_Listings"> | number
+    salary_max?: IntFilter<"Job_Listings"> | number
+    salary_type?: StringFilter<"Job_Listings"> | string
     location_city?: StringFilter<"Job_Listings"> | string
     location_province?: StringFilter<"Job_Listings"> | string
     location_country?: StringFilter<"Job_Listings"> | string
-    accessibility_features?: StringFilter<"Job_Listings"> | string
-    experience_level?: EnumExperienceLevelFilter<"Job_Listings"> | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFilter<"Job_Listings"> | Date | string
-    applications_count?: IntFilter<"Job_Listings"> | number
+    application_deadline?: StringNullableFilter<"Job_Listings"> | string | null
+    workplace_accessibility_features?: StringNullableListFilter<"Job_Listings">
+    experience_level?: StringFilter<"Job_Listings"> | string
+    job_status?: StringFilter<"Job_Listings"> | string
     created_at?: DateTimeFilter<"Job_Listings"> | Date | string
     updated_at?: DateTimeFilter<"Job_Listings"> | Date | string
     applications?: ApplicationsListRelationFilter
-    category?: XOR<Job_CategoriesScalarRelationFilter, Job_CategoriesWhereInput>
     employer?: XOR<Employer_ProfileScalarRelationFilter, Employer_ProfileWhereInput>
     ai_match_results?: Ai_match_resultsListRelationFilter
     Saved_Jobs?: Saved_JobsListRelationFilter
-  }, "job_id">
+  }, "job_id" | "job_code">
 
   export type Job_ListingsOrderByWithAggregationInput = {
     job_id?: SortOrder
+    job_code?: SortOrderInput | SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
+    jobtitle?: SortOrder
+    jobCategory?: SortOrder
+    description?: SortOrderInput | SortOrder
     skills_required?: SortOrder
     employment_type?: SortOrder
     work_arrangement?: SortOrder
@@ -32805,10 +31427,10 @@ export namespace Prisma {
     location_city?: SortOrder
     location_province?: SortOrder
     location_country?: SortOrder
-    accessibility_features?: SortOrder
+    application_deadline?: SortOrderInput | SortOrder
+    workplace_accessibility_features?: SortOrder
     experience_level?: SortOrder
-    application_deadline?: SortOrder
-    applications_count?: SortOrder
+    job_status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     _count?: Job_ListingsCountOrderByAggregateInput
@@ -32823,23 +31445,24 @@ export namespace Prisma {
     OR?: Job_ListingsScalarWhereWithAggregatesInput[]
     NOT?: Job_ListingsScalarWhereWithAggregatesInput | Job_ListingsScalarWhereWithAggregatesInput[]
     job_id?: IntWithAggregatesFilter<"Job_Listings"> | number
+    job_code?: StringNullableWithAggregatesFilter<"Job_Listings"> | string | null
     employer_id?: IntWithAggregatesFilter<"Job_Listings"> | number
-    category_id?: IntWithAggregatesFilter<"Job_Listings"> | number
-    title?: StringWithAggregatesFilter<"Job_Listings"> | string
-    description?: StringWithAggregatesFilter<"Job_Listings"> | string
-    skills_required?: StringWithAggregatesFilter<"Job_Listings"> | string
-    employment_type?: EnumEmploymentTypeWithAggregatesFilter<"Job_Listings"> | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementWithAggregatesFilter<"Job_Listings"> | $Enums.WorkArrangement
-    salary_min?: DecimalWithAggregatesFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalWithAggregatesFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeWithAggregatesFilter<"Job_Listings"> | $Enums.SalaryType
+    jobtitle?: StringWithAggregatesFilter<"Job_Listings"> | string
+    jobCategory?: StringWithAggregatesFilter<"Job_Listings"> | string
+    description?: StringNullableWithAggregatesFilter<"Job_Listings"> | string | null
+    skills_required?: StringNullableListFilter<"Job_Listings">
+    employment_type?: StringWithAggregatesFilter<"Job_Listings"> | string
+    work_arrangement?: StringWithAggregatesFilter<"Job_Listings"> | string
+    salary_min?: IntWithAggregatesFilter<"Job_Listings"> | number
+    salary_max?: IntWithAggregatesFilter<"Job_Listings"> | number
+    salary_type?: StringWithAggregatesFilter<"Job_Listings"> | string
     location_city?: StringWithAggregatesFilter<"Job_Listings"> | string
     location_province?: StringWithAggregatesFilter<"Job_Listings"> | string
     location_country?: StringWithAggregatesFilter<"Job_Listings"> | string
-    accessibility_features?: StringWithAggregatesFilter<"Job_Listings"> | string
-    experience_level?: EnumExperienceLevelWithAggregatesFilter<"Job_Listings"> | $Enums.ExperienceLevel
-    application_deadline?: DateTimeWithAggregatesFilter<"Job_Listings"> | Date | string
-    applications_count?: IntWithAggregatesFilter<"Job_Listings"> | number
+    application_deadline?: StringNullableWithAggregatesFilter<"Job_Listings"> | string | null
+    workplace_accessibility_features?: StringNullableListFilter<"Job_Listings">
+    experience_level?: StringWithAggregatesFilter<"Job_Listings"> | string
+    job_status?: StringWithAggregatesFilter<"Job_Listings"> | string
     created_at?: DateTimeWithAggregatesFilter<"Job_Listings"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Job_Listings"> | Date | string
   }
@@ -34793,49 +33416,6 @@ export namespace Prisma {
     read_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type Job_CategoriesCreateInput = {
-    name: string
-    description: string
-    job_listings?: Job_ListingsCreateNestedManyWithoutCategoryInput
-  }
-
-  export type Job_CategoriesUncheckedCreateInput = {
-    category_id?: number
-    name: string
-    description: string
-    job_listings?: Job_ListingsUncheckedCreateNestedManyWithoutCategoryInput
-  }
-
-  export type Job_CategoriesUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    job_listings?: Job_ListingsUpdateManyWithoutCategoryNestedInput
-  }
-
-  export type Job_CategoriesUncheckedUpdateInput = {
-    category_id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    job_listings?: Job_ListingsUncheckedUpdateManyWithoutCategoryNestedInput
-  }
-
-  export type Job_CategoriesCreateManyInput = {
-    category_id?: number
-    name: string
-    description: string
-  }
-
-  export type Job_CategoriesUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type Job_CategoriesUncheckedUpdateManyInput = {
-    category_id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-  }
-
   export type Saved_JobsCreateInput = {
     job_listings: Job_ListingsCreateNestedOneWithoutSaved_JobsInput
     pwd_profile: Pwd_ProfileCreateNestedOneWithoutSaved_JobsInput
@@ -34881,25 +33461,26 @@ export namespace Prisma {
   }
 
   export type Job_ListingsCreateInput = {
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsCreateNestedManyWithoutJob_listingInput
-    category: Job_CategoriesCreateNestedOneWithoutJob_listingsInput
     employer: Employer_ProfileCreateNestedOneWithoutJob_listingsInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutJob_listingInput
     Saved_Jobs?: Saved_JobsCreateNestedManyWithoutJob_listingsInput
@@ -34907,23 +33488,24 @@ export namespace Prisma {
 
   export type Job_ListingsUncheckedCreateInput = {
     job_id?: number
+    job_code?: string | null
     employer_id: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsUncheckedCreateNestedManyWithoutJob_listingInput
@@ -34932,25 +33514,26 @@ export namespace Prisma {
   }
 
   export type Job_ListingsUpdateInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUpdateManyWithoutJob_listingNestedInput
-    category?: Job_CategoriesUpdateOneRequiredWithoutJob_listingsNestedInput
     employer?: Employer_ProfileUpdateOneRequiredWithoutJob_listingsNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutJob_listingNestedInput
     Saved_Jobs?: Saved_JobsUpdateManyWithoutJob_listingsNestedInput
@@ -34958,23 +33541,24 @@ export namespace Prisma {
 
   export type Job_ListingsUncheckedUpdateInput = {
     job_id?: IntFieldUpdateOperationsInput | number
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
     employer_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUncheckedUpdateManyWithoutJob_listingNestedInput
@@ -34984,66 +33568,70 @@ export namespace Prisma {
 
   export type Job_ListingsCreateManyInput = {
     job_id?: number
+    job_code?: string | null
     employer_id: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type Job_ListingsUpdateManyMutationInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type Job_ListingsUncheckedUpdateManyInput = {
     job_id?: IntFieldUpdateOperationsInput | number
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
     employer_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -36830,32 +35418,6 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
-  export type Job_CategoriesCountOrderByAggregateInput = {
-    category_id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-  }
-
-  export type Job_CategoriesAvgOrderByAggregateInput = {
-    category_id?: SortOrder
-  }
-
-  export type Job_CategoriesMaxOrderByAggregateInput = {
-    category_id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-  }
-
-  export type Job_CategoriesMinOrderByAggregateInput = {
-    category_id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-  }
-
-  export type Job_CategoriesSumOrderByAggregateInput = {
-    category_id?: SortOrder
-  }
-
   export type Saved_JobsCountOrderByAggregateInput = {
     savedJob_id?: SortOrder
     job_id?: SortOrder
@@ -36891,44 +35453,12 @@ export namespace Prisma {
     employer_id?: SortOrder
   }
 
-  export type EnumEmploymentTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.EmploymentType | EnumEmploymentTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumEmploymentTypeFilter<$PrismaModel> | $Enums.EmploymentType
-  }
-
-  export type EnumWorkArrangementFilter<$PrismaModel = never> = {
-    equals?: $Enums.WorkArrangement | EnumWorkArrangementFieldRefInput<$PrismaModel>
-    in?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    not?: NestedEnumWorkArrangementFilter<$PrismaModel> | $Enums.WorkArrangement
-  }
-
-  export type EnumSalaryTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.SalaryType | EnumSalaryTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumSalaryTypeFilter<$PrismaModel> | $Enums.SalaryType
-  }
-
-  export type EnumExperienceLevelFilter<$PrismaModel = never> = {
-    equals?: $Enums.ExperienceLevel | EnumExperienceLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumExperienceLevelFilter<$PrismaModel> | $Enums.ExperienceLevel
-  }
-
-  export type Job_CategoriesScalarRelationFilter = {
-    is?: Job_CategoriesWhereInput
-    isNot?: Job_CategoriesWhereInput
-  }
-
   export type Job_ListingsCountOrderByAggregateInput = {
     job_id?: SortOrder
+    job_code?: SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
-    title?: SortOrder
+    jobtitle?: SortOrder
+    jobCategory?: SortOrder
     description?: SortOrder
     skills_required?: SortOrder
     employment_type?: SortOrder
@@ -36939,10 +35469,10 @@ export namespace Prisma {
     location_city?: SortOrder
     location_province?: SortOrder
     location_country?: SortOrder
-    accessibility_features?: SortOrder
-    experience_level?: SortOrder
     application_deadline?: SortOrder
-    applications_count?: SortOrder
+    workplace_accessibility_features?: SortOrder
+    experience_level?: SortOrder
+    job_status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -36950,19 +35480,17 @@ export namespace Prisma {
   export type Job_ListingsAvgOrderByAggregateInput = {
     job_id?: SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
     salary_min?: SortOrder
     salary_max?: SortOrder
-    applications_count?: SortOrder
   }
 
   export type Job_ListingsMaxOrderByAggregateInput = {
     job_id?: SortOrder
+    job_code?: SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
-    title?: SortOrder
+    jobtitle?: SortOrder
+    jobCategory?: SortOrder
     description?: SortOrder
-    skills_required?: SortOrder
     employment_type?: SortOrder
     work_arrangement?: SortOrder
     salary_min?: SortOrder
@@ -36971,21 +35499,20 @@ export namespace Prisma {
     location_city?: SortOrder
     location_province?: SortOrder
     location_country?: SortOrder
-    accessibility_features?: SortOrder
-    experience_level?: SortOrder
     application_deadline?: SortOrder
-    applications_count?: SortOrder
+    experience_level?: SortOrder
+    job_status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
 
   export type Job_ListingsMinOrderByAggregateInput = {
     job_id?: SortOrder
+    job_code?: SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
-    title?: SortOrder
+    jobtitle?: SortOrder
+    jobCategory?: SortOrder
     description?: SortOrder
-    skills_required?: SortOrder
     employment_type?: SortOrder
     work_arrangement?: SortOrder
     salary_min?: SortOrder
@@ -36994,10 +35521,9 @@ export namespace Prisma {
     location_city?: SortOrder
     location_province?: SortOrder
     location_country?: SortOrder
-    accessibility_features?: SortOrder
-    experience_level?: SortOrder
     application_deadline?: SortOrder
-    applications_count?: SortOrder
+    experience_level?: SortOrder
+    job_status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -37005,50 +35531,8 @@ export namespace Prisma {
   export type Job_ListingsSumOrderByAggregateInput = {
     job_id?: SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
     salary_min?: SortOrder
     salary_max?: SortOrder
-    applications_count?: SortOrder
-  }
-
-  export type EnumEmploymentTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.EmploymentType | EnumEmploymentTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumEmploymentTypeWithAggregatesFilter<$PrismaModel> | $Enums.EmploymentType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumEmploymentTypeFilter<$PrismaModel>
-    _max?: NestedEnumEmploymentTypeFilter<$PrismaModel>
-  }
-
-  export type EnumWorkArrangementWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.WorkArrangement | EnumWorkArrangementFieldRefInput<$PrismaModel>
-    in?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    not?: NestedEnumWorkArrangementWithAggregatesFilter<$PrismaModel> | $Enums.WorkArrangement
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumWorkArrangementFilter<$PrismaModel>
-    _max?: NestedEnumWorkArrangementFilter<$PrismaModel>
-  }
-
-  export type EnumSalaryTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.SalaryType | EnumSalaryTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumSalaryTypeWithAggregatesFilter<$PrismaModel> | $Enums.SalaryType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumSalaryTypeFilter<$PrismaModel>
-    _max?: NestedEnumSalaryTypeFilter<$PrismaModel>
-  }
-
-  export type EnumExperienceLevelWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ExperienceLevel | EnumExperienceLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumExperienceLevelWithAggregatesFilter<$PrismaModel> | $Enums.ExperienceLevel
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumExperienceLevelFilter<$PrismaModel>
-    _max?: NestedEnumExperienceLevelFilter<$PrismaModel>
   }
 
   export type EnumTicketCategoryFilter<$PrismaModel = never> = {
@@ -39026,48 +37510,6 @@ export namespace Prisma {
     update?: XOR<XOR<UsersUpdateToOneWithWhereWithoutNotificationsInput, UsersUpdateWithoutNotificationsInput>, UsersUncheckedUpdateWithoutNotificationsInput>
   }
 
-  export type Job_ListingsCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<Job_ListingsCreateWithoutCategoryInput, Job_ListingsUncheckedCreateWithoutCategoryInput> | Job_ListingsCreateWithoutCategoryInput[] | Job_ListingsUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: Job_ListingsCreateOrConnectWithoutCategoryInput | Job_ListingsCreateOrConnectWithoutCategoryInput[]
-    createMany?: Job_ListingsCreateManyCategoryInputEnvelope
-    connect?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-  }
-
-  export type Job_ListingsUncheckedCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<Job_ListingsCreateWithoutCategoryInput, Job_ListingsUncheckedCreateWithoutCategoryInput> | Job_ListingsCreateWithoutCategoryInput[] | Job_ListingsUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: Job_ListingsCreateOrConnectWithoutCategoryInput | Job_ListingsCreateOrConnectWithoutCategoryInput[]
-    createMany?: Job_ListingsCreateManyCategoryInputEnvelope
-    connect?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-  }
-
-  export type Job_ListingsUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<Job_ListingsCreateWithoutCategoryInput, Job_ListingsUncheckedCreateWithoutCategoryInput> | Job_ListingsCreateWithoutCategoryInput[] | Job_ListingsUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: Job_ListingsCreateOrConnectWithoutCategoryInput | Job_ListingsCreateOrConnectWithoutCategoryInput[]
-    upsert?: Job_ListingsUpsertWithWhereUniqueWithoutCategoryInput | Job_ListingsUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: Job_ListingsCreateManyCategoryInputEnvelope
-    set?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    disconnect?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    delete?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    connect?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    update?: Job_ListingsUpdateWithWhereUniqueWithoutCategoryInput | Job_ListingsUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: Job_ListingsUpdateManyWithWhereWithoutCategoryInput | Job_ListingsUpdateManyWithWhereWithoutCategoryInput[]
-    deleteMany?: Job_ListingsScalarWhereInput | Job_ListingsScalarWhereInput[]
-  }
-
-  export type Job_ListingsUncheckedUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<Job_ListingsCreateWithoutCategoryInput, Job_ListingsUncheckedCreateWithoutCategoryInput> | Job_ListingsCreateWithoutCategoryInput[] | Job_ListingsUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: Job_ListingsCreateOrConnectWithoutCategoryInput | Job_ListingsCreateOrConnectWithoutCategoryInput[]
-    upsert?: Job_ListingsUpsertWithWhereUniqueWithoutCategoryInput | Job_ListingsUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: Job_ListingsCreateManyCategoryInputEnvelope
-    set?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    disconnect?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    delete?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    connect?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    update?: Job_ListingsUpdateWithWhereUniqueWithoutCategoryInput | Job_ListingsUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: Job_ListingsUpdateManyWithWhereWithoutCategoryInput | Job_ListingsUpdateManyWithWhereWithoutCategoryInput[]
-    deleteMany?: Job_ListingsScalarWhereInput | Job_ListingsScalarWhereInput[]
-  }
-
   export type Job_ListingsCreateNestedOneWithoutSaved_JobsInput = {
     create?: XOR<Job_ListingsCreateWithoutSaved_JobsInput, Job_ListingsUncheckedCreateWithoutSaved_JobsInput>
     connectOrCreate?: Job_ListingsCreateOrConnectWithoutSaved_JobsInput
@@ -39110,17 +37552,19 @@ export namespace Prisma {
     update?: XOR<XOR<Employer_ProfileUpdateToOneWithWhereWithoutSaved_JobsInput, Employer_ProfileUpdateWithoutSaved_JobsInput>, Employer_ProfileUncheckedUpdateWithoutSaved_JobsInput>
   }
 
+  export type Job_ListingsCreateskills_requiredInput = {
+    set: string[]
+  }
+
+  export type Job_ListingsCreateworkplace_accessibility_featuresInput = {
+    set: string[]
+  }
+
   export type ApplicationsCreateNestedManyWithoutJob_listingInput = {
     create?: XOR<ApplicationsCreateWithoutJob_listingInput, ApplicationsUncheckedCreateWithoutJob_listingInput> | ApplicationsCreateWithoutJob_listingInput[] | ApplicationsUncheckedCreateWithoutJob_listingInput[]
     connectOrCreate?: ApplicationsCreateOrConnectWithoutJob_listingInput | ApplicationsCreateOrConnectWithoutJob_listingInput[]
     createMany?: ApplicationsCreateManyJob_listingInputEnvelope
     connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
-  }
-
-  export type Job_CategoriesCreateNestedOneWithoutJob_listingsInput = {
-    create?: XOR<Job_CategoriesCreateWithoutJob_listingsInput, Job_CategoriesUncheckedCreateWithoutJob_listingsInput>
-    connectOrCreate?: Job_CategoriesCreateOrConnectWithoutJob_listingsInput
-    connect?: Job_CategoriesWhereUniqueInput
   }
 
   export type Employer_ProfileCreateNestedOneWithoutJob_listingsInput = {
@@ -39164,20 +37608,14 @@ export namespace Prisma {
     connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
   }
 
-  export type EnumEmploymentTypeFieldUpdateOperationsInput = {
-    set?: $Enums.EmploymentType
+  export type Job_ListingsUpdateskills_requiredInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
-  export type EnumWorkArrangementFieldUpdateOperationsInput = {
-    set?: $Enums.WorkArrangement
-  }
-
-  export type EnumSalaryTypeFieldUpdateOperationsInput = {
-    set?: $Enums.SalaryType
-  }
-
-  export type EnumExperienceLevelFieldUpdateOperationsInput = {
-    set?: $Enums.ExperienceLevel
+  export type Job_ListingsUpdateworkplace_accessibility_featuresInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type ApplicationsUpdateManyWithoutJob_listingNestedInput = {
@@ -39192,14 +37630,6 @@ export namespace Prisma {
     update?: ApplicationsUpdateWithWhereUniqueWithoutJob_listingInput | ApplicationsUpdateWithWhereUniqueWithoutJob_listingInput[]
     updateMany?: ApplicationsUpdateManyWithWhereWithoutJob_listingInput | ApplicationsUpdateManyWithWhereWithoutJob_listingInput[]
     deleteMany?: ApplicationsScalarWhereInput | ApplicationsScalarWhereInput[]
-  }
-
-  export type Job_CategoriesUpdateOneRequiredWithoutJob_listingsNestedInput = {
-    create?: XOR<Job_CategoriesCreateWithoutJob_listingsInput, Job_CategoriesUncheckedCreateWithoutJob_listingsInput>
-    connectOrCreate?: Job_CategoriesCreateOrConnectWithoutJob_listingsInput
-    upsert?: Job_CategoriesUpsertWithoutJob_listingsInput
-    connect?: Job_CategoriesWhereUniqueInput
-    update?: XOR<XOR<Job_CategoriesUpdateToOneWithWhereWithoutJob_listingsInput, Job_CategoriesUpdateWithoutJob_listingsInput>, Job_CategoriesUncheckedUpdateWithoutJob_listingsInput>
   }
 
   export type Employer_ProfileUpdateOneRequiredWithoutJob_listingsNestedInput = {
@@ -39774,74 +38204,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTransactionStatusFilter<$PrismaModel>
     _max?: NestedEnumTransactionStatusFilter<$PrismaModel>
-  }
-
-  export type NestedEnumEmploymentTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.EmploymentType | EnumEmploymentTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumEmploymentTypeFilter<$PrismaModel> | $Enums.EmploymentType
-  }
-
-  export type NestedEnumWorkArrangementFilter<$PrismaModel = never> = {
-    equals?: $Enums.WorkArrangement | EnumWorkArrangementFieldRefInput<$PrismaModel>
-    in?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    not?: NestedEnumWorkArrangementFilter<$PrismaModel> | $Enums.WorkArrangement
-  }
-
-  export type NestedEnumSalaryTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.SalaryType | EnumSalaryTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumSalaryTypeFilter<$PrismaModel> | $Enums.SalaryType
-  }
-
-  export type NestedEnumExperienceLevelFilter<$PrismaModel = never> = {
-    equals?: $Enums.ExperienceLevel | EnumExperienceLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumExperienceLevelFilter<$PrismaModel> | $Enums.ExperienceLevel
-  }
-
-  export type NestedEnumEmploymentTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.EmploymentType | EnumEmploymentTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumEmploymentTypeWithAggregatesFilter<$PrismaModel> | $Enums.EmploymentType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumEmploymentTypeFilter<$PrismaModel>
-    _max?: NestedEnumEmploymentTypeFilter<$PrismaModel>
-  }
-
-  export type NestedEnumWorkArrangementWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.WorkArrangement | EnumWorkArrangementFieldRefInput<$PrismaModel>
-    in?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    not?: NestedEnumWorkArrangementWithAggregatesFilter<$PrismaModel> | $Enums.WorkArrangement
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumWorkArrangementFilter<$PrismaModel>
-    _max?: NestedEnumWorkArrangementFilter<$PrismaModel>
-  }
-
-  export type NestedEnumSalaryTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.SalaryType | EnumSalaryTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumSalaryTypeWithAggregatesFilter<$PrismaModel> | $Enums.SalaryType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumSalaryTypeFilter<$PrismaModel>
-    _max?: NestedEnumSalaryTypeFilter<$PrismaModel>
-  }
-
-  export type NestedEnumExperienceLevelWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ExperienceLevel | EnumExperienceLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumExperienceLevelWithAggregatesFilter<$PrismaModel> | $Enums.ExperienceLevel
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumExperienceLevelFilter<$PrismaModel>
-    _max?: NestedEnumExperienceLevelFilter<$PrismaModel>
   }
 
   export type NestedEnumTicketCategoryFilter<$PrismaModel = never> = {
@@ -42335,47 +40697,49 @@ export namespace Prisma {
   }
 
   export type Job_ListingsCreateWithoutEmployerInput = {
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsCreateNestedManyWithoutJob_listingInput
-    category: Job_CategoriesCreateNestedOneWithoutJob_listingsInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutJob_listingInput
     Saved_Jobs?: Saved_JobsCreateNestedManyWithoutJob_listingsInput
   }
 
   export type Job_ListingsUncheckedCreateWithoutEmployerInput = {
     job_id?: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsUncheckedCreateNestedManyWithoutJob_listingInput
@@ -42563,23 +40927,24 @@ export namespace Prisma {
     OR?: Job_ListingsScalarWhereInput[]
     NOT?: Job_ListingsScalarWhereInput | Job_ListingsScalarWhereInput[]
     job_id?: IntFilter<"Job_Listings"> | number
+    job_code?: StringNullableFilter<"Job_Listings"> | string | null
     employer_id?: IntFilter<"Job_Listings"> | number
-    category_id?: IntFilter<"Job_Listings"> | number
-    title?: StringFilter<"Job_Listings"> | string
-    description?: StringFilter<"Job_Listings"> | string
-    skills_required?: StringFilter<"Job_Listings"> | string
-    employment_type?: EnumEmploymentTypeFilter<"Job_Listings"> | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFilter<"Job_Listings"> | $Enums.WorkArrangement
-    salary_min?: DecimalFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFilter<"Job_Listings"> | $Enums.SalaryType
+    jobtitle?: StringFilter<"Job_Listings"> | string
+    jobCategory?: StringFilter<"Job_Listings"> | string
+    description?: StringNullableFilter<"Job_Listings"> | string | null
+    skills_required?: StringNullableListFilter<"Job_Listings">
+    employment_type?: StringFilter<"Job_Listings"> | string
+    work_arrangement?: StringFilter<"Job_Listings"> | string
+    salary_min?: IntFilter<"Job_Listings"> | number
+    salary_max?: IntFilter<"Job_Listings"> | number
+    salary_type?: StringFilter<"Job_Listings"> | string
     location_city?: StringFilter<"Job_Listings"> | string
     location_province?: StringFilter<"Job_Listings"> | string
     location_country?: StringFilter<"Job_Listings"> | string
-    accessibility_features?: StringFilter<"Job_Listings"> | string
-    experience_level?: EnumExperienceLevelFilter<"Job_Listings"> | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFilter<"Job_Listings"> | Date | string
-    applications_count?: IntFilter<"Job_Listings"> | number
+    application_deadline?: StringNullableFilter<"Job_Listings"> | string | null
+    workplace_accessibility_features?: StringNullableListFilter<"Job_Listings">
+    experience_level?: StringFilter<"Job_Listings"> | string
+    job_status?: StringFilter<"Job_Listings"> | string
     created_at?: DateTimeFilter<"Job_Listings"> | Date | string
     updated_at?: DateTimeFilter<"Job_Listings"> | Date | string
   }
@@ -43287,24 +41652,25 @@ export namespace Prisma {
   }
 
   export type Job_ListingsCreateWithoutApplicationsInput = {
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
-    category: Job_CategoriesCreateNestedOneWithoutJob_listingsInput
     employer: Employer_ProfileCreateNestedOneWithoutJob_listingsInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutJob_listingInput
     Saved_Jobs?: Saved_JobsCreateNestedManyWithoutJob_listingsInput
@@ -43312,23 +41678,24 @@ export namespace Prisma {
 
   export type Job_ListingsUncheckedCreateWithoutApplicationsInput = {
     job_id?: number
+    job_code?: string | null
     employer_id: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutJob_listingInput
@@ -43630,24 +41997,25 @@ export namespace Prisma {
   }
 
   export type Job_ListingsUpdateWithoutApplicationsInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: Job_CategoriesUpdateOneRequiredWithoutJob_listingsNestedInput
     employer?: Employer_ProfileUpdateOneRequiredWithoutJob_listingsNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutJob_listingNestedInput
     Saved_Jobs?: Saved_JobsUpdateManyWithoutJob_listingsNestedInput
@@ -43655,23 +42023,24 @@ export namespace Prisma {
 
   export type Job_ListingsUncheckedUpdateWithoutApplicationsInput = {
     job_id?: IntFieldUpdateOperationsInput | number
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
     employer_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutJob_listingNestedInput
@@ -44760,124 +43129,51 @@ export namespace Prisma {
     withdrawal_requests?: withdrawal_requestsUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type Job_ListingsCreateWithoutCategoryInput = {
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
-    location_city: string
-    location_province: string
-    location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
-    created_at?: Date | string
-    updated_at?: Date | string
-    applications?: ApplicationsCreateNestedManyWithoutJob_listingInput
-    employer: Employer_ProfileCreateNestedOneWithoutJob_listingsInput
-    ai_match_results?: ai_match_resultsCreateNestedManyWithoutJob_listingInput
-    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutJob_listingsInput
-  }
-
-  export type Job_ListingsUncheckedCreateWithoutCategoryInput = {
-    job_id?: number
-    employer_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
-    location_city: string
-    location_province: string
-    location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
-    created_at?: Date | string
-    updated_at?: Date | string
-    applications?: ApplicationsUncheckedCreateNestedManyWithoutJob_listingInput
-    ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutJob_listingInput
-    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutJob_listingsInput
-  }
-
-  export type Job_ListingsCreateOrConnectWithoutCategoryInput = {
-    where: Job_ListingsWhereUniqueInput
-    create: XOR<Job_ListingsCreateWithoutCategoryInput, Job_ListingsUncheckedCreateWithoutCategoryInput>
-  }
-
-  export type Job_ListingsCreateManyCategoryInputEnvelope = {
-    data: Job_ListingsCreateManyCategoryInput | Job_ListingsCreateManyCategoryInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type Job_ListingsUpsertWithWhereUniqueWithoutCategoryInput = {
-    where: Job_ListingsWhereUniqueInput
-    update: XOR<Job_ListingsUpdateWithoutCategoryInput, Job_ListingsUncheckedUpdateWithoutCategoryInput>
-    create: XOR<Job_ListingsCreateWithoutCategoryInput, Job_ListingsUncheckedCreateWithoutCategoryInput>
-  }
-
-  export type Job_ListingsUpdateWithWhereUniqueWithoutCategoryInput = {
-    where: Job_ListingsWhereUniqueInput
-    data: XOR<Job_ListingsUpdateWithoutCategoryInput, Job_ListingsUncheckedUpdateWithoutCategoryInput>
-  }
-
-  export type Job_ListingsUpdateManyWithWhereWithoutCategoryInput = {
-    where: Job_ListingsScalarWhereInput
-    data: XOR<Job_ListingsUpdateManyMutationInput, Job_ListingsUncheckedUpdateManyWithoutCategoryInput>
-  }
-
   export type Job_ListingsCreateWithoutSaved_JobsInput = {
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsCreateNestedManyWithoutJob_listingInput
-    category: Job_CategoriesCreateNestedOneWithoutJob_listingsInput
     employer: Employer_ProfileCreateNestedOneWithoutJob_listingsInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutJob_listingInput
   }
 
   export type Job_ListingsUncheckedCreateWithoutSaved_JobsInput = {
     job_id?: number
+    job_code?: string | null
     employer_id: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsUncheckedCreateNestedManyWithoutJob_listingInput
@@ -45077,48 +43373,50 @@ export namespace Prisma {
   }
 
   export type Job_ListingsUpdateWithoutSaved_JobsInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUpdateManyWithoutJob_listingNestedInput
-    category?: Job_CategoriesUpdateOneRequiredWithoutJob_listingsNestedInput
     employer?: Employer_ProfileUpdateOneRequiredWithoutJob_listingsNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutJob_listingNestedInput
   }
 
   export type Job_ListingsUncheckedUpdateWithoutSaved_JobsInput = {
     job_id?: IntFieldUpdateOperationsInput | number
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
     employer_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUncheckedUpdateManyWithoutJob_listingNestedInput
@@ -45350,22 +43648,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type Job_CategoriesCreateWithoutJob_listingsInput = {
-    name: string
-    description: string
-  }
-
-  export type Job_CategoriesUncheckedCreateWithoutJob_listingsInput = {
-    category_id?: number
-    name: string
-    description: string
-  }
-
-  export type Job_CategoriesCreateOrConnectWithoutJob_listingsInput = {
-    where: Job_CategoriesWhereUniqueInput
-    create: XOR<Job_CategoriesCreateWithoutJob_listingsInput, Job_CategoriesUncheckedCreateWithoutJob_listingsInput>
-  }
-
   export type Employer_ProfileCreateWithoutJob_listingsInput = {
     rating?: number
     created_at: string
@@ -45514,28 +43796,6 @@ export namespace Prisma {
   export type ApplicationsUpdateManyWithWhereWithoutJob_listingInput = {
     where: ApplicationsScalarWhereInput
     data: XOR<ApplicationsUpdateManyMutationInput, ApplicationsUncheckedUpdateManyWithoutJob_listingInput>
-  }
-
-  export type Job_CategoriesUpsertWithoutJob_listingsInput = {
-    update: XOR<Job_CategoriesUpdateWithoutJob_listingsInput, Job_CategoriesUncheckedUpdateWithoutJob_listingsInput>
-    create: XOR<Job_CategoriesCreateWithoutJob_listingsInput, Job_CategoriesUncheckedCreateWithoutJob_listingsInput>
-    where?: Job_CategoriesWhereInput
-  }
-
-  export type Job_CategoriesUpdateToOneWithWhereWithoutJob_listingsInput = {
-    where?: Job_CategoriesWhereInput
-    data: XOR<Job_CategoriesUpdateWithoutJob_listingsInput, Job_CategoriesUncheckedUpdateWithoutJob_listingsInput>
-  }
-
-  export type Job_CategoriesUpdateWithoutJob_listingsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type Job_CategoriesUncheckedUpdateWithoutJob_listingsInput = {
-    category_id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
   }
 
   export type Employer_ProfileUpsertWithoutJob_listingsInput = {
@@ -45977,48 +44237,50 @@ export namespace Prisma {
   }
 
   export type Job_ListingsCreateWithoutAi_match_resultsInput = {
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsCreateNestedManyWithoutJob_listingInput
-    category: Job_CategoriesCreateNestedOneWithoutJob_listingsInput
     employer: Employer_ProfileCreateNestedOneWithoutJob_listingsInput
     Saved_Jobs?: Saved_JobsCreateNestedManyWithoutJob_listingsInput
   }
 
   export type Job_ListingsUncheckedCreateWithoutAi_match_resultsInput = {
     job_id?: number
+    job_code?: string | null
     employer_id: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsUncheckedCreateNestedManyWithoutJob_listingInput
@@ -46136,48 +44398,50 @@ export namespace Prisma {
   }
 
   export type Job_ListingsUpdateWithoutAi_match_resultsInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUpdateManyWithoutJob_listingNestedInput
-    category?: Job_CategoriesUpdateOneRequiredWithoutJob_listingsNestedInput
     employer?: Employer_ProfileUpdateOneRequiredWithoutJob_listingsNestedInput
     Saved_Jobs?: Saved_JobsUpdateManyWithoutJob_listingsNestedInput
   }
 
   export type Job_ListingsUncheckedUpdateWithoutAi_match_resultsInput = {
     job_id?: IntFieldUpdateOperationsInput | number
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
     employer_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUncheckedUpdateManyWithoutJob_listingNestedInput
@@ -47199,22 +45463,23 @@ export namespace Prisma {
 
   export type Job_ListingsCreateManyEmployerInput = {
     job_id?: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -47251,47 +45516,49 @@ export namespace Prisma {
   }
 
   export type Job_ListingsUpdateWithoutEmployerInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUpdateManyWithoutJob_listingNestedInput
-    category?: Job_CategoriesUpdateOneRequiredWithoutJob_listingsNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutJob_listingNestedInput
     Saved_Jobs?: Saved_JobsUpdateManyWithoutJob_listingsNestedInput
   }
 
   export type Job_ListingsUncheckedUpdateWithoutEmployerInput = {
     job_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUncheckedUpdateManyWithoutJob_listingNestedInput
@@ -47301,22 +45568,23 @@ export namespace Prisma {
 
   export type Job_ListingsUncheckedUpdateManyWithoutEmployerInput = {
     job_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -47589,99 +45857,6 @@ export namespace Prisma {
     reference_number?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     processed_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type Job_ListingsCreateManyCategoryInput = {
-    job_id?: number
-    employer_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
-    location_city: string
-    location_province: string
-    location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type Job_ListingsUpdateWithoutCategoryInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
-    location_city?: StringFieldUpdateOperationsInput | string
-    location_province?: StringFieldUpdateOperationsInput | string
-    location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications?: ApplicationsUpdateManyWithoutJob_listingNestedInput
-    employer?: Employer_ProfileUpdateOneRequiredWithoutJob_listingsNestedInput
-    ai_match_results?: ai_match_resultsUpdateManyWithoutJob_listingNestedInput
-    Saved_Jobs?: Saved_JobsUpdateManyWithoutJob_listingsNestedInput
-  }
-
-  export type Job_ListingsUncheckedUpdateWithoutCategoryInput = {
-    job_id?: IntFieldUpdateOperationsInput | number
-    employer_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
-    location_city?: StringFieldUpdateOperationsInput | string
-    location_province?: StringFieldUpdateOperationsInput | string
-    location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications?: ApplicationsUncheckedUpdateManyWithoutJob_listingNestedInput
-    ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutJob_listingNestedInput
-    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutJob_listingsNestedInput
-  }
-
-  export type Job_ListingsUncheckedUpdateManyWithoutCategoryInput = {
-    job_id?: IntFieldUpdateOperationsInput | number
-    employer_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
-    location_city?: StringFieldUpdateOperationsInput | string
-    location_province?: StringFieldUpdateOperationsInput | string
-    location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ApplicationsCreateManyJob_listingInput = {

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import api from '../../utils/api.js';
+import Swal from 'sweetalert2';
 import EmployerHeader from '../../components/ui/EmployerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
@@ -20,19 +22,13 @@ const PostedJobView = () => {
     const fetchJobData = async () => {
       try {
         setLoading(true);
-        // TODO: Replace with actual API call
-        // const response = await fetch(`/api/employer/jobs/${jobId}`, {
-        //   headers: {
-        //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        //     'Content-Type': 'application/json'
-        //   }
-        // });
-        // const data = await response.json();
-        // setJobData(data);
-        
-        // Mock data for now
-        setJobData(mockJobData);
-        setJobStatus(mockJobData.status);
+
+        const response = await api.get(`/job/${jobId}/posted`);
+
+        if(response.data.success) {
+          setJobData(response.data.job);
+          setJobStatus(mockJobData.status);
+        }
       } catch (err) {
         setError('Failed to load job data');
         console.error('Error fetching job data:', err);
@@ -59,6 +55,8 @@ const PostedJobView = () => {
         // });
         // const data = await response.json();
         // setApplications(data);
+
+
         
         // Mock data for now
         setApplications(mockApplications);
@@ -291,21 +289,17 @@ const PostedJobView = () => {
   const handleDeleteJob = async () => {
     if (window.confirm('Are you sure you want to delete this job posting? This action cannot be undone.')) {
       try {
-        // TODO: Replace with actual API call
-        // const response = await fetch(`/api/employer/jobs/${jobId}`, {
-        //   method: 'DELETE',
-        //   headers: {
-        //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        //     'Content-Type': 'application/json'
-        //   }
-        // });
-        // if (response.ok) {
-        //   navigate('/employer/dashboard');
-        // }
-        
-        // Mock implementation
-        console.log('Deleting job:', jobId);
-        navigate('/employer/dashboard');
+        const response = await api.delete(`/job/${jobId}/delete`);
+        if(response.data.success) {
+          Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            icon: 'success',
+            title: `Job ID: ${jobId} successfully deleted.`,
+            showConfirmButton: false
+          })
+          navigate('/employer/dashboard');
+        }
       } catch (error) {
         console.error('Error deleting job:', error);
         alert('Failed to delete job. Please try again.');
@@ -404,15 +398,15 @@ const PostedJobView = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
                   </button>
-                  <h1 className="text-2xl font-bold text-gray-900">{jobData.title}</h1>
+                  <h1 className="text-2xl font-bold text-gray-900">{jobData.jobtitle}</h1>
                 </div>
                 <div className="flex items-center text-gray-600 ml-11">
-                  <Link to="#" className="text-blue-600 hover:text-blue-700 font-medium">{jobData.company}</Link>
+                  <Link to="#" className="text-blue-600 hover:text-blue-700 font-medium">{jobData.employer.company_name}</Link>
                   <svg className="w-4 h-4 mx-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <span>{jobData.location}</span>
+                  <span>{jobData.location_city}, {jobData.location_province}, {jobData.location_country}</span>
                 </div>
               </div>
 
@@ -436,7 +430,7 @@ const PostedJobView = () => {
                       : 'text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300'
                   }`}
                 >
-                  Applications ({jobData.applications})
+                  Applications ({jobData._count.applications})
                 </button>
                 <button 
                   onClick={() => handleTabChange('hires')}
@@ -473,7 +467,7 @@ const PostedJobView = () => {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-3">Key Responsibilities:</h3>
                       <ul className="space-y-2 text-gray-700">
-                        {jobData.keyResponsibilities.map((responsibility, index) => (
+                        {mockJobData.keyResponsibilities.map((responsibility, index) => (
                           <li key={index} className="flex items-start">
                             <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2.5 mr-3 flex-shrink-0"></span>
                             {responsibility}
@@ -486,12 +480,12 @@ const PostedJobView = () => {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-3">Required Skills</h3>
                       <div className="flex flex-wrap gap-2">
-                        {jobData.requiredSkills.map((skill, index) => (
+                        {jobData.skills_required.map((skill, index) => (
                           <span
                             key={index}
                             className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full font-medium"
                           >
-                            {skill.name}
+                            {skill}
                           </span>
                         ))}
                       </div>
@@ -501,7 +495,7 @@ const PostedJobView = () => {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-3">Accessibility Features & Accommodations</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {jobData.accessibilityFeatures.map((feature, index) => (
+                        {jobData.workplace_accessibility_features.map((feature, index) => (
                           <div key={index} className="flex items-center">
                             <svg className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                               <path
@@ -525,43 +519,51 @@ const PostedJobView = () => {
                       <div className="space-y-4">
                         <div>
                           <span className="text-sm font-medium text-gray-600 block mb-1">Job Category</span>
-                          <p className="text-gray-900 font-medium">{jobData.category}</p>
+                          <p className="text-gray-900 font-medium">{jobData.jobCategory}</p>
                         </div>
                         
                         <div>
                           <span className="text-sm font-medium text-gray-600 block mb-1">Employment Type</span>
-                          <p className="text-gray-900 font-medium">{jobData.type}</p>
+                          <p className="text-gray-900 font-medium">{jobData.employment_type}</p>
                         </div>
                         
                         <div>
                           <span className="text-sm font-medium text-gray-600 block mb-1">Work Arrangement</span>
-                          <p className="text-gray-900 font-medium">{jobData.workArrangement}</p>
+                          <p className="text-gray-900 font-medium">{jobData.work_arrangement}</p>
                         </div>
                         
                         <div>
                           <span className="text-sm font-medium text-gray-600 block mb-1">Location</span>
-                          <p className="text-gray-900 font-medium">{jobData.location}</p>
+                          <p className="text-gray-900 font-medium">{jobData.location_city}, {jobData.location_province}, {jobData.location_country}</p>
                         </div>
                         
                         <div>
                           <span className="text-sm font-medium text-gray-600 block mb-1">Experience Level</span>
-                          <p className="text-gray-900 font-medium">{jobData.experienceLevel}</p>
+                          <p className="text-gray-900 font-medium">{jobData.experience_level}</p>
                         </div>
                         
                         <div>
                           <span className="text-sm font-medium text-gray-600 block mb-1">Salary Range</span>
-                          <p className="text-gray-900 font-bold">{jobData.salary}</p>
+                          <p className="text-gray-900 font-bold">${jobData.salary_min} - ${jobData.salary_max} CAD / {jobData.salary_type.toLowerCase()}</p>
                           <p className="text-sm text-gray-500">Per year</p>
                         </div>
                         
                         <div>
                           <span className="text-sm font-medium text-gray-600 block mb-1">Applications</span>
-                          <p className="text-gray-900 font-medium">{jobData.applications} applications received</p>
+                          <p className="text-gray-900 font-medium">{jobData._count.applications} applications received</p>
                         </div>
                         
                         <div>
                           <span className="text-sm font-medium text-gray-600 block mb-1">Application Deadline</span>
-                          <p className="text-red-600 font-bold">{jobData.applicationDeadline}</p>
+                          <p className="text-red-600 font-bold">
+                            {jobData.application_deadline
+                              ? new Date(jobData.application_deadline).toLocaleDateString("en-US", {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                })
+                              : "No deadline"}
+                          </p>
                         </div>
                       </div>
                       
@@ -609,15 +611,31 @@ const PostedJobView = () => {
                         <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
                             <span className="text-gray-600">Date Posted:</span>
-                            <span className="text-gray-900">December 2, 2024</span>
+                            <span className="text-gray-900">
+                              {jobData.created_at
+                              ? new Date(jobData.created_at).toLocaleDateString("en-US", {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                })
+                              : "No deadline"}
+                            </span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-gray-600">Last Updated:</span>
-                            <span className="text-gray-900">December 4, 2024</span>
+                            <span className="text-gray-900">
+                              {jobData.updated_at
+                              ? new Date(jobData.updated_at).toLocaleDateString("en-US", {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                })
+                              : "No deadline"}
+                            </span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-gray-600">Job ID:</span>
-                            <span className="text-gray-900">TC-2024-SD-001</span>
+                            <span className="text-gray-900">{jobData.job_code}</span>
                           </div>
                         </div>
                       </div>
