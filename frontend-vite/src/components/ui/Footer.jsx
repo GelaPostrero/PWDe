@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo from './Logo.jsx';
+import pwdelogo from '../../assets/pwdelogo.png';
 
 const Footer = ({ 
   showLogo = true, 
@@ -39,9 +39,10 @@ const Footer = ({
         
           {showLogo && (
             <div className="lg:col-span-1 flex flex-col items-start">
-              
-              <Logo showText={false} />
-              <div className="text-sm font-semi-bold text-blue-900 mt-2">PWDe</div>
+              <div className="flex flex-col items-start">
+                <img src={pwdelogo} alt="PWDe Logo" className="w-16 h-16 mb-2" />
+                <div className="text-lg font-bold text-blue-700">PWDe</div>
+              </div>
             </div>
           )}
 
