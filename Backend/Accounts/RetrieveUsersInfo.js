@@ -80,17 +80,14 @@ router.get('/header', authenticateToken, async (req, res) => {
         }
 });
 
-// DASHBOARD (KUWANGAN PA SA EMPLOYERS)
 router.get('/dashboard', authenticateToken, async (req, res) => {
     try {
-        const pwd_id = req.user?.pwd_id;
-        const emp_id = req.user?.emp_id;
         const userId = req.user?.userId;
         const userType = req.user?.userType;
 
         let user = null;
 
-        if((!pwd_id && !emp_id) || !userId) {
+        if(!userId) {
             return res.status(400).json({ error: "No ID found from this token." });
         }
 
@@ -207,7 +204,7 @@ router.get('/dashboard', authenticateToken, async (req, res) => {
     } catch(error) {
         res.status(500).json({ error: "Failed to fetch user dashboard." });
     }
-})
+});
 
 router.get('/profile', authenticateToken, async (req, res) => {
     try {
@@ -323,6 +320,54 @@ router.get('/profile', authenticateToken, async (req, res) => {
         console.error("Error fetching profile:", error);
         res.status(500).json({ success: false, message: 'Internal Server error', error: "Failed to fetch user profile." });
     }
-})
+});
+
+router.put('/update/basic-information', authenticateToken, async (req, res) => {
+    try {
+        const {
+            firstName,
+            lastName,
+            email,
+            phone,
+            birthDate,
+            disabilityType,
+            location
+        } = req.body;
+
+        const pwd_id = req.user?.pwd_id;
+        const user_id = req.user?.userId;
+
+        const updatePersonalInfo = await prisma.users.update({
+            where: { user_id },
+            data: {
+                email,
+                phone_number: phone,
+                pwd_Profile: {
+                    update: {
+                        first_name: firstName,
+                        last_name: lastName,
+                        date_of_birth: birthDate,
+                        disability_Type: disabilityType,
+                        address: location,
+                    }
+                }
+            },
+            include: {
+                pwd_Profile: true
+            }
+        });
+
+        res.json({ 
+            message: 'Profile updated successfully', 
+            data: updatePersonalInfo 
+        });
+    } catch(error) {
+        console.error('Error updating profile:', error);
+        res.status(500).json({ 
+            error: 'Failed to update profile',
+            message: error
+        });
+    }
+});
 
 module.exports = router;

@@ -4777,6 +4777,23 @@ export namespace Prisma {
     professional_summary: string | null
     hourly_rate: number | null
     profile_visibility: string | null
+    show_email: boolean | null
+    show_phone_number: boolean | null
+    show_location: boolean | null
+    allow_messages: boolean | null
+    show_online_status: boolean | null
+    email_job_matches: boolean | null
+    messages: boolean | null
+    application_updates: boolean | null
+    email_profile_views: boolean | null
+    weekly_digest: boolean | null
+    marketing_emails: boolean | null
+    push_notif_job_matches: boolean | null
+    push_notif_messages: boolean | null
+    push_notif_application_updates: boolean | null
+    push_notif_profile_views: boolean | null
+    urgent_messages: boolean | null
+    security_alerts: boolean | null
     resume_cv: string | null
     basic_information: boolean | null
     professional_experience: boolean | null
@@ -4811,6 +4828,23 @@ export namespace Prisma {
     professional_summary: string | null
     hourly_rate: number | null
     profile_visibility: string | null
+    show_email: boolean | null
+    show_phone_number: boolean | null
+    show_location: boolean | null
+    allow_messages: boolean | null
+    show_online_status: boolean | null
+    email_job_matches: boolean | null
+    messages: boolean | null
+    application_updates: boolean | null
+    email_profile_views: boolean | null
+    weekly_digest: boolean | null
+    marketing_emails: boolean | null
+    push_notif_job_matches: boolean | null
+    push_notif_messages: boolean | null
+    push_notif_application_updates: boolean | null
+    push_notif_profile_views: boolean | null
+    urgent_messages: boolean | null
+    security_alerts: boolean | null
     resume_cv: string | null
     basic_information: boolean | null
     professional_experience: boolean | null
@@ -4848,6 +4882,23 @@ export namespace Prisma {
     professional_summary: number
     hourly_rate: number
     profile_visibility: number
+    show_email: number
+    show_phone_number: number
+    show_location: number
+    allow_messages: number
+    show_online_status: number
+    email_job_matches: number
+    messages: number
+    application_updates: number
+    email_profile_views: number
+    weekly_digest: number
+    marketing_emails: number
+    push_notif_job_matches: number
+    push_notif_messages: number
+    push_notif_application_updates: number
+    push_notif_profile_views: number
+    urgent_messages: number
+    security_alerts: number
     resume_cv: number
     basic_information: number
     professional_experience: number
@@ -4902,6 +4953,23 @@ export namespace Prisma {
     professional_summary?: true
     hourly_rate?: true
     profile_visibility?: true
+    show_email?: true
+    show_phone_number?: true
+    show_location?: true
+    allow_messages?: true
+    show_online_status?: true
+    email_job_matches?: true
+    messages?: true
+    application_updates?: true
+    email_profile_views?: true
+    weekly_digest?: true
+    marketing_emails?: true
+    push_notif_job_matches?: true
+    push_notif_messages?: true
+    push_notif_application_updates?: true
+    push_notif_profile_views?: true
+    urgent_messages?: true
+    security_alerts?: true
     resume_cv?: true
     basic_information?: true
     professional_experience?: true
@@ -4936,6 +5004,23 @@ export namespace Prisma {
     professional_summary?: true
     hourly_rate?: true
     profile_visibility?: true
+    show_email?: true
+    show_phone_number?: true
+    show_location?: true
+    allow_messages?: true
+    show_online_status?: true
+    email_job_matches?: true
+    messages?: true
+    application_updates?: true
+    email_profile_views?: true
+    weekly_digest?: true
+    marketing_emails?: true
+    push_notif_job_matches?: true
+    push_notif_messages?: true
+    push_notif_application_updates?: true
+    push_notif_profile_views?: true
+    urgent_messages?: true
+    security_alerts?: true
     resume_cv?: true
     basic_information?: true
     professional_experience?: true
@@ -4973,6 +5058,23 @@ export namespace Prisma {
     professional_summary?: true
     hourly_rate?: true
     profile_visibility?: true
+    show_email?: true
+    show_phone_number?: true
+    show_location?: true
+    allow_messages?: true
+    show_online_status?: true
+    email_job_matches?: true
+    messages?: true
+    application_updates?: true
+    email_profile_views?: true
+    weekly_digest?: true
+    marketing_emails?: true
+    push_notif_job_matches?: true
+    push_notif_messages?: true
+    push_notif_application_updates?: true
+    push_notif_profile_views?: true
+    urgent_messages?: true
+    security_alerts?: true
     resume_cv?: true
     basic_information?: true
     professional_experience?: true
@@ -5097,6 +5199,23 @@ export namespace Prisma {
     professional_summary: string | null
     hourly_rate: number | null
     profile_visibility: string | null
+    show_email: boolean
+    show_phone_number: boolean
+    show_location: boolean
+    allow_messages: boolean
+    show_online_status: boolean
+    email_job_matches: boolean
+    messages: boolean
+    application_updates: boolean
+    email_profile_views: boolean
+    weekly_digest: boolean
+    marketing_emails: boolean
+    push_notif_job_matches: boolean
+    push_notif_messages: boolean
+    push_notif_application_updates: boolean
+    push_notif_profile_views: boolean
+    urgent_messages: boolean
+    security_alerts: boolean
     resume_cv: string | null
     basic_information: boolean
     professional_experience: boolean
@@ -5153,6 +5272,23 @@ export namespace Prisma {
     professional_summary?: boolean
     hourly_rate?: boolean
     profile_visibility?: boolean
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: boolean
     basic_information?: boolean
     professional_experience?: boolean
@@ -5201,6 +5337,23 @@ export namespace Prisma {
     professional_summary?: boolean
     hourly_rate?: boolean
     profile_visibility?: boolean
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: boolean
     basic_information?: boolean
     professional_experience?: boolean
@@ -5239,6 +5392,23 @@ export namespace Prisma {
     professional_summary?: boolean
     hourly_rate?: boolean
     profile_visibility?: boolean
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: boolean
     basic_information?: boolean
     professional_experience?: boolean
@@ -5277,6 +5447,23 @@ export namespace Prisma {
     professional_summary?: boolean
     hourly_rate?: boolean
     profile_visibility?: boolean
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: boolean
     basic_information?: boolean
     professional_experience?: boolean
@@ -5286,7 +5473,7 @@ export namespace Prisma {
     set_accessibility_preferences?: boolean
   }
 
-  export type Pwd_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"first_name" | "last_name" | "middle_name" | "profile_picture" | "bio" | "disability_Type" | "disability_severity" | "gender" | "rating" | "profile_views" | "interviews" | "created_at" | "updated_at" | "pwd_id" | "user_id" | "date_of_birth" | "address" | "pwd_document" | "profession" | "skills" | "portfolio_url" | "github_url" | "otherPlatform" | "professional_role" | "professional_summary" | "hourly_rate" | "profile_visibility" | "resume_cv" | "basic_information" | "professional_experience" | "education" | "portfolio_items" | "skills_assessment" | "set_accessibility_preferences", ExtArgs["result"]["pwd_Profile"]>
+  export type Pwd_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"first_name" | "last_name" | "middle_name" | "profile_picture" | "bio" | "disability_Type" | "disability_severity" | "gender" | "rating" | "profile_views" | "interviews" | "created_at" | "updated_at" | "pwd_id" | "user_id" | "date_of_birth" | "address" | "pwd_document" | "profession" | "skills" | "portfolio_url" | "github_url" | "otherPlatform" | "professional_role" | "professional_summary" | "hourly_rate" | "profile_visibility" | "show_email" | "show_phone_number" | "show_location" | "allow_messages" | "show_online_status" | "email_job_matches" | "messages" | "application_updates" | "email_profile_views" | "weekly_digest" | "marketing_emails" | "push_notif_job_matches" | "push_notif_messages" | "push_notif_application_updates" | "push_notif_profile_views" | "urgent_messages" | "security_alerts" | "resume_cv" | "basic_information" | "professional_experience" | "education" | "portfolio_items" | "skills_assessment" | "set_accessibility_preferences", ExtArgs["result"]["pwd_Profile"]>
   export type Pwd_ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | Pwd_Profile$applicationsArgs<ExtArgs>
     accessibility_needs?: boolean | Pwd_Profile$accessibility_needsArgs<ExtArgs>
@@ -5349,6 +5536,23 @@ export namespace Prisma {
       professional_summary: string | null
       hourly_rate: number | null
       profile_visibility: string | null
+      show_email: boolean
+      show_phone_number: boolean
+      show_location: boolean
+      allow_messages: boolean
+      show_online_status: boolean
+      email_job_matches: boolean
+      messages: boolean
+      application_updates: boolean
+      email_profile_views: boolean
+      weekly_digest: boolean
+      marketing_emails: boolean
+      push_notif_job_matches: boolean
+      push_notif_messages: boolean
+      push_notif_application_updates: boolean
+      push_notif_profile_views: boolean
+      urgent_messages: boolean
+      security_alerts: boolean
       resume_cv: string | null
       basic_information: boolean
       professional_experience: boolean
@@ -5816,6 +6020,23 @@ export namespace Prisma {
     readonly professional_summary: FieldRef<"Pwd_Profile", 'String'>
     readonly hourly_rate: FieldRef<"Pwd_Profile", 'Int'>
     readonly profile_visibility: FieldRef<"Pwd_Profile", 'String'>
+    readonly show_email: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly show_phone_number: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly show_location: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly allow_messages: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly show_online_status: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly email_job_matches: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly messages: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly application_updates: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly email_profile_views: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly weekly_digest: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly marketing_emails: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly push_notif_job_matches: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly push_notif_messages: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly push_notif_application_updates: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly push_notif_profile_views: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly urgent_messages: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly security_alerts: FieldRef<"Pwd_Profile", 'Boolean'>
     readonly resume_cv: FieldRef<"Pwd_Profile", 'String'>
     readonly basic_information: FieldRef<"Pwd_Profile", 'Boolean'>
     readonly professional_experience: FieldRef<"Pwd_Profile", 'Boolean'>
@@ -29158,6 +29379,23 @@ export namespace Prisma {
     professional_summary: 'professional_summary',
     hourly_rate: 'hourly_rate',
     profile_visibility: 'profile_visibility',
+    show_email: 'show_email',
+    show_phone_number: 'show_phone_number',
+    show_location: 'show_location',
+    allow_messages: 'allow_messages',
+    show_online_status: 'show_online_status',
+    email_job_matches: 'email_job_matches',
+    messages: 'messages',
+    application_updates: 'application_updates',
+    email_profile_views: 'email_profile_views',
+    weekly_digest: 'weekly_digest',
+    marketing_emails: 'marketing_emails',
+    push_notif_job_matches: 'push_notif_job_matches',
+    push_notif_messages: 'push_notif_messages',
+    push_notif_application_updates: 'push_notif_application_updates',
+    push_notif_profile_views: 'push_notif_profile_views',
+    urgent_messages: 'urgent_messages',
+    security_alerts: 'security_alerts',
     resume_cv: 'resume_cv',
     basic_information: 'basic_information',
     professional_experience: 'professional_experience',
@@ -29901,6 +30139,23 @@ export namespace Prisma {
     professional_summary?: StringNullableFilter<"Pwd_Profile"> | string | null
     hourly_rate?: IntNullableFilter<"Pwd_Profile"> | number | null
     profile_visibility?: StringNullableFilter<"Pwd_Profile"> | string | null
+    show_email?: BoolFilter<"Pwd_Profile"> | boolean
+    show_phone_number?: BoolFilter<"Pwd_Profile"> | boolean
+    show_location?: BoolFilter<"Pwd_Profile"> | boolean
+    allow_messages?: BoolFilter<"Pwd_Profile"> | boolean
+    show_online_status?: BoolFilter<"Pwd_Profile"> | boolean
+    email_job_matches?: BoolFilter<"Pwd_Profile"> | boolean
+    messages?: BoolFilter<"Pwd_Profile"> | boolean
+    application_updates?: BoolFilter<"Pwd_Profile"> | boolean
+    email_profile_views?: BoolFilter<"Pwd_Profile"> | boolean
+    weekly_digest?: BoolFilter<"Pwd_Profile"> | boolean
+    marketing_emails?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_job_matches?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_messages?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_application_updates?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_profile_views?: BoolFilter<"Pwd_Profile"> | boolean
+    urgent_messages?: BoolFilter<"Pwd_Profile"> | boolean
+    security_alerts?: BoolFilter<"Pwd_Profile"> | boolean
     resume_cv?: StringNullableFilter<"Pwd_Profile"> | string | null
     basic_information?: BoolFilter<"Pwd_Profile"> | boolean
     professional_experience?: BoolFilter<"Pwd_Profile"> | boolean
@@ -29948,6 +30203,23 @@ export namespace Prisma {
     professional_summary?: SortOrderInput | SortOrder
     hourly_rate?: SortOrderInput | SortOrder
     profile_visibility?: SortOrderInput | SortOrder
+    show_email?: SortOrder
+    show_phone_number?: SortOrder
+    show_location?: SortOrder
+    allow_messages?: SortOrder
+    show_online_status?: SortOrder
+    email_job_matches?: SortOrder
+    messages?: SortOrder
+    application_updates?: SortOrder
+    email_profile_views?: SortOrder
+    weekly_digest?: SortOrder
+    marketing_emails?: SortOrder
+    push_notif_job_matches?: SortOrder
+    push_notif_messages?: SortOrder
+    push_notif_application_updates?: SortOrder
+    push_notif_profile_views?: SortOrder
+    urgent_messages?: SortOrder
+    security_alerts?: SortOrder
     resume_cv?: SortOrderInput | SortOrder
     basic_information?: SortOrder
     professional_experience?: SortOrder
@@ -29998,6 +30270,23 @@ export namespace Prisma {
     professional_summary?: StringNullableFilter<"Pwd_Profile"> | string | null
     hourly_rate?: IntNullableFilter<"Pwd_Profile"> | number | null
     profile_visibility?: StringNullableFilter<"Pwd_Profile"> | string | null
+    show_email?: BoolFilter<"Pwd_Profile"> | boolean
+    show_phone_number?: BoolFilter<"Pwd_Profile"> | boolean
+    show_location?: BoolFilter<"Pwd_Profile"> | boolean
+    allow_messages?: BoolFilter<"Pwd_Profile"> | boolean
+    show_online_status?: BoolFilter<"Pwd_Profile"> | boolean
+    email_job_matches?: BoolFilter<"Pwd_Profile"> | boolean
+    messages?: BoolFilter<"Pwd_Profile"> | boolean
+    application_updates?: BoolFilter<"Pwd_Profile"> | boolean
+    email_profile_views?: BoolFilter<"Pwd_Profile"> | boolean
+    weekly_digest?: BoolFilter<"Pwd_Profile"> | boolean
+    marketing_emails?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_job_matches?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_messages?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_application_updates?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_profile_views?: BoolFilter<"Pwd_Profile"> | boolean
+    urgent_messages?: BoolFilter<"Pwd_Profile"> | boolean
+    security_alerts?: BoolFilter<"Pwd_Profile"> | boolean
     resume_cv?: StringNullableFilter<"Pwd_Profile"> | string | null
     basic_information?: BoolFilter<"Pwd_Profile"> | boolean
     professional_experience?: BoolFilter<"Pwd_Profile"> | boolean
@@ -30045,6 +30334,23 @@ export namespace Prisma {
     professional_summary?: SortOrderInput | SortOrder
     hourly_rate?: SortOrderInput | SortOrder
     profile_visibility?: SortOrderInput | SortOrder
+    show_email?: SortOrder
+    show_phone_number?: SortOrder
+    show_location?: SortOrder
+    allow_messages?: SortOrder
+    show_online_status?: SortOrder
+    email_job_matches?: SortOrder
+    messages?: SortOrder
+    application_updates?: SortOrder
+    email_profile_views?: SortOrder
+    weekly_digest?: SortOrder
+    marketing_emails?: SortOrder
+    push_notif_job_matches?: SortOrder
+    push_notif_messages?: SortOrder
+    push_notif_application_updates?: SortOrder
+    push_notif_profile_views?: SortOrder
+    urgent_messages?: SortOrder
+    security_alerts?: SortOrder
     resume_cv?: SortOrderInput | SortOrder
     basic_information?: SortOrder
     professional_experience?: SortOrder
@@ -30090,6 +30396,23 @@ export namespace Prisma {
     professional_summary?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     hourly_rate?: IntNullableWithAggregatesFilter<"Pwd_Profile"> | number | null
     profile_visibility?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
+    show_email?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    show_phone_number?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    show_location?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    allow_messages?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    show_online_status?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    email_job_matches?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    messages?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    application_updates?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    email_profile_views?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    weekly_digest?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    marketing_emails?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    push_notif_job_matches?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    push_notif_messages?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    push_notif_application_updates?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    push_notif_profile_views?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    urgent_messages?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    security_alerts?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
     resume_cv?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     basic_information?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
     professional_experience?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
@@ -31926,6 +32249,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -31973,6 +32313,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -32017,6 +32374,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -32064,6 +32438,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -32110,6 +32501,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -32145,6 +32553,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -32182,6 +32607,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -34387,6 +34829,23 @@ export namespace Prisma {
     professional_summary?: SortOrder
     hourly_rate?: SortOrder
     profile_visibility?: SortOrder
+    show_email?: SortOrder
+    show_phone_number?: SortOrder
+    show_location?: SortOrder
+    allow_messages?: SortOrder
+    show_online_status?: SortOrder
+    email_job_matches?: SortOrder
+    messages?: SortOrder
+    application_updates?: SortOrder
+    email_profile_views?: SortOrder
+    weekly_digest?: SortOrder
+    marketing_emails?: SortOrder
+    push_notif_job_matches?: SortOrder
+    push_notif_messages?: SortOrder
+    push_notif_application_updates?: SortOrder
+    push_notif_profile_views?: SortOrder
+    urgent_messages?: SortOrder
+    security_alerts?: SortOrder
     resume_cv?: SortOrder
     basic_information?: SortOrder
     professional_experience?: SortOrder
@@ -34430,6 +34889,23 @@ export namespace Prisma {
     professional_summary?: SortOrder
     hourly_rate?: SortOrder
     profile_visibility?: SortOrder
+    show_email?: SortOrder
+    show_phone_number?: SortOrder
+    show_location?: SortOrder
+    allow_messages?: SortOrder
+    show_online_status?: SortOrder
+    email_job_matches?: SortOrder
+    messages?: SortOrder
+    application_updates?: SortOrder
+    email_profile_views?: SortOrder
+    weekly_digest?: SortOrder
+    marketing_emails?: SortOrder
+    push_notif_job_matches?: SortOrder
+    push_notif_messages?: SortOrder
+    push_notif_application_updates?: SortOrder
+    push_notif_profile_views?: SortOrder
+    urgent_messages?: SortOrder
+    security_alerts?: SortOrder
     resume_cv?: SortOrder
     basic_information?: SortOrder
     professional_experience?: SortOrder
@@ -34464,6 +34940,23 @@ export namespace Prisma {
     professional_summary?: SortOrder
     hourly_rate?: SortOrder
     profile_visibility?: SortOrder
+    show_email?: SortOrder
+    show_phone_number?: SortOrder
+    show_location?: SortOrder
+    allow_messages?: SortOrder
+    show_online_status?: SortOrder
+    email_job_matches?: SortOrder
+    messages?: SortOrder
+    application_updates?: SortOrder
+    email_profile_views?: SortOrder
+    weekly_digest?: SortOrder
+    marketing_emails?: SortOrder
+    push_notif_job_matches?: SortOrder
+    push_notif_messages?: SortOrder
+    push_notif_application_updates?: SortOrder
+    push_notif_profile_views?: SortOrder
+    urgent_messages?: SortOrder
+    security_alerts?: SortOrder
     resume_cv?: SortOrder
     basic_information?: SortOrder
     professional_experience?: SortOrder
@@ -38434,6 +38927,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -38479,6 +38989,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -38930,6 +39457,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -38975,6 +39519,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -39896,6 +40457,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -39942,6 +40520,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -40001,6 +40596,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -40047,6 +40659,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -40090,6 +40719,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -40136,6 +40782,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -40195,6 +40858,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -40241,6 +40921,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -40284,6 +40981,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -40330,6 +41044,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -40389,6 +41120,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -40435,6 +41183,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -40478,6 +41243,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -40524,6 +41306,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -40583,6 +41382,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -40629,6 +41445,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -41060,6 +41893,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -41106,6 +41956,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -41181,6 +42048,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -41227,6 +42111,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -41733,6 +42634,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -41779,6 +42697,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -42084,6 +43019,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -42130,6 +43082,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -42647,6 +43616,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -42693,6 +43679,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -42872,6 +43875,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -42918,6 +43938,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -43211,6 +44248,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -43257,6 +44311,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -43460,6 +44531,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -43506,6 +44594,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -44318,6 +45423,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -44364,6 +45486,23 @@ export namespace Prisma {
     professional_summary?: string | null
     hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
     professional_experience?: boolean
@@ -44485,6 +45624,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
@@ -44531,6 +45687,23 @@ export namespace Prisma {
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
     hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean

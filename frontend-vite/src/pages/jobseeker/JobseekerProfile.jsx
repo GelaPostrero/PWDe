@@ -266,36 +266,28 @@ const JobseekerProfile = () => {
     // Update profile data
     updateProfile: async (section, data) => {
       try {
+        setIsLoading(true);
         setIsSaving(true);
         setError(null);
         
-        // TODO: Replace with actual API call
-        // const response = await fetch('/api/jobseeker/profile', {
-        //   method: 'PUT',
-        //   headers: {
-        //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify({ section, data })
-        // });
-        // const result = await response.json();
-        
-        // Mock API response
-        await new Promise(resolve => setTimeout(resolve, 300));
-        
-        // Update local state
-        setProfileData(prev => ({
-          ...prev,
-          [section]: data
-        }));
-        
-        return { success: true };
+        const response = await api.put('/retrieve/update/basic-information', data);
+
+        if(response.data.success) {
+          // Update local state
+          setProfileData(prev => ({
+            ...prev,
+            [section]: data
+          }));
+
+          return { success: true };
+        }
       } catch (err) {
         setError('Failed to update profile');
         console.error('Error updating profile:', err);
         throw err;
       } finally {
         setIsSaving(false);
+        setIsLoading(false);
       }
     },
 
@@ -472,6 +464,25 @@ const JobseekerProfile = () => {
               <div className="text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
                 <p className="text-gray-500">Loading profile...</p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (isSaving) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <JobseekerHeader disabled={false} />
+        <main className="flex-1 py-6 sm:py-8">
+          <div className="mx-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-16">
+            <div className="flex items-center justify-center h-64">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-500">Saving profile...</p>
               </div>
             </div>
           </div>

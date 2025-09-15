@@ -6,8 +6,8 @@ const onboardRouterPWD = require('../Accounts/OnboardPWD');
 const onboardRouterEMP = require('../Accounts/OnboardEMP');
 const fetchProfile = require('../Accounts/RetrieveUsersInfo');
 const createNewJob = require('../Accounts/CreateNewJob');
-const updateProfile = require('../Accounts/UpdateBasicInformation');
 const jobs = require('../Accounts/RetrieveJob');
+const accountSettings = require('../Accounts/AccountSettings');
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.use('/accounts', userRouter);
 app.use('/onboard', onboardRouterPWD, onboardRouterEMP);
 app.use('/retrieve', fetchProfile);
 app.use('/create', createNewJob);
-app.use('/update-profile', updateProfile);
 app.use('/job', jobs);
+app.use('/account-settings', accountSettings);
 
 app.listen(4000, () => console.log(`Server running on http://localhost:4000`));

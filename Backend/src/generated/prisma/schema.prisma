@@ -34,50 +34,67 @@ model Users {
 }
 
 model Pwd_Profile {
-  first_name                    String                             @default("") @db.VarChar(20)
-  last_name                     String                             @default("") @db.VarChar(20)
-  middle_name                   String                             @default("") @db.VarChar(20)
-  profile_picture               String?
-  bio                           String?
-  disability_Type               String?
-  disability_severity           Disability_Severity?
-  gender                        Gender?
-  rating                        Float?                             @default(0.0)
-  profile_views                 Int
-  interviews                    Int
-  created_at                    String?
-  updated_at                    DateTime?                          @updatedAt
-  pwd_id                        Int                                @id @default(autoincrement())
-  user_id                       Int                                @unique
-  date_of_birth                 String?
-  address                       String?
-  pwd_document                  String[]
-  profession                    String?
-  skills                        String[]
-  portfolio_url                 String?
-  github_url                    String?
-  otherPlatform                 String[]
-  professional_role             String?
-  professional_summary          String?
-  hourly_rate                   Int?
-  profile_visibility            String?                            @default("Public")
-  resume_cv                     String?
-  basic_information             Boolean                            @default(false)
-  professional_experience       Boolean                            @default(false)
-  education                     Boolean                            @default(false)
-  portfolio_items               Boolean                            @default(false)
-  skills_assessment             Boolean                            @default(false)
-  set_accessibility_preferences Boolean                            @default(false)
-  applications                  Applications[]
-  accessibility_needs           Pwd_Accessibility_Needs[]
-  educations                    Pwd_Education[]
-  experiences                   Pwd_Experience[]
-  job_preferences               Pwd_Job_Preferences_Requirements[]
-  user                          Users                              @relation("UserToPWD", fields: [user_id], references: [user_id], onDelete: Cascade)
-  resumes                       Resumes[]
-  ai_match_results              ai_match_results[]
-  transactions                  transactions[]                     @relation("TransactionPayee")
-  Saved_Jobs                    Saved_Jobs[]
+  first_name                     String                             @default("") @db.VarChar(20)
+  last_name                      String                             @default("") @db.VarChar(20)
+  middle_name                    String                             @default("") @db.VarChar(20)
+  profile_picture                String?
+  bio                            String?
+  disability_Type                String?
+  disability_severity            Disability_Severity?
+  gender                         Gender?
+  rating                         Float?                             @default(0.0)
+  profile_views                  Int
+  interviews                     Int
+  created_at                     String?
+  updated_at                     DateTime?                          @updatedAt
+  pwd_id                         Int                                @id @default(autoincrement())
+  user_id                        Int                                @unique
+  date_of_birth                  String?
+  address                        String?
+  pwd_document                   String[]
+  profession                     String?
+  skills                         String[]
+  portfolio_url                  String?
+  github_url                     String?
+  otherPlatform                  String[]
+  professional_role              String?
+  professional_summary           String?
+  hourly_rate                    Int?
+  profile_visibility             String?                            @default("Public")
+  show_email                     Boolean                            @default(false)
+  show_phone_number              Boolean                            @default(false)
+  show_location                  Boolean                            @default(false)
+  allow_messages                 Boolean                            @default(false)
+  show_online_status             Boolean                            @default(false)
+  email_job_matches              Boolean                            @default(true)
+  messages                       Boolean                            @default(true)
+  application_updates            Boolean                            @default(true)
+  email_profile_views            Boolean                            @default(true)
+  weekly_digest                  Boolean                            @default(true)
+  marketing_emails               Boolean                            @default(true)
+  push_notif_job_matches         Boolean                            @default(true)
+  push_notif_messages            Boolean                            @default(true)
+  push_notif_application_updates Boolean                            @default(true)
+  push_notif_profile_views       Boolean                            @default(true)
+  urgent_messages                Boolean                            @default(true)
+  security_alerts                Boolean                            @default(true)
+  resume_cv                      String?
+  basic_information              Boolean                            @default(false)
+  professional_experience        Boolean                            @default(false)
+  education                      Boolean                            @default(false)
+  portfolio_items                Boolean                            @default(false)
+  skills_assessment              Boolean                            @default(false)
+  set_accessibility_preferences  Boolean                            @default(false)
+  applications                   Applications[]
+  accessibility_needs            Pwd_Accessibility_Needs[]
+  educations                     Pwd_Education[]
+  experiences                    Pwd_Experience[]
+  job_preferences                Pwd_Job_Preferences_Requirements[]
+  user                           Users                              @relation("UserToPWD", fields: [user_id], references: [user_id], onDelete: Cascade)
+  resumes                        Resumes[]
+  ai_match_results               ai_match_results[]
+  transactions                   transactions[]                     @relation("TransactionPayee")
+  Saved_Jobs                     Saved_Jobs[]
 }
 
 model Pwd_Experience {

@@ -227,7 +227,18 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
     const hasPortfolioItems =
         (portfolioUrl && portfolioUrl.trim() !== "") || // non empty string
         (githubUrl && githubUrl.trim() !== "") ||       // non empty string
-        (Array.isArray(parsedOtherPlatform) && parsedOtherPlatform.length > 0);
+        (Array.isArray(parsedOtherPlatform) && 
+        parsedOtherPlatform.some(platform => {
+            // If platform is a string
+            if (typeof platform === 'string') {
+                return platform.trim() !== "";
+            }
+            // If platform is an object with url property
+            if (typeof platform === 'object' && platform !== null) {
+                return platform.url && platform.url.trim() !== "";
+            }
+            return false;
+        }));
     try {
         console.log("PWD ID: ", pwd_id);
         console.log("USER ID: ", user_id);
