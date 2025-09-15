@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import api from '../../../utils/api.js'
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 import Spinner from '../../../components/ui/Spinner.jsx';
@@ -245,7 +246,6 @@ const JobseekerOnboardingExperience = () => {
   const addAdditionalExperience = () => {
     if (additionalExperiences.length < 5) {
       setAdditionalExperiences([...additionalExperiences, {
-        id: Date.now(),
         jobTitle: '',
         company: '',
         location: '',
@@ -298,71 +298,30 @@ const JobseekerOnboardingExperience = () => {
     const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
 
     const token = localStorage.getItem('authToken');
-    const experienceData = {
+    const experienceEntries = [{
       jobTitle,
       company,
       location,
       country,
-      startDate: startDate ? startDate.toISOString() : null,
-      endDate: isCurrent ? null : (endDate ? endDate.toISOString() : null),
+      startDate: startDate && startDate instanceof Date ? startDate.toISOString() : null,
+      endDate: isCurrent ? null : (endDate && endDate instanceof Date ? endDate.toISOString() : null),
       isCurrent,
       employmentType,
-      description,
-      additionalExperiences: additionalExperiences.filter(exp => 
-        exp.jobTitle.trim() && exp.company.trim() && exp.location.trim()
-      )
-    };
+      description
+    },
+      ...additionalExperiences
+    ];
 
+    const experienceData = {experience: experienceEntries}
     console.log('Sending experience data:', experienceData);
 
     try {
-      // Check if we have a valid token
-      if (!token) {
-        console.log('No auth token found, proceeding with mock data');
-        // Wait for minimum loading time even for mock data
-        await minLoadingTime;
-        // Mock success for development
-        Swal.fire({
-          icon: 'success',
-          html: '<h5><b>Work Experience</b></h5>\n<h6>You may now fillup your Accessibility needs.</h6>',
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          toast: true,
-          position: 'bottom-end'
-        });
-        navigate(routeForStep('accessibility'));
-        setIsLoading(false);
-        return;
-      }
-
-      var url = "http://localhost:4000/onboard/pwd/onboard/work-experience";
-      var headers = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-      
-      console.log('Attempting to connect to:', url);
-      
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(experienceData)
-      });
+      const response = await api.post('/onboard/pwd/onboard/work-experience', experienceData);
 
       // Wait for both API call and minimum loading time
       await Promise.all([response, minLoadingTime]);
-
-      console.log('Response status:', response.status);
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log('API response:', data);
-      
-      if(data.success) {
+      if(response.data.success) {
         Swal.fire({
           icon: 'success',
           html: '<h5><b>Work Experience</b></h5>\n<h6>You may now fillup your Accessibility needs.</h6>',
@@ -818,7 +777,6 @@ const JobseekerOnboardingExperience = () => {
                       <input 
                         value={exp.startDate ? exp.startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
                         onClick={() => updateAdditionalExperience(exp.id, 'showStartCalendar', true)}
-                        readOnly
                         placeholder="Select start date"
                         className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer ${
                           errors.startDate ? 'border-red-500' : 'border-gray-200'
@@ -917,7 +875,6 @@ const JobseekerOnboardingExperience = () => {
                       <input 
                         value={exp.endDate ? exp.endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
                         onClick={() => !exp.isCurrent && updateAdditionalExperience(exp.id, 'showEndCalendar', true)}
-                        readOnly
                         placeholder="Select end date"
                         disabled={exp.isCurrent}
                         className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${

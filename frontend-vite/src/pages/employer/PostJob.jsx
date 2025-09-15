@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import api from '../../utils/api.js';
 import EmployerHeader from '../../components/ui/EmployerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
@@ -64,21 +66,21 @@ const PostJob = () => {
 
   const handlePublish = async () => {
     try {
-      // TODO: API call to publish job
-      // const response = await fetch('/api/employer/jobs', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(jobData)
-      // });
+      const response = await api.post('/create/publish');
       
-      // Mock successful job creation
-      const newJobId = Math.floor(Math.random() * 1000) + 1;
-      
-      // Navigate to posted job view
-      navigate(`/employer/job/${newJobId}/posted`);
+      if(response.data.success) {
+        const newJobId = response.data.job.job_id;
+        Swal.fire({
+          icon: 'success',
+          title: 'New job successfully published.',
+          toast: true,
+          position: 'bottom-end',
+          timer: 3500,
+          showConfirmButton: false
+        })
+        // Navigate to posted job view
+        navigate(`/employer/job/${newJobId}/posted`);
+      }
     } catch (error) {
       console.error('Error publishing job:', error);
       alert('Failed to publish job. Please try again.');

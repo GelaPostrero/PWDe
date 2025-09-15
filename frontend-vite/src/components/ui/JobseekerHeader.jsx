@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import api from '../../utils/api.js'
 import Logo from './Logo.jsx';
 import AnimatedHamburger from './AnimatedHamburger.jsx';
 
@@ -86,6 +87,8 @@ const IconButton = ({
 
 const JobseekerHeader = ({ disabled = false }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [fetchedProfile, setFetchedProfile] = useState();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isFindJobsOpen, setIsFindJobsOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -127,6 +130,13 @@ const JobseekerHeader = ({ disabled = false }) => {
     setIsFindJobsOpen(false);
   };
 
+  // handle signout
+  const signOut = () => {
+    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
+    navigate('/signin');
+  }
+
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -143,6 +153,20 @@ const JobseekerHeader = ({ disabled = false }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await api.get('/retrieve/header');
+        if(response.data.success) {
+          setFetchedProfile(response.data.data);
+        }
+      } catch(error) {
+        console.error("Failed to load profile:", error);
+      }
+    };
+    fetchProfile();
   }, []);
 
   return (
@@ -286,11 +310,19 @@ const JobseekerHeader = ({ disabled = false }) => {
                 }`}
                 disabled={disabled}
               >
-                <img
-                  className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
-                  src="https://i.pravatar.cc/64"
-                  alt="Profile"
-                />
+                {fetchedProfile?.profile_picture ? (
+                  <img
+                    className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
+                    src={fetchedProfile.profile_picture}
+                    alt="Profile"
+                  /> 
+                ) : (
+                  <img
+                    className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
+                    src="https://i.pravatar.cc/64"
+                    alt="Profile"
+                  />
+                )};
                 <svg className="w-4 h-4 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -311,6 +343,7 @@ const JobseekerHeader = ({ disabled = false }) => {
                   <button
                     onClick={() => {
                       // Handle logout
+                      signOut();
                       setIsProfileDropdownOpen(false);
                     }}
                     className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50"

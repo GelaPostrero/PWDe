@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import api from '../../utils/api.js'
 import logo from '../../assets/pwdelogo.png';
 import AnimatedHamburger from './AnimatedHamburger.jsx';
 
@@ -42,8 +43,10 @@ const IconButton = ({
 
 const EmployerHeader = ({ disabled = false }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [fetchedProfile, setFetchedProfile] = useState();
 
   const navigationLinks = [
     { name: 'Dashboard', path: '/employer/dashboard' },
@@ -78,6 +81,13 @@ const EmployerHeader = ({ disabled = false }) => {
     setIsMobileMenuOpen(false);
   };
 
+  // handle signout
+  const signOut = () => {
+    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
+    navigate('/signin');
+  }
+
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -94,6 +104,20 @@ const EmployerHeader = ({ disabled = false }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await api.get('/retrieve/header');
+        if (response.data.success) {
+          setFetchedProfile(response.data.data);
+        }
+      } catch(error) {
+        console.error("Failed to load profile:", error);
+      }
+    };
+    fetchProfile();
   }, []);
 
   return (
@@ -191,11 +215,19 @@ const EmployerHeader = ({ disabled = false }) => {
                 }`}
                 disabled={disabled}
               >
-                <div className={`w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white text-xs font-semibold border-2 border-purple-100 ${
-                  disabled ? '' : 'hover:border-purple-300'
-                } transition-colors`}>
-                  TECH
-                </div>
+                {fetchedProfile?.profile_picture ? (
+                  <img
+                    className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
+                    src={fetchedProfile.profile_picture}
+                    alt="Profile"
+                  />
+                ) : (
+                  <div className={`w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white text-xs font-semibold border-2 border-purple-100 ${
+                    disabled ? '' : 'hover:border-purple-300'
+                  } transition-colors`}>
+                    TECH
+                  </div>
+                )};
                 <svg className="w-4 h-4 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -222,6 +254,7 @@ const EmployerHeader = ({ disabled = false }) => {
                   <button
                     onClick={() => {
                       // Handle logout
+                      signOut();
                       setIsProfileDropdownOpen(false);
                     }}
                     className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50"

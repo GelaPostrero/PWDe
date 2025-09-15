@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import api from '../../../utils/api.js'
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 import Spinner from '../../../components/ui/Spinner.jsx';
@@ -149,53 +150,12 @@ const JobseekerOnboardingPreferences = () => {
     }
     
     try {
-      // Check if we have a valid token
-      if (!token) {
-        console.log('No auth token found, proceeding with mock data');
-        // Wait for minimum loading time even for mock data
-        await minLoadingTime;
-        // Mock success for development
-        Swal.fire({
-          icon: 'success',
-          html: '<h5><b>Job Preferences & Requirements</b></h5>\n<h6>You may now complete your profile.</h6>',
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          toast: true,
-          position: 'bottom-end'
-        });
-        navigate(routeForStep('completion'));
-        setIsLoading(false);
-        return;
-      }
-
-      var url = "http://localhost:4000/onboard/pwd/onboard/job-preferences";
-      var headers = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-      
-      console.log('Attempting to connect to:', url);
-      
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(preferencesData)
-      });
+      const response = await api.post('/onboard/pwd/onboard/job-preferences', preferencesData);
 
       // Wait for both API call and minimum loading time
       await Promise.all([response, minLoadingTime]);
-
-      console.log('Response status:', response.status);
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log('API response:', data);
-      
-      if(data.success) {
+      if(response.data.success) {
         Swal.fire({
           icon: 'success',
           html: '<h5><b>Job Preferences & Requirements</b></h5>\n<h6>You may now complete your profile.</h6>',

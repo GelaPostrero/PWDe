@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../../utils/api.js'
 import EmployerHeader from '../../components/ui/EmployerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
@@ -7,16 +8,19 @@ import Chatbot from '../../components/ui/Chatbot.jsx';
 const EmployerDashboard = () => {
   const [highContrast, setHighContrast] = useState(false);
   const [largeText, setLargeText] = useState(true);
+  const [fetchedData, setFetchedData] = useState([]);
+  const [fetchJob, setFetchJob] = useState([]);
 
   // Mock company data
   const companyProfile = {
-    name: "TechCorp Inc.",
-    industry: "Technology",
-    rating: 4.8,
-    profileViews: 142,
-    applications: 12,
-    interviews: 5,
-    savedJobs: 24
+    companylogo: fetchedData.companylogo,
+    name: fetchedData.company_name,
+    industry: fetchedData.industryPreference,
+    rating: fetchedData.rating,
+    profileViews: fetchedData.profile_views,
+    applications: fetchedData.applications,
+    interviews: fetchedData.interviews,
+    savedJobs: fetchedData.saved_jobs
   };
 
   // Mock job postings data
@@ -97,11 +101,16 @@ const EmployerDashboard = () => {
     }
   ];
 
-  const profileCompletion = {
-    percentage: 75,
-    completed: ["Company Profile", "Job Roles & Requirements"],
-    remaining: ["Work Environment"]
-  };
+  const items = [
+    { text: 'Company Profile', completed: fetchedData.set_company_profile },
+    { text: 'Job Roles & Requirements', completed: fetchedData.set_jobRoles_requirements },
+    { text: 'Work Environment', completed: fetchedData.set_work_environment }
+  ];
+
+  const totalItems = items.length;
+  const completedItems = items.filter(item => item.completed).length;
+  const progressPercentage = Math.round((completedItems / totalItems) * 100);
+  const itemsLeft = totalItems - completedItems;
 
   const quickActions = [
     {
@@ -124,6 +133,34 @@ const EmployerDashboard = () => {
     }
   ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get("/retrieve/dashboard");
+        if (response.data.success) {
+          setFetchedData(response.data.data);
+        }
+      } catch (error) {
+        console.error("Failed to load profile:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        const response = await api.get('/job/all');
+        if(response.data.success) {
+          setFetchJob(response.data.job);
+        }
+      } catch (error) {
+        console.error("Failed to load jobs:", error);
+      }
+    };
+    fetchJob();
+  }, [fetchJob]);
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
@@ -139,18 +176,27 @@ const EmployerDashboard = () => {
               {/* Company Profile Section */}
               <div className="bg-white rounded-lg shadow p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
-                  {/* Company Logo */}
                   <div className="relative flex-shrink-0 flex justify-center sm:justify-start">
-                    <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold text-lg">TECH</span>
-                    </div>
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
+                  {/* Company Logo */}
+                  {companyProfile.companylogo ?  (
+                      <img 
+                        src={fetchedData.companylogo} 
+                        alt="Company Logo"
+                        className="w-16 h-16 rounded-full object-cover border-4 border-blue-100"
+                      />
+                  ) : (
+                    <>
+                      <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">LOGO</span>
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
+                    </>
+                  )}
                   </div>
-
                   {/* Company Name and Rating */}
                   <div className="flex-shrink-0 text-center sm:text-left">
                     <h2 className="text-lg font-bold text-gray-900">{companyProfile.name}</h2>
-                    <p className="text-sm text-gray-600">Industry Preference</p>
+                    <p className="text-sm text-gray-600">{companyProfile.industry}</p>
                     <div className="flex items-center justify-center sm:justify-start mt-1">
                       <div className="flex items-center">
                         {[...Array(5)].map((_, i) => (
@@ -253,18 +299,18 @@ const EmployerDashboard = () => {
 
                 {/* Job Postings Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                  {jobPostings.map((job) => (
-                    <div key={job.id} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
+                  {fetchJob.map((job) => (
+                    <div key={job.job_id} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
                       
                       {/* Job Header */}
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
+                          <h3 className="text-lg font-semibold text-gray-900">{job.jobtitle}</h3>
                         </div>
                         <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${
-                          job.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                          job.job_status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                         }`}>
-                          {job.status}
+                          {job.job_status}
                         </span>
                       </div>
 
@@ -274,34 +320,34 @@ const EmployerDashboard = () => {
                           <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
-                          {job.type}
+                          {job.employment_type}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                           </svg>
-                          {job.location}
+                          {job.work_arrangement}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                           </svg>
-                          ₱{job.salary} / {job.period}
+                          ₱{job.salary_min} - ₱{job.salary_max} / {job.salary_type.toLowerCase()}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6z" />
                           </svg>
-                          {job.level}
+                          {job.experience_level}
                         </div>
                       </div>
 
                       {/* Skills */}
                       <div className="mb-4">
                         <div className="flex flex-wrap gap-1">
-                          {job.skills.slice(0, 3).map((skill, index) => (
+                          {job.skills_required.slice(0, 3).map((skill, index) => (
                             <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
-                              {skill}
+                              {skill.replace(/ \(.*\)$/, '')}
                             </span>
                           ))}
                         </div>
@@ -310,7 +356,7 @@ const EmployerDashboard = () => {
                       {/* Accessibility Features */}
                       <div className="mb-4">
                         <div className="flex flex-wrap gap-1">
-                          {job.accessibilityFeatures.map((feature, index) => (
+                          {job.workplace_accessibility_features.slice(0, 3).map((feature, index) => (
                             <span key={index} className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
                               {feature}
                             </span>
@@ -324,13 +370,18 @@ const EmployerDashboard = () => {
                           <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                           </svg>
-                          {job.applications} applications
+                          {job._count.applications} applications
                         </div>
                         <div className="flex items-center">
                           <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
-                          Due: {job.dueDate}
+                          Due: {job.application_deadline
+                                ? new Date(job.application_deadline).toLocaleDateString("en-US", {
+                                    month: "short",
+                                    day: "numeric",
+                                  })
+                                : "No deadline"}
                         </div>
                       </div>
 
@@ -427,19 +478,33 @@ const EmployerDashboard = () => {
                 <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Profile Completion</h3>
                 <div className="mb-4">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">{profileCompletion.percentage}% Complete</span>
-                    <span className="text-xs sm:text-sm text-gray-500">{profileCompletion.remaining.length} item left</span>
+                    <span className="text-sm font-medium text-gray-700">{progressPercentage}% Complete</span>
+                    <span className="text-xs sm:text-sm text-gray-500">{itemsLeft} item{itemsLeft !== 1 ? 's' : ''} left</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div 
                       className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${profileCompletion.percentage}%` }}
+                      style={{ width: `${progressPercentage}%` }}
                     ></div>
                   </div>
                 </div>
 
                 <div className="space-y-3 mb-4">
-                  {profileCompletion.completed.map((item, index) => (
+                  {items.map((item, index) => (
+                    <div key={index} className="flex items-center space-x-2">
+                      {item.completed ? (
+                        <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      ) : (
+                        <div className="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
+                      )}
+                      <span className="text-xs sm:text-sm text-gray-700">{item.text}</span>
+                    </div>
+                  ))}
+                  {/* {profileCompletion.completed.map((item, index) => (
                     <div key={index} className="flex items-center space-x-2">
                       <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                         <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -454,7 +519,7 @@ const EmployerDashboard = () => {
                       <div className="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
                       <span className="text-xs sm:text-sm text-gray-500">{item}</span>
                     </div>
-                  ))}
+                  ))} */}
                 </div>
                 
                 <Link 

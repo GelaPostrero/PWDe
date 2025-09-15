@@ -1,16 +1,17 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import EmployerHeader from '../../../components/ui/EmployerHeader.jsx';
 import Spinner from '../../../components/ui/Spinner.jsx';
 
 const EmployerOnboardingCompletion = () => {
   const navigate = useNavigate();
+  const [otherPlatform, setOtherPlatform] = useState([]);
   const [formData, setFormData] = useState({
     companyDescription: '',
     portfolioUrl: '',
     githubUrl: '',
-    otherPlatform: '',
-    otherUrl: ''
+    otherPortfolio: [],
   });
   const [agreements, setAgreements] = useState({
     termsOfService: false,
@@ -29,6 +30,22 @@ const EmployerOnboardingCompletion = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handlePlatformChange = (e) => {
+    const platform = e.target.value;
+    setFormData({
+      ...formData,
+      otherPortfolio: [platform, formData.otherPortfolio[1] || ""]
+    });
+  };
+
+  const handleUrlChange = (e) => {
+    const url = e.target.value;
+    setFormData({
+      ...formData,
+      otherPortfolio: [formData.otherPortfolio[0] || "", url]
+    });
   };
 
   const handleAgreementChange = (agreement) => {
@@ -102,7 +119,6 @@ const EmployerOnboardingCompletion = () => {
       profileCompletion.append('portfolioUrl', formData.portfolioUrl);
       profileCompletion.append('githubUrl', formData.githubUrl);
       profileCompletion.append('otherPlatform', formData.otherPlatform);
-      profileCompletion.append('otherUrl', formData.otherUrl);
       profileCompletion.append('agreements', JSON.stringify(agreements));
 
       // Append photo if present
@@ -111,18 +127,27 @@ const EmployerOnboardingCompletion = () => {
       }
 
       // Mock API call (replace with actual endpoint)
-      const response = await fetch('http://localhost:4000/onboard/employer/complete-profile', {
+      const response = await fetch('http://localhost:4000/onboard/emp/onboard/complete-profile', {
         method: 'POST',
         headers: { "Authorization": `Bearer ${token}` },
         body: profileCompletion
       });
 
       // Wait for both API call and minimum loading time
-      await Promise.all([response, minLoadingTime]);
+      await minLoadingTime;
 
       const data = await response.json();
       if (data.success) {
-        console.log('Company profile completed successfully:', { formData, agreements, photo });
+        console.log('Company profile completed successfully:', { profileCompletion });
+        Swal.fire({
+          icon: 'success',
+          html: '<h5><b>Profile Completion</b></h5>\n<h6>Welcome to your dashboard.</h6>',
+          timer: 5000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          toast: true,
+          position: 'bottom-end'
+        });
         navigate('/employer/dashboard');
       } else {
         throw new Error(data.message || 'Failed to complete profile');
@@ -345,8 +370,8 @@ const EmployerOnboardingCompletion = () => {
                       <input
                         name="otherPlatform"
                         type="text"
-                        value={formData.otherPlatform}
-                        onChange={handleChange}
+                        value={formData.otherPortfolio[0] || ""}
+                        onChange={handlePlatformChange}
                         placeholder="Platform name"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
@@ -362,8 +387,8 @@ const EmployerOnboardingCompletion = () => {
                         <input
                           name="otherUrl"
                           type="url"
-                          value={formData.otherUrl}
-                          onChange={handleChange}
+                          value={formData.otherPortfolio[1] || ""}
+                          onChange={handleUrlChange}
                           placeholder="https://example.com/yourprofile"
                           className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />

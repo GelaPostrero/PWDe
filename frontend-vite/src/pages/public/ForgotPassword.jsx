@@ -76,11 +76,11 @@ const ForgotPassword = () => {
           toast: true,
           position: 'bottom-end'
         });
-      } else if(data.error.includes('No Email found.')) {
+      } else if(data.message.includes('No account found')) {
         Swal.fire({
           icon: 'error',
           html: `
-            <p><b>Error!</b></p>\n <p>No <b>${email}</b> found in our database.</p>
+            <p><b>Error!</b></p>\n <p>No account found with this email address.</p>
           `,
           timer: 3000,
           showConfirmButton: false,

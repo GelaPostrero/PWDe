@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import api from '../../../utils/api.js';
 import Spinner from '../../../components/ui/Spinner.jsx';
+import { useEffect } from 'react';
 
 const ReviewPublish = ({ data, onDataChange, onPublish, onBack }) => {
   // Loading state
   const [isLoading, setIsLoading] = useState(false);
+  const [companyname, setCompanyName] = useState(''); 
 
   const formatSalary = () => {
     if (data.minimumSalary && data.maximumSalary && data.salaryType) {
@@ -18,20 +21,29 @@ const ReviewPublish = ({ data, onDataChange, onPublish, onBack }) => {
     // Add minimum loading time to see spinner (remove this in production)
     const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
     
-    try {
-      await minLoadingTime;
-      onPublish();
-    } catch (error) {
-      console.error('Error publishing job:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    await minLoadingTime;
+    
+    onPublish();
   };
 
   const formatLocation = () => {
     const parts = [data.city, data.province, data.country].filter(Boolean);
     return parts.join(', ') || 'Not specified';
   };
+
+  useEffect(() => {
+    const companyName = async () => {
+      try {
+        const response = await api.get("/create/review");
+        if (response.data.success) {
+          setCompanyName(response.data.companyname.company_name);
+        }
+      } catch (error) {
+        console.error("Failed to load profile:", error);
+      }
+    }
+    companyName();
+  })
 
   return (
     <div className="bg-white rounded-lg shadow p-6 sm:p-8">
@@ -47,7 +59,7 @@ const ReviewPublish = ({ data, onDataChange, onPublish, onBack }) => {
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">{data.jobTitle || 'Job Title'}</h1>
             <div className="flex items-center text-gray-600 mb-4">
-              <span className="font-medium">{data.companyName}</span>
+              <span className="font-medium">{companyname}</span>
               <svg className="w-4 h-4 mx-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -105,7 +117,7 @@ const ReviewPublish = ({ data, onDataChange, onPublish, onBack }) => {
                     key={index}
                     className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
                   >
-                    {skill.name}
+                    {skill}
                   </span>
                 ))
               ) : (

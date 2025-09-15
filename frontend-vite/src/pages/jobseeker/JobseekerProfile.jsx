@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
+import api from '../../utils/api.js';
 import JobseekerHeader from '../../components/ui/JobseekerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
@@ -19,89 +21,87 @@ const JobseekerProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [fetchedData, setFetchedData] = useState([]);
+  const [profileData, setProfileData] = useState({});
 
-  // Profile data state - matches onboarding structure
-  const [profileData, setProfileData] = useState({
-    // Basic Information (from onboarding)
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    birthDate: '',
-    disabilityType: '',
-    location: '',
-    
-    // Professional Information
-    jobTitle: '',
-    professionalSummary: '',
-    hourlyRate: '',
-    
-    // Skills and Education
-    skills: [],
-    education: [],
-    workExperience: [],
-    
-    // Portfolio and Links
-    portfolioLinks: {
-      linkedin: '',
-      github: '',
-      portfolio: '',
-      other: ''
-    },
-    
-    // Accessibility and Accommodation
-    accessibilityNeeds: {
-      visual: [],
-      hearing: [],
-      mobility: [],
-      cognitive: []
-    },
-    
-    // Employment Preferences
-    employmentPreferences: {
-      workArrangement: '',
-      employmentType: [],
-      experienceLevel: '',
-      salaryRange: {
-        min: '',
-        max: '',
-        currency: 'PHP'
-      },
-      preferredLocations: []
-    },
-    
-    // Profile Settings
-    profileVisibility: {
-      searchable: true,
-      hourlyRate: true,
-      personalInfo: true,
-      portfolioLinks: true,
-      accommodationNeeds: true
-    },
-    
-    // Verification Status
-    verification: {
-      emailVerified: false,
-      identityVerified: false,
-      phoneVerified: false
-    },
-    
-    // Profile Completion
-    profileCompletion: {
-      basicInfo: false,
-      professionalInfo: false,
-      skills: false,
-      education: false,
-      workExperience: false,
-      portfolio: false,
-      accessibility: false,
-      preferences: false
+  useEffect(() => {
+    if(fetchedData) {
+      // Profile data state - matches onboarding structure
+      setProfileData(prev => ({
+        ...prev,
+        // Basic Information (from onboarding)
+        firstName: fetchedData.firstname,
+        lastName: fetchedData.lastname,
+        email: fetchedData.email,
+        phone: fetchedData.phone,
+        birthDate: fetchedData.birthdate,
+        disabilityType: fetchedData.disability_type,
+        location: fetchedData.location,
+        rating: fetchedData.rating,
+        
+        // Professional Information
+        jobTitle: fetchedData.profession,
+        professionalSummary: fetchedData.professional_summary,
+        hourlyRate: '',
+        
+        // Skills and Education
+        skills: fetchedData.skills,
+        education: fetchedData.educations,
+        workExperience: fetchedData.experiences,
+        
+        // Portfolio and Links
+        portfolioLinks: {
+          github: fetchedData.github_url,
+          portfolio: fetchedData.portfolio_url,
+          other: fetchedData.otherPlatform
+        },
+        
+        // Accessibility and Accommodation
+        accessibilityNeeds: fetchedData.accessibility_needs || [],
+        
+        // Employment Preferences
+        employmentPreferences: {
+          workArrangement: fetchedData.job_preferences?.[0]?.work_arrangement || '',
+          employmentType: fetchedData.job_preferences?.[0]?.employment_types || [],
+          experienceLevel: fetchedData.job_preferences?.[0]?.experience_level || '',
+          salaryRange: fetchedData.job_preferences?.[0]?.salary_range || '',
+          preferredLocations: []
+        },
+        
+        // Profile Settings
+        profileVisibility: {
+          searchable: true,
+          hourlyRate: true,
+          personalInfo: true,
+          portfolioLinks: true,
+          accommodationNeeds: true
+        },
+        
+        // Verification Status
+        verification: {
+          emailVerified: false,
+          identityVerified: false,
+          phoneVerified: false
+        },
+        
+        // Profile Completion
+        profileCompletion: {
+          basicInfo: fetchedData.basic_information,
+          professionalInfo: fetchedData.workexperience,
+          skills: fetchedData.skills,
+          education: fetchedData.education,
+          portfolio: fetchedData.portfolio_items,
+          accessibilityPreferences: fetchedData.set_accessibility_preferences
+        }
+      }));
     }
-  });
+  }, [fetchedData]);
 
   const [expandedSections, setExpandedSections] = useState({
     visualSupport: false,
-    hearingSupport: false
+    hearingSupport: false,
+    mobilitySupport: false,
+    cognitiveSupport: false
   });
 
   // Modal states
@@ -238,118 +238,22 @@ const JobseekerProfile = () => {
   };
 
   // API Functions - Ready for backend integration
-  const api = {
+  const apifunctions = {
     // Fetch user profile data
     fetchProfile: async () => {
       try {
         setIsLoading(true);
         setError(null);
         
-        // TODO: Replace with actual API call
-        // const response = await fetch('/api/jobseeker/profile', {
-        //   method: 'GET',
-        //   headers: {
-        //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        //     'Content-Type': 'application/json'
-        //   }
-        // });
-        // const data = await response.json();
+        const { data } = await api.get('/retrieve/profile'); // get data
         
         // Mock API response - this will come from your onboarding data
         await new Promise(resolve => setTimeout(resolve, 500));
-        const mockData = {
-          firstName: 'Angela',
-          lastName: 'Martinez',
-          email: 'angela.martinez@email.com',
-          phone: '+63 917 123 4567',
-          birthDate: '2005-03-18',
-          disabilityType: 'Hearing',
-          location: 'Cebu, Philippines',
-          jobTitle: 'Full Stack Developer & UX Designer',
-          professionalSummary: 'Experienced Full Stack Developer and UX Designer specializing in accessible, user-centered digital solutions. Proficient in React, Node.js, and inclusive design principles. Passionate about bridging technical excellence and user experience for underserved communities. Track record of delivering high-quality projects that meet accessibility standards. Strong advocate for WCAG 2.1 compliance and experienced in remote/agile environments.',
-          hourlyRate: '25',
-          skills: ['React.js', 'TypeScript', 'JavaScript', 'Frontend Architecture', 'Responsive Design', 'Redux', 'GraphQL', 'Webpack', 'Next.js'],
-          education: [
-            {
-              id: 1,
-              degree: 'Bachelor of Science in Computer Science',
-              institution: 'University of Cebu',
-              startYear: '2022',
-              endYear: '2026',
-              isCurrent: true
-            }
-          ],
-          workExperience: [
-            {
-              id: 1,
-              title: 'Senior Frontend Developer',
-              company: 'TechCorp Solutions',
-              startDate: '2023-01',
-              endDate: '2024-01',
-              employmentType: 'Full-time',
-              location: 'Cebu City, Philippines',
-              description: 'Led development of accessible e-commerce platform serving 100K+ users. Improved site performance by 45% through React optimization techniques. Mentored 3 junior developers and established accessibility testing protocols.'
-            },
-            {
-              id: 2,
-              title: 'UX Designer',
-              company: 'DesignHub Agency',
-              startDate: '2023-01',
-              endDate: '2024-01',
-              employmentType: 'Part-time',
-              location: 'Cebu City, Philippines',
-              description: 'Designed user interfaces for 20+ client projects across healthcare and fintech. Conducted accessibility audits resulting in 100% WCAG AA compliance. Created design system used by 5+ development teams.'
-            }
-          ],
-          portfolioLinks: {
-            linkedin: 'linkedin.com/in/angela-m',
-            github: 'angelamartinez.dev',
-            portfolio: '',
-            other: ''
-          },
-          accessibilityNeeds: {
-            visual: [],
-            hearing: ['Hearing aids', 'Captioning services'],
-            mobility: [],
-            cognitive: []
-          },
-          employmentPreferences: {
-            workArrangement: 'Remote',
-            employmentType: ['Full-time', 'Contract'],
-            experienceLevel: 'Senior',
-            salaryRange: {
-              min: '80000',
-              max: '120000',
-              currency: 'PHP'
-            },
-            preferredLocations: ['Remote', 'Cebu City']
-          },
-          profileVisibility: {
-            searchable: false,
-            hourlyRate: true,
-            personalInfo: true,
-            portfolioLinks: true,
-            accommodationNeeds: true
-          },
-          verification: {
-            emailVerified: true,
-            identityVerified: true,
-            phoneVerified: false
-          },
-          profileCompletion: {
-            basicInfo: true,
-            professionalInfo: true,
-            skills: true,
-            education: true,
-            workExperience: true,
-            portfolio: false,
-            accessibility: false,
-            preferences: true
-          }
-        };
-        
-        setProfileData(mockData);
-        return mockData;
+
+        if(data.success) {
+          console.log("Data: ", data.data);
+          setFetchedData(data.data);
+        }
       } catch (err) {
         setError('Failed to load profile data');
         console.error('Error fetching profile:', err);
@@ -362,36 +266,28 @@ const JobseekerProfile = () => {
     // Update profile data
     updateProfile: async (section, data) => {
       try {
+        setIsLoading(true);
         setIsSaving(true);
         setError(null);
         
-        // TODO: Replace with actual API call
-        // const response = await fetch('/api/jobseeker/profile', {
-        //   method: 'PUT',
-        //   headers: {
-        //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify({ section, data })
-        // });
-        // const result = await response.json();
-        
-        // Mock API response
-        await new Promise(resolve => setTimeout(resolve, 300));
-        
-        // Update local state
-        setProfileData(prev => ({
-          ...prev,
-          [section]: data
-        }));
-        
-        return { success: true };
+        const response = await api.put('/retrieve/update/basic-information', data);
+
+        if(response.data.success) {
+          // Update local state
+          setProfileData(prev => ({
+            ...prev,
+            [section]: data
+          }));
+
+          return { success: true };
+        }
       } catch (err) {
         setError('Failed to update profile');
         console.error('Error updating profile:', err);
         throw err;
       } finally {
         setIsSaving(false);
+        setIsLoading(false);
       }
     },
 
@@ -434,7 +330,7 @@ const JobseekerProfile = () => {
         [setting]: !profileData.profileVisibility[setting]
       };
       
-      await api.updateVisibility(newSettings);
+      await apifunctions.updateVisibility(newSettings);
     } catch (err) {
       // Error already handled in API function
     }
@@ -442,7 +338,7 @@ const JobseekerProfile = () => {
 
   const handleUpdateProfile = async (section, data) => {
     try {
-      await api.updateProfile(section, data);
+      await apifunctions.updateProfile(section, data);
     } catch (err) {
       // Error already handled in API function
     }
@@ -546,20 +442,15 @@ const JobseekerProfile = () => {
       { text: 'Education', completed: profileData.profileCompletion.education },
       { text: 'Add portfolio items', completed: profileData.profileCompletion.portfolio },
       { text: 'Complete skills assessment', completed: profileData.profileCompletion.skills },
-      { text: 'Set accessibility preferences', completed: profileData.profileCompletion.accessibility }
+      { text: 'Set accessibility preferences', completed: profileData.profileCompletion.accessibilityPreferences }
     ];
   };
 
   // Initialize data on component mount
   useEffect(() => {
     const initializeProfile = async () => {
-      try {
-        await api.fetchProfile();
-      } catch (err) {
-        // Error already handled in API function
-      }
+      await apifunctions.fetchProfile();
     };
-    
     initializeProfile();
   }, []);
 
@@ -573,6 +464,25 @@ const JobseekerProfile = () => {
               <div className="text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
                 <p className="text-gray-500">Loading profile...</p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (isSaving) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <JobseekerHeader disabled={false} />
+        <main className="flex-1 py-6 sm:py-8">
+          <div className="mx-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-16">
+            <div className="flex items-center justify-center h-64">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-500">Saving profile...</p>
               </div>
             </div>
           </div>
@@ -599,11 +509,19 @@ const JobseekerProfile = () => {
           <div className="bg-white rounded-lg shadow p-6 mb-6">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
               <div className="flex items-start space-x-4">
-                <img
-                  src="https://i.pravatar.cc/150?img=32"
-                  alt="Angela Martinez"
-                  className="w-20 h-20 rounded-full object-cover border-4 border-gray-200"
-                />
+                {fetchedData.profile_picture ? (
+                  <img
+                    src={fetchedData.profile_picture}
+                    alt="Profile Picture"
+                    className="w-20 h-20 rounded-full object-cover border-4 border-gray-200"
+                  />
+                ) : (
+                  <img
+                    src="https://i.pravatar.cc/150?img=32"
+                    alt="Angela Martinez"
+                    className="w-20 h-20 rounded-full object-cover border-4 border-gray-200"
+                  />
+                )}
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-1">
                     <h1 className="text-2xl font-bold text-gray-900">
@@ -636,13 +554,48 @@ const JobseekerProfile = () => {
                     </div>
                     <div className="flex items-center space-x-1">
                       <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <svg key={i} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        ))}
+                        {[...Array(5)].map((_, i) => {
+                          const full = i < Math.floor(profileData.rating);
+                          const half = i < profileData.rating && i >= Math.floor(profileData.rating);
+
+                          return (
+                            <div key={i} className="relative w-4 h-4">
+                              {/* Empty star (gray background) */}
+                              <svg
+                                className="absolute inset-0 w-4 h-4 text-gray-300"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                              </svg>
+
+                              {/* Full star (yellow) */}
+                              {full && (
+                                <svg
+                                  className="absolute inset-0 w-4 h-4 text-yellow-400"
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                              )}
+
+                              {/* Half star (yellow left side only) */}
+                              {half && (
+                                <svg
+                                  className="absolute inset-0 w-4 h-4 text-yellow-400"
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                  style={{ clipPath: "inset(0 50% 0 0)" }}
+                                >
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
-                      <span className="text-sm font-medium">4.8/5</span>
+                      <span className="text-sm font-medium">{profileData.rating}/5</span>
                     </div>
                   </div>
                 </div>
@@ -750,14 +703,36 @@ const JobseekerProfile = () => {
               <div className="bg-white rounded-lg shadow p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Portfolio Links</h3>
                 <div className="space-y-3 mb-4">
-                  <div>
-                    <span className="text-sm font-medium text-gray-700">LinkedIn:</span>
-                    <span className="text-sm text-blue-600 ml-2">linkedin.com/in/angela-m</span>
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium text-gray-700">Github:</span>
-                    <span className="text-sm text-blue-600 ml-2">angelamartinez.dev</span>
-                  </div>
+                  {profileData.portfolioLinks.portfolio && (
+                    <div>
+                      <span className="text-sm font-medium text-gray-700">Portfolio:</span>
+                      <span className="text-sm text-blue-600 ml-2">{profileData.portfolioLinks.portfolio}</span>
+                    </div>
+                  )}
+                  {profileData.portfolioLinks.github && (
+                    <div>
+                      <span className="text-sm font-medium text-gray-700">Github:</span>
+                      <span className="text-sm text-blue-600 ml-2">{profileData.portfolioLinks.github}</span>
+                    </div>
+                  )}
+                  {Array.isArray(profileData.portfolioLinks.other) &&
+                  profileData.portfolioLinks.other.length === 2 &&
+                  profileData.portfolioLinks.other[0].trim() !== "" &&
+                  profileData.portfolioLinks.other[1].trim() !== "" && (
+                    <div>
+                      <span className="text-sm font-medium text-gray-700">
+                        {profileData.portfolioLinks.other[0]}:
+                      </span>
+                      <a
+                        href={profileData.portfolioLinks.other[1]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-blue-600 ml-2"
+                      >
+                        {profileData.portfolioLinks.other[1]}
+                      </a>
+                    </div>
+                  )}
                 </div>
                 <button 
                   onClick={() => openModal('portfolioLinks')}
@@ -846,7 +821,7 @@ const JobseekerProfile = () => {
                 <p className="text-gray-700 mb-4 leading-relaxed">
                   {profileData.professionalSummary}
                 </p>
-                <div className="text-sm text-gray-500">{profileData.professionalSummary.length}/2000 characters</div>
+                <div className="text-sm text-gray-500">{(profileData.professionalSummary?.length || 0)}/2000 characters</div>
               </div>
 
               {/* Skills & Expertise */}
@@ -860,13 +835,15 @@ const JobseekerProfile = () => {
                     Manage Skills
                   </button>
                 </div>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {profileData.skills.map((skill, index) => (
-                    <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+                {profileData.skills && profileData.skills.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {profileData.skills.map((skill, index) => (
+                      <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 <button className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center space-x-1">
                   <span>Show 15 more skills</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -887,37 +864,40 @@ const JobseekerProfile = () => {
                   </button>
                 </div>
                 <div className="space-y-4">
-                  {profileData.education.map((item) => (
-                    <div key={item.id} className="border border-gray-200 rounded-lg p-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h4 className="font-medium text-gray-900">{item.degree}</h4>
-                          <p className="text-sm text-gray-600">{item.institution}</p>
-                          <p className="text-sm text-gray-500">
-                            {item.startYear} - {item.isCurrent ? 'Present' : item.endYear}
-                          </p>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <button 
-                            onClick={() => openModal('education', item)}
-                            className="p-1 text-gray-400 hover:text-gray-600"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                          </button>
-                          <button 
-                            onClick={() => handleDelete('education', item.id)}
-                            className="p-1 text-gray-400 hover:text-red-600"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                          </button>
+                  {Array.isArray(profileData.education) && profileData.education.length > 0 &&  (
+                    profileData.education.map((item) => (
+                      <div key={item.id} className="border border-gray-200 rounded-lg p-4">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h4 className="font-medium text-gray-900">{item.field_of_study}</h4>
+                            <p className="text-sm text-gray-600">{item.institution}</p>
+                            <p className="text-sm text-gray-500">
+                              {/* {item.startYear}  */} WALA PA START YEAR
+                              - {item.graduation_details === "Currently Studying" ? "Present" : item.endYear}
+                            </p>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <button 
+                              onClick={() => openModal('education', item)}
+                              className="p-1 text-gray-400 hover:text-gray-600"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                              </svg>
+                            </button>
+                            <button 
+                              onClick={() => handleDelete('education', item.id)}
+                              className="p-1 text-gray-400 hover:text-red-600"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </div>
 
@@ -933,40 +913,45 @@ const JobseekerProfile = () => {
                   </button>
                 </div>
                 <div className="space-y-4">
-                  {profileData.workExperience.map((item) => (
-                    <div key={item.id} className="border border-gray-200 rounded-lg p-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h4 className="font-medium text-gray-900">{item.title}</h4>
-                          <p className="text-sm text-gray-600">{item.company}</p>
-                          <p className="text-sm text-gray-500">
-                            {new Date(item.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - 
-                            {new Date(item.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} • {item.employmentType}
-                          </p>
-                          <p className="text-sm text-gray-500">{item.location}</p>
-                          <p className="text-sm text-gray-700 mt-2">{item.description}</p>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <button 
-                            onClick={() => openModal('workExperience', item)}
-                            className="p-1 text-gray-400 hover:text-gray-600"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                          </button>
-                          <button 
-                            onClick={() => handleDelete('workExperience', item.id)}
-                            className="p-1 text-gray-400 hover:text-red-600"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                          </button>
+                  {profileData.workExperience && (
+                    profileData.workExperience.map((item) => (
+                      <div key={item.id} className="border border-gray-200 rounded-lg p-4">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h4 className="font-medium text-gray-900">{item.title}</h4>
+                            <p className="text-sm text-gray-600">{item.company}</p>
+                            <p className="text-sm text-gray-500">
+                              {new Date(item.start_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} -{" "}
+                              {item.end_date
+                                ? new Date(item.end_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+                                : "Present"}{" "}
+                              • {item.employment_type}
+                            </p>
+                            <p className="text-sm text-gray-500">{item.location}, {item.country}</p>
+                            <p className="text-sm text-gray-700 mt-2">{item.description}</p>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <button 
+                              onClick={() => openModal('workExperience', item)}
+                              className="p-1 text-gray-400 hover:text-gray-600"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                              </svg>
+                            </button>
+                            <button 
+                              onClick={() => handleDelete('workExperience', item.id)}
+                              className="p-1 text-gray-400 hover:text-red-600"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </div>
 
@@ -981,42 +966,105 @@ const JobseekerProfile = () => {
                     Update Requirements
                   </button>
                 </div>
-                <div className="space-y-3">
-                  <div className="border border-gray-200 rounded-lg">
-                    <button
-                      onClick={() => toggleSection('visualSupport')}
-                      className="w-full p-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
-                    >
-                      <div className="flex items-center space-x-2">
-                        <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                        <span className="text-sm font-medium text-gray-900">Visual Support</span>
-                      </div>
-                      <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSections.visualSupport ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                  </div>
+                {Array.isArray(profileData.accessibilityNeeds) &&
+                  profileData.accessibilityNeeds.length > 0 && (
+                    profileData.accessibilityNeeds.map((needs, idx) => (
+                      <div key={idx} className="space-y-3">
+                        {/* VISUAL SUPPORT */}
+                        {needs.visual_support &&
+                          needs.visual_support.length > 0 &&
+                          !(needs.visual_support.length === 1 &&
+                            needs.visual_support[0] === "None of the above") && (
+                            <div className="border border-gray-200 rounded-lg">
+                              <button
+                                onClick={() => toggleSection("visualSupport")}
+                                className="w-full p-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+                              >
+                                <div className="flex items-center space-x-2">
+                                  <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                  </svg>
+                                  <span className="text-sm font-medium text-gray-900">Visual Support</span>
+                                </div>
+                                <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSections.visualSupport ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                              </button>
+                            </div>
+                        )}
 
-                  <div className="border border-gray-200 rounded-lg">
-                    <button
-                      onClick={() => toggleSection('hearingSupport')}
-                      className="w-full p-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
-                    >
-                      <div className="flex items-center space-x-2">
-                        <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                        </svg>
-                        <span className="text-sm font-medium text-gray-900">Hearing Support</span>
+                        {/* HEARING SUPPORT */}
+                        {needs.hearing_support &&
+                          needs.hearing_support.length > 0 && 
+                          !(needs.hearing_support.length === 1 &&
+                            needs.hearing_support[0] === "None of the above") && (
+                          <div className="border border-gray-200 rounded-lg">
+                            <button
+                              onClick={() => toggleSection('hearingSupport')}
+                              className="w-full p-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+                            >
+                              <div className="flex items-center space-x-2">
+                                <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                                </svg>
+                                <span className="text-sm font-medium text-gray-900">Hearing Support</span>
+                              </div>
+                              <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSections.hearingSupport ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </button>
+                          </div>
+                        )}
+
+                        {/* MOBILITY SUPPORT */}
+                        {needs.mobility_support &&
+                          needs.mobility_support.length > 0 && 
+                          !(needs.mobility_support.length === 1 &&
+                            needs.mobility_support[0] === "None of the above") && (
+                          <div className="border border-gray-200 rounded-lg">
+                            <button
+                              onClick={() => toggleSection('mobilitySupport')}
+                              className="w-full p-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+                            >
+                              <div className="flex items-center space-x-2">
+                                <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                                </svg>
+                                <span className="text-sm font-medium text-gray-900">Mobility Support</span>
+                              </div>
+                              <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSections.mobilitySupport ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </button>
+                          </div>
+                        )}
+
+                        {/* COGNITIVE SUPPORT */}
+                        {needs.cognitive_support &&
+                          needs.cognitive_support.length > 0 && 
+                          !(needs.cognitive_support.length === 1 &&
+                            needs.cognitive_support[0] === "None of the above") && (
+                          <div className="border border-gray-200 rounded-lg">
+                            <button
+                              onClick={() => toggleSection('cognitiveSupport')}
+                              className="w-full p-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+                            >
+                              <div className="flex items-center space-x-2">
+                                <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                                </svg>
+                                <span className="text-sm font-medium text-gray-900">Cognitive Support</span>
+                              </div>
+                              <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSections.cognitiveSupport ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </button>
+                          </div>
+                        )}
                       </div>
-                      <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedSections.hearingSupport ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
+                    ))
+                )}
               </div>
 
               {/* Employment Preferences */}
@@ -1037,7 +1085,11 @@ const JobseekerProfile = () => {
                   </div>
                   <div>
                     <span className="text-sm font-medium text-gray-700">Employment Type:</span>
-                    <span className="text-sm text-gray-900 ml-2">{profileData.employmentPreferences.employmentType.join(', ')}</span>
+                    <span className="text-sm text-gray-900 ml-2">
+                      {Array.isArray(profileData.employmentPreferences.employmentType) 
+                      ? profileData.employmentPreferences.employmentType.join(', ') 
+                      : ''}
+                    </span>
                   </div>
                   <div>
                     <span className="text-sm font-medium text-gray-700">Experience Level:</span>
@@ -1046,7 +1098,7 @@ const JobseekerProfile = () => {
                   <div>
                     <span className="text-sm font-medium text-gray-700">Salary Range:</span>
                     <span className="text-sm text-gray-900 ml-2">
-                      ₱{profileData.employmentPreferences.salaryRange.min} - ₱{profileData.employmentPreferences.salaryRange.max}/month
+                      {profileData.employmentPreferences.salaryRange}/month
                     </span>
                   </div>
                 </div>
