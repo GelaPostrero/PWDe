@@ -76,6 +76,8 @@ function App() {
         <Route path="/signup/employer" element={<EmployerSignUp />} />
         <Route path="/signup/jobseeker/verification" element={<JobseekerVerification />} />
         <Route path="/signup/jobseeker/activation" element={<JobseekerActivation />} />
+        <Route path="/employer/verification" element={<EmployerVerification />} />
+        <Route path="/employer/activation" element={<EmployerActivation />} />
         
         {
         /* Protected Routes must be inside a route with an element protected route to 
@@ -88,10 +90,6 @@ function App() {
           <Route path="/onboarding/jobseeker/accessibility" element={<JobseekerOnboardingAccessibility />} />
           <Route path="/onboarding/jobseeker/preferences" element={<JobseekerOnboardingPreferences />} />
           <Route path="/onboarding/jobseeker/completion" element={<JobseekerOnboardingCompletion />} />
-          
-          {/* Employer verification and activation routes */}
-          <Route path="/employer/verification" element={<EmployerVerification />} />
-          <Route path="/employer/activation" element={<EmployerActivation />} />
           
           {/* Employer onboarding routes (kept for future use) */}
           <Route path="/onboarding/employer/skills" element={<EmployerOnboardingSkills />} />
