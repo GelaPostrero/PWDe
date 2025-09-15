@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import api from '../../utils/api.js'
-import logo from '../../assets/logo.png';
+import logo from '../../assets/pwdelogo.png';
 import AnimatedHamburger from './AnimatedHamburger.jsx';
 
 

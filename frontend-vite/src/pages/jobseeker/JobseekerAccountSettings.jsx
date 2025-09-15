@@ -180,13 +180,13 @@ const JobseekerAccountSettings = () => {
       try {
         setIsSaving(true);
         setError(null);
-        
+
         //  Replace with actual API call
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
+
         // Redirect to login or home page
         window.location.href = '/';
-        
+
         return { success: true };
       } catch (err) {
         setError('Failed to delete account');
@@ -225,22 +225,22 @@ const JobseekerAccountSettings = () => {
         setError('Please select a valid image file');
         return;
       }
-      
+
       // Validate file size (2MB limit)
       if (file.size > 2 * 1024 * 1024) {
         setError('File size must be less than 2MB');
         return;
       }
-      
+
       setSelectedFile(file);
-      
+
       // Create preview URL
       const reader = new FileReader();
       reader.onload = (e) => {
         setPreviewUrl(e.target.result);
       };
       reader.readAsDataURL(file);
-      
+
       setError(null);
     }
   };
@@ -310,7 +310,7 @@ const JobseekerAccountSettings = () => {
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
-    
+
     // Validation
     if (!accountData.password || !accountData.confirmPassword) {
       setError('Please fill in all password fields');
@@ -340,10 +340,10 @@ const JobseekerAccountSettings = () => {
     try {
       setIsSaving(true);
       setError(null);
-      
+
       //Replace with actual API call
       await new Promise(resolve => setTimeout(resolve, 500));
-      
+
       // Remove device from state
       setAccountData(prev => ({
         ...prev,
@@ -352,10 +352,10 @@ const JobseekerAccountSettings = () => {
           trustedDevices: prev.security.trustedDevices.filter(device => device.id !== deviceId)
         }
       }));
-      
+
       setSuccessMessage('Device removed successfully');
       setTimeout(() => setSuccessMessage(''), 3000);
-      
+
     } catch (err) {
       setError('Failed to remove device');
       console.error('Error removing device:', err);
@@ -373,7 +373,7 @@ const JobseekerAccountSettings = () => {
         // Error already handled in API function
       }
     };
-    
+
     initializeAccount();
   }, []);
 
@@ -402,7 +402,7 @@ const JobseekerAccountSettings = () => {
 
       <main className="flex-1 py-6 sm:py-8">
         <div className="mx-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-16">
-          
+
           {error && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-red-600 text-sm">{error}</p>
@@ -435,11 +435,10 @@ const JobseekerAccountSettings = () => {
                   <button
                     key={item.id}
                     onClick={() => setActiveSection(item.id)}
-                    className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${
-                      activeSection === item.id
+                    className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${activeSection === item.id
                         ? 'bg-blue-100 text-blue-700 border border-blue-200'
                         : 'text-gray-700 hover:bg-gray-100'
-                    }`}
+                      }`}
                   >
                     <span className="text-lg mr-3">{item.icon}</span>
                     <span className="font-medium">{item.label}</span>
@@ -450,13 +449,13 @@ const JobseekerAccountSettings = () => {
 
             {/* Main Content */}
             <div className="lg:col-span-3">
-              
+
               {/* Account Information Section */}
               {activeSection === 'account' && (
                 <div className="space-y-6">
                   <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
                     <h2 className="text-xl font-semibold text-gray-900 mb-6">Account Information</h2>
-                    
+
                     <div className="space-y-6">
                       {/* Profile Picture */}
                       <div className="flex items-center space-x-4">
@@ -640,7 +639,7 @@ const JobseekerAccountSettings = () => {
                 <div className="space-y-6">
                   <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
                     <h2 className="text-xl font-semibold text-gray-900 mb-6">Privacy & Visibility</h2>
-                    
+
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-3">Profile Visibility</label>
@@ -685,14 +684,12 @@ const JobseekerAccountSettings = () => {
                               </div>
                               <button
                                 onClick={() => handleInputChange('privacy', setting.key, !accountData.privacy[setting.key])}
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                                  accountData.privacy[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
-                                }`}
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.privacy[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
+                                  }`}
                               >
                                 <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                                    accountData.privacy[setting.key] ? 'translate-x-6' : 'translate-x-1'
-                                  }`}
+                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.privacy[setting.key] ? 'translate-x-6' : 'translate-x-1'
+                                    }`}
                                 />
                               </button>
                             </div>
@@ -719,7 +716,7 @@ const JobseekerAccountSettings = () => {
                 <div className="space-y-6">
                   <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
                     <h2 className="text-xl font-semibold text-gray-900 mb-6">Notification Preferences</h2>
-                    
+
                     <div className="space-y-8">
                       {/* Email Notifications */}
                       <div>
@@ -740,14 +737,12 @@ const JobseekerAccountSettings = () => {
                               </div>
                               <button
                                 onClick={() => handleNestedInputChange('notifications', 'email', setting.key, !accountData.notifications.email[setting.key])}
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                                  accountData.notifications.email[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
-                                }`}
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.notifications.email[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
+                                  }`}
                               >
                                 <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                                    accountData.notifications.email[setting.key] ? 'translate-x-6' : 'translate-x-1'
-                                  }`}
+                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.notifications.email[setting.key] ? 'translate-x-6' : 'translate-x-1'
+                                    }`}
                                 />
                               </button>
                             </div>
@@ -772,14 +767,12 @@ const JobseekerAccountSettings = () => {
                               </div>
                               <button
                                 onClick={() => handleNestedInputChange('notifications', 'push', setting.key, !accountData.notifications.push[setting.key])}
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                                  accountData.notifications.push[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
-                                }`}
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.notifications.push[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
+                                  }`}
                               >
                                 <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                                    accountData.notifications.push[setting.key] ? 'translate-x-6' : 'translate-x-1'
-                                  }`}
+                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.notifications.push[setting.key] ? 'translate-x-6' : 'translate-x-1'
+                                    }`}
                                 />
                               </button>
                             </div>
@@ -802,14 +795,12 @@ const JobseekerAccountSettings = () => {
                               </div>
                               <button
                                 onClick={() => handleNestedInputChange('notifications', 'sms', setting.key, !accountData.notifications.sms[setting.key])}
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                                  accountData.notifications.sms[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
-                                }`}
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.notifications.sms[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
+                                  }`}
                               >
                                 <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                                    accountData.notifications.sms[setting.key] ? 'translate-x-6' : 'translate-x-1'
-                                  }`}
+                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.notifications.sms[setting.key] ? 'translate-x-6' : 'translate-x-1'
+                                    }`}
                                 />
                               </button>
                             </div>
@@ -836,7 +827,7 @@ const JobseekerAccountSettings = () => {
                 <div className="space-y-6">
                   <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
                     <h2 className="text-xl font-semibold text-gray-900 mb-6">Security Settings</h2>
-                    
+
                     <div className="space-y-6">
                       {/* Two-Factor Authentication */}
                       <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
@@ -845,11 +836,10 @@ const JobseekerAccountSettings = () => {
                           <p className="text-sm text-gray-500">Add an extra layer of security to your account</p>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                            accountData.security.twoFactorAuth 
-                              ? 'bg-green-100 text-green-800' 
+                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${accountData.security.twoFactorAuth
+                              ? 'bg-green-100 text-green-800'
                               : 'bg-gray-100 text-gray-800'
-                          }`}>
+                            }`}>
                             {accountData.security.twoFactorAuth ? 'Enabled' : 'Disabled'}
                           </span>
                           <button
@@ -869,14 +859,12 @@ const JobseekerAccountSettings = () => {
                         </div>
                         <button
                           onClick={() => handleInputChange('security', 'loginAlerts', !accountData.security.loginAlerts)}
-                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                            accountData.security.loginAlerts ? 'bg-blue-600' : 'bg-gray-200'
-                          }`}
+                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.security.loginAlerts ? 'bg-blue-600' : 'bg-gray-200'
+                            }`}
                         >
                           <span
-                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                              accountData.security.loginAlerts ? 'translate-x-6' : 'translate-x-1'
-                            }`}
+                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.security.loginAlerts ? 'translate-x-6' : 'translate-x-1'
+                              }`}
                           />
                         </button>
                       </div>
@@ -912,7 +900,7 @@ const JobseekerAccountSettings = () => {
                                   Last used: {new Date(device.lastUsed).toLocaleDateString()} • {device.location}
                                 </div>
                               </div>
-                              <button 
+                              <button
                                 onClick={() => handleRemoveDevice(device.id)}
                                 disabled={isSaving}
                                 className="px-3 py-1 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
@@ -943,7 +931,7 @@ const JobseekerAccountSettings = () => {
                 <div className="space-y-6">
                   <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
                     <h2 className="text-xl font-semibold text-gray-900 mb-6">Account Management</h2>
-                    
+
                     <div className="space-y-6">
                       {/* Account Status */}
                       <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
@@ -998,9 +986,9 @@ const JobseekerAccountSettings = () => {
 
       <Footer />
 
-      <Chatbot 
-        position="right" 
-        showNotification={true} 
+      <Chatbot
+        position="right"
+        showNotification={true}
         notificationCount={3}
       />
 
@@ -1020,7 +1008,7 @@ const JobseekerAccountSettings = () => {
                   <p className="text-sm text-gray-500">This action cannot be undone</p>
                 </div>
               </div>
-              
+
               <form onSubmit={handleDeleteAccount} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
@@ -1033,7 +1021,7 @@ const JobseekerAccountSettings = () => {
                     required
                   />
                 </div>
-                
+
                 <div className="flex space-x-3">
                   <button
                     type="submit"
@@ -1072,25 +1060,25 @@ const JobseekerAccountSettings = () => {
                   <p className="text-sm text-gray-500">You can reactivate anytime</p>
                 </div>
               </div>
-              
+
               <p className="text-sm text-gray-600 mb-6">
                 Are you sure you want to deactivate your account? You can reactivate it anytime by logging in.
               </p>
-              
+
               <div className="flex space-x-3">
                 <button
                   onClick={async () => {
                     try {
                       setIsSaving(true);
                       setError(null);
-                      
+
                       // TODO: Replace with actual API call
                       await new Promise(resolve => setTimeout(resolve, 1000));
-                      
+
                       setShowDeactivateModal(false);
                       setSuccessMessage('Account deactivated successfully. You can reactivate by logging in.');
                       setTimeout(() => setSuccessMessage(''), 5000);
-                      
+
                       // Update account status
                       setAccountData(prev => ({
                         ...prev,
@@ -1099,7 +1087,7 @@ const JobseekerAccountSettings = () => {
                           active: false
                         }
                       }));
-                      
+
                     } catch (err) {
                       setError('Failed to deactivate account');
                       console.error('Error deactivating account:', err);
