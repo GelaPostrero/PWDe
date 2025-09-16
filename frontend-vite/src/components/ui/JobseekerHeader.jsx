@@ -6,7 +6,7 @@ import AnimatedHamburger from './AnimatedHamburger.jsx';
 const NavLink = ({ to = '#', children, hasDropdown = false, disabled = false, isActive = false, onClick = null }) => {
   if (disabled) {
     return (
-      <span className="text-gray-400 cursor-not-allowed text-sm font-medium flex items-center gap-1 opacity-60">
+      <span className="text-gray-400 cursor-not-allowed text-xs font-medium flex items-center gap-1 opacity-60">
         {children}
         {hasDropdown && (
           <svg
@@ -31,7 +31,7 @@ const NavLink = ({ to = '#', children, hasDropdown = false, disabled = false, is
     <Link
       to={to}
       onClick={onClick}
-      className={`px-3 py-2 text-sm font-medium transition-colors ${
+      className={`px-3 py-1 text-xs font-medium transition-colors ${
         isActive 
           ? 'text-blue-600 border-b-2 border-blue-600' 
           : 'text-gray-600 hover:text-blue-600'
@@ -66,7 +66,7 @@ const IconButton = ({
 }) => (
   <div className="relative">
     <button
-      className={`p-2 transition-colors rounded-lg ${
+      className={`p-1.5 transition-colors rounded-lg ${
         disabled 
           ? 'text-gray-300 cursor-not-allowed opacity-60' 
           : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
@@ -147,8 +147,8 @@ const JobseekerHeader = ({ disabled = false }) => {
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
-      <div className="mx-full px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
-        <div className="flex justify-between items-center py-6">
+      <div className="mx-full ml-8 mr-8 px-6 h-15 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
+        <div className="flex justify-between items-center h-full py-2">
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/jobseeker/dashboard" className="flex-shrink-0">
@@ -165,7 +165,7 @@ const JobseekerHeader = ({ disabled = false }) => {
               <button
                 onClick={toggleFindJobs}
                 disabled={disabled}
-                className={`px-3 py-2 text-sm font-medium transition-colors flex items-center gap-1 ${
+                className={`px-3 py-1 text-xs font-medium transition-colors flex items-center gap-1 ${
                   isFindJobsOpen || isNavActive('/find-job')
                     ? 'text-blue-600 border-b-2 border-blue-600' 
                     : 'text-gray-600 hover:text-blue-600'
@@ -235,7 +235,7 @@ const JobseekerHeader = ({ disabled = false }) => {
               {/* Theme toggle */}
               <IconButton label="Toggle theme" disabled={disabled}>
                 <svg
-                  className="w-5 h-5"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -251,7 +251,7 @@ const JobseekerHeader = ({ disabled = false }) => {
 
               {/* Text size */}
               <IconButton label="Text size" disabled={disabled}>
-                <span className="font-bold text-sm">Tt</span>
+                <span className="font-bold text-xs">Tt</span>
               </IconButton>
 
               {/* Notifications */}
@@ -262,7 +262,7 @@ const JobseekerHeader = ({ disabled = false }) => {
                 disabled={disabled}
               >
                 <svg
-                  className="w-5 h-5"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -281,13 +281,13 @@ const JobseekerHeader = ({ disabled = false }) => {
             <div className="relative profile-dropdown-container">
               <button 
                 onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-                className={`flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 hover:ring-2 hover:ring-blue-300 transition-all ${
+                className={`flex items-center text-xs rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 hover:ring-2 hover:ring-blue-300 transition-all ${
                   disabled ? 'cursor-not-allowed opacity-60' : ''
                 }`}
                 disabled={disabled}
               >
                 <img
-                  className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
+                  className="h-6 w-6 rounded-full object-cover border-2 border-gray-200"
                   src="https://i.pravatar.cc/64"
                   alt="Profile"
                 />
@@ -340,7 +340,7 @@ const JobseekerHeader = ({ disabled = false }) => {
               <Link
                 to="/jobseeker/dashboard"
                 onClick={closeMobileMenu}
-                className={`block px-3 py-2 text-sm font-medium transition-all duration-200 rounded-lg cursor-pointer ${
+                className={`block px-3 py-1.5 text-xs font-medium transition-all duration-200 rounded-lg cursor-pointer ${
                   isNavActive('/dashboard')
                     ? 'text-blue-600 bg-blue-50'
                     : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
@@ -354,7 +354,7 @@ const JobseekerHeader = ({ disabled = false }) => {
                 <button
                   onClick={toggleFindJobs}
                   disabled={disabled}
-                  className={`w-full text-left px-3 py-2 text-sm font-medium transition-colors flex items-center justify-between rounded-lg ${
+                  className={`w-full text-left px-3 py-1.5 text-xs font-medium transition-colors flex items-center justify-between rounded-lg ${
                     isFindJobsOpen || isNavActive('/find-job')
                       ? 'text-blue-600 bg-blue-50' 
                       : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
@@ -381,28 +381,28 @@ const JobseekerHeader = ({ disabled = false }) => {
                   <div className="ml-4 mt-2 space-y-1" ref={dropdownRef}>
                     <Link
                       to="/find-job"
-                      className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200"
+                      className="block px-3 py-1.5 text-xs text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200"
                       onClick={closeMobileMenu}
                     >
                       Browse All Jobs
                     </Link>
                     <Link
                       to="/find-job/recommended"
-                      className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200"
+                      className="block px-3 py-1.5 text-xs text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200"
                       onClick={closeMobileMenu}
                     >
                       AI Recommended
                     </Link>
                     <Link
                       to="/find-job/saved"
-                      className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200"
+                      className="block px-3 py-1.5 text-xs text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200"
                       onClick={closeMobileMenu}
                     >
                       Saved Jobs
                     </Link>
                     <Link
                       to="/find-job/applied"
-                      className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200"
+                      className="block px-3 py-1.5 text-xs text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200"
                       onClick={closeMobileMenu}
                     >
                       Applied Jobs
@@ -415,7 +415,7 @@ const JobseekerHeader = ({ disabled = false }) => {
               <Link
                 to="/resume"
                 onClick={closeMobileMenu}
-                className={`block px-3 py-2 text-sm font-medium transition-all duration-200 rounded-lg cursor-pointer ${
+                className={`block px-3 py-1.5 text-xs font-medium transition-all duration-200 rounded-lg cursor-pointer ${
                   isNavActive('/resume')
                     ? 'text-blue-600 bg-blue-50'
                     : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
@@ -428,7 +428,7 @@ const JobseekerHeader = ({ disabled = false }) => {
               <Link
                 to="/transactions"
                 onClick={closeMobileMenu}
-                className={`block px-3 py-2 text-sm font-medium transition-all duration-200 rounded-lg cursor-pointer ${
+                className={`block px-3 py-1.5 text-xs font-medium transition-all duration-200 rounded-lg cursor-pointer ${
                   isNavActive('/transactions')
                     ? 'text-blue-600 bg-blue-50'
                     : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
@@ -441,7 +441,7 @@ const JobseekerHeader = ({ disabled = false }) => {
               <Link
                 to="/resources"
                 onClick={closeMobileMenu}
-                className={`block px-3 py-2 text-sm font-medium transition-all duration-200 rounded-lg cursor-pointer ${
+                className={`block px-3 py-1.5 text-xs font-medium transition-all duration-200 rounded-lg cursor-pointer ${
                   isNavActive('/resources')
                     ? 'text-blue-600 bg-blue-50'
                     : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
@@ -454,7 +454,7 @@ const JobseekerHeader = ({ disabled = false }) => {
               <Link
                 to="/messages"
                 onClick={closeMobileMenu}
-                className={`block px-3 py-2 text-sm font-medium transition-all duration-200 rounded-lg cursor-pointer ${
+                className={`block px-3 py-1.5 text-xs font-medium transition-all duration-200 rounded-lg cursor-pointer ${
                   isNavActive('/messages')
                     ? 'text-blue-600 bg-blue-50'
                     : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'

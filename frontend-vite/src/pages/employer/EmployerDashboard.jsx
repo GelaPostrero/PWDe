@@ -131,111 +131,110 @@ const EmployerDashboard = () => {
 
       {/* Main Content */}
       <main className="flex-1 py-4 sm:py-6 lg:py-8">
-        <div className="mx-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-16">
+        <div className="mx-full ml-8 mr-8 px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* Top Section - Full Width Company Profile */}
-            <div className="lg:col-span-3 mb-4 sm:mb-6 lg:mb-3">
+            <div className="lg:col-span-4 mb-4 lg:mb-2 mt-1">
               {/* Company Profile Section */}
               <div className="bg-white rounded-lg shadow p-4 sm:p-6">
-                <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
-                  {/* Company Logo */}
-                  <div className="relative flex-shrink-0 flex justify-center sm:justify-start">
-                    <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold text-lg">TECH</span>
+                <div className="flex flex-col lg:flex-row lg:items-center space-y-4 lg:space-y-0 lg:space-x-6">
+                  {/* Company Logo & Basic Info */}
+                  <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 flex-shrink-0">
+                    <div className="relative flex-shrink-0 flex justify-center sm:justify-start">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-purple-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-lg sm:text-xl">TECH</span>
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
                     </div>
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
-                  </div>
 
-                  {/* Company Name and Rating */}
-                  <div className="flex-shrink-0 text-center sm:text-left">
-                    <h2 className="text-lg font-bold text-gray-900">{companyProfile.name}</h2>
-                    <p className="text-sm text-gray-600">Industry Preference</p>
-                    <div className="flex items-center justify-center sm:justify-start mt-1">
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <svg
-                            key={i}
-                            className={`w-4 h-4 ${
-                              i < Math.floor(companyProfile.rating) 
-                                ? 'text-yellow-400' 
-                                : i < companyProfile.rating 
+                    {/* Company Name and Rating */}
+                    <div className="text-center sm:text-left">
+                      <h2 className="text-lg sm:text-xl font-bold text-gray-900">{companyProfile.name}</h2>
+                      <p className="text-sm sm:text-base text-gray-600">Industry Preference</p>
+                      <div className="flex items-center justify-center sm:justify-start mt-2">
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <svg
+                              key={i}
+                              className={`w-4 h-4 ${
+                                i < Math.floor(companyProfile.rating) 
                                   ? 'text-yellow-400' 
-                                  : 'text-gray-300'
-                            }`}
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        ))}
+                                  : i < companyProfile.rating 
+                                    ? 'text-yellow-400' 
+                                    : 'text-gray-300'
+                              }`}
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                          ))}
+                        </div>
+                        <span className="ml-2 text-sm text-gray-600 font-medium">{companyProfile.rating}/5</span>
                       </div>
-                      <span className="ml-1 text-xs text-gray-600 font-medium">{companyProfile.rating}/5</span>
                     </div>
                   </div>
 
-                  {/* Key Metrics - inline with profile */}
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-1">
-                   <Link to="/employer/profile" className="flex-1 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
-                      <div className="flex items-center justify-between h-full">
-                        <div className="flex flex-col items-start">
-                          <span className="text-xs font-medium text-gray-600 mb-1">Profile Views</span>
-                          <div className="text-xl font-bold text-gray-600">{companyProfile.profileViews}</div>
+                  {/* Key Metrics - responsive grid */}
+                  <div className="flex-1">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                      <Link to="/employer/profile" className="p-3 sm:p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                        <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+                          <div className="flex items-center justify-center lg:justify-between w-full mb-2">
+                            <span className="text-xs font-medium text-gray-600">Profile Views</span>
+                            <svg className="w-4 h-4 text-blue-600 hidden lg:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                          </div>
+                          <div className="text-xl sm:text-2xl font-bold text-gray-900">{companyProfile.profileViews}</div>
                         </div>
-                        <div className="flex items-center">
-                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                          </svg>
+                      </Link>
+
+                      <Link to="/employer/applications" className="p-3 sm:p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                        <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+                          <div className="flex items-center justify-center lg:justify-between w-full mb-2">
+                            <span className="text-xs font-medium text-gray-600">Applications</span>
+                            <svg className="w-4 h-4 text-blue-600 hidden lg:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                          </div>
+                          <div className="text-xl sm:text-2xl font-bold text-gray-900">{companyProfile.applications}</div>
                         </div>
-                      </div>
-                    </Link>
-                    <Link to="/employer/applications" className="flex-1 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
-                      <div className="flex items-center justify-between h-full">
-                        <div className="flex flex-col items-start">
-                          <span className="text-xs font-medium text-gray-600 mb-1">Applications</span>
-                          <div className="text-xl font-bold text-gray-600">{companyProfile.applications}</div>
+                      </Link>
+
+                      <Link to="/employer/applications" className="p-3 sm:p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                        <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+                          <div className="flex items-center justify-center lg:justify-between w-full mb-2">
+                            <span className="text-xs font-medium text-gray-600">Interviews</span>
+                            <svg className="w-4 h-4 text-blue-600 hidden lg:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                          <div className="text-xl sm:text-2xl font-bold text-gray-900">{companyProfile.interviews}</div>
                         </div>
-                        <div className="flex items-center">
-                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                          </svg>
+                      </Link>
+
+                      <Link to="/employer/candidates" className="p-3 sm:p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                        <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+                          <div className="flex items-center justify-center lg:justify-between w-full mb-2">
+                            <span className="text-xs font-medium text-gray-600">Saved Jobs</span>
+                            <svg className="w-4 h-4 text-blue-600 hidden lg:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                          </div>
+                          <div className="text-xl sm:text-2xl font-bold text-gray-900">{companyProfile.savedJobs}</div>
                         </div>
-                      </div>
-                    </Link>
-                    <Link to="/employer/applications" className="flex-1 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
-                      <div className="flex items-center justify-between h-full">
-                        <div className="flex flex-col items-start">
-                          <span className="text-xs font-medium text-gray-600 mb-1">Interviews</span>
-                          <div className="text-xl font-bold text-gray-600">{companyProfile.interviews}</div>
-                        </div>
-                        <div className="flex items-center">
-                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </Link>
-                    <Link to="/employer/candidates" className="flex-1 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
-                      <div className="flex items-center justify-between h-full">
-                        <div className="flex flex-col items-start">
-                          <span className="text-xs font-medium text-gray-600 mb-1">Saved Jobs</span>
-                          <div className="text-xl font-bold text-gray-600">{companyProfile.savedJobs}</div>
-                        </div>
-                        <div className="flex items-center">
-                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </Link>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Left Column - Job Postings and Recent Applicants */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="lg:col-span-3">
               
               {/* Your Job Postings Section */}
               <div className="bg-white rounded-lg shadow p-4 sm:p-6 ">
@@ -375,20 +374,20 @@ const EmployerDashboard = () => {
               </div>
 
               {/* Recent Applicants Section */}
-              <div className="bg-white rounded-lg shadow p-4 sm:p-6">
+              <div className="bg-white rounded-lg shadow p-4 sm:p-6 mt-7">
                 <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Recent Applicants</h3>
                 <div className="space-y-4">
                   {recentApplicants.map((applicant) => (
-                    <div key={applicant.id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
-                      <div className="flex items-center space-x-3">
+                    <div key={applicant.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                      <div className="flex items-center space-x-3 flex-1 min-w-0">
                         <img
                           src={applicant.avatar}
                           alt={applicant.name}
-                          className="w-10 h-10 rounded-full object-cover"
+                          className="w-12 h-12 rounded-full object-cover flex-shrink-0"
                         />
-                        <div>
-                          <h4 className="font-medium text-gray-900 text-sm sm:text-base">{applicant.name}</h4>
-                          <p className="text-xs sm:text-sm text-gray-600">{applicant.role}</p>
+                        <div className="min-w-0 flex-1">
+                          <h4 className="font-medium text-gray-900 text-sm truncate">{applicant.name}</h4>
+                          <p className="text-xs text-gray-600 truncate">{applicant.role}</p>
                           <div className="flex items-center mt-1">
                             <div className="flex">
                               {[...Array(5)].map((_, i) => (
@@ -401,14 +400,14 @@ const EmployerDashboard = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 flex-shrink-0">
                         <Link
                           to={`/employer/applicant/${applicant.id}`}
-                          className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-medium rounded-lg transition-colors"
+                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
                         >
                           Review
                         </Link>
-                        <button className="p-2 text-gray-400 hover:text-gray-600">
+                        <button className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                           </svg>
@@ -421,14 +420,14 @@ const EmployerDashboard = () => {
             </div>
 
             {/* Right Column - Profile Completion, Quick Actions, Accessibility */}
-            <div className="lg:col-span-1 space-y-4 sm:space-y-6">
+            <div className="lg:col-span-1 space-y-6">
               {/* Profile Completion */}
               <div className="bg-white rounded-lg shadow p-4 sm:p-6">
                 <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Profile Completion</h3>
                 <div className="mb-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                  <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium text-gray-700">{profileCompletion.percentage}% Complete</span>
-                    <span className="text-xs sm:text-sm text-gray-500">{profileCompletion.remaining.length} item left</span>
+                    <span className="text-xs text-gray-500">{profileCompletion.remaining.length} item left</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div 
@@ -440,26 +439,26 @@ const EmployerDashboard = () => {
 
                 <div className="space-y-3 mb-4">
                   {profileCompletion.completed.map((item, index) => (
-                    <div key={index} className="flex items-center space-x-2">
-                      <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                    <div key={index} className="flex items-center space-x-3">
+                      <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                         <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <span className="text-xs sm:text-sm text-gray-700">{item}</span>
+                      <span className="text-sm text-gray-700 flex-1">{item}</span>
                     </div>
                   ))}
                   {profileCompletion.remaining.map((item, index) => (
-                    <div key={index} className="flex items-center space-x-2">
-                      <div className="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
-                      <span className="text-xs sm:text-sm text-gray-500">{item}</span>
+                    <div key={index} className="flex items-center space-x-3">
+                      <div className="w-5 h-5 border-2 border-gray-300 rounded-full flex-shrink-0"></div>
+                      <span className="text-sm text-gray-500 flex-1">{item}</span>
                     </div>
                   ))}
                 </div>
                 
                 <Link 
                   to="/employer/profile"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors text-sm sm:text-base text-center block"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors text-sm text-center block"
                 >
                   Complete Your Profile
                 </Link>
@@ -475,11 +474,14 @@ const EmployerDashboard = () => {
                       to={action.href}
                       className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
                     >
-                      <span className="text-xl sm:text-2xl">{action.icon}</span>
-                      <div className="flex-1">
-                        <div className="font-medium text-gray-900 text-sm sm:text-base">{action.title}</div>
-                        <div className="text-xs sm:text-sm text-gray-500">{action.subtitle}</div>
+                      <span className="text-xl flex-shrink-0">{action.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium text-gray-900 text-sm truncate">{action.title}</div>
+                        <div className="text-xs text-gray-500 truncate">{action.subtitle}</div>
                       </div>
+                      <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
                     </Link>
                   ))}
                 </div>
@@ -490,10 +492,10 @@ const EmployerDashboard = () => {
                 <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Accessibility Tools</h3>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs sm:text-sm font-medium text-gray-700">High Contrast</span>
+                    <span className="text-sm font-medium text-gray-700 flex-1">High Contrast</span>
                     <button
                       onClick={() => setHighContrast(!highContrast)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors flex-shrink-0 ${
                         highContrast ? 'bg-blue-600' : 'bg-gray-200'
                       }`}
                     >
@@ -505,10 +507,10 @@ const EmployerDashboard = () => {
                     </button>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs sm:text-sm font-medium text-gray-700">Large Text</span>
+                    <span className="text-sm font-medium text-gray-700 flex-1">Large Text</span>
                     <button
                       onClick={() => setLargeText(!largeText)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors flex-shrink-0 ${
                         largeText ? 'bg-blue-600' : 'bg-gray-200'
                       }`}
                     >
