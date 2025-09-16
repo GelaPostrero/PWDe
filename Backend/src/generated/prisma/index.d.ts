@@ -4773,6 +4773,7 @@ export namespace Prisma {
     profession: string | null
     portfolio_url: string | null
     github_url: string | null
+    linkedin_url: string | null
     professional_role: string | null
     professional_summary: string | null
     hourly_rate: number | null
@@ -4796,6 +4797,7 @@ export namespace Prisma {
     security_alerts: boolean | null
     resume_cv: string | null
     basic_information: boolean | null
+    professional_summary_completed: boolean | null
     professional_experience: boolean | null
     education: boolean | null
     portfolio_items: boolean | null
@@ -4824,6 +4826,7 @@ export namespace Prisma {
     profession: string | null
     portfolio_url: string | null
     github_url: string | null
+    linkedin_url: string | null
     professional_role: string | null
     professional_summary: string | null
     hourly_rate: number | null
@@ -4847,6 +4850,7 @@ export namespace Prisma {
     security_alerts: boolean | null
     resume_cv: string | null
     basic_information: boolean | null
+    professional_summary_completed: boolean | null
     professional_experience: boolean | null
     education: boolean | null
     portfolio_items: boolean | null
@@ -4877,6 +4881,7 @@ export namespace Prisma {
     skills: number
     portfolio_url: number
     github_url: number
+    linkedin_url: number
     otherPlatform: number
     professional_role: number
     professional_summary: number
@@ -4901,6 +4906,7 @@ export namespace Prisma {
     security_alerts: number
     resume_cv: number
     basic_information: number
+    professional_summary_completed: number
     professional_experience: number
     education: number
     portfolio_items: number
@@ -4949,6 +4955,7 @@ export namespace Prisma {
     profession?: true
     portfolio_url?: true
     github_url?: true
+    linkedin_url?: true
     professional_role?: true
     professional_summary?: true
     hourly_rate?: true
@@ -4972,6 +4979,7 @@ export namespace Prisma {
     security_alerts?: true
     resume_cv?: true
     basic_information?: true
+    professional_summary_completed?: true
     professional_experience?: true
     education?: true
     portfolio_items?: true
@@ -5000,6 +5008,7 @@ export namespace Prisma {
     profession?: true
     portfolio_url?: true
     github_url?: true
+    linkedin_url?: true
     professional_role?: true
     professional_summary?: true
     hourly_rate?: true
@@ -5023,6 +5032,7 @@ export namespace Prisma {
     security_alerts?: true
     resume_cv?: true
     basic_information?: true
+    professional_summary_completed?: true
     professional_experience?: true
     education?: true
     portfolio_items?: true
@@ -5053,6 +5063,7 @@ export namespace Prisma {
     skills?: true
     portfolio_url?: true
     github_url?: true
+    linkedin_url?: true
     otherPlatform?: true
     professional_role?: true
     professional_summary?: true
@@ -5077,6 +5088,7 @@ export namespace Prisma {
     security_alerts?: true
     resume_cv?: true
     basic_information?: true
+    professional_summary_completed?: true
     professional_experience?: true
     education?: true
     portfolio_items?: true
@@ -5194,6 +5206,7 @@ export namespace Prisma {
     skills: string[]
     portfolio_url: string | null
     github_url: string | null
+    linkedin_url: string | null
     otherPlatform: string[]
     professional_role: string | null
     professional_summary: string | null
@@ -5218,6 +5231,7 @@ export namespace Prisma {
     security_alerts: boolean
     resume_cv: string | null
     basic_information: boolean
+    professional_summary_completed: boolean
     professional_experience: boolean
     education: boolean
     portfolio_items: boolean
@@ -5267,6 +5281,7 @@ export namespace Prisma {
     skills?: boolean
     portfolio_url?: boolean
     github_url?: boolean
+    linkedin_url?: boolean
     otherPlatform?: boolean
     professional_role?: boolean
     professional_summary?: boolean
@@ -5291,6 +5306,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: boolean
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -5332,6 +5348,7 @@ export namespace Prisma {
     skills?: boolean
     portfolio_url?: boolean
     github_url?: boolean
+    linkedin_url?: boolean
     otherPlatform?: boolean
     professional_role?: boolean
     professional_summary?: boolean
@@ -5356,6 +5373,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: boolean
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -5387,6 +5405,7 @@ export namespace Prisma {
     skills?: boolean
     portfolio_url?: boolean
     github_url?: boolean
+    linkedin_url?: boolean
     otherPlatform?: boolean
     professional_role?: boolean
     professional_summary?: boolean
@@ -5411,6 +5430,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: boolean
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -5442,6 +5462,7 @@ export namespace Prisma {
     skills?: boolean
     portfolio_url?: boolean
     github_url?: boolean
+    linkedin_url?: boolean
     otherPlatform?: boolean
     professional_role?: boolean
     professional_summary?: boolean
@@ -5466,6 +5487,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: boolean
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -5473,7 +5495,7 @@ export namespace Prisma {
     set_accessibility_preferences?: boolean
   }
 
-  export type Pwd_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"first_name" | "last_name" | "middle_name" | "profile_picture" | "bio" | "disability_Type" | "disability_severity" | "gender" | "rating" | "profile_views" | "interviews" | "created_at" | "updated_at" | "pwd_id" | "user_id" | "date_of_birth" | "address" | "pwd_document" | "profession" | "skills" | "portfolio_url" | "github_url" | "otherPlatform" | "professional_role" | "professional_summary" | "hourly_rate" | "profile_visibility" | "show_email" | "show_phone_number" | "show_location" | "allow_messages" | "show_online_status" | "email_job_matches" | "messages" | "application_updates" | "email_profile_views" | "weekly_digest" | "marketing_emails" | "push_notif_job_matches" | "push_notif_messages" | "push_notif_application_updates" | "push_notif_profile_views" | "urgent_messages" | "security_alerts" | "resume_cv" | "basic_information" | "professional_experience" | "education" | "portfolio_items" | "skills_assessment" | "set_accessibility_preferences", ExtArgs["result"]["pwd_Profile"]>
+  export type Pwd_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"first_name" | "last_name" | "middle_name" | "profile_picture" | "bio" | "disability_Type" | "disability_severity" | "gender" | "rating" | "profile_views" | "interviews" | "created_at" | "updated_at" | "pwd_id" | "user_id" | "date_of_birth" | "address" | "pwd_document" | "profession" | "skills" | "portfolio_url" | "github_url" | "linkedin_url" | "otherPlatform" | "professional_role" | "professional_summary" | "hourly_rate" | "profile_visibility" | "show_email" | "show_phone_number" | "show_location" | "allow_messages" | "show_online_status" | "email_job_matches" | "messages" | "application_updates" | "email_profile_views" | "weekly_digest" | "marketing_emails" | "push_notif_job_matches" | "push_notif_messages" | "push_notif_application_updates" | "push_notif_profile_views" | "urgent_messages" | "security_alerts" | "resume_cv" | "basic_information" | "professional_summary_completed" | "professional_experience" | "education" | "portfolio_items" | "skills_assessment" | "set_accessibility_preferences", ExtArgs["result"]["pwd_Profile"]>
   export type Pwd_ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | Pwd_Profile$applicationsArgs<ExtArgs>
     accessibility_needs?: boolean | Pwd_Profile$accessibility_needsArgs<ExtArgs>
@@ -5531,6 +5553,7 @@ export namespace Prisma {
       skills: string[]
       portfolio_url: string | null
       github_url: string | null
+      linkedin_url: string | null
       otherPlatform: string[]
       professional_role: string | null
       professional_summary: string | null
@@ -5555,6 +5578,7 @@ export namespace Prisma {
       security_alerts: boolean
       resume_cv: string | null
       basic_information: boolean
+      professional_summary_completed: boolean
       professional_experience: boolean
       education: boolean
       portfolio_items: boolean
@@ -6015,6 +6039,7 @@ export namespace Prisma {
     readonly skills: FieldRef<"Pwd_Profile", 'String[]'>
     readonly portfolio_url: FieldRef<"Pwd_Profile", 'String'>
     readonly github_url: FieldRef<"Pwd_Profile", 'String'>
+    readonly linkedin_url: FieldRef<"Pwd_Profile", 'String'>
     readonly otherPlatform: FieldRef<"Pwd_Profile", 'String[]'>
     readonly professional_role: FieldRef<"Pwd_Profile", 'String'>
     readonly professional_summary: FieldRef<"Pwd_Profile", 'String'>
@@ -6039,6 +6064,7 @@ export namespace Prisma {
     readonly security_alerts: FieldRef<"Pwd_Profile", 'Boolean'>
     readonly resume_cv: FieldRef<"Pwd_Profile", 'String'>
     readonly basic_information: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly professional_summary_completed: FieldRef<"Pwd_Profile", 'Boolean'>
     readonly professional_experience: FieldRef<"Pwd_Profile", 'Boolean'>
     readonly education: FieldRef<"Pwd_Profile", 'Boolean'>
     readonly portfolio_items: FieldRef<"Pwd_Profile", 'Boolean'>
@@ -17468,6 +17494,8 @@ export namespace Prisma {
     resume_id: number | null
     custom_message: string | null
     proposed_salary: Decimal | null
+    work_experience: string | null
+    portfolio_links: string | null
     submitted_at: Date | null
     updated_at: Date | null
     status_changed_at: Date | null
@@ -17481,6 +17509,8 @@ export namespace Prisma {
     resume_id: number | null
     custom_message: string | null
     proposed_salary: Decimal | null
+    work_experience: string | null
+    portfolio_links: string | null
     submitted_at: Date | null
     updated_at: Date | null
     status_changed_at: Date | null
@@ -17494,6 +17524,8 @@ export namespace Prisma {
     resume_id: number
     custom_message: number
     proposed_salary: number
+    work_experience: number
+    portfolio_links: number
     submitted_at: number
     updated_at: number
     status_changed_at: number
@@ -17527,6 +17559,8 @@ export namespace Prisma {
     resume_id?: true
     custom_message?: true
     proposed_salary?: true
+    work_experience?: true
+    portfolio_links?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17540,6 +17574,8 @@ export namespace Prisma {
     resume_id?: true
     custom_message?: true
     proposed_salary?: true
+    work_experience?: true
+    portfolio_links?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17553,6 +17589,8 @@ export namespace Prisma {
     resume_id?: true
     custom_message?: true
     proposed_salary?: true
+    work_experience?: true
+    portfolio_links?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17653,6 +17691,8 @@ export namespace Prisma {
     resume_id: number
     custom_message: string
     proposed_salary: Decimal
+    work_experience: string | null
+    portfolio_links: string | null
     submitted_at: Date
     updated_at: Date
     status_changed_at: Date
@@ -17685,6 +17725,8 @@ export namespace Prisma {
     resume_id?: boolean
     custom_message?: boolean
     proposed_salary?: boolean
+    work_experience?: boolean
+    portfolio_links?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
@@ -17705,6 +17747,8 @@ export namespace Prisma {
     resume_id?: boolean
     custom_message?: boolean
     proposed_salary?: boolean
+    work_experience?: boolean
+    portfolio_links?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
@@ -17722,6 +17766,8 @@ export namespace Prisma {
     resume_id?: boolean
     custom_message?: boolean
     proposed_salary?: boolean
+    work_experience?: boolean
+    portfolio_links?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
@@ -17739,12 +17785,14 @@ export namespace Prisma {
     resume_id?: boolean
     custom_message?: boolean
     proposed_salary?: boolean
+    work_experience?: boolean
+    portfolio_links?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
   }
 
-  export type ApplicationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"application_id" | "job_id" | "pwd_id" | "employer_id" | "resume_id" | "custom_message" | "proposed_salary" | "submitted_at" | "updated_at" | "status_changed_at", ExtArgs["result"]["applications"]>
+  export type ApplicationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"application_id" | "job_id" | "pwd_id" | "employer_id" | "resume_id" | "custom_message" | "proposed_salary" | "work_experience" | "portfolio_links" | "submitted_at" | "updated_at" | "status_changed_at", ExtArgs["result"]["applications"]>
   export type ApplicationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
@@ -17785,6 +17833,8 @@ export namespace Prisma {
       resume_id: number
       custom_message: string
       proposed_salary: Prisma.Decimal
+      work_experience: string | null
+      portfolio_links: string | null
       submitted_at: Date
       updated_at: Date
       status_changed_at: Date
@@ -18224,6 +18274,8 @@ export namespace Prisma {
     readonly resume_id: FieldRef<"Applications", 'Int'>
     readonly custom_message: FieldRef<"Applications", 'String'>
     readonly proposed_salary: FieldRef<"Applications", 'Decimal'>
+    readonly work_experience: FieldRef<"Applications", 'String'>
+    readonly portfolio_links: FieldRef<"Applications", 'String'>
     readonly submitted_at: FieldRef<"Applications", 'DateTime'>
     readonly updated_at: FieldRef<"Applications", 'DateTime'>
     readonly status_changed_at: FieldRef<"Applications", 'DateTime'>
@@ -29374,6 +29426,7 @@ export namespace Prisma {
     skills: 'skills',
     portfolio_url: 'portfolio_url',
     github_url: 'github_url',
+    linkedin_url: 'linkedin_url',
     otherPlatform: 'otherPlatform',
     professional_role: 'professional_role',
     professional_summary: 'professional_summary',
@@ -29398,6 +29451,7 @@ export namespace Prisma {
     security_alerts: 'security_alerts',
     resume_cv: 'resume_cv',
     basic_information: 'basic_information',
+    professional_summary_completed: 'professional_summary_completed',
     professional_experience: 'professional_experience',
     education: 'education',
     portfolio_items: 'portfolio_items',
@@ -29571,6 +29625,8 @@ export namespace Prisma {
     resume_id: 'resume_id',
     custom_message: 'custom_message',
     proposed_salary: 'proposed_salary',
+    work_experience: 'work_experience',
+    portfolio_links: 'portfolio_links',
     submitted_at: 'submitted_at',
     updated_at: 'updated_at',
     status_changed_at: 'status_changed_at'
@@ -30134,6 +30190,7 @@ export namespace Prisma {
     skills?: StringNullableListFilter<"Pwd_Profile">
     portfolio_url?: StringNullableFilter<"Pwd_Profile"> | string | null
     github_url?: StringNullableFilter<"Pwd_Profile"> | string | null
+    linkedin_url?: StringNullableFilter<"Pwd_Profile"> | string | null
     otherPlatform?: StringNullableListFilter<"Pwd_Profile">
     professional_role?: StringNullableFilter<"Pwd_Profile"> | string | null
     professional_summary?: StringNullableFilter<"Pwd_Profile"> | string | null
@@ -30158,6 +30215,7 @@ export namespace Prisma {
     security_alerts?: BoolFilter<"Pwd_Profile"> | boolean
     resume_cv?: StringNullableFilter<"Pwd_Profile"> | string | null
     basic_information?: BoolFilter<"Pwd_Profile"> | boolean
+    professional_summary_completed?: BoolFilter<"Pwd_Profile"> | boolean
     professional_experience?: BoolFilter<"Pwd_Profile"> | boolean
     education?: BoolFilter<"Pwd_Profile"> | boolean
     portfolio_items?: BoolFilter<"Pwd_Profile"> | boolean
@@ -30198,6 +30256,7 @@ export namespace Prisma {
     skills?: SortOrder
     portfolio_url?: SortOrderInput | SortOrder
     github_url?: SortOrderInput | SortOrder
+    linkedin_url?: SortOrderInput | SortOrder
     otherPlatform?: SortOrder
     professional_role?: SortOrderInput | SortOrder
     professional_summary?: SortOrderInput | SortOrder
@@ -30222,6 +30281,7 @@ export namespace Prisma {
     security_alerts?: SortOrder
     resume_cv?: SortOrderInput | SortOrder
     basic_information?: SortOrder
+    professional_summary_completed?: SortOrder
     professional_experience?: SortOrder
     education?: SortOrder
     portfolio_items?: SortOrder
@@ -30265,6 +30325,7 @@ export namespace Prisma {
     skills?: StringNullableListFilter<"Pwd_Profile">
     portfolio_url?: StringNullableFilter<"Pwd_Profile"> | string | null
     github_url?: StringNullableFilter<"Pwd_Profile"> | string | null
+    linkedin_url?: StringNullableFilter<"Pwd_Profile"> | string | null
     otherPlatform?: StringNullableListFilter<"Pwd_Profile">
     professional_role?: StringNullableFilter<"Pwd_Profile"> | string | null
     professional_summary?: StringNullableFilter<"Pwd_Profile"> | string | null
@@ -30289,6 +30350,7 @@ export namespace Prisma {
     security_alerts?: BoolFilter<"Pwd_Profile"> | boolean
     resume_cv?: StringNullableFilter<"Pwd_Profile"> | string | null
     basic_information?: BoolFilter<"Pwd_Profile"> | boolean
+    professional_summary_completed?: BoolFilter<"Pwd_Profile"> | boolean
     professional_experience?: BoolFilter<"Pwd_Profile"> | boolean
     education?: BoolFilter<"Pwd_Profile"> | boolean
     portfolio_items?: BoolFilter<"Pwd_Profile"> | boolean
@@ -30329,6 +30391,7 @@ export namespace Prisma {
     skills?: SortOrder
     portfolio_url?: SortOrderInput | SortOrder
     github_url?: SortOrderInput | SortOrder
+    linkedin_url?: SortOrderInput | SortOrder
     otherPlatform?: SortOrder
     professional_role?: SortOrderInput | SortOrder
     professional_summary?: SortOrderInput | SortOrder
@@ -30353,6 +30416,7 @@ export namespace Prisma {
     security_alerts?: SortOrder
     resume_cv?: SortOrderInput | SortOrder
     basic_information?: SortOrder
+    professional_summary_completed?: SortOrder
     professional_experience?: SortOrder
     education?: SortOrder
     portfolio_items?: SortOrder
@@ -30391,6 +30455,7 @@ export namespace Prisma {
     skills?: StringNullableListFilter<"Pwd_Profile">
     portfolio_url?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     github_url?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
+    linkedin_url?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     otherPlatform?: StringNullableListFilter<"Pwd_Profile">
     professional_role?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     professional_summary?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
@@ -30415,6 +30480,7 @@ export namespace Prisma {
     security_alerts?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
     resume_cv?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     basic_information?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    professional_summary_completed?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
     professional_experience?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
     education?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
     portfolio_items?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
@@ -31247,6 +31313,8 @@ export namespace Prisma {
     resume_id?: IntFilter<"Applications"> | number
     custom_message?: StringFilter<"Applications"> | string
     proposed_salary?: DecimalFilter<"Applications"> | Decimal | DecimalJsLike | number | string
+    work_experience?: StringNullableFilter<"Applications"> | string | null
+    portfolio_links?: StringNullableFilter<"Applications"> | string | null
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
@@ -31266,6 +31334,8 @@ export namespace Prisma {
     resume_id?: SortOrder
     custom_message?: SortOrder
     proposed_salary?: SortOrder
+    work_experience?: SortOrderInput | SortOrder
+    portfolio_links?: SortOrderInput | SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -31288,6 +31358,8 @@ export namespace Prisma {
     resume_id?: IntFilter<"Applications"> | number
     custom_message?: StringFilter<"Applications"> | string
     proposed_salary?: DecimalFilter<"Applications"> | Decimal | DecimalJsLike | number | string
+    work_experience?: StringNullableFilter<"Applications"> | string | null
+    portfolio_links?: StringNullableFilter<"Applications"> | string | null
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
@@ -31307,6 +31379,8 @@ export namespace Prisma {
     resume_id?: SortOrder
     custom_message?: SortOrder
     proposed_salary?: SortOrder
+    work_experience?: SortOrderInput | SortOrder
+    portfolio_links?: SortOrderInput | SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -31328,6 +31402,8 @@ export namespace Prisma {
     resume_id?: IntWithAggregatesFilter<"Applications"> | number
     custom_message?: StringWithAggregatesFilter<"Applications"> | string
     proposed_salary?: DecimalWithAggregatesFilter<"Applications"> | Decimal | DecimalJsLike | number | string
+    work_experience?: StringNullableWithAggregatesFilter<"Applications"> | string | null
+    portfolio_links?: StringNullableWithAggregatesFilter<"Applications"> | string | null
     submitted_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
@@ -32244,6 +32320,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -32268,6 +32345,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -32308,6 +32386,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -32332,6 +32411,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -32369,6 +32449,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32393,6 +32474,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -32433,6 +32515,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32457,6 +32540,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -32496,6 +32580,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -32520,6 +32605,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -32548,6 +32634,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32572,6 +32659,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -32602,6 +32690,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32626,6 +32715,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -33519,6 +33609,8 @@ export namespace Prisma {
   export type ApplicationsCreateInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -33538,6 +33630,8 @@ export namespace Prisma {
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -33548,6 +33642,8 @@ export namespace Prisma {
   export type ApplicationsUpdateInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33567,6 +33663,8 @@ export namespace Prisma {
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33582,6 +33680,8 @@ export namespace Prisma {
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -33590,6 +33690,8 @@ export namespace Prisma {
   export type ApplicationsUpdateManyMutationInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33603,6 +33705,8 @@ export namespace Prisma {
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34824,6 +34928,7 @@ export namespace Prisma {
     skills?: SortOrder
     portfolio_url?: SortOrder
     github_url?: SortOrder
+    linkedin_url?: SortOrder
     otherPlatform?: SortOrder
     professional_role?: SortOrder
     professional_summary?: SortOrder
@@ -34848,6 +34953,7 @@ export namespace Prisma {
     security_alerts?: SortOrder
     resume_cv?: SortOrder
     basic_information?: SortOrder
+    professional_summary_completed?: SortOrder
     professional_experience?: SortOrder
     education?: SortOrder
     portfolio_items?: SortOrder
@@ -34885,6 +34991,7 @@ export namespace Prisma {
     profession?: SortOrder
     portfolio_url?: SortOrder
     github_url?: SortOrder
+    linkedin_url?: SortOrder
     professional_role?: SortOrder
     professional_summary?: SortOrder
     hourly_rate?: SortOrder
@@ -34908,6 +35015,7 @@ export namespace Prisma {
     security_alerts?: SortOrder
     resume_cv?: SortOrder
     basic_information?: SortOrder
+    professional_summary_completed?: SortOrder
     professional_experience?: SortOrder
     education?: SortOrder
     portfolio_items?: SortOrder
@@ -34936,6 +35044,7 @@ export namespace Prisma {
     profession?: SortOrder
     portfolio_url?: SortOrder
     github_url?: SortOrder
+    linkedin_url?: SortOrder
     professional_role?: SortOrder
     professional_summary?: SortOrder
     hourly_rate?: SortOrder
@@ -34959,6 +35068,7 @@ export namespace Prisma {
     security_alerts?: SortOrder
     resume_cv?: SortOrder
     basic_information?: SortOrder
+    professional_summary_completed?: SortOrder
     professional_experience?: SortOrder
     education?: SortOrder
     portfolio_items?: SortOrder
@@ -35650,6 +35760,8 @@ export namespace Prisma {
     resume_id?: SortOrder
     custom_message?: SortOrder
     proposed_salary?: SortOrder
+    work_experience?: SortOrder
+    portfolio_links?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -35672,6 +35784,8 @@ export namespace Prisma {
     resume_id?: SortOrder
     custom_message?: SortOrder
     proposed_salary?: SortOrder
+    work_experience?: SortOrder
+    portfolio_links?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -35685,6 +35799,8 @@ export namespace Prisma {
     resume_id?: SortOrder
     custom_message?: SortOrder
     proposed_salary?: SortOrder
+    work_experience?: SortOrder
+    portfolio_links?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -38922,6 +39038,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -38946,6 +39063,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -38984,6 +39102,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -39008,6 +39127,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -39452,6 +39572,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39476,6 +39597,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -39514,6 +39636,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39538,6 +39661,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -39758,6 +39882,8 @@ export namespace Prisma {
   export type ApplicationsCreateWithoutPwd_profileInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -39775,6 +39901,8 @@ export namespace Prisma {
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -40121,6 +40249,8 @@ export namespace Prisma {
     resume_id?: IntFilter<"Applications"> | number
     custom_message?: StringFilter<"Applications"> | string
     proposed_salary?: DecimalFilter<"Applications"> | Decimal | DecimalJsLike | number | string
+    work_experience?: StringNullableFilter<"Applications"> | string | null
+    portfolio_links?: StringNullableFilter<"Applications"> | string | null
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
@@ -40452,6 +40582,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -40476,6 +40607,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -40515,6 +40647,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -40539,6 +40672,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -40591,6 +40725,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40615,6 +40750,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -40654,6 +40790,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40678,6 +40815,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -40714,6 +40852,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -40738,6 +40877,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -40777,6 +40917,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -40801,6 +40942,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -40853,6 +40995,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40877,6 +41020,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -40916,6 +41060,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40940,6 +41085,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -40976,6 +41122,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -41000,6 +41147,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -41039,6 +41187,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -41063,6 +41212,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -41115,6 +41265,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41139,6 +41290,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -41178,6 +41330,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41202,6 +41355,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -41238,6 +41392,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -41262,6 +41417,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -41301,6 +41457,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -41325,6 +41482,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -41377,6 +41535,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41401,6 +41560,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -41440,6 +41600,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41464,6 +41625,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -41628,6 +41790,8 @@ export namespace Prisma {
   export type ApplicationsCreateWithoutEmployer_profileInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -41645,6 +41809,8 @@ export namespace Prisma {
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -41833,6 +41999,8 @@ export namespace Prisma {
   export type ApplicationsCreateWithoutResumeInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -41850,6 +42018,8 @@ export namespace Prisma {
     employer_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -41888,6 +42058,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -41912,6 +42083,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -41951,6 +42123,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -41975,6 +42148,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -42043,6 +42217,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42067,6 +42242,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -42106,6 +42282,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42130,6 +42307,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -42629,6 +42807,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -42653,6 +42832,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -42692,6 +42872,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -42716,6 +42897,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -43014,6 +43196,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43038,6 +43221,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -43077,6 +43261,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43101,6 +43286,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -43279,6 +43465,8 @@ export namespace Prisma {
   export type ApplicationsCreateWithoutReviewsInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43297,6 +43485,8 @@ export namespace Prisma {
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43422,6 +43612,8 @@ export namespace Prisma {
   export type ApplicationsUpdateWithoutReviewsInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43440,6 +43632,8 @@ export namespace Prisma {
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43561,6 +43755,8 @@ export namespace Prisma {
   export type ApplicationsCreateWithoutTransactionsInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43579,6 +43775,8 @@ export namespace Prisma {
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43611,6 +43809,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -43635,6 +43834,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -43674,6 +43874,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -43698,6 +43899,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -43814,6 +44016,8 @@ export namespace Prisma {
   export type ApplicationsUpdateWithoutTransactionsInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43832,6 +44036,8 @@ export namespace Prisma {
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43870,6 +44076,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43894,6 +44101,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -43933,6 +44141,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43957,6 +44166,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -44243,6 +44453,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -44267,6 +44478,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -44306,6 +44518,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -44330,6 +44543,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -44526,6 +44740,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44550,6 +44765,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -44589,6 +44805,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44613,6 +44830,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -44719,6 +44937,8 @@ export namespace Prisma {
   export type ApplicationsCreateWithoutJob_listingInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -44736,6 +44956,8 @@ export namespace Prisma {
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -45418,6 +45640,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -45442,6 +45665,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -45481,6 +45705,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
@@ -45505,6 +45730,7 @@ export namespace Prisma {
     security_alerts?: boolean
     resume_cv?: string | null
     basic_information?: boolean
+    professional_summary_completed?: boolean
     professional_experience?: boolean
     education?: boolean
     portfolio_items?: boolean
@@ -45619,6 +45845,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45643,6 +45870,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -45682,6 +45910,7 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45706,6 +45935,7 @@ export namespace Prisma {
     security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
     basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
     professional_experience?: BoolFieldUpdateOperationsInput | boolean
     education?: BoolFieldUpdateOperationsInput | boolean
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
@@ -46240,6 +46470,8 @@ export namespace Prisma {
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -46337,6 +46569,8 @@ export namespace Prisma {
   export type ApplicationsUpdateWithoutPwd_profileInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46354,6 +46588,8 @@ export namespace Prisma {
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46368,6 +46604,8 @@ export namespace Prisma {
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46677,6 +46915,8 @@ export namespace Prisma {
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -46803,6 +47043,8 @@ export namespace Prisma {
   export type ApplicationsUpdateWithoutEmployer_profileInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46820,6 +47062,8 @@ export namespace Prisma {
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46834,6 +47078,8 @@ export namespace Prisma {
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46863,6 +47109,8 @@ export namespace Prisma {
     employer_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -46871,6 +47119,8 @@ export namespace Prisma {
   export type ApplicationsUpdateWithoutResumeInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46888,6 +47138,8 @@ export namespace Prisma {
     employer_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46902,6 +47154,8 @@ export namespace Prisma {
     employer_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47039,6 +47293,8 @@ export namespace Prisma {
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -47064,6 +47320,8 @@ export namespace Prisma {
   export type ApplicationsUpdateWithoutJob_listingInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47081,6 +47339,8 @@ export namespace Prisma {
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47095,6 +47355,8 @@ export namespace Prisma {
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string

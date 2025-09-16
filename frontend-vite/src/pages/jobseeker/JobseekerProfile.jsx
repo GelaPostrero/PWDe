@@ -31,6 +31,7 @@ const JobseekerProfile = () => {
         ...prev,
         // Basic Information (from onboarding)
         firstName: fetchedData.firstname,
+        middleName: fetchedData.middlename,
         lastName: fetchedData.lastname,
         email: fetchedData.email,
         phone: fetchedData.phone,
@@ -87,6 +88,7 @@ const JobseekerProfile = () => {
         // Profile Completion
         profileCompletion: {
           basicInfo: fetchedData.basic_information,
+          professionalSummary: fetchedData.professional_summary_completed,
           professionalInfo: fetchedData.workexperience,
           skills: fetchedData.skills,
           education: fetchedData.education,
@@ -438,6 +440,7 @@ const JobseekerProfile = () => {
   const getCompletionItems = () => {
     return [
       { text: 'Basic information', completed: profileData.profileCompletion.basicInfo },
+      { text: 'Professional summary', completed: profileData.profileCompletion.professionalSummary },
       { text: 'Professional experience', completed: profileData.profileCompletion.professionalInfo },
       { text: 'Education', completed: profileData.profileCompletion.education },
       { text: 'Add portfolio items', completed: profileData.profileCompletion.portfolio },
@@ -525,7 +528,7 @@ const JobseekerProfile = () => {
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-1">
                     <h1 className="text-2xl font-bold text-gray-900">
-                      {profileData.firstName} {profileData.lastName}
+                      {profileData.firstName} {profileData.middleName} {profileData.lastName}
                     </h1>
                     {profileData.verification.identityVerified && (
                       <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">

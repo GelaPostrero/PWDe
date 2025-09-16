@@ -103,6 +103,7 @@ router.get('/dashboard', authenticateToken, async (req, res) => {
                     pwd_Profile: {
                         select: {
                             first_name: true,
+                            middle_name: true,
                             last_name: true,
                             professional_role: true,
                             rating: true,
@@ -136,7 +137,10 @@ router.get('/dashboard', authenticateToken, async (req, res) => {
                     profile_picture: user.pwd_Profile?.profile_picture
                     ? `http://localhost:4000/uploads/PWDs/${userId}/${user.pwd_Profile?.profile_picture}`
                     : null,
-                    fullname: `${user.pwd_Profile?.first_name} ${user.pwd_Profile?.last_name}`,
+                    fullname: `${user.pwd_Profile?.first_name || ''} ${user.pwd_Profile?.middle_name || ''} ${user.pwd_Profile?.last_name || ''}`.trim().replace(/\s+/g, ' '),
+                    firstname: user.pwd_Profile?.first_name,
+                    middlename: user.pwd_Profile?.middle_name,
+                    lastname: user.pwd_Profile?.last_name,
                     professional_role: user.pwd_Profile?.professional_role,
                     profile_views: user.pwd_Profile?.profile_views,
                     interviews: user.pwd_Profile?.interviews,
@@ -231,6 +235,7 @@ router.get('/profile', authenticateToken, async (req, res) => {
                         select: {
                             profile_picture: true,
                             first_name: true,
+                            middle_name: true,
                             last_name: true,
                             professional_role: true,
                             rating: true,
@@ -267,7 +272,9 @@ router.get('/profile', authenticateToken, async (req, res) => {
                     profile_picture: profile.pwd_Profile?.profile_picture
                     ? `http://localhost:4000/uploads/PWDs/${userId}/${profile.pwd_Profile?.profile_picture}`
                     : null,
+                    fullname: `${profile.pwd_Profile?.first_name || ''} ${profile.pwd_Profile?.middle_name || ''} ${profile.pwd_Profile?.last_name || ''}`.trim().replace(/\s+/g, ' '),
                     firstname: profile.pwd_Profile?.first_name,
+                    middlename: profile.pwd_Profile?.middle_name,
                     lastname: profile.pwd_Profile?.last_name,
                     professional_role: profile.pwd_Profile?.professional_role,
                     rating: profile.pwd_Profile?.rating,
@@ -282,7 +289,9 @@ router.get('/profile', authenticateToken, async (req, res) => {
                     professional_summary: profile.pwd_Profile?.professional_summary,
                     profession: profile.pwd_Profile?.profession,
                     basic_information: profile.pwd_Profile?.basic_information,
+                    professional_summary_completed: profile.pwd_Profile?.professional_summary_completed || false,
                     skills: profile.pwd_Profile?.skills,
+                    skills_assessment: profile.pwd_Profile?.skills_assessment || false,
                     education: profile.pwd_Profile?.education,
                     workexperience: profile.pwd_Profile?.professional_experience,
                     portfolio_items: profile.pwd_Profile?.portfolio_items,

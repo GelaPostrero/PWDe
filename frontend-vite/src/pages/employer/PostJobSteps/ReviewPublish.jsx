@@ -80,32 +80,6 @@ const ReviewPublish = ({ data, onDataChange, onPublish, onBack }) => {
             </div>
           </div>
 
-          {/* Key Responsibilities */}
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">Key Responsibilities</h3>
-            <ul className="space-y-2 text-gray-700">
-              <li className="flex items-start">
-                <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                Develop and maintain web applications using modern technologies
-              </li>
-              <li className="flex items-start">
-                <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                Implement accessibility features following WCAG 2.1 AA standards
-              </li>
-              <li className="flex items-start">
-                <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                Collaborate with UX/UI designers to create inclusive user experiences
-              </li>
-              <li className="flex items-start">
-                <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                Participate in code reviews and maintain coding standards
-              </li>
-              <li className="flex items-start">
-                <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                Mentor junior developers and contribute to team knowledge sharing
-              </li>
-            </ul>
-          </div>
 
           {/* Required Skills */}
           <div>

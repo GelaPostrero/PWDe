@@ -87,13 +87,6 @@ const PostedJobView = () => {
     views: 0,
     status: jobStatus,
     description: "We are seeking a talented Senior Software Developer to join our innovative team. You will be responsible for designing, developing, and maintaining high-quality software solutions that serve our diverse user base, including individuals with disabilities. As part of our commitment to accessibility and inclusion, you'll work on creating applications that are accessible to all users, implementing WCAG guidelines and ensuring our products can be used by everyone.",
-    keyResponsibilities: [
-      "Develop and maintain web applications using modern technologies",
-      "Implement accessibility features following WCAG 2.1 AA standards",
-      "Collaborate with UX/UI designers to create inclusive user experiences",
-      "Participate in code reviews and maintain coding standards",
-      "Mentor junior developers and contribute to team knowledge sharing"
-    ],
     requiredSkills: [
       { name: "JavaScript", category: "Programming" },
       { name: "React", category: "Programming" },
@@ -463,18 +456,6 @@ const PostedJobView = () => {
                       </div>
                     </div>
 
-                    {/* Key Responsibilities */}
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">Key Responsibilities:</h3>
-                      <ul className="space-y-2 text-gray-700">
-                        {mockJobData.keyResponsibilities.map((responsibility, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2.5 mr-3 flex-shrink-0"></span>
-                            {responsibility}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
 
                     {/* Required Skills */}
                     <div>

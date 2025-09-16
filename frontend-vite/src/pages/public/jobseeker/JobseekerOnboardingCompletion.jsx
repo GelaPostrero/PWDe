@@ -62,10 +62,12 @@ const JobseekerOnboardingCompletion = () => {
   // ---- form state ----
   const [role, setRole] = useState('');
   const [summary, setSummary] = useState('');
-  const [portfolioUrl, setPortfolioUrl] = useState('');
-  const [githubUrl, setGithubUrl] = useState('');
-  const [otherPlatformName, setOtherPlatformName] = useState('');
-  const [otherPlatformUrl, setOtherPlatformUrl] = useState('');
+  const [portfolioLinks, setPortfolioLinks] = useState({
+    linkedin: '',
+    github: '',
+    portfolio: '',
+    other: ''
+  });
   const [visibility, setVisibility] = useState('public');
   const [agreeTos, setAgreeTos] = useState(false);
   const [agreeShare, setAgreeShare] = useState(false);
@@ -83,6 +85,14 @@ const JobseekerOnboardingCompletion = () => {
   // drag state (resume)
   const [isDraggingResume, setIsDraggingResume] = useState(false);
   const [isLoading, setIsLoading] = useState(false);  
+
+  // ---- handlers ----
+  const handlePortfolioLinksChange = (field, value) => {
+    setPortfolioLinks(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
 
   // ---- validators ----
   const validatePhoto = (file) => {
@@ -213,9 +223,7 @@ const JobseekerOnboardingCompletion = () => {
 
   // ---- submit (with backend placeholder) ----
   const finish = async () => {
-    const otherPlatform = [`${otherPlatformName}`, `${otherPlatformUrl}`];
-
-    console.log("Other platform: ", otherPlatform);
+    console.log("Portfolio links: ", portfolioLinks);
     // basic agreements check (adjust if you want to make them required)
     if (!agreeTos || !agreeTruthful) {
       alert('Please agree to the Terms and confirm information is truthful.');
@@ -233,9 +241,10 @@ const JobseekerOnboardingCompletion = () => {
       const profileCompletion = new FormData();
       profileCompletion.append('role', role);
       profileCompletion.append('summary', summary);
-      profileCompletion.append('portfolioUrl', portfolioUrl);
-      profileCompletion.append('githubUrl', githubUrl);
-      profileCompletion.append('otherPlatform', JSON.stringify(otherPlatform)); 
+      profileCompletion.append('portfolioUrl', portfolioLinks.portfolio);
+      profileCompletion.append('githubUrl', portfolioLinks.github);
+      profileCompletion.append('linkedinUrl', portfolioLinks.linkedin);
+      profileCompletion.append('otherPlatform', JSON.stringify([portfolioLinks.other])); 
       profileCompletion.append('visibility', visibility);
 
       // Append files if present
@@ -453,43 +462,58 @@ const JobseekerOnboardingCompletion = () => {
 
               {/* Portfolio Links */}
               <div className="border border-gray-200 rounded-xl p-6">
-                <div className="font-medium text-gray-900 mb-2">Portfolio Links (Optional)</div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-sm text-gray-700 mb-1">Website/Portfolio URL</label>
-                    <input
-                      className="w-full border border-gray-200 rounded-lg px-4 py-3"
-                      placeholder="https://yourportfolio.com"
-                      value={portfolioUrl}
-                      onChange={(e) => setPortfolioUrl(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-700 mb-1">GitHub Profile</label>
-                    <input
-                      className="w-full border border-gray-200 rounded-lg px-4 py-3"
-                      placeholder="https://github.com/yourusername"
-                      value={githubUrl}
-                      onChange={(e) => setGithubUrl(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-700 mb-1">Other Portfolio</label>
-                    <div className="flex gap-2 mb-2">
+                <div className="font-medium text-gray-900 mb-4">Portfolio Links (Optional)</div>
+                <div className="space-y-4">
+                  {/* LinkedIn Profile and GitHub Profile - Side by Side */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">LinkedIn Profile</label>
                       <input
-                        className="w-40 border border-gray-200 hover:border-gray-300 rounded-lg px-3 py-3"
-                        placeholder="Platform name"
-                        value={otherPlatformName}
-                        onChange={(e) => setOtherPlatformName(e.target.value)}
+                        type="url"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        placeholder="https://linkedin.com/in/yourusername"
+                        value={portfolioLinks.linkedin || ''}
+                        onChange={(e) => handlePortfolioLinksChange('linkedin', e.target.value)}
                       />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">GitHub Profile</label>
                       <input
-                        className="flex-1 border border-gray-200 hover:border-gray-300 rounded-lg px-4 py-3"
-                        placeholder="https://example.com/yourprofile"
-                        value={otherPlatformUrl}
-                        onChange={(e) => setOtherPlatformUrl(e.target.value)}
+                        type="url"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        placeholder="https://github.com/yourusername"
+                        value={portfolioLinks.github || ''}
+                        onChange={(e) => handlePortfolioLinksChange('github', e.target.value)}
                       />
                     </div>
                   </div>
+                  
+                  {/* Portfolio Website and Other Links - Side by Side */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Portfolio Website</label>
+                      <input
+                        type="url"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        placeholder="https://yourportfolio.com"
+                        value={portfolioLinks.portfolio || ''}
+                        onChange={(e) => handlePortfolioLinksChange('portfolio', e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Other Links</label>
+                      <input
+                        type="url"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        placeholder="https://behance.net/yourusername or https://dribbble.com/yourusername"
+                        value={portfolioLinks.other || ''}
+                        onChange={(e) => handlePortfolioLinksChange('other', e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 text-sm text-gray-500">
+                  <p>Add your portfolio links to showcase your work to employers. These will be included in your profile.</p>
                 </div>
               </div>
 
@@ -544,12 +568,11 @@ const JobseekerOnboardingCompletion = () => {
                 <button 
                   onClick={goBack} 
                   disabled={isLoading}
-                  className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors ${
-                    isLoading 
-                      ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-gray-700 hover:bg-gray-50 cursor-pointer'
-                  }`}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                 >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
                   Back
                 </button>
                 <button
