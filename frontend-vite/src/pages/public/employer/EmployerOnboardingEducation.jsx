@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import EmployerHeader from '../../../components/ui/EmployerHeader.jsx';
 import Spinner from '../../../components/ui/Spinner.jsx';
 
@@ -75,7 +76,6 @@ const EmployerOnboardingEducation = () => {
 
   const handleNext = async () => {
     setIsLoading(true);
-    console.log('Education form validation passed, proceeding...');
 
     // Add minimum loading time to see spinner (remove this in production)
     const minLoadingTime = new Promise(resolve => setTimeout(resolve, 1500));
@@ -90,7 +90,7 @@ const EmployerOnboardingEducation = () => {
 
       if (token) {
         try {
-          const response = await fetch('http://localhost:4000/onboard/employer/education', {
+          const response = await fetch('http://localhost:4000/onboard/emp/onboard/work-environment', {
             method: 'POST',
             headers: { 
               "Authorization": `Bearer ${token}`,
@@ -103,6 +103,15 @@ const EmployerOnboardingEducation = () => {
             const data = await response.json();
             if (data.success) {
               console.log('Education data saved successfully:', educationData);
+              Swal.fire({
+                icon: 'success',
+                html: '<h5><b>Work Environment</b></h5>\n<h6>You may now start to fill up your Profile Completion.</h6>',
+                timer: 2000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                toast: true,
+                position: 'bottom-end'
+              });
             }
           }
         } catch (apiError) {

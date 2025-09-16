@@ -3,231 +3,158 @@ import { Link } from 'react-router-dom';
 import JobseekerHeader from '../../components/ui/JobseekerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
+import api from '../../utils/api.js';
 
 const SavedJobs = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('recent');
   const [isLoadingJobs, setIsLoadingJobs] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [savedJobsData, setSavedJobsData] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
+  const [error, setError] = useState(null);
+  const [appliedJobs, setAppliedJobs] = useState(new Set());
 
-  // Mock saved jobs data - in real app, fetch this from backend
-  const savedJobsData = [
-    {
-      id: 1,
-      title: "Content Writer",
-      company: "MediaGroup",
-      companyLogo: "https://via.placeholder.com/40",
-      matchScore: 82,
-      type: "Part-time",
-      location: "Remote",
-      salary: {
-        min: 10,
-        max: 10,
-        currency: "USD",
-        period: "hourly",
-        isFixed: true
-      },
-      level: "Entry-Level",
-      requiredSkills: ["SEO", "Blogging", "Content Strategy"],
-      preferredSkills: ["Social Media", "Analytics"],
-      experienceYears: 1,
-      accessibilityFeatures: ["Flexible Schedule", "Global Opportunity"],
-      companyAccessibility: {
-        hasAccessibilityPolicy: true,
-        providesAccommodations: true,
-        inclusiveHiring: true
-      },
-      applicationStatus: "not_applied",
-      isSaved: true,
-      postedDate: "2025-01-08",
-      expiresDate: "2025-02-08",
-      isActive: true
-    },
-    {
-      id: 2,
-      title: "Frontend Developer",
-      company: "TechCorp Inc.",
-      companyLogo: "https://via.placeholder.com/40",
-      matchScore: 95,
-      type: "Full-time",
-      location: "Remote",
-      salary: {
-        min: 1000,
-        max: 5000,
-        currency: "USD",
-        period: "weekly",
-        isFixed: false
-      },
-      level: "Senior Level",
-      requiredSkills: ["React", "TypeScript", "Tailwind"],
-      preferredSkills: ["Figma", "Accessibility"],
-      experienceYears: 3,
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      companyAccessibility: {
-        hasAccessibilityPolicy: true,
-        providesAccommodations: true,
-        inclusiveHiring: true
-      },
-      applicationStatus: "not_applied",
-      isSaved: true,
-      postedDate: "2025-01-15",
-      expiresDate: "2025-02-15",
-      isActive: true
-    },
-    {
-      id: 3,
-      title: "UX/UI Designer",
-      company: "DesignHub",
-      companyLogo: "https://via.placeholder.com/40",
-      matchScore: 88,
-      type: "Full-time",
-      location: "Remote",
-      salary: {
-        min: 5000,
-        max: 5000,
-        currency: "USD",
-        period: "monthly",
-        isFixed: true
-      },
-      level: "Entry Level",
-      requiredSkills: ["Figma", "Adobe XD", "Prototyping"],
-      preferredSkills: ["Accessibility", "User Research"],
-      experienceYears: 1,
-      accessibilityFeatures: ["Accessible Office", "Remote Options"],
-      companyAccessibility: {
-        hasAccessibilityPolicy: true,
-        providesAccommodations: true,
-        inclusiveHiring: true
-      },
-      applicationStatus: "not_applied",
-      isSaved: true,
-      postedDate: "2025-01-12",
-      expiresDate: "2025-02-12",
-      isActive: true
-    },
-    {
-      id: 4,
-      title: "Backend Developer",
-      company: "DataTech Solutions",
-      companyLogo: "https://via.placeholder.com/40",
-      matchScore: 91,
-      type: "Full-time",
-      location: "Hybrid",
-      salary: {
-        min: 6000,
-        max: 8000,
-        currency: "USD",
-        period: "monthly",
-        isFixed: false
-      },
-      level: "Mid-Level",
-      requiredSkills: ["Node.js", "Python", "PostgreSQL"],
-      preferredSkills: ["AWS", "Docker"],
-      experienceYears: 2,
-      accessibilityFeatures: ["Flexible Hours", "Accessible Office"],
-      companyAccessibility: {
-        hasAccessibilityPolicy: true,
-        providesAccommodations: true,
-        inclusiveHiring: true
-      },
-      applicationStatus: "not_applied",
-      isSaved: true,
-      postedDate: "2025-01-14",
-      expiresDate: "2025-02-14",
-      isActive: true
-    },
-    {
-      id: 5,
-      title: "Product Manager",
-      company: "InnovateCorp",
-      companyLogo: "https://via.placeholder.com/40",
-      matchScore: 87,
-      type: "Full-time",
-      location: "On-site",
-      salary: {
-        min: 8000,
-        max: 12000,
-        currency: "USD",
-        period: "monthly",
-        isFixed: false
-      },
-      level: "Senior Level",
-      requiredSkills: ["Product Strategy", "Agile", "User Research"],
-      preferredSkills: ["Data Analysis", "A/B Testing"],
-      experienceYears: 4,
-      accessibilityFeatures: ["Accessible Office", "Flexible Schedule"],
-      companyAccessibility: {
-        hasAccessibilityPolicy: true,
-        providesAccommodations: true,
-        inclusiveHiring: true
-      },
-      applicationStatus: "not_applied",
-      isSaved: true,
-      postedDate: "2025-01-13",
-      expiresDate: "2025-02-13",
-      isActive: true
-    },
-    {
-      id: 6,
-      title: "DevOps Engineer",
-      company: "CloudWorks Inc.",
-      companyLogo: "https://via.placeholder.com/40",
-      matchScore: 89,
-      type: "Contract",
-      location: "Remote",
-      salary: {
-        min: 80,
-        max: 120,
-        currency: "USD",
-        period: "hourly",
-        isFixed: false
-      },
-      level: "Mid-Level",
-      requiredSkills: ["Docker", "Kubernetes", "AWS"],
-      preferredSkills: ["Terraform", "Jenkins"],
-      experienceYears: 3,
-      accessibilityFeatures: ["Remote Options", "Flexible Hours"],
-      companyAccessibility: {
-        hasAccessibilityPolicy: true,
-        providesAccommodations: true,
-        inclusiveHiring: true
-      },
-      applicationStatus: "not_applied",
-      isSaved: true,
-      postedDate: "2025-01-11",
-      expiresDate: "2025-02-11",
-      isActive: true
+  // Fetch applied jobs to check which jobs user has already applied to
+  const fetchAppliedJobs = async () => {
+    try {
+      const response = await api.get('/api/applications/my-applications?limit=100');
+      if (response.data.success) {
+        const appliedJobIds = new Set(response.data.data.map(app => app.job.job_id));
+        setAppliedJobs(appliedJobIds);
+      }
+    } catch (error) {
+      console.error('Error fetching applied jobs:', error);
     }
-  ];
+  };
+
+  // Fetch saved jobs from backend
+  const fetchSavedJobs = async () => {
+    try {
+      setIsLoadingJobs(true);
+      setError(null);
+      
+      console.log('Fetching saved jobs from API...');
+      const response = await api.get('/api/saved-jobs/my-saved-jobs?limit=50');
+      console.log('Saved jobs API Response:', response.data);
+      
+      if (response.data.success && response.data.data) {
+        console.log('Saved jobs found:', response.data.data.length);
+        console.log('First saved job:', response.data.data[0]);
+        
+        // Transform backend data to match frontend format
+        console.log('First saved job employer data:', response.data.data[0]?.job?.employer);
+        const transformedJobs = response.data.data.map(savedJob => ({
+          id: savedJob.job.job_id,
+          title: savedJob.job.jobtitle,
+          company: savedJob.job.employer?.company_name || 'Unknown Company',
+          companyLogo: savedJob.job.employer?.profile_picture || "https://via.placeholder.com/40",
+          matchScore: Math.floor(Math.random() * 40) + 30, // Random score 30-70%
+          type: savedJob.job.employment_type,
+          location: `${savedJob.job.location_city}, ${savedJob.job.location_province}`,
+          salaryRange: {
+            min: savedJob.job.salary_min || 0,
+            max: savedJob.job.salary_max || 0,
+            currency: "PHP",
+            period: savedJob.job.salary_type || "monthly"
+          },
+          level: savedJob.job.experience_level,
+          requiredSkills: savedJob.job.skills_required || [],
+          preferredSkills: [],
+          experienceYears: 0,
+          accessibilityFeatures: savedJob.job.workplace_accessibility_features || [],
+          companyAccessibility: {
+            hasAccessibilityPolicy: true,
+            providesAccommodations: true,
+            inclusiveHiring: true
+          },
+          applicationStatus: "not_applied",
+          isSaved: true,
+          postedDate: new Date(savedJob.job.created_at).toLocaleDateString(),
+          expiresDate: savedJob.job.application_deadline ? new Date(savedJob.job.application_deadline).toLocaleDateString() : 'No deadline',
+          isActive: true,
+          savedAt: new Date().toLocaleDateString() // Use current date as fallback since saved_at doesn't exist
+        }));
+        
+        console.log('First transformed job companyLogo:', transformedJobs[0]?.companyLogo);
+        setSavedJobsData(transformedJobs);
+      } else {
+        console.log('No saved jobs found in response:', response.data);
+        setSavedJobsData([]);
+      }
+    } catch (error) {
+      console.error('Error fetching saved jobs:', error);
+      setError('Failed to load saved jobs. Please try again.');
+      setSavedJobsData([]);
+    } finally {
+      setIsLoadingJobs(false);
+    }
+  };
 
   // Load saved jobs on component mount
   useEffect(() => {
-    const loadSavedJobs = async () => {
-      setIsLoadingJobs(true);
-      // Simulate API call
-      setTimeout(() => {
-        setIsLoadingJobs(false);
-      }, 1000);
-    };
-    loadSavedJobs();
+    fetchSavedJobs();
+    fetchAppliedJobs();
   }, []);
 
+  // Filter and sort jobs based on current settings
+  useEffect(() => {
+    let filtered = [...savedJobsData];
+
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(job => 
+        job.title.toLowerCase().includes(query) ||
+        job.company.toLowerCase().includes(query) ||
+        job.requiredSkills.some(skill => skill.toLowerCase().includes(query)) ||
+        job.location.toLowerCase().includes(query)
+      );
+    }
+
+    // Apply sorting
+    switch (sortBy) {
+      case 'match-score':
+        filtered.sort((a, b) => b.matchScore - a.matchScore);
+        break;
+      case 'salary-high':
+        filtered.sort((a, b) => (b.salaryRange.max + b.salaryRange.min) - (a.salaryRange.max + a.salaryRange.min));
+        break;
+      case 'salary-low':
+        filtered.sort((a, b) => (a.salaryRange.max + a.salaryRange.min) - (b.salaryRange.max + b.salaryRange.min));
+        break;
+      case 'experience':
+        const experienceOrder = ['Entry Level', 'Mid Level', 'Senior Level', 'Executive Level'];
+        filtered.sort((a, b) => {
+          const aIndex = experienceOrder.indexOf(a.level);
+          const bIndex = experienceOrder.indexOf(b.level);
+          return aIndex - bIndex;
+        });
+        break;
+      case 'recent':
+      default:
+        // Sort by job posting date since we don't have saved_at
+        filtered.sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate));
+        break;
+    }
+
+    setFilteredJobs(filtered);
+  }, [savedJobsData, searchQuery, sortBy]);
+
   // Helper function to format salary display
-  const formatSalary = (salary) => {
-    if (salary.isFixed) {
-      return `$${salary.min.toLocaleString()} (fixed)`;
+  const formatSalary = (salaryRange) => {
+    if (!salaryRange || (salaryRange.min === 0 && salaryRange.max === 0)) {
+      return 'Salary not specified';
     }
     
-    const periodText = salary.period === 'hourly' ? '/hour' : 
-                      salary.period === 'weekly' ? '/weekly' :
-                      salary.period === 'bi-weekly' ? '/bi-weekly' :
-                      salary.period === 'monthly' ? '/monthly' : '/yearly';
+    const period = salaryRange.period;
+    const periodText = period === 'monthly' ? 'month' : 
+                      period === 'weekly' ? 'week' : 
+                      period === 'biweekly' ? '2 weeks' : 
+                      period === 'yearly' ? 'year' : 
+                      period;
     
-    if (salary.min === salary.max) {
-      return `$${salary.min.toLocaleString()}${periodText}`;
-    }
-    
-    return `$${salary.min.toLocaleString()} - $${salary.max.toLocaleString()}${periodText}`;
+    return `₱${salaryRange.min.toLocaleString()} - ₱${salaryRange.max.toLocaleString()} ${salaryRange.currency} Per ${periodText}`;
   };
 
   // Helper function to get match score color
@@ -241,15 +168,21 @@ const SavedJobs = () => {
   // Job action handlers
   const removeFromSaved = async (jobId) => {
     try {
-      // API call to remove from saved
-      // const response = await fetch(`/api/jobs/${jobId}/remove-saved`, {
-      //   method: 'DELETE',
-      //   headers: { 'Authorization': `Bearer ${token}` }
-      // });
-      
       console.log(`Removing job ${jobId} from saved jobs`);
+      
+      // API call to remove from saved
+      const response = await api.delete(`/api/saved-jobs/unsave/${jobId}`);
+      console.log('Job removed from saved:', response.data);
+      
+      // Update local state
+      setSavedJobsData(prevJobs => prevJobs.filter(job => job.id !== jobId));
+      
+      // Show success message
+      alert('Job removed from saved jobs successfully!');
     } catch (error) {
       console.error('Error removing job from saved:', error);
+      const errorMessage = error.response?.data?.error || error.response?.data?.message || error.message;
+      alert(`Failed to remove job from saved: ${errorMessage}. Please try again.`);
     }
   };
 
@@ -268,11 +201,16 @@ const SavedJobs = () => {
   };
 
   // Pagination
-  const totalPages = 8;
   const jobsPerPage = 9; // Show 9 jobs (3x3 grid) for better visual balance
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
   const startIndex = (currentPage - 1) * jobsPerPage;
   const endIndex = startIndex + jobsPerPage;
-  const currentJobs = savedJobsData.slice(startIndex, endIndex);
+  const currentJobs = filteredJobs.slice(startIndex, endIndex);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, sortBy]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -355,119 +293,121 @@ const SavedJobs = () => {
                 </div>
               ))}
             </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <div className="text-red-500 text-lg font-medium mb-2">Error Loading Saved Jobs</div>
+              <p className="text-gray-600 mb-4">{error}</p>
+              <button
+                onClick={fetchSavedJobs}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Try Again
+              </button>
+            </div>
+          ) : filteredJobs.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="text-gray-500 text-lg font-medium mb-2">No Saved Jobs Found</div>
+              <p className="text-gray-600">
+                {searchQuery 
+                  ? 'No saved jobs match your search criteria. Try adjusting your search terms.'
+                  : 'You haven\'t saved any jobs yet. Start exploring and save jobs you\'re interested in!'
+                }
+              </p>
+            </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {currentJobs.map((job) => (
-                <div key={job.id} className="border border-gray-200 rounded-lg p-4 lg:p-6 hover:shadow-md transition-shadow relative border-l-4 border-l-blue-500">
+                <div key={job.id} className="bg-white border border-gray-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow relative border-l-4 border-l-blue-500">
                   
-                  {/* Job Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center space-x-3">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
+                    <div className="flex items-center space-x-2 mb-2 sm:mb-0">
                       <img 
                         src={job.companyLogo} 
                         alt={`${job.company} logo`}
-                        className="w-10 h-10 rounded"
+                        className="w-8 h-8 rounded-full object-cover"
                       />
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
-                        <p className="text-sm text-gray-600">{job.company}</p>
+                        <h4 className="font-semibold text-gray-900 text-sm sm:text-base">{job.title}</h4>
+                        <p className="text-xs sm:text-sm text-gray-600">{job.company}</p>
                       </div>
                     </div>
-                    <span className={`inline-block ${getMatchScoreColor(job.matchScore)} text-sm font-medium px-3 py-1 rounded-full`}>
+                    <div className="text-right">
+                      <span className={`inline-block ${getMatchScoreColor(job.matchScore)} text-xs font-medium px-2 py-1 rounded-full`}>
                       {job.matchScore}% Match
                     </span>
-                  </div>
-
-                  {/* Job Details */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4 mb-4">
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <span>{job.type}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                      <span>{job.location}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                      </svg>
-                      <span>{formatSalary(job.salary)}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M12 16h.01" />
-                      </svg>
-                      <span>{job.level}</span>
                     </div>
                   </div>
 
-                  {/* Skills */}
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-2">
+                  <div className="space-y-2 mb-3">
+                    <p className="text-xs sm:text-sm text-gray-600">
+                      {job.type} • {job.location}
+                    </p>
+                      <p className="text-xs sm:text-sm font-medium text-gray-900">
+                        {formatSalary(job.salaryRange)}
+                      </p>
+                    <p className="text-xs sm:text-sm text-gray-600">{job.level}</p>
+                  </div>
+
+                  <div className="mb-3">
+                    <div className="flex gap-1 mb-2 overflow-hidden">
                       {job.requiredSkills.slice(0, 4).map((skill, index) => (
-                        <span 
-                          key={index}
-                          className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-700"
-                        >
+                        <span key={index} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded whitespace-nowrap flex-shrink-0">
                           {skill}
                         </span>
                       ))}
                     </div>
-                  </div>
-
-                  {/* Accessibility Features */}
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex gap-1 overflow-hidden">
                       {job.accessibilityFeatures.slice(0, 3).map((feature, index) => (
-                        <span 
-                          key={index}
-                          className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800"
-                        >
-                          <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
+                        <span key={index} className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded whitespace-nowrap flex-shrink-0">
                           {feature}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <div className="flex space-x-2">
                       <Link
                         to={`/jobseeker/job/${job.id}`}
-                        className="px-4 py-2 text-sm font-medium transition-colors flex items-center space-x-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg"
+                        state={{ from: '/jobseeker/saved-jobs' }}
+                        className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center justify-center space-x-1 bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         </svg>
                         <span>View Details</span>
                       </Link>
                       
+                      {appliedJobs.has(job.id) ? (
+                        <button
+                          disabled
+                          className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium bg-green-100 text-green-800 cursor-not-allowed"
+                        >
+                          <span>Applied</span>
+                        </button>
+                      ) : (
                       <Link
-                        to={`/jobseeker/job/${job.id}`}
-                        className="px-4 py-2 text-sm font-medium transition-colors flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+                          to={`/jobseeker/submit-application/${job.id}`}
+                          className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center justify-center space-x-1 bg-blue-600 hover:bg-blue-700 text-white"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                         </svg>
                         <span>Apply Now</span>
                       </Link>
+                      )}
                     </div>
                     
                     <button
                       onClick={() => removeFromSaved(job.id)}
-                      className="p-2 rounded-lg transition-colors text-yellow-500 hover:text-yellow-600"
-                      title="Remove from saved jobs"
+                      className={`p-2 rounded-lg transition-colors ${
+                        job.isSaved 
+                          ? 'text-red-500 hover:text-red-600' 
+                          : 'text-gray-400 hover:text-gray-600'
+                      }`}
                     >
-                      <svg className="w-5 h-5" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5" fill={job.isSaved ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                       </svg>
                     </button>

@@ -34,40 +34,69 @@ model Users {
 }
 
 model Pwd_Profile {
-  first_name           String                             @default("") @db.VarChar(20)
-  last_name            String                             @default("") @db.VarChar(20)
-  middle_name          String                             @default("") @db.VarChar(20)
-  profile_picture      String?
-  bio                  String?
-  disability_Type      String?
-  disability_severity  Disability_Severity?
-  gender               Gender?
-  rating               Float?                             @default(0.0)
-  created_at           String?
-  updated_at           DateTime?                          @updatedAt
-  pwd_id               Int                                @id @default(autoincrement())
-  user_id              Int                                @unique
-  date_of_birth        String?
-  address              String?
-  pwd_document         String[]
-  profession           String?
-  skills               String[]
-  portfolio_url        String?
-  github_url           String?
-  otherPlatform        String[]
-  professional_role    String?
-  professional_summary String?
-  profile_visibility   String?                            @default("Public")
-  resume_cv            String?
-  applications         Applications[]
-  accessibility_needs  Pwd_Accessibility_Needs[]
-  educations           Pwd_Education[]
-  experiences          Pwd_Experience[]
-  job_preferences      Pwd_Job_Preferences_Requirements[]
-  user                 Users                              @relation("UserToPWD", fields: [user_id], references: [user_id], onDelete: Cascade)
-  resumes              Resumes[]
-  ai_match_results     ai_match_results[]
-  transactions         transactions[]                     @relation("TransactionPayee")
+  first_name                     String                             @default("") @db.VarChar(20)
+  last_name                      String                             @default("") @db.VarChar(20)
+  middle_name                    String                             @default("") @db.VarChar(20)
+  profile_picture                String?
+  bio                            String?
+  disability_Type                String?
+  disability_severity            Disability_Severity?
+  gender                         Gender?
+  rating                         Float?                             @default(0.0)
+  profile_views                  Int
+  interviews                     Int
+  created_at                     String?
+  updated_at                     DateTime?                          @updatedAt
+  pwd_id                         Int                                @id @default(autoincrement())
+  user_id                        Int                                @unique
+  date_of_birth                  String?
+  address                        String?
+  pwd_document                   String[]
+  profession                     String?
+  skills                         String[]
+  portfolio_url                  String?
+  github_url                     String?
+  linkedin_url                   String?
+  otherPlatform                  String[]
+  professional_role              String?
+  professional_summary           String?
+  hourly_rate                    Int?
+  profile_visibility             String?                            @default("Public")
+  show_email                     Boolean                            @default(false)
+  show_phone_number              Boolean                            @default(false)
+  show_location                  Boolean                            @default(false)
+  allow_messages                 Boolean                            @default(false)
+  show_online_status             Boolean                            @default(false)
+  email_job_matches              Boolean                            @default(true)
+  messages                       Boolean                            @default(true)
+  application_updates            Boolean                            @default(true)
+  email_profile_views            Boolean                            @default(true)
+  weekly_digest                  Boolean                            @default(true)
+  marketing_emails               Boolean                            @default(true)
+  push_notif_job_matches         Boolean                            @default(true)
+  push_notif_messages            Boolean                            @default(true)
+  push_notif_application_updates Boolean                            @default(true)
+  push_notif_profile_views       Boolean                            @default(true)
+  urgent_messages                Boolean                            @default(true)
+  security_alerts                Boolean                            @default(true)
+  resume_cv                      String?
+  basic_information              Boolean                            @default(false)
+  professional_summary_completed Boolean                            @default(false)
+  professional_experience        Boolean                            @default(false)
+  education                      Boolean                            @default(false)
+  portfolio_items                Boolean                            @default(false)
+  skills_assessment              Boolean                            @default(false)
+  set_accessibility_preferences  Boolean                            @default(false)
+  applications                   Applications[]
+  accessibility_needs            Pwd_Accessibility_Needs[]
+  educations                     Pwd_Education[]
+  experiences                    Pwd_Experience[]
+  job_preferences                Pwd_Job_Preferences_Requirements[]
+  user                           Users                              @relation("UserToPWD", fields: [user_id], references: [user_id], onDelete: Cascade)
+  resumes                        Resumes[]
+  ai_match_results               ai_match_results[]
+  transactions                   transactions[]                     @relation("TransactionPayee")
+  Saved_Jobs                     Saved_Jobs[]
 }
 
 model Pwd_Experience {
@@ -131,13 +160,17 @@ model Employer_Profile {
   user_id                     Int            @unique
   address                     String
   profile_picture             String?
-  LinkedIn_profile            String?
-  Other_Social_Media          String?
+  profile_views               Int
+  interviews                  Int
   company_name                String
   company_email               String         @unique
   company_phone               String
   company_address             String
-  company_website             String?
+  company_social_media        String?
+  company_website_portfolio   String?
+  company_github_profile      String?
+  company_other_portfolio     String[]
+  company_description         String?
   contact_person_fullname     String?
   contact_person_job_title    String?
   contact_person_phone_number String?
@@ -145,9 +178,19 @@ model Employer_Profile {
   businessRegistration        String?
   governmentId                String?
   taxDocuments                String?
+  industryPreference          String?
+  jobRolesTypicallyHire       String[]
+  requiredPreferredSkills     String[]
+  workArrangement             String[]
+  accessibilityFeatures       String[]
+  set_company_profile         Boolean        @default(false)
+  set_jobRoles_requirements   Boolean        @default(false)
+  set_work_environment        Boolean        @default(false)
   user                        Users          @relation("UserToEmployer", fields: [user_id], references: [user_id], onDelete: Cascade)
   job_listings                Job_Listings[]
   transactions                transactions[] @relation("TransactionPayer")
+  Applications                Applications[]
+  Saved_Jobs                  Saved_Jobs[]
 }
 
 model Resumes {
@@ -201,18 +244,22 @@ model withdrawal_requests {
 }
 
 model Applications {
-  application_id    Int            @id @default(autoincrement())
+  application_id    Int              @id @default(autoincrement())
   job_id            Int
   pwd_id            Int
+  employer_id       Int
   resume_id         Int
   custom_message    String
-  proposed_salary   Decimal        @db.Decimal(10, 2)
+  proposed_salary   Decimal          @db.Decimal(10, 2)
+  work_experience   String?          // JSON string of selected work experiences
+  portfolio_links   String?          // JSON string of portfolio links
   submitted_at      DateTime
-  updated_at        DateTime       @updatedAt
+  updated_at        DateTime         @updatedAt
   status_changed_at DateTime
-  job_listing       Job_Listings   @relation(fields: [job_id], references: [job_id])
-  pwd_profile       Pwd_Profile    @relation(fields: [pwd_id], references: [pwd_id])
-  resume            Resumes        @relation(fields: [resume_id], references: [resume_id])
+  job_listing       Job_Listings     @relation(fields: [job_id], references: [job_id])
+  pwd_profile       Pwd_Profile      @relation(fields: [pwd_id], references: [pwd_id])
+  employer_profile  Employer_Profile @relation(fields: [employer_id], references: [employer_id])
+  resume            Resumes          @relation(fields: [resume_id], references: [resume_id])
   reviews           reviews[]
   transactions      transactions[]
 }
@@ -262,38 +309,42 @@ model Notifications {
   user            Users     @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 }
 
-model Job_Categories {
-  category_id  Int            @id @default(autoincrement())
-  name         String         @unique
-  description  String
-  job_listings Job_Listings[]
+model Saved_Jobs {
+  savedJob_id      Int              @id @default(autoincrement())
+  job_id           Int
+  pwd_id           Int
+  employer_id      Int
+  job_listings     Job_Listings     @relation(fields: [job_id], references: [job_id], onDelete: Cascade)
+  pwd_profile      Pwd_Profile      @relation(fields: [pwd_id], references: [pwd_id], onDelete: Cascade)
+  employer_profile Employer_Profile @relation(fields: [employer_id], references: [employer_id], onDelete: Cascade)
 }
 
 model Job_Listings {
-  job_id                 Int                @id @default(autoincrement())
-  employer_id            Int
-  category_id            Int
-  title                  String             @db.VarChar(255)
-  description            String
-  skills_required        String
-  employment_type        EmploymentType
-  work_arrangement       WorkArrangement
-  salary_min             Decimal            @db.Decimal(10, 2)
-  salary_max             Decimal            @db.Decimal(10, 2)
-  salary_type            SalaryType
-  location_city          String             @db.VarChar(100)
-  location_province      String             @db.VarChar(100)
-  location_country       String             @db.VarChar(100)
-  accessibility_features String
-  experience_level       ExperienceLevel
-  application_deadline   DateTime           @db.Date
-  applications_count     Int                @default(0)
-  created_at             DateTime           @default(now())
-  updated_at             DateTime           @updatedAt
-  applications           Applications[]
-  category               Job_Categories     @relation(fields: [category_id], references: [category_id], onDelete: Cascade)
-  employer               Employer_Profile   @relation(fields: [employer_id], references: [employer_id], onDelete: Cascade)
-  ai_match_results       ai_match_results[]
+  job_id                           Int                @id @default(autoincrement())
+  job_code                         String?            @unique
+  employer_id                      Int
+  jobtitle                         String             @db.VarChar(255)
+  jobCategory                      String
+  description                      String?
+  skills_required                  String[]
+  employment_type                  String             @db.VarChar(10)
+  work_arrangement                 String             @db.VarChar(10)
+  salary_min                       Int
+  salary_max                       Int
+  salary_type                      String             @db.VarChar(20)
+  location_city                    String             @db.VarChar(100)
+  location_province                String             @db.VarChar(100)
+  location_country                 String             @db.VarChar(100)
+  application_deadline             String?
+  workplace_accessibility_features String[]
+  experience_level                 String             @db.VarChar(20)
+  job_status                       String             @default("Active")
+  created_at                       DateTime           @default(now())
+  updated_at                       DateTime           @updatedAt
+  applications                     Applications[]
+  employer                         Employer_Profile   @relation(fields: [employer_id], references: [employer_id], onDelete: Cascade)
+  ai_match_results                 ai_match_results[]
+  Saved_Jobs                       Saved_Jobs[]
 }
 
 model support_tickets {
@@ -371,35 +422,6 @@ enum Gender {
   Male
   Female
   Other
-}
-
-enum EmploymentType {
-  Full_time
-  Part_time
-  Contract
-  Freelance
-  Internship
-}
-
-enum WorkArrangement {
-  On_site
-  Remote
-  Hybrid
-}
-
-enum SalaryType {
-  Hourly
-  Daily
-  Monthly
-  Annually
-  Milestone_based
-}
-
-enum ExperienceLevel {
-  Entry
-  Mid
-  Senior
-  Executive
 }
 
 enum TicketCategory {

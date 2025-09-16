@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import api from '../../../utils/api.js';
 import Spinner from '../../../components/ui/Spinner.jsx';
 
 const AccessibilityFeatures = ({ data, onDataChange, onNext, onBack }) => {
@@ -25,8 +26,11 @@ const AccessibilityFeatures = ({ data, onDataChange, onNext, onBack }) => {
     const minLoadingTime = new Promise(resolve => setTimeout(resolve, 1500));
     
     try {
+      const response = await api.post('/create/accessibility-inclusionfeatures', formData);
       await minLoadingTime;
-      onNext();
+      if(response.data.success) {
+        onNext();
+      }
     } catch (error) {
       console.error('Error proceeding to next step:', error);
     } finally {

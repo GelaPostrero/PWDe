@@ -27,6 +27,8 @@ const JobseekerVerification = () => {
   const [capturedPhotos, setCapturedPhotos] = useState([]);
   const [uploadErrors, setUploadErrors] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleStepClick = (key) => {
     // Allow navigation to any step (including going back)
     if (key === 'registration') {
@@ -200,9 +202,12 @@ const JobseekerVerification = () => {
   // Submit all documents (ready for backend integration)
   const submitDocuments = async () => {
     const allDocuments = [...uploadedFiles, ...capturedPhotos];
-    
+
+    setIsLoading(true);
+
     if (allDocuments.length === 0) {
       alert('Please upload at least one document or take a photo before submitting.');
+      setIsLoading(false);
       return;
     }
 
@@ -224,17 +229,23 @@ const JobseekerVerification = () => {
       // TODO: Replace with actual API endpoint when backend is ready
       console.log('Documents ready for submission:', allDocuments);
       console.log('FormData prepared for backend:', formData);
+
+      // Add minimum loading time to see spinner (remove this in production)
+      const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
       
       // Example of how to connect to your backend:
       const response = await fetch('http://localhost:4000/accounts/users/register/pwd/documents', {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!response.ok) {
         const text = await response.text();
         throw new Error(`Server error: ${response.status} - ${text}`);
       }
+
+      // Wait for both API call and minimum loading time
+      await Promise.all([response, minLoadingTime]);
       
       const data = await response.json();
       if (data.success) {
@@ -253,6 +264,8 @@ const JobseekerVerification = () => {
     } catch (error) {
       console.error('Error submitting documents:', error);
       alert('Error submitting documents. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 

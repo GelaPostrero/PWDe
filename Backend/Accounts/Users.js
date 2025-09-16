@@ -13,7 +13,6 @@ const fs = require('fs');
 
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { error } = require('console');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const tempPwdUser = new Map();
@@ -76,6 +75,7 @@ router.post('/users/register/pwd', async (req, res) => {
     password,
     phone,
     userType: 'PWD',
+    basic_information: true,
     firstName,
     lastName,
     middleName,
@@ -142,15 +142,20 @@ router.post('/users/register/employer', async (req, res) => {
     password
   } = req.body;
 
-  const existingEmailPhoneNumber = await prisma.users.findUnique({
-    where: { 
-      email: companyEmail,
-      phone_number: companyPhone 
-    }
+  const existingEmail = await prisma.users.findUnique({
+    where: { email: companyEmail }
   });
   
-  if (existingEmailPhoneNumber) {
-    return res.status(400).json({ error: 'This email or phone number is already registered.' });
+  if (existingEmail) {
+    return res.status(400).json({ error: 'This email is already registered.' });
+  }
+
+  const existingPhoneNumber = await prisma.users.findUnique({
+    where: { phone_number: companyPhone }
+  });
+  
+  if (existingPhoneNumber) {
+    return res.status(400).json({ error: 'This phone number is already registered.' });
   }
 
   const userData = {
@@ -164,20 +169,25 @@ router.post('/users/register/employer', async (req, res) => {
 
   tempEmpUser.set(companyEmail, userData);
   console.log(`Temporary employer user data stored for ${companyEmail}:`, userData);
+  console.log('Current tempEmpUser Map size:', tempEmpUser.size);
+  console.log('Current tempEmpUser keys:', Array.from(tempEmpUser.keys()));
   res.json({ message: 'First phase registration successful!', data: userData, success: true });
 });
 
 // Register a new user phase 2 for Employer
 router.post('/users/register/employer/documents', memoryUploadForEMP, async (req, res) => {
   const email = req.body.companyEmail;
+  console.log('Employer documents endpoint - Email received:', email);
+  console.log('Available tempEmpUser keys:', Array.from(tempEmpUser.keys()));
+  
   const userData = tempEmpUser.get(email);
+  console.log('User data found:', userData ? 'Yes' : 'No');
+  
   const {
-    companyWebsite,
-    linkedinProfile,
-    otherSocialMedia,
     contactName,
     jobTitle,
-    phoneNumber
+    phoneNumber,
+    otherSocialMedia
   } = req.body;
   const {
     businessRegistration,
@@ -186,6 +196,7 @@ router.post('/users/register/employer/documents', memoryUploadForEMP, async (req
   } = req.files;
 
   if (!userData) {
+    console.log('Error: No user data found for email:', email);
     return res.status(404).json({ message: 'User not found or session expired.' });
   }
 
@@ -197,30 +208,18 @@ router.post('/users/register/employer/documents', memoryUploadForEMP, async (req
   userData.taxDocuments = taxDocuments;
 
   // Store the rest of the employer data as before
-  userData.company_website = companyWebsite.trim();
-  userData.LinkedIn_profile = linkedinProfile.trim();
-  userData.other_social_media = otherSocialMedia ? otherSocialMedia.trim() : '';
   userData.contact_person_fullname = contactName.trim();
   userData.contact_person_job_title = jobTitle.trim();
   userData.contact_person_phone = phoneNumber.trim();
+
+  // Store company other social media (optional)
+  userData.otherSocialMedia = otherSocialMedia;
 
   // Store the verification code and last resend time if needed
   userData.verificationCode = code;
   userData.lastResendTime = Date.now();
 
   tempEmpUser.set(email, userData);
-
-  console.log(`Employer documents and info stored in memory for ${email}:`, {
-    businessRegistration: userData.businessRegistration ? userData.businessRegistration.map(file => file.originalname) : [],
-    governmentId: userData.governmentId ? userData.governmentId.map(file => file.originalname) : [],
-    taxDocuments: userData.taxDocuments ? userData.taxDocuments.map(file => file.originalname) : [],
-    company_website: userData.company_website,
-    LinkedIn_profile: userData.LinkedIn_profile,
-    other_social_media: userData.other_social_media,
-    contact_person_fullname: userData.contact_person_fullname,
-    contact_person_job_title: userData.contact_person_job_title,
-    contact_person_phone: userData.contact_person_phone
-  });
   // Send verification code padong email
   try {
     await transporter.sendMail({
@@ -243,38 +242,48 @@ router.post('/users/register/employer/documents', memoryUploadForEMP, async (req
 
 // Verify and register the user
 router.post('/users/register/verify', async (req, res) => {
-  const { email, code } = req.body;
+  try {
+    const { email, code } = req.body;
+    
+    console.log('Verification request received:', { email, code });
+    console.log('Available tempPwdUser keys:', Array.from(tempPwdUser.keys()));
+    console.log('Available tempEmpUser keys:', Array.from(tempEmpUser.keys()));
 
-  const result = verifyCode(email, code);
-  if (!result.valid) {
-    return res.status(400).json({ error: result.message, message: 'Incorrect verification code.' });
-  }
+    const result = verifyCode(email, code);
+    console.log('Verification result:', result);
+    
+    if (!result.valid) {
+      return res.status(400).json({ error: result.message, message: 'Incorrect verification code.' });
+    }
 
-  const dateToday = new Date();
-  const formattedDate = dateToday.toLocaleString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-  });
+    const dateToday = new Date();
+    const formattedDate = dateToday.toLocaleString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    });
 
-  const userData = tempPwdUser.get(email) || tempEmpUser.get(email);
-  if(!userData) {
-    return res.status(404).json({ message: 'User not found or session expired.' });
-  }
+    const userData = tempPwdUser.get(email) || tempEmpUser.get(email);
+    console.log('User data found:', userData ? 'Yes' : 'No');
+    console.log('User type:', userData?.userType);
+    
+    if(!userData) {
+      return res.status(404).json({ message: 'User not found or session expired.' });
+    }
 
-  // Double-check for duplicate email before creating user
-  const existingEmail = await prisma.users.findUnique({
-    where: { email }
-  });
-  
-  if (existingEmail) {
-    return res.status(400).json({ error: 'This email is already registered.' });
-  }
+    // Double-check for duplicate email before creating user
+    const existingEmail = await prisma.users.findUnique({
+      where: { email }
+    });
+    
+    if (existingEmail) {
+      return res.status(400).json({ error: 'This email is already registered.' });
+    }
 
-  const hashedPassword = await bcrypt.hash(userData.password, 10);
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
 
   const user = await prisma.users.create({
       data: { 
@@ -318,11 +327,15 @@ router.post('/users/register/verify', async (req, res) => {
         created_at: formattedDate,
         professional_role: '',
         professional_summary: '',
+        profile_views: 0,
+        interviews: 0,
+        basic_information: userData.basic_information
       }
     })
 
     const payload = {
       userId: user.user_id,
+      userType: userData.userType,
       pwd_id: pwd.pwd_id,
     }
 
@@ -373,19 +386,21 @@ router.post('/users/register/verify', async (req, res) => {
         company_email: userData.companyEmail,
         company_phone: userData.companyPhone,
         company_address: userData.companyAddress,
-        company_website: userData.company_website,
-        LinkedIn_profile: userData.LinkedIn_profile,
-        Other_Social_Media: userData.other_social_media,
+        company_website_portfolio: userData.company_website,
+        company_social_media: userData.otherSocialMedia,
         contact_person_fullname: userData.contact_person_fullname,
         contact_person_job_title: userData.contact_person_job_title,
         contact_person_phone_number: userData.contact_person_phone,
         created_at: formattedDate,
+        profile_views: 0,
+        interviews: 0,
       }
     })
 
     const payload = {
-      user_id: emp.user_id,
-      emp_id: emp.emp_id
+      userId: user.user_id,
+      userType: userData.userType,
+      emp_id: emp.employer_id
     }
 
     // GENERATE TOKEN EXPIRATION 3 HOURS 
@@ -394,18 +409,49 @@ router.post('/users/register/verify', async (req, res) => {
     tempEmpUser.delete(email);
     res.status(201).json({ message: 'Account verified and registered successfully.', user, emp, token, success: true});
   }
+  } catch (error) {
+    console.error('Error in verification process:', error);
+    
+    // Handle specific Prisma errors
+    if (error.code === 'P2002') {
+      if (error.meta?.target?.includes('phone_number')) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Phone number is already registered. Please use a different phone number.',
+          error: 'Phone number already exists'
+        });
+      } else if (error.meta?.target?.includes('email')) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Email is already registered.',
+          error: 'Email already exists'
+        });
+      }
+    }
+    
+    res.status(500).json({ 
+      success: false, 
+      message: 'Internal server error during verification',
+      error: error.message 
+    });
+  }
 });
 
 // Resend verification code
 router.post('/users/register/verify/resend', async (req, res) => {
+  console.log('Resend verification code endpoint hit');
   const { email } = req.body;
+  console.log('Resend request email:', email);
 
   if (!email) {
     return res.status(400).json({ error: "Email is required." });
   }
 
-  const identifier = email || companyEmail;
-  const userData = tempPwdUser.get(identifier) || tempEmpUser.get(identifier);
+  // Check both PWD and Employer temporary data
+  const pwdUserData = tempPwdUser.get(email);
+  const empUserData = tempEmpUser.get(email);
+  const userData = pwdUserData || empUserData;
+  
   if (!userData) {
     return res.status(404).json({ message: 'User not found or session expired.' });
   }
@@ -426,18 +472,37 @@ router.post('/users/register/verify/resend', async (req, res) => {
 
     userData.verificationCode = newCode;
     userData.lastResendTime = now;
-    tempPwdUser.set(email, userData);
+    
+    // Update the correct Map based on user type
+    if (pwdUserData) {
+      tempPwdUser.set(email, userData);
+    } else {
+      tempEmpUser.set(email, userData);
+    }
+
+    // Generate appropriate email content based on user type
+    let emailContent = '';
+    if (userData.userType === 'PWD') {
+      emailContent = `
+        <p>Hello ${userData.firstName} ${userData.lastName}, You requested to resend a verification code.</p>
+        <p>Your new verification code is <b>${newCode}</b>.</p>
+        <p>This code is valid for 15 minutes.</p>
+        <p>If you did not request this, please ignore this email.</p>
+      `;
+    } else {
+      emailContent = `
+        <p>Hello ${userData.companyName}, You requested to resend a verification code.</p>
+        <p>Your new verification code is <b>${newCode}</b>.</p>
+        <p>This code is valid for 15 minutes.</p>
+        <p>If you did not request this, please ignore this email.</p>
+      `;
+    }
 
     await transporter.sendMail({
       from: 'PWDe App',
       to: email,
       subject: 'Your PWDe Verification Code',
-      html: `
-        <p>Hello ${userData.firstName} ${userData.lastName}, You requested to resend a verification code.</p>
-        <p>Your new verification code is <b>${newCode}</b>.</p>
-        <p>This code is valid for 15 minutes.</p>
-        <p>If you did not request this, please ignore this email.</p>
-      `
+      html: emailContent
     });
     res.json({ message: 'New verification code sent successfully.', newCode, success: true });
     console.log(`Verification code resent to ${email}: ${newCode}`);
@@ -482,12 +547,12 @@ router.post('/users/login', async (req, res) => {
   const payload = {
     userId: user.user_id,
     pwd_id: profile && user.user_type === 'PWD' ? profile.pwd_id : null,
-    emp_id: profile && user.user_type === 'Employer' ? profile.emp_id : null,
+    emp_id: profile && user.user_type === 'Employer' ? profile.employer_id : null,
     email: user.email,
     userType: user.user_type,
   }
 
-  const expiresIn = rememberMe ? '7d' : '1h'; // 7 days if rememberMe is true, or otherwise 3 hours
+  const expiresIn = rememberMe ? '7d' : '3h'; // 7 days if rememberMe is true, or otherwise 3 hours
 
   // GENERATE TOKEN EXPIRATION 3 HOURS
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn });
@@ -501,84 +566,76 @@ router.post('/users/forgot-password', async (req, res) => {
   const email = req.body.email;
   const code = generateVerificationCode(email);
 
-  const userWithProfile = await prisma.users.findUnique({
-    where: {
-      email: req.body.email
-    },
-    select: {
-      user_type: true,
-      pwd_Profile: {
-        select: {
-          first_name: true,
-          last_name: true
-        }
-      },
-      employer_Profile: {
-        select: {
-          company_name: true
+  try {
+    const userWithProfile = await prisma.users.findUnique({
+      where: { email },
+      select: {
+        user_type: true,
+        pwd_Profile: {
+          select: { first_name: true, last_name: true }
+        },
+        employer_Profile: {
+          select: { company_name: true }
         }
       }
+    });
+
+    if (!userWithProfile) {
+      return res.status(404).json({
+        message: 'No account found with this email address.',
+        success: false
+      });
     }
-  });
 
-  const userEmailNcode = {
-    email,
-    code,
-    first_name: userWithProfile.pwd_Profile?.first_name,
-    last_name: userWithProfile.pwd_Profile?.last_name,
-    company_name: userWithProfile.employer_Profile?.company_name,
-    userType: userWithProfile.user_type
-  }
+    const userEmailNcode = {
+      email,
+      code,
+      first_name: userWithProfile.pwd_Profile?.first_name,
+      last_name: userWithProfile.pwd_Profile?.last_name,
+      company_name: userWithProfile.employer_Profile?.company_name,
+      userType: userWithProfile.user_type,
+      lastResendTime: Date.now()
+    };
 
-  
-  userEmailNcode.lastResendTime = Date.now();
+    forgotPasswordCode.set(email, userEmailNcode);
 
-  console.log("Data: ", userEmailNcode);
-
-  forgotPasswordCode.set(email, userEmailNcode);
-
-  if (userWithProfile) {
-    console.log(`Usertype: ${userWithProfile.user_type}, Email Add: ${email}`);
-    if(userWithProfile.user_type == 'PWD') {
-      try {
-        await transporter.sendMail({
-          from: 'PWDe App',
-          to: email,
-          subject: 'PWDe Request to: Forgot Password',
-          html: `
-            <p>Hello <b>${userWithProfile.pwd_Profile?.first_name} ${userWithProfile.pwd_Profile?.last_name}</b>,</p>\n
-            <p>Your verification code for your request to renew your password is: <b>${code}</b>.</p>\n
-            <p>If you did not request this, please ignore this email.</p>
-          `
-        });
-        console.log(`Verification code for forgotten password sent to ${email}: ${code}`);
-        return res.status(200).json({ message: 'Verification code sent to your email.', success: true });
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Failed to send verification email.' });
-      }
+    // ✅ Send email depending on user type
+    if (userWithProfile.user_type === 'PWD') {
+      await transporter.sendMail({
+        from: 'PWDe App',
+        to: email,
+        subject: 'PWDe Request to: Forgot Password',
+        html: `
+          <p>Hello <b>${userWithProfile.pwd_Profile?.first_name} ${userWithProfile.pwd_Profile?.last_name}</b>,</p>
+          <p>Your verification code for your request to renew your password is: <b>${code}</b>.</p>
+          <p>If you did not request this, please ignore this email.</p>
+        `
+      });
     } else {
-      try {
-        await transporter.sendMail({
-          from: 'PWDe App',
-          to: email,
-          subject: 'PWDe Request to: Forgot Password',
-          html: `
-            <p>Hello <b>${userWithProfile.employer_Profile?.company_name}</b>,</p>\n
-            <p>Your verification code for your request to renew your password is: <b>${code}</b>.</p>\n
-            <p>If you did not request this, please ignore this email.</p>
-          `
-        });
-        console.log(`Verification code for forgotten password sent to ${email}: ${code}`);
-        return res.status(200).json({ message: 'Verification code sent to your email.', success: true });
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Failed to send verification email.' });
-      }
+      await transporter.sendMail({
+        from: 'PWDe App',
+        to: email,
+        subject: 'PWDe Request to: Forgot Password',
+        html: `
+          <p>Hello <b>${userWithProfile.employer_Profile?.company_name}</b>,</p>
+          <p>Your verification code for your request to renew your password is: <b>${code}</b>.</p>
+          <p>If you did not request this, please ignore this email.</p>
+        `
+      });
     }
-  } else {
-    console.log("No profile found for this email");
-    return res.status(400).json({ error: 'No Email found.' });
+
+    console.log(`Verification code sent to ${email}: ${code}`);
+    return res.status(200).json({
+      message: 'Verification code sent to your email.',
+      success: true
+    });
+
+  } catch (error) {
+    console.error('Error in forgot password:', error);
+    return res.status(500).json({
+      message: 'Something went wrong. Please try again later.',
+      success: false
+    });
   }
 });
 
@@ -676,6 +733,50 @@ router.post('/users/forgot-password/resend', async (req, res) => {
   }
 
   // AFTER SEND I-DELETE SA MAP ANG DATA
-  tempPwdUser.delete(email);
+  // Note: This should not delete tempPwdUser data as this is for forgot password, not registration
+  // tempPwdUser.delete(email); // Removed this line as it was causing issues
 });
+
+// Debug endpoint to check temporary data (remove in production)
+router.get('/debug/temp-data', (req, res) => {
+  res.json({
+    tempPwdUser: {
+      size: tempPwdUser.size,
+      keys: Array.from(tempPwdUser.keys())
+    },
+    tempEmpUser: {
+      size: tempEmpUser.size,
+      keys: Array.from(tempEmpUser.keys())
+    }
+  });
+});
+
+// Debug endpoint to clear user data (remove in production)
+router.delete('/debug/clear-user/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+    
+    // Delete from database
+    const deletedUser = await prisma.users.deleteMany({
+      where: { email: email }
+    });
+    
+    // Clear from temporary storage
+    tempPwdUser.delete(email);
+    tempEmpUser.delete(email);
+    
+    res.json({
+      success: true,
+      message: `Cleared data for ${email}`,
+      deletedUsers: deletedUser.count
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error clearing user data',
+      error: error.message
+    });
+  }
+});
+
 module.exports = router;

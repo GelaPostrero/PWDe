@@ -142,6 +142,8 @@ exports.Prisma.Pwd_ProfileScalarFieldEnum = {
   disability_severity: 'disability_severity',
   gender: 'gender',
   rating: 'rating',
+  profile_views: 'profile_views',
+  interviews: 'interviews',
   created_at: 'created_at',
   updated_at: 'updated_at',
   pwd_id: 'pwd_id',
@@ -153,11 +155,37 @@ exports.Prisma.Pwd_ProfileScalarFieldEnum = {
   skills: 'skills',
   portfolio_url: 'portfolio_url',
   github_url: 'github_url',
+  linkedin_url: 'linkedin_url',
   otherPlatform: 'otherPlatform',
   professional_role: 'professional_role',
   professional_summary: 'professional_summary',
+  hourly_rate: 'hourly_rate',
   profile_visibility: 'profile_visibility',
-  resume_cv: 'resume_cv'
+  show_email: 'show_email',
+  show_phone_number: 'show_phone_number',
+  show_location: 'show_location',
+  allow_messages: 'allow_messages',
+  show_online_status: 'show_online_status',
+  email_job_matches: 'email_job_matches',
+  messages: 'messages',
+  application_updates: 'application_updates',
+  email_profile_views: 'email_profile_views',
+  weekly_digest: 'weekly_digest',
+  marketing_emails: 'marketing_emails',
+  push_notif_job_matches: 'push_notif_job_matches',
+  push_notif_messages: 'push_notif_messages',
+  push_notif_application_updates: 'push_notif_application_updates',
+  push_notif_profile_views: 'push_notif_profile_views',
+  urgent_messages: 'urgent_messages',
+  security_alerts: 'security_alerts',
+  resume_cv: 'resume_cv',
+  basic_information: 'basic_information',
+  professional_summary_completed: 'professional_summary_completed',
+  professional_experience: 'professional_experience',
+  education: 'education',
+  portfolio_items: 'portfolio_items',
+  skills_assessment: 'skills_assessment',
+  set_accessibility_preferences: 'set_accessibility_preferences'
 };
 
 exports.Prisma.Pwd_ExperienceScalarFieldEnum = {
@@ -217,20 +245,32 @@ exports.Prisma.Employer_ProfileScalarFieldEnum = {
   user_id: 'user_id',
   address: 'address',
   profile_picture: 'profile_picture',
-  LinkedIn_profile: 'LinkedIn_profile',
-  Other_Social_Media: 'Other_Social_Media',
+  profile_views: 'profile_views',
+  interviews: 'interviews',
   company_name: 'company_name',
   company_email: 'company_email',
   company_phone: 'company_phone',
   company_address: 'company_address',
-  company_website: 'company_website',
+  company_social_media: 'company_social_media',
+  company_website_portfolio: 'company_website_portfolio',
+  company_github_profile: 'company_github_profile',
+  company_other_portfolio: 'company_other_portfolio',
+  company_description: 'company_description',
   contact_person_fullname: 'contact_person_fullname',
   contact_person_job_title: 'contact_person_job_title',
   contact_person_phone_number: 'contact_person_phone_number',
   date_of_birth: 'date_of_birth',
   businessRegistration: 'businessRegistration',
   governmentId: 'governmentId',
-  taxDocuments: 'taxDocuments'
+  taxDocuments: 'taxDocuments',
+  industryPreference: 'industryPreference',
+  jobRolesTypicallyHire: 'jobRolesTypicallyHire',
+  requiredPreferredSkills: 'requiredPreferredSkills',
+  workArrangement: 'workArrangement',
+  accessibilityFeatures: 'accessibilityFeatures',
+  set_company_profile: 'set_company_profile',
+  set_jobRoles_requirements: 'set_jobRoles_requirements',
+  set_work_environment: 'set_work_environment'
 };
 
 exports.Prisma.ResumesScalarFieldEnum = {
@@ -280,9 +320,12 @@ exports.Prisma.ApplicationsScalarFieldEnum = {
   application_id: 'application_id',
   job_id: 'job_id',
   pwd_id: 'pwd_id',
+  employer_id: 'employer_id',
   resume_id: 'resume_id',
   custom_message: 'custom_message',
   proposed_salary: 'proposed_salary',
+  work_experience: 'work_experience',
+  portfolio_links: 'portfolio_links',
   submitted_at: 'submitted_at',
   updated_at: 'updated_at',
   status_changed_at: 'status_changed_at'
@@ -326,17 +369,19 @@ exports.Prisma.NotificationsScalarFieldEnum = {
   read_at: 'read_at'
 };
 
-exports.Prisma.Job_CategoriesScalarFieldEnum = {
-  category_id: 'category_id',
-  name: 'name',
-  description: 'description'
+exports.Prisma.Saved_JobsScalarFieldEnum = {
+  savedJob_id: 'savedJob_id',
+  job_id: 'job_id',
+  pwd_id: 'pwd_id',
+  employer_id: 'employer_id'
 };
 
 exports.Prisma.Job_ListingsScalarFieldEnum = {
   job_id: 'job_id',
+  job_code: 'job_code',
   employer_id: 'employer_id',
-  category_id: 'category_id',
-  title: 'title',
+  jobtitle: 'jobtitle',
+  jobCategory: 'jobCategory',
   description: 'description',
   skills_required: 'skills_required',
   employment_type: 'employment_type',
@@ -347,10 +392,10 @@ exports.Prisma.Job_ListingsScalarFieldEnum = {
   location_city: 'location_city',
   location_province: 'location_province',
   location_country: 'location_country',
-  accessibility_features: 'accessibility_features',
-  experience_level: 'experience_level',
   application_deadline: 'application_deadline',
-  applications_count: 'applications_count',
+  workplace_accessibility_features: 'workplace_accessibility_features',
+  experience_level: 'experience_level',
+  job_status: 'job_status',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };
@@ -466,35 +511,6 @@ exports.TransactionStatus = exports.$Enums.TransactionStatus = {
   Cancelled: 'Cancelled'
 };
 
-exports.EmploymentType = exports.$Enums.EmploymentType = {
-  Full_time: 'Full_time',
-  Part_time: 'Part_time',
-  Contract: 'Contract',
-  Freelance: 'Freelance',
-  Internship: 'Internship'
-};
-
-exports.WorkArrangement = exports.$Enums.WorkArrangement = {
-  On_site: 'On_site',
-  Remote: 'Remote',
-  Hybrid: 'Hybrid'
-};
-
-exports.SalaryType = exports.$Enums.SalaryType = {
-  Hourly: 'Hourly',
-  Daily: 'Daily',
-  Monthly: 'Monthly',
-  Annually: 'Annually',
-  Milestone_based: 'Milestone_based'
-};
-
-exports.ExperienceLevel = exports.$Enums.ExperienceLevel = {
-  Entry: 'Entry',
-  Mid: 'Mid',
-  Senior: 'Senior',
-  Executive: 'Executive'
-};
-
 exports.TicketCategory = exports.$Enums.TicketCategory = {
   Technical: 'Technical',
   Account: 'Account',
@@ -540,7 +556,7 @@ exports.Prisma.ModelName = {
   reviews: 'reviews',
   transactions: 'transactions',
   Notifications: 'Notifications',
-  Job_Categories: 'Job_Categories',
+  Saved_Jobs: 'Saved_Jobs',
   Job_Listings: 'Job_Listings',
   support_tickets: 'support_tickets',
   resources: 'resources',

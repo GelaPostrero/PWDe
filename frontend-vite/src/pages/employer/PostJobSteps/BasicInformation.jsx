@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import api from '../../../utils/api.js';
 import Spinner from '../../../components/ui/Spinner.jsx';
 
 const BasicInformation = ({ data, onDataChange, onNext, onBack }) => {
@@ -32,8 +33,16 @@ const BasicInformation = ({ data, onDataChange, onNext, onBack }) => {
     const minLoadingTime = new Promise(resolve => setTimeout(resolve, 1500));
     
     try {
+      const response = await api.post('/create/basic-information', formData);
+
       await minLoadingTime;
-      onNext();
+      
+      if (response.data.success) {
+        onNext();
+      } else {
+        console.warn('Error: ', response.data.message);
+        alert("Error error")
+      }
     } catch (error) {
       console.error('Error proceeding to next step:', error);
     } finally {

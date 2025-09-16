@@ -1,83 +1,107 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../../utils/api.js'
 import EmployerHeader from '../../components/ui/EmployerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
 
 const EmployerDashboard = () => {
-  const [highContrast, setHighContrast] = useState(false);
-  const [largeText, setLargeText] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [textSize, setTextSize] = useState('normal');
+  const [screenReader, setScreenReader] = useState(false);
+  const [keyboardNavigation, setKeyboardNavigation] = useState(false);
+  const [focusIndicators, setFocusIndicators] = useState(true);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [fetchedData, setFetchedData] = useState(null);
+  const [fetchJob, setFetchJob] = useState([]);
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
+  const [isLoadingJobs, setIsLoadingJobs] = useState(true);
+  const [companyStats, setCompanyStats] = useState({
+    jobsPosted: 0,
+    applicationsReceived: 0,
+    interviewsScheduled: 0,
+    profileViews: 0
+  });
 
-  // Mock company data
-  const companyProfile = {
-    name: "TechCorp Inc.",
-    industry: "Technology",
-    rating: 4.8,
-    profileViews: 142,
-    applications: 12,
-    interviews: 5,
-    savedJobs: 24
+  // Accessibility functions
+  const applyAccessibilityStyles = (darkMode, size, screenReader, keyboardNav, focusInd, reducedMotion) => {
+    const root = document.documentElement;
+    console.log('Applying accessibility styles:', { darkMode, size, screenReader, keyboardNav, focusInd, reducedMotion });
+    
+    // Dark mode
+    if (darkMode) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+
+    // Text size
+    root.classList.remove('text-small', 'text-normal', 'text-large', 'text-extra-large');
+    root.classList.add(`text-${size}`);
+
+    // Screen reader optimizations
+    if (screenReader) {
+      root.classList.add('screen-reader-optimized');
+    } else {
+      root.classList.remove('screen-reader-optimized');
+    }
+
+    // Keyboard navigation
+    if (keyboardNav) {
+      root.classList.add('keyboard-navigation');
+    } else {
+      root.classList.remove('keyboard-navigation');
+    }
+
+    // Focus indicators
+    if (focusInd) {
+      root.classList.add('focus-indicators');
+    } else {
+      root.classList.remove('focus-indicators');
+    }
+
+    // Reduced motion
+    if (reducedMotion) {
+      root.classList.add('reduced-motion');
+    } else {
+      root.classList.remove('reduced-motion');
+    }
   };
 
-  // Mock job postings data
-  const jobPostings = [
-    {
-      id: 1,
-      title: "Senior Software Engineer",
-      status: "Active",
-      type: "Full-time",
-      location: "Remote",
-      salary: "P50,000 - P70,000",
-      period: "monthly",
-      level: "Senior Level",
-      skills: ["React", "Node.js", "TypeScript"],
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      applications: 15,
-      dueDate: "Dec 15"
-    },
-    {
-      id: 2,
-      title: "UX/UI Designer",
-      status: "Active",
-      type: "Full-time",
-      location: "Hybrid",
-      salary: "P45,000 - P60,000",
-      period: "monthly",
-      level: "Mid Level",
-      skills: ["Figma", "Adobe XD", "Prototyping"],
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      applications: 8,
-      dueDate: "Dec 20"
-    },
-    {
-      id: 3,
-      title: "Customer Support Specialist",
-      status: "Closed",
-      type: "Part-time",
-      location: "On-Site",
-      salary: "P25,000 - P35,000",
-      period: "monthly",
-      level: "Entry Level",
-      skills: ["Communication", "Problem Solving"],
-      accessibilityFeatures: ["Accessible Office"],
-      applications: 12,
-      dueDate: "Dec 10"
-    },
-    {
-      id: 4,
-      title: "Tigluto",
-      status: "Active",
-      type: "Part-time",
-      location: "On-Site",
-      salary: "P5,000 - P10,000",
-      period: "monthly",
-      level: "Entry Level",
-      skills: ["Cleaning :)"],
-      accessibilityFeatures: ["Accessible Office"],
-      applications: 12,
-      dueDate: "Dec 5"
-    }
-  ];
+  // Load saved accessibility preferences
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    const savedTextSize = localStorage.getItem('textSize') || 'normal';
+    const savedScreenReader = localStorage.getItem('screenReader') === 'true';
+    const savedKeyboardNavigation = localStorage.getItem('keyboardNavigation') === 'true';
+    const savedFocusIndicators = localStorage.getItem('focusIndicators') !== 'false';
+    const savedReducedMotion = localStorage.getItem('reducedMotion') === 'true';
+
+    setIsDarkMode(savedDarkMode);
+    setTextSize(savedTextSize);
+    setScreenReader(savedScreenReader);
+    setKeyboardNavigation(savedKeyboardNavigation);
+    setFocusIndicators(savedFocusIndicators);
+    setReducedMotion(savedReducedMotion);
+
+    // Apply initial styles
+    applyAccessibilityStyles(savedDarkMode, savedTextSize, savedScreenReader, savedKeyboardNavigation, savedFocusIndicators, savedReducedMotion);
+  }, []);
+
+  // Real company profile data from backend
+  const companyProfile = fetchedData ? {
+    companylogo: fetchedData.companylogo || '',
+    name: fetchedData.company_name || 'Company',
+    industry: fetchedData.industryPreference || 'Technology',
+    rating: fetchedData.rating || 0,
+    profileViews: companyStats.profileViews,
+    applications: companyStats.applicationsReceived,
+    interviews: companyStats.interviewsScheduled,
+    jobsPosted: companyStats.jobsPosted
+  } : null;
+
+  // Real job postings data from backend
+  const jobPostings = fetchJob || [];
 
   // Mock recent applicants data
   const recentApplicants = [
@@ -97,11 +121,23 @@ const EmployerDashboard = () => {
     }
   ];
 
-  const profileCompletion = {
-    percentage: 75,
-    completed: ["Company Profile", "Job Roles & Requirements"],
-    remaining: ["Work Environment"]
+  // Profile completion tracking based on real data
+  const getProfileCompletionItems = () => {
+    if (!fetchedData) return [];
+    
+    return [
+      { text: 'Company Profile', completed: !!(fetchedData.company_name && fetchedData.company_email) },
+      { text: 'Job Roles & Requirements', completed: !!(fetchedData.jobRoles_requirements && fetchedData.jobRoles_requirements.length > 0) },
+      { text: 'Work Environment', completed: !!(fetchedData.work_environment && fetchedData.work_environment.length > 0) }
+    ];
   };
+
+  const items = getProfileCompletionItems();
+
+  const totalItems = items.length;
+  const completedItems = items.filter(item => item.completed).length;
+  const progressPercentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+  const itemsLeft = totalItems - completedItems;
 
   const quickActions = [
     {
@@ -124,6 +160,88 @@ const EmployerDashboard = () => {
     }
   ];
 
+  // Fetch company profile data
+  const fetchCompanyProfile = async () => {
+      try {
+      setIsLoadingProfile(true);
+        const response = await api.get("/retrieve/dashboard");
+        if (response.data.success) {
+          setFetchedData(response.data.data);
+        }
+      } catch (error) {
+      console.error("Failed to load company profile:", error);
+    } finally {
+      setIsLoadingProfile(false);
+      }
+    };
+
+  // Fetch company job postings
+  const fetchCompanyJobs = async () => {
+      try {
+      setIsLoadingJobs(true);
+        const response = await api.get('/job/all');
+        if(response.data.success) {
+        setFetchJob(response.data.job || []);
+        }
+      } catch (error) {
+        console.error("Failed to load jobs:", error);
+      setFetchJob([]);
+    } finally {
+      setIsLoadingJobs(false);
+    }
+  };
+
+  // Fetch company statistics
+  const fetchCompanyStats = async () => {
+    try {
+      const [jobsRes, applicationsRes] = await Promise.all([
+        api.get('/job/count'),
+        api.get('/api/applications/employer/count')
+      ]);
+
+      setCompanyStats({
+        jobsPosted: jobsRes.data.count || 0,
+        applicationsReceived: applicationsRes.data.count || 0,
+        interviewsScheduled: 0, // This would come from a separate API
+        profileViews: fetchedData?.profile_views || 0
+      });
+    } catch (error) {
+      console.error('Failed to fetch company stats:', error);
+    }
+  };
+
+  // Load all data on component mount
+  useEffect(() => {
+    fetchCompanyProfile();
+    fetchCompanyJobs();
+  }, []);
+
+  // Fetch company stats when profile data is loaded
+  useEffect(() => {
+    if (fetchedData) {
+      fetchCompanyStats();
+    }
+  }, [fetchedData]);
+
+  // Show loading state while data is being fetched
+  if (isLoadingProfile) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <EmployerHeader disabled={false} />
+        <main className="flex-1">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="flex items-center justify-center h-64">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading dashboard...</p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
@@ -138,31 +256,39 @@ const EmployerDashboard = () => {
             <div className="lg:col-span-4 mb-4 lg:mb-2 mt-1">
               {/* Company Profile Section */}
               <div className="bg-white rounded-lg shadow p-4 sm:p-6">
-                <div className="flex flex-col lg:flex-row lg:items-center space-y-4 lg:space-y-0 lg:space-x-6">
-                  {/* Company Logo & Basic Info */}
-                  <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 flex-shrink-0">
-                    <div className="relative flex-shrink-0 flex justify-center sm:justify-start">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-purple-600 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold text-lg sm:text-xl">TECH</span>
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                  <div className="relative flex-shrink-0 flex justify-center sm:justify-start">
+                  {/* Company Logo */}
+                  {companyProfile?.companylogo ?  (
+                      <img 
+                        src={companyProfile.companylogo} 
+                        alt="Company Logo"
+                        className="w-16 h-16 rounded-full object-cover border-4 border-blue-100"
+                      />
+                  ) : (
+                    <>
+                      <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">LOGO</span>
                       </div>
                       <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
-                    </div>
-
-                    {/* Company Name and Rating */}
-                    <div className="text-center sm:text-left">
-                      <h2 className="text-lg sm:text-xl font-bold text-gray-900">{companyProfile.name}</h2>
-                      <p className="text-sm sm:text-base text-gray-600">Industry Preference</p>
-                      <div className="flex items-center justify-center sm:justify-start mt-2">
-                        <div className="flex items-center">
-                          {[...Array(5)].map((_, i) => (
-                            <svg
-                              key={i}
-                              className={`w-4 h-4 ${
-                                i < Math.floor(companyProfile.rating) 
+                    </>
+                  )}
+                  </div>
+                  {/* Company Name and Rating */}
+                  <div className="flex-shrink-0 text-center sm:text-left">
+                    <h2 className="text-lg font-bold text-gray-900">{companyProfile.name}</h2>
+                    <p className="text-sm text-gray-600">{companyProfile.industry}</p>
+                    <div className="flex items-center justify-center sm:justify-start mt-1">
+                      <div className="flex items-center">
+                        {[...Array(5)].map((_, i) => (
+                          <svg
+                            key={i}
+                            className={`w-4 h-4 ${
+                              i < Math.floor(companyProfile.rating) 
+                                ? 'text-yellow-400' 
+                                : i < companyProfile.rating 
                                   ? 'text-yellow-400' 
-                                  : i < companyProfile.rating 
-                                    ? 'text-yellow-400' 
-                                    : 'text-gray-300'
+                                  : 'text-gray-300'
                               }`}
                               fill="currentColor"
                               viewBox="0 0 20 20"
@@ -252,18 +378,18 @@ const EmployerDashboard = () => {
 
                 {/* Job Postings Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                  {jobPostings.map((job) => (
-                    <div key={job.id} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
+                  {fetchJob.map((job) => (
+                    <div key={job.job_id} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
                       
                       {/* Job Header */}
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
+                          <h3 className="text-lg font-semibold text-gray-900">{job.jobtitle}</h3>
                         </div>
                         <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${
-                          job.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                          job.job_status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                         }`}>
-                          {job.status}
+                          {job.job_status}
                         </span>
                       </div>
 
@@ -273,34 +399,34 @@ const EmployerDashboard = () => {
                           <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
-                          {job.type}
+                          {job.employment_type}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                           </svg>
-                          {job.location}
+                          {job.work_arrangement}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                           </svg>
-                          ₱{job.salary} / {job.period}
+                          ₱{job.salary_min} - ₱{job.salary_max} / {job.salary_type.toLowerCase()}
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6z" />
                           </svg>
-                          {job.level}
+                          {job.experience_level}
                         </div>
                       </div>
 
                       {/* Skills */}
                       <div className="mb-4">
                         <div className="flex flex-wrap gap-1">
-                          {job.skills.slice(0, 3).map((skill, index) => (
+                          {job.skills_required.slice(0, 3).map((skill, index) => (
                             <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
-                              {skill}
+                              {skill.replace(/ \(.*\)$/, '')}
                             </span>
                           ))}
                         </div>
@@ -309,7 +435,7 @@ const EmployerDashboard = () => {
                       {/* Accessibility Features */}
                       <div className="mb-4">
                         <div className="flex flex-wrap gap-1">
-                          {job.accessibilityFeatures.map((feature, index) => (
+                          {job.workplace_accessibility_features.slice(0, 3).map((feature, index) => (
                             <span key={index} className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
                               {feature}
                             </span>
@@ -323,13 +449,18 @@ const EmployerDashboard = () => {
                           <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                           </svg>
-                          {job.applications} applications
+                          {job._count.applications} applications
                         </div>
                         <div className="flex items-center">
                           <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
-                          Due: {job.dueDate}
+                          Due: {job.application_deadline
+                                ? new Date(job.application_deadline).toLocaleDateString("en-US", {
+                                    month: "short",
+                                    day: "numeric",
+                                  })
+                                : "No deadline"}
                         </div>
                       </div>
 
@@ -425,33 +556,31 @@ const EmployerDashboard = () => {
               <div className="bg-white rounded-lg shadow p-4 sm:p-6">
                 <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Profile Completion</h3>
                 <div className="mb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">{profileCompletion.percentage}% Complete</span>
-                    <span className="text-xs text-gray-500">{profileCompletion.remaining.length} item left</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-700">{progressPercentage}% Complete</span>
+                    <span className="text-xs sm:text-sm text-gray-500">{itemsLeft} item{itemsLeft !== 1 ? 's' : ''} left</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div 
                       className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${profileCompletion.percentage}%` }}
+                      style={{ width: `${progressPercentage}%` }}
                     ></div>
                   </div>
                 </div>
 
                 <div className="space-y-3 mb-4">
-                  {profileCompletion.completed.map((item, index) => (
-                    <div key={index} className="flex items-center space-x-3">
-                      <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-sm text-gray-700 flex-1">{item}</span>
-                    </div>
-                  ))}
-                  {profileCompletion.remaining.map((item, index) => (
-                    <div key={index} className="flex items-center space-x-3">
-                      <div className="w-5 h-5 border-2 border-gray-300 rounded-full flex-shrink-0"></div>
-                      <span className="text-sm text-gray-500 flex-1">{item}</span>
+                  {items.map((item, index) => (
+                    <div key={index} className="flex items-center space-x-2">
+                      {item.completed ? (
+                        <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      ) : (
+                        <div className="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
+                      )}
+                      <span className="text-xs sm:text-sm text-gray-700">{item.text}</span>
                     </div>
                   ))}
                 </div>
@@ -491,32 +620,133 @@ const EmployerDashboard = () => {
               <div className="bg-white rounded-lg shadow p-4 sm:p-6">
                 <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Accessibility Tools</h3>
                 <div className="space-y-4">
+                  {/* Dark Mode */}
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700 flex-1">High Contrast</span>
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Dark Mode</span>
                     <button
-                      onClick={() => setHighContrast(!highContrast)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors flex-shrink-0 ${
-                        highContrast ? 'bg-blue-600' : 'bg-gray-200'
+                      onClick={() => {
+                        const newDarkMode = !isDarkMode;
+                        setIsDarkMode(newDarkMode);
+                        localStorage.setItem('darkMode', newDarkMode.toString());
+                        applyAccessibilityStyles(newDarkMode, textSize, screenReader, keyboardNavigation, focusIndicators, reducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        isDarkMode ? 'bg-blue-600' : 'bg-gray-200'
                       }`}
                     >
                       <span
                         className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                          highContrast ? 'translate-x-6' : 'translate-x-1'
+                          isDarkMode ? 'translate-x-6' : 'translate-x-1'
                         }`}
                       />
                     </button>
                   </div>
+
+                  {/* Text Size */}
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-gray-700 flex-1">Large Text</span>
                     <button
-                      onClick={() => setLargeText(!largeText)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors flex-shrink-0 ${
-                        largeText ? 'bg-blue-600' : 'bg-gray-200'
+                      onClick={() => {
+                        const newTextSize = textSize === 'normal' ? 'large' : 'normal';
+                        setTextSize(newTextSize);
+                        localStorage.setItem('textSize', newTextSize);
+                        applyAccessibilityStyles(isDarkMode, newTextSize, screenReader, keyboardNavigation, focusIndicators, reducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        textSize === 'large' ? 'bg-blue-600' : 'bg-gray-200'
                       }`}
                     >
                       <span
                         className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                          largeText ? 'translate-x-6' : 'translate-x-1'
+                          textSize === 'large' ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Screen Reader Optimizations */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Screen Reader Optimized</span>
+                    <button
+                      onClick={() => {
+                        const newScreenReader = !screenReader;
+                        setScreenReader(newScreenReader);
+                        localStorage.setItem('screenReader', newScreenReader.toString());
+                        applyAccessibilityStyles(isDarkMode, textSize, newScreenReader, keyboardNavigation, focusIndicators, reducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        screenReader ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          screenReader ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Enhanced Keyboard Navigation */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Enhanced Keyboard Navigation</span>
+                    <button
+                      onClick={() => {
+                        const newKeyboardNavigation = !keyboardNavigation;
+                        setKeyboardNavigation(newKeyboardNavigation);
+                        localStorage.setItem('keyboardNavigation', newKeyboardNavigation.toString());
+                        applyAccessibilityStyles(isDarkMode, textSize, screenReader, newKeyboardNavigation, focusIndicators, reducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        keyboardNavigation ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          keyboardNavigation ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Enhanced Focus Indicators */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Enhanced Focus Indicators</span>
+                    <button
+                      onClick={() => {
+                        const newFocusIndicators = !focusIndicators;
+                        setFocusIndicators(newFocusIndicators);
+                        localStorage.setItem('focusIndicators', newFocusIndicators.toString());
+                        applyAccessibilityStyles(isDarkMode, textSize, screenReader, keyboardNavigation, newFocusIndicators, reducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        focusIndicators ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          focusIndicators ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Reduced Motion */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Reduced Motion</span>
+                    <button
+                      onClick={() => {
+                        const newReducedMotion = !reducedMotion;
+                        setReducedMotion(newReducedMotion);
+                        localStorage.setItem('reducedMotion', newReducedMotion.toString());
+                        applyAccessibilityStyles(isDarkMode, textSize, screenReader, keyboardNavigation, focusIndicators, newReducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        reducedMotion ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          reducedMotion ? 'translate-x-6' : 'translate-x-1'
                         }`}
                       />
                     </button>

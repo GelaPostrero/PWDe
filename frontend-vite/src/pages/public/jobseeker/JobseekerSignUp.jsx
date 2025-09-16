@@ -125,9 +125,17 @@ const JobseekerSignUp = () => {
     
     // Set loading state
     setIsLoading(true);
-    
-    if(!formData.email) {
-      alert("Email is required.");
+
+    if(!formData.email || !formData.phone || !formData.address || !formData.gender || !formData.password || !formData.confirmPassword || !formData.disabilityType || !formData.firstName || !formData.lastName || !formData.middleName) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Please double check your data.',
+        text: 'We think you have forgotten some fields.',
+        timer: 4000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'bottom-end'
+      });
       setIsLoading(false);
       return;
     }
@@ -179,7 +187,19 @@ const JobseekerSignUp = () => {
     }
 
     // Validate age (must be at least 16 years old)
-    if (formData.birthdate) {
+    if (!formData.birthdate) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning',
+        text: 'Don`t forget to set your birthdate.',
+        timer: 4000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'bottom-end'
+      });
+      setIsLoading(false);
+      return;
+    } else {
       const birthDate = new Date(formData.birthdate);
       const today = new Date();
       let age = today.getFullYear() - birthDate.getFullYear();
@@ -205,7 +225,7 @@ const JobseekerSignUp = () => {
     }
 
     localStorage.setItem('userEmail', formData.email);
-    
+    console.log("Formdata: ", formData);
     try {
       // Add minimum loading time to see spinner (remove this in production)
       const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));

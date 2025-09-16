@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import api from '../../../utils/api.js'
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 import Spinner from '../../../components/ui/Spinner.jsx';
@@ -149,53 +150,12 @@ const JobseekerOnboardingAccessibility = () => {
     }
     
     try {
-      // Check if we have a valid token
-      if (!token) {
-        console.log('No auth token found, proceeding with mock data');
-        // Wait for minimum loading time even for mock data
-        await minLoadingTime;
-        // Mock success for development
-        Swal.fire({
-          icon: 'success',
-          html: '<h5><b>Accessibility Needs</b></h5>\n<h6>You may now fillup Job Preferences & Requirements.</h6>',
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          toast: true,
-          position: 'bottom-end'
-        });
-        navigate(routeForStep('preferences'));
-        setIsLoading(false);
-        return;
-      }
-
-      var url = "http://localhost:4000/onboard/pwd/onboard/accessibility-needs";
-      var headers = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-      
-      console.log('Attempting to connect to:', url);
-      
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(accessibilityData)
-      });
+      const response = await api.post('/onboard/pwd/onboard/accessibility-needs', accessibilityData);
 
       // Wait for both API call and minimum loading time
       await Promise.all([response, minLoadingTime]);
-
-      console.log('Response status:', response.status);
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log('API response:', data);
-      
-      if(data.success) {
+      if(response.data.success) {
         Swal.fire({
           icon: 'success',
           html: '<h5><b>Accessibility Needs</b></h5>\n<h6>You may now fillup Job Preferences & Requirements.</h6>',
@@ -368,26 +328,26 @@ const JobseekerOnboardingAccessibility = () => {
               <div className="mt-3 text-xs text-blue-700 bg-blue-50 border border-blue-100 rounded-lg p-3">This information is used only for job matching and accommodation purposes. Employers will only see relevant accommodation needs if you choose to share them.</div>
             </div>
 
-            <div className="mt-2 flex items-center justify-between">
+            {/* Navigation Buttons */}
+            <div className="flex items-center justify-between pt-6 border-t border-gray-200">
               <button 
                 onClick={goBack} 
                 disabled={isLoading}
-                className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors ${
-                  isLoading 
-                    ? 'text-gray-400 cursor-not-allowed' 
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
+                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
               >
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
                 Back
               </button>
               <div className="flex items-center gap-3">
                 <button 
                   onClick={handleSkip} 
                   disabled={isLoading}
-                  className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors ${
+                  className={`text-sm font-medium transition-colors ${
                     isLoading 
                       ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-gray-700 hover:bg-gray-50'
+                      : 'text-blue-600 hover:text-blue-800'
                   }`}
                 >
                   Skip for now
@@ -395,19 +355,24 @@ const JobseekerOnboardingAccessibility = () => {
                 <button 
                   onClick={handleNext} 
                   disabled={!isFormValid || isLoading}
-                  className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-all duration-200 flex items-center gap-2 ${
+                  className={`inline-flex items-center px-6 py-2 text-white text-sm font-medium rounded-lg transition-all duration-200 ${
                     isFormValid && !isLoading
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg' 
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      ? 'bg-blue-600 hover:bg-blue-700' 
+                      : 'bg-gray-400 cursor-not-allowed'
                   }`}
                 >
                   {isLoading ? (
                     <>
                       <Spinner size="sm" color="white" />
-                      <span>Saving...</span>
+                      <span className="ml-2">Saving...</span>
                     </>
                   ) : (
-                    isFormValid ? 'Next' : 'Select at least one need'
+                    <>
+                      Next
+                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </>
                   )}
                 </button>
               </div>

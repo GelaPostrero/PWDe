@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 import Logo from '../../components/ui/Logo.jsx';
 
@@ -120,7 +120,7 @@ const SignIn = () => {
 
   const handleSignUp = () => {
     // Navigate to sign up page
-    console.log('Navigate to sign up');
+    navigate('/chooseuser')
   };
 
   const handleForgotPassword = () => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../../utils/api.js';
 import EmployerHeader from '../../components/ui/EmployerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
@@ -13,196 +14,47 @@ const EmployerJob = () => {
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [job, setJob] = useState([]);
 
-  // Mock job data - ready for backend integration
-  const [jobPostings, setJobPostings] = useState([
-    {
-      id: 1,
-      title: "Senior Software Engineer",
-      status: "Active",
-      type: "Full-time",
-      location: "Remote",
-      salary: "P50,000 - P70,000",
-      period: "monthly",
-      level: "Senior Level",
-      skills: ["React", "Node.js", "TypeScript"],
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      applications: 15,
-      dueDate: "Dec 15",
-      postedDate: "2024-12-01"
-    },
-    {
-      id: 2,
-      title: "UX/UI Designer",
-      status: "Active",
-      type: "Full-time",
-      location: "Hybrid",
-      salary: "P50,000 - P70,000",
-      period: "semi-monthly",
-      level: "Mid Level",
-      skills: ["Figma", "Adobe XD", "Prototyping"],
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      applications: 8,
-      dueDate: "Dec 20",
-      postedDate: "2024-11-28"
-    },
-    {
-      id: 3,
-      title: "Customer Support Specialist",
-      status: "Closed",
-      type: "Part-time",
-      location: "On-Site",
-      salary: "P50,000 - P70,000",
-      period: "hourly",
-      level: "Mid Level",
-      skills: ["Communication", "Problem Solving"],
-      accessibilityFeatures: ["Accessible Office"],
-      applications: 8,
-      dueDate: "Dec 10",
-      postedDate: "2024-11-25"
-    },
-    {
-      id: 4,
-      title: "Frontend Developer",
-      status: "Active",
-      type: "Full-time",
-      location: "Remote",
-      salary: "P45,000 - P65,000",
-      period: "monthly",
-      level: "Mid Level",
-      skills: ["React", "JavaScript", "CSS"],
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      applications: 12,
-      dueDate: "Dec 18",
-      postedDate: "2024-11-30"
-    },
-    {
-      id: 5,
-      title: "Backend Developer",
-      status: "Active",
-      type: "Full-time",
-      location: "Hybrid",
-      salary: "P55,000 - P75,000",
-      period: "monthly",
-      level: "Senior Level",
-      skills: ["Python", "Django", "PostgreSQL"],
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      applications: 9,
-      dueDate: "Dec 22",
-      postedDate: "2024-12-02"
-    },
-    {
-      id: 6,
-      title: "Data Analyst",
-      status: "Active",
-      type: "Full-time",
-      location: "Remote",
-      salary: "P40,000 - P60,000",
-      period: "monthly",
-      level: "Mid Level",
-      skills: ["Python", "SQL", "Tableau"],
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      applications: 6,
-      dueDate: "Dec 25",
-      postedDate: "2024-12-03"
-    },
-    {
-      id: 7,
-      title: "Product Manager",
-      status: "Active",
-      type: "Full-time",
-      location: "Hybrid",
-      salary: "P60,000 - P80,000",
-      period: "monthly",
-      level: "Senior Level",
-      skills: ["Product Strategy", "Agile", "Analytics"],
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      applications: 11,
-      dueDate: "Dec 28",
-      postedDate: "2024-12-04"
-    },
-    {
-      id: 8,
-      title: "Marketing Specialist",
-      status: "Active",
-      type: "Part-time",
-      location: "Remote",
-      salary: "P30,000 - P45,000",
-      period: "monthly",
-      level: "Mid Level",
-      skills: ["Digital Marketing", "SEO", "Social Media"],
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      applications: 7,
-      dueDate: "Dec 30",
-      postedDate: "2024-12-05"
-    },
-    {
-      id: 9,
-      title: "DevOps Engineer",
-      status: "Active",
-      type: "Full-time",
-      location: "Remote",
-      salary: "P55,000 - P75,000",
-      period: "monthly",
-      level: "Senior Level",
-      skills: ["AWS", "Docker", "Kubernetes"],
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      applications: 5,
-      dueDate: "Jan 5",
-      postedDate: "2024-12-06"
-    },
-    {
-        id: 10,
-        title: "Cleaner",
-        status: "Active",
-        type: "Full-time",
-        location: "Remote",
-        salary: "P55,000 - P75,000",
-        period: "monthly",
-        level: "Senior Level",
-        skills: ["Cleaning :)"],
-        accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-        applications: 5,
-        dueDate: "Jan 5",
-        postedDate: "2024-12-06"
-      },
-      {
-        id: 11,
-        title: "Cook",
-        status: "Active",
-        type: "Full-time",
-        location: "Remote",
-        salary: "P55,000 - P75,000",
-        period: "monthly",
-        level: "Senior Level",
-        skills: ["Cooking :)"],
-        accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-        applications: 5,
-        dueDate: "Jan 5",
-        postedDate: "2024-12-06"
-      }
-  ]);
+  const [jobPostings, setJobPostings] = useState([]);
+
+  useEffect(() => {
+    if (job && job.length > 0) {
+      const formattedJobs = job.map(job => ({
+        id: job.job_id,
+        title: job.jobtitle,
+        status: job.job_status,
+        type: job.employment_type,
+        location: job.work_arrangement,
+        salary: `P${job.salary_min} - P${job.salary_max}`,
+        period: job.salary_type,
+        level: job.experience_level,
+        skills: job.skills_required?.map(skill => skill.replace(/ \(.*\)$/, '')) || [],
+        accessibilityFeatures: job.workplace_accessibility_features,
+        applications: job._count.applications,
+        dueDate: job.application_deadline
+          ? new Date(job.application_deadline).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            })
+          : "No deadline",
+        postedDate: job.created_at
+      }));
+      setJobPostings(formattedJobs);
+    }
+  }, [job]);
 
   // API Functions - Ready for backend integration
-  const api = {
+  const apifunction = {
     // Fetch job postings
     fetchJobPostings: async (filters = {}) => {
       try {
         setIsLoading(true);
         
-        // TODO: Replace with actual API call
-        // const response = await fetch('/api/employer/jobs', {
-        //   method: 'GET',
-        //   headers: {
-        //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify(filters)
-        // });
-        // const data = await response.json();
-        
-        // Mock API response
-        await new Promise(resolve => setTimeout(resolve, 500));
+        const response = await api.get('/job/all');
+        if(response.data.success) {
+          setJob(response.data.job);
+        }
         
         return jobPostings;
       } catch (err) {
@@ -337,7 +189,7 @@ const EmployerJob = () => {
   const handleDeleteJob = async (jobId) => {
     if (window.confirm('Are you sure you want to delete this job posting?')) {
       try {
-        await api.deleteJob(jobId);
+        await apifunction.deleteJob(jobId);
         // Job will be removed from state by the API function
       } catch (err) {
         alert('Failed to delete job posting. Please try again.');
@@ -359,7 +211,7 @@ const EmployerJob = () => {
   useEffect(() => {
     const initializeData = async () => {
       try {
-        await api.fetchJobPostings();
+        await apifunction.fetchJobPostings();
       } catch (err) {
         // Error already handled in API function
       }
@@ -605,7 +457,7 @@ const EmployerJob = () => {
                   {/* Accessibility Features */}
                   <div className="mb-4">
                     <div className="flex flex-wrap gap-1">
-                      {job.accessibilityFeatures.map((feature, index) => (
+                      {job.accessibilityFeatures.slice(0, 3).map((feature, index) => (
                         <span key={index} className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
                           {feature}
                         </span>

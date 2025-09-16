@@ -89,10 +89,10 @@ export type transactions = $Result.DefaultSelection<Prisma.$transactionsPayload>
  */
 export type Notifications = $Result.DefaultSelection<Prisma.$NotificationsPayload>
 /**
- * Model Job_Categories
+ * Model Saved_Jobs
  * 
  */
-export type Job_Categories = $Result.DefaultSelection<Prisma.$Job_CategoriesPayload>
+export type Saved_Jobs = $Result.DefaultSelection<Prisma.$Saved_JobsPayload>
 /**
  * Model Job_Listings
  * 
@@ -158,47 +158,6 @@ export const Gender: {
 };
 
 export type Gender = (typeof Gender)[keyof typeof Gender]
-
-
-export const EmploymentType: {
-  Full_time: 'Full_time',
-  Part_time: 'Part_time',
-  Contract: 'Contract',
-  Freelance: 'Freelance',
-  Internship: 'Internship'
-};
-
-export type EmploymentType = (typeof EmploymentType)[keyof typeof EmploymentType]
-
-
-export const WorkArrangement: {
-  On_site: 'On_site',
-  Remote: 'Remote',
-  Hybrid: 'Hybrid'
-};
-
-export type WorkArrangement = (typeof WorkArrangement)[keyof typeof WorkArrangement]
-
-
-export const SalaryType: {
-  Hourly: 'Hourly',
-  Daily: 'Daily',
-  Monthly: 'Monthly',
-  Annually: 'Annually',
-  Milestone_based: 'Milestone_based'
-};
-
-export type SalaryType = (typeof SalaryType)[keyof typeof SalaryType]
-
-
-export const ExperienceLevel: {
-  Entry: 'Entry',
-  Mid: 'Mid',
-  Senior: 'Senior',
-  Executive: 'Executive'
-};
-
-export type ExperienceLevel = (typeof ExperienceLevel)[keyof typeof ExperienceLevel]
 
 
 export const TicketCategory: {
@@ -296,22 +255,6 @@ export const Disability_Severity: typeof $Enums.Disability_Severity
 export type Gender = $Enums.Gender
 
 export const Gender: typeof $Enums.Gender
-
-export type EmploymentType = $Enums.EmploymentType
-
-export const EmploymentType: typeof $Enums.EmploymentType
-
-export type WorkArrangement = $Enums.WorkArrangement
-
-export const WorkArrangement: typeof $Enums.WorkArrangement
-
-export type SalaryType = $Enums.SalaryType
-
-export const SalaryType: typeof $Enums.SalaryType
-
-export type ExperienceLevel = $Enums.ExperienceLevel
-
-export const ExperienceLevel: typeof $Enums.ExperienceLevel
 
 export type TicketCategory = $Enums.TicketCategory
 
@@ -614,14 +557,14 @@ export class PrismaClient<
   get notifications(): Prisma.NotificationsDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.job_Categories`: Exposes CRUD operations for the **Job_Categories** model.
+   * `prisma.saved_Jobs`: Exposes CRUD operations for the **Saved_Jobs** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Job_Categories
-    * const job_Categories = await prisma.job_Categories.findMany()
+    * // Fetch zero or more Saved_Jobs
+    * const saved_Jobs = await prisma.saved_Jobs.findMany()
     * ```
     */
-  get job_Categories(): Prisma.Job_CategoriesDelegate<ExtArgs, ClientOptions>;
+  get saved_Jobs(): Prisma.Saved_JobsDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.job_Listings`: Exposes CRUD operations for the **Job_Listings** model.
@@ -1127,7 +1070,7 @@ export namespace Prisma {
     reviews: 'reviews',
     transactions: 'transactions',
     Notifications: 'Notifications',
-    Job_Categories: 'Job_Categories',
+    Saved_Jobs: 'Saved_Jobs',
     Job_Listings: 'Job_Listings',
     support_tickets: 'support_tickets',
     resources: 'resources',
@@ -1151,7 +1094,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "users" | "pwd_Profile" | "pwd_Experience" | "pwd_Accessibility_Needs" | "pwd_Education" | "pwd_Job_Preferences_Requirements" | "employer_Profile" | "resumes" | "chat_Thread" | "chat_Message" | "withdrawal_requests" | "applications" | "reviews" | "transactions" | "notifications" | "job_Categories" | "job_Listings" | "support_tickets" | "resources" | "ai_match_results" | "chatbot_logs"
+      modelProps: "users" | "pwd_Profile" | "pwd_Experience" | "pwd_Accessibility_Needs" | "pwd_Education" | "pwd_Job_Preferences_Requirements" | "employer_Profile" | "resumes" | "chat_Thread" | "chat_Message" | "withdrawal_requests" | "applications" | "reviews" | "transactions" | "notifications" | "saved_Jobs" | "job_Listings" | "support_tickets" | "resources" | "ai_match_results" | "chatbot_logs"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2265,77 +2208,77 @@ export namespace Prisma {
           }
         }
       }
-      Job_Categories: {
-        payload: Prisma.$Job_CategoriesPayload<ExtArgs>
-        fields: Prisma.Job_CategoriesFieldRefs
+      Saved_Jobs: {
+        payload: Prisma.$Saved_JobsPayload<ExtArgs>
+        fields: Prisma.Saved_JobsFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.Job_CategoriesFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload> | null
+            args: Prisma.Saved_JobsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Saved_JobsPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.Job_CategoriesFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>
+            args: Prisma.Saved_JobsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Saved_JobsPayload>
           }
           findFirst: {
-            args: Prisma.Job_CategoriesFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload> | null
+            args: Prisma.Saved_JobsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Saved_JobsPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.Job_CategoriesFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>
+            args: Prisma.Saved_JobsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Saved_JobsPayload>
           }
           findMany: {
-            args: Prisma.Job_CategoriesFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>[]
+            args: Prisma.Saved_JobsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Saved_JobsPayload>[]
           }
           create: {
-            args: Prisma.Job_CategoriesCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>
+            args: Prisma.Saved_JobsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Saved_JobsPayload>
           }
           createMany: {
-            args: Prisma.Job_CategoriesCreateManyArgs<ExtArgs>
+            args: Prisma.Saved_JobsCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.Job_CategoriesCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>[]
+            args: Prisma.Saved_JobsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Saved_JobsPayload>[]
           }
           delete: {
-            args: Prisma.Job_CategoriesDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>
+            args: Prisma.Saved_JobsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Saved_JobsPayload>
           }
           update: {
-            args: Prisma.Job_CategoriesUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>
+            args: Prisma.Saved_JobsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Saved_JobsPayload>
           }
           deleteMany: {
-            args: Prisma.Job_CategoriesDeleteManyArgs<ExtArgs>
+            args: Prisma.Saved_JobsDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.Job_CategoriesUpdateManyArgs<ExtArgs>
+            args: Prisma.Saved_JobsUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.Job_CategoriesUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>[]
+            args: Prisma.Saved_JobsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Saved_JobsPayload>[]
           }
           upsert: {
-            args: Prisma.Job_CategoriesUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Job_CategoriesPayload>
+            args: Prisma.Saved_JobsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$Saved_JobsPayload>
           }
           aggregate: {
-            args: Prisma.Job_CategoriesAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateJob_Categories>
+            args: Prisma.Saved_JobsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSaved_Jobs>
           }
           groupBy: {
-            args: Prisma.Job_CategoriesGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Job_CategoriesGroupByOutputType>[]
+            args: Prisma.Saved_JobsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Saved_JobsGroupByOutputType>[]
           }
           count: {
-            args: Prisma.Job_CategoriesCountArgs<ExtArgs>
-            result: $Utils.Optional<Job_CategoriesCountAggregateOutputType> | number
+            args: Prisma.Saved_JobsCountArgs<ExtArgs>
+            result: $Utils.Optional<Saved_JobsCountAggregateOutputType> | number
           }
         }
       }
@@ -2816,7 +2759,7 @@ export namespace Prisma {
     reviews?: reviewsOmit
     transactions?: transactionsOmit
     notifications?: NotificationsOmit
-    job_Categories?: Job_CategoriesOmit
+    saved_Jobs?: Saved_JobsOmit
     job_Listings?: Job_ListingsOmit
     support_tickets?: support_ticketsOmit
     resources?: resourcesOmit
@@ -3022,6 +2965,7 @@ export namespace Prisma {
     resumes: number
     ai_match_results: number
     transactions: number
+    Saved_Jobs: number
   }
 
   export type Pwd_ProfileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3033,6 +2977,7 @@ export namespace Prisma {
     resumes?: boolean | Pwd_ProfileCountOutputTypeCountResumesArgs
     ai_match_results?: boolean | Pwd_ProfileCountOutputTypeCountAi_match_resultsArgs
     transactions?: boolean | Pwd_ProfileCountOutputTypeCountTransactionsArgs
+    Saved_Jobs?: boolean | Pwd_ProfileCountOutputTypeCountSaved_JobsArgs
   }
 
   // Custom InputTypes
@@ -3102,6 +3047,13 @@ export namespace Prisma {
     where?: transactionsWhereInput
   }
 
+  /**
+   * Pwd_ProfileCountOutputType without action
+   */
+  export type Pwd_ProfileCountOutputTypeCountSaved_JobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Saved_JobsWhereInput
+  }
+
 
   /**
    * Count Type Employer_ProfileCountOutputType
@@ -3110,11 +3062,15 @@ export namespace Prisma {
   export type Employer_ProfileCountOutputType = {
     job_listings: number
     transactions: number
+    Applications: number
+    Saved_Jobs: number
   }
 
   export type Employer_ProfileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job_listings?: boolean | Employer_ProfileCountOutputTypeCountJob_listingsArgs
     transactions?: boolean | Employer_ProfileCountOutputTypeCountTransactionsArgs
+    Applications?: boolean | Employer_ProfileCountOutputTypeCountApplicationsArgs
+    Saved_Jobs?: boolean | Employer_ProfileCountOutputTypeCountSaved_JobsArgs
   }
 
   // Custom InputTypes
@@ -3140,6 +3096,20 @@ export namespace Prisma {
    */
   export type Employer_ProfileCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: transactionsWhereInput
+  }
+
+  /**
+   * Employer_ProfileCountOutputType without action
+   */
+  export type Employer_ProfileCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationsWhereInput
+  }
+
+  /**
+   * Employer_ProfileCountOutputType without action
+   */
+  export type Employer_ProfileCountOutputTypeCountSaved_JobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Saved_JobsWhereInput
   }
 
 
@@ -3246,48 +3216,19 @@ export namespace Prisma {
 
 
   /**
-   * Count Type Job_CategoriesCountOutputType
-   */
-
-  export type Job_CategoriesCountOutputType = {
-    job_listings: number
-  }
-
-  export type Job_CategoriesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    job_listings?: boolean | Job_CategoriesCountOutputTypeCountJob_listingsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * Job_CategoriesCountOutputType without action
-   */
-  export type Job_CategoriesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_CategoriesCountOutputType
-     */
-    select?: Job_CategoriesCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * Job_CategoriesCountOutputType without action
-   */
-  export type Job_CategoriesCountOutputTypeCountJob_listingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: Job_ListingsWhereInput
-  }
-
-
-  /**
    * Count Type Job_ListingsCountOutputType
    */
 
   export type Job_ListingsCountOutputType = {
     applications: number
     ai_match_results: number
+    Saved_Jobs: number
   }
 
   export type Job_ListingsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | Job_ListingsCountOutputTypeCountApplicationsArgs
     ai_match_results?: boolean | Job_ListingsCountOutputTypeCountAi_match_resultsArgs
+    Saved_Jobs?: boolean | Job_ListingsCountOutputTypeCountSaved_JobsArgs
   }
 
   // Custom InputTypes
@@ -3313,6 +3254,13 @@ export namespace Prisma {
    */
   export type Job_ListingsCountOutputTypeCountAi_match_resultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ai_match_resultsWhereInput
+  }
+
+  /**
+   * Job_ListingsCountOutputType without action
+   */
+  export type Job_ListingsCountOutputTypeCountSaved_JobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Saved_JobsWhereInput
   }
 
 
@@ -4788,14 +4736,20 @@ export namespace Prisma {
 
   export type Pwd_ProfileAvgAggregateOutputType = {
     rating: number | null
+    profile_views: number | null
+    interviews: number | null
     pwd_id: number | null
     user_id: number | null
+    hourly_rate: number | null
   }
 
   export type Pwd_ProfileSumAggregateOutputType = {
     rating: number | null
+    profile_views: number | null
+    interviews: number | null
     pwd_id: number | null
     user_id: number | null
+    hourly_rate: number | null
   }
 
   export type Pwd_ProfileMinAggregateOutputType = {
@@ -4808,6 +4762,8 @@ export namespace Prisma {
     disability_severity: $Enums.Disability_Severity | null
     gender: $Enums.Gender | null
     rating: number | null
+    profile_views: number | null
+    interviews: number | null
     created_at: string | null
     updated_at: Date | null
     pwd_id: number | null
@@ -4817,10 +4773,36 @@ export namespace Prisma {
     profession: string | null
     portfolio_url: string | null
     github_url: string | null
+    linkedin_url: string | null
     professional_role: string | null
     professional_summary: string | null
+    hourly_rate: number | null
     profile_visibility: string | null
+    show_email: boolean | null
+    show_phone_number: boolean | null
+    show_location: boolean | null
+    allow_messages: boolean | null
+    show_online_status: boolean | null
+    email_job_matches: boolean | null
+    messages: boolean | null
+    application_updates: boolean | null
+    email_profile_views: boolean | null
+    weekly_digest: boolean | null
+    marketing_emails: boolean | null
+    push_notif_job_matches: boolean | null
+    push_notif_messages: boolean | null
+    push_notif_application_updates: boolean | null
+    push_notif_profile_views: boolean | null
+    urgent_messages: boolean | null
+    security_alerts: boolean | null
     resume_cv: string | null
+    basic_information: boolean | null
+    professional_summary_completed: boolean | null
+    professional_experience: boolean | null
+    education: boolean | null
+    portfolio_items: boolean | null
+    skills_assessment: boolean | null
+    set_accessibility_preferences: boolean | null
   }
 
   export type Pwd_ProfileMaxAggregateOutputType = {
@@ -4833,6 +4815,8 @@ export namespace Prisma {
     disability_severity: $Enums.Disability_Severity | null
     gender: $Enums.Gender | null
     rating: number | null
+    profile_views: number | null
+    interviews: number | null
     created_at: string | null
     updated_at: Date | null
     pwd_id: number | null
@@ -4842,10 +4826,36 @@ export namespace Prisma {
     profession: string | null
     portfolio_url: string | null
     github_url: string | null
+    linkedin_url: string | null
     professional_role: string | null
     professional_summary: string | null
+    hourly_rate: number | null
     profile_visibility: string | null
+    show_email: boolean | null
+    show_phone_number: boolean | null
+    show_location: boolean | null
+    allow_messages: boolean | null
+    show_online_status: boolean | null
+    email_job_matches: boolean | null
+    messages: boolean | null
+    application_updates: boolean | null
+    email_profile_views: boolean | null
+    weekly_digest: boolean | null
+    marketing_emails: boolean | null
+    push_notif_job_matches: boolean | null
+    push_notif_messages: boolean | null
+    push_notif_application_updates: boolean | null
+    push_notif_profile_views: boolean | null
+    urgent_messages: boolean | null
+    security_alerts: boolean | null
     resume_cv: string | null
+    basic_information: boolean | null
+    professional_summary_completed: boolean | null
+    professional_experience: boolean | null
+    education: boolean | null
+    portfolio_items: boolean | null
+    skills_assessment: boolean | null
+    set_accessibility_preferences: boolean | null
   }
 
   export type Pwd_ProfileCountAggregateOutputType = {
@@ -4858,6 +4868,8 @@ export namespace Prisma {
     disability_severity: number
     gender: number
     rating: number
+    profile_views: number
+    interviews: number
     created_at: number
     updated_at: number
     pwd_id: number
@@ -4869,25 +4881,57 @@ export namespace Prisma {
     skills: number
     portfolio_url: number
     github_url: number
+    linkedin_url: number
     otherPlatform: number
     professional_role: number
     professional_summary: number
+    hourly_rate: number
     profile_visibility: number
+    show_email: number
+    show_phone_number: number
+    show_location: number
+    allow_messages: number
+    show_online_status: number
+    email_job_matches: number
+    messages: number
+    application_updates: number
+    email_profile_views: number
+    weekly_digest: number
+    marketing_emails: number
+    push_notif_job_matches: number
+    push_notif_messages: number
+    push_notif_application_updates: number
+    push_notif_profile_views: number
+    urgent_messages: number
+    security_alerts: number
     resume_cv: number
+    basic_information: number
+    professional_summary_completed: number
+    professional_experience: number
+    education: number
+    portfolio_items: number
+    skills_assessment: number
+    set_accessibility_preferences: number
     _all: number
   }
 
 
   export type Pwd_ProfileAvgAggregateInputType = {
     rating?: true
+    profile_views?: true
+    interviews?: true
     pwd_id?: true
     user_id?: true
+    hourly_rate?: true
   }
 
   export type Pwd_ProfileSumAggregateInputType = {
     rating?: true
+    profile_views?: true
+    interviews?: true
     pwd_id?: true
     user_id?: true
+    hourly_rate?: true
   }
 
   export type Pwd_ProfileMinAggregateInputType = {
@@ -4900,6 +4944,8 @@ export namespace Prisma {
     disability_severity?: true
     gender?: true
     rating?: true
+    profile_views?: true
+    interviews?: true
     created_at?: true
     updated_at?: true
     pwd_id?: true
@@ -4909,10 +4955,36 @@ export namespace Prisma {
     profession?: true
     portfolio_url?: true
     github_url?: true
+    linkedin_url?: true
     professional_role?: true
     professional_summary?: true
+    hourly_rate?: true
     profile_visibility?: true
+    show_email?: true
+    show_phone_number?: true
+    show_location?: true
+    allow_messages?: true
+    show_online_status?: true
+    email_job_matches?: true
+    messages?: true
+    application_updates?: true
+    email_profile_views?: true
+    weekly_digest?: true
+    marketing_emails?: true
+    push_notif_job_matches?: true
+    push_notif_messages?: true
+    push_notif_application_updates?: true
+    push_notif_profile_views?: true
+    urgent_messages?: true
+    security_alerts?: true
     resume_cv?: true
+    basic_information?: true
+    professional_summary_completed?: true
+    professional_experience?: true
+    education?: true
+    portfolio_items?: true
+    skills_assessment?: true
+    set_accessibility_preferences?: true
   }
 
   export type Pwd_ProfileMaxAggregateInputType = {
@@ -4925,6 +4997,8 @@ export namespace Prisma {
     disability_severity?: true
     gender?: true
     rating?: true
+    profile_views?: true
+    interviews?: true
     created_at?: true
     updated_at?: true
     pwd_id?: true
@@ -4934,10 +5008,36 @@ export namespace Prisma {
     profession?: true
     portfolio_url?: true
     github_url?: true
+    linkedin_url?: true
     professional_role?: true
     professional_summary?: true
+    hourly_rate?: true
     profile_visibility?: true
+    show_email?: true
+    show_phone_number?: true
+    show_location?: true
+    allow_messages?: true
+    show_online_status?: true
+    email_job_matches?: true
+    messages?: true
+    application_updates?: true
+    email_profile_views?: true
+    weekly_digest?: true
+    marketing_emails?: true
+    push_notif_job_matches?: true
+    push_notif_messages?: true
+    push_notif_application_updates?: true
+    push_notif_profile_views?: true
+    urgent_messages?: true
+    security_alerts?: true
     resume_cv?: true
+    basic_information?: true
+    professional_summary_completed?: true
+    professional_experience?: true
+    education?: true
+    portfolio_items?: true
+    skills_assessment?: true
+    set_accessibility_preferences?: true
   }
 
   export type Pwd_ProfileCountAggregateInputType = {
@@ -4950,6 +5050,8 @@ export namespace Prisma {
     disability_severity?: true
     gender?: true
     rating?: true
+    profile_views?: true
+    interviews?: true
     created_at?: true
     updated_at?: true
     pwd_id?: true
@@ -4961,11 +5063,37 @@ export namespace Prisma {
     skills?: true
     portfolio_url?: true
     github_url?: true
+    linkedin_url?: true
     otherPlatform?: true
     professional_role?: true
     professional_summary?: true
+    hourly_rate?: true
     profile_visibility?: true
+    show_email?: true
+    show_phone_number?: true
+    show_location?: true
+    allow_messages?: true
+    show_online_status?: true
+    email_job_matches?: true
+    messages?: true
+    application_updates?: true
+    email_profile_views?: true
+    weekly_digest?: true
+    marketing_emails?: true
+    push_notif_job_matches?: true
+    push_notif_messages?: true
+    push_notif_application_updates?: true
+    push_notif_profile_views?: true
+    urgent_messages?: true
+    security_alerts?: true
     resume_cv?: true
+    basic_information?: true
+    professional_summary_completed?: true
+    professional_experience?: true
+    education?: true
+    portfolio_items?: true
+    skills_assessment?: true
+    set_accessibility_preferences?: true
     _all?: true
   }
 
@@ -5065,6 +5193,8 @@ export namespace Prisma {
     disability_severity: $Enums.Disability_Severity | null
     gender: $Enums.Gender | null
     rating: number | null
+    profile_views: number
+    interviews: number
     created_at: string | null
     updated_at: Date | null
     pwd_id: number
@@ -5076,11 +5206,37 @@ export namespace Prisma {
     skills: string[]
     portfolio_url: string | null
     github_url: string | null
+    linkedin_url: string | null
     otherPlatform: string[]
     professional_role: string | null
     professional_summary: string | null
+    hourly_rate: number | null
     profile_visibility: string | null
+    show_email: boolean
+    show_phone_number: boolean
+    show_location: boolean
+    allow_messages: boolean
+    show_online_status: boolean
+    email_job_matches: boolean
+    messages: boolean
+    application_updates: boolean
+    email_profile_views: boolean
+    weekly_digest: boolean
+    marketing_emails: boolean
+    push_notif_job_matches: boolean
+    push_notif_messages: boolean
+    push_notif_application_updates: boolean
+    push_notif_profile_views: boolean
+    urgent_messages: boolean
+    security_alerts: boolean
     resume_cv: string | null
+    basic_information: boolean
+    professional_summary_completed: boolean
+    professional_experience: boolean
+    education: boolean
+    portfolio_items: boolean
+    skills_assessment: boolean
+    set_accessibility_preferences: boolean
     _count: Pwd_ProfileCountAggregateOutputType | null
     _avg: Pwd_ProfileAvgAggregateOutputType | null
     _sum: Pwd_ProfileSumAggregateOutputType | null
@@ -5112,6 +5268,8 @@ export namespace Prisma {
     disability_severity?: boolean
     gender?: boolean
     rating?: boolean
+    profile_views?: boolean
+    interviews?: boolean
     created_at?: boolean
     updated_at?: boolean
     pwd_id?: boolean
@@ -5123,11 +5281,37 @@ export namespace Prisma {
     skills?: boolean
     portfolio_url?: boolean
     github_url?: boolean
+    linkedin_url?: boolean
     otherPlatform?: boolean
     professional_role?: boolean
     professional_summary?: boolean
+    hourly_rate?: boolean
     profile_visibility?: boolean
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: boolean
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: boolean | Pwd_Profile$applicationsArgs<ExtArgs>
     accessibility_needs?: boolean | Pwd_Profile$accessibility_needsArgs<ExtArgs>
     educations?: boolean | Pwd_Profile$educationsArgs<ExtArgs>
@@ -5137,6 +5321,7 @@ export namespace Prisma {
     resumes?: boolean | Pwd_Profile$resumesArgs<ExtArgs>
     ai_match_results?: boolean | Pwd_Profile$ai_match_resultsArgs<ExtArgs>
     transactions?: boolean | Pwd_Profile$transactionsArgs<ExtArgs>
+    Saved_Jobs?: boolean | Pwd_Profile$Saved_JobsArgs<ExtArgs>
     _count?: boolean | Pwd_ProfileCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["pwd_Profile"]>
 
@@ -5150,6 +5335,8 @@ export namespace Prisma {
     disability_severity?: boolean
     gender?: boolean
     rating?: boolean
+    profile_views?: boolean
+    interviews?: boolean
     created_at?: boolean
     updated_at?: boolean
     pwd_id?: boolean
@@ -5161,11 +5348,37 @@ export namespace Prisma {
     skills?: boolean
     portfolio_url?: boolean
     github_url?: boolean
+    linkedin_url?: boolean
     otherPlatform?: boolean
     professional_role?: boolean
     professional_summary?: boolean
+    hourly_rate?: boolean
     profile_visibility?: boolean
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: boolean
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["pwd_Profile"]>
 
@@ -5179,6 +5392,8 @@ export namespace Prisma {
     disability_severity?: boolean
     gender?: boolean
     rating?: boolean
+    profile_views?: boolean
+    interviews?: boolean
     created_at?: boolean
     updated_at?: boolean
     pwd_id?: boolean
@@ -5190,11 +5405,37 @@ export namespace Prisma {
     skills?: boolean
     portfolio_url?: boolean
     github_url?: boolean
+    linkedin_url?: boolean
     otherPlatform?: boolean
     professional_role?: boolean
     professional_summary?: boolean
+    hourly_rate?: boolean
     profile_visibility?: boolean
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: boolean
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["pwd_Profile"]>
 
@@ -5208,6 +5449,8 @@ export namespace Prisma {
     disability_severity?: boolean
     gender?: boolean
     rating?: boolean
+    profile_views?: boolean
+    interviews?: boolean
     created_at?: boolean
     updated_at?: boolean
     pwd_id?: boolean
@@ -5219,14 +5462,40 @@ export namespace Prisma {
     skills?: boolean
     portfolio_url?: boolean
     github_url?: boolean
+    linkedin_url?: boolean
     otherPlatform?: boolean
     professional_role?: boolean
     professional_summary?: boolean
+    hourly_rate?: boolean
     profile_visibility?: boolean
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: boolean
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
   }
 
-  export type Pwd_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"first_name" | "last_name" | "middle_name" | "profile_picture" | "bio" | "disability_Type" | "disability_severity" | "gender" | "rating" | "created_at" | "updated_at" | "pwd_id" | "user_id" | "date_of_birth" | "address" | "pwd_document" | "profession" | "skills" | "portfolio_url" | "github_url" | "otherPlatform" | "professional_role" | "professional_summary" | "profile_visibility" | "resume_cv", ExtArgs["result"]["pwd_Profile"]>
+  export type Pwd_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"first_name" | "last_name" | "middle_name" | "profile_picture" | "bio" | "disability_Type" | "disability_severity" | "gender" | "rating" | "profile_views" | "interviews" | "created_at" | "updated_at" | "pwd_id" | "user_id" | "date_of_birth" | "address" | "pwd_document" | "profession" | "skills" | "portfolio_url" | "github_url" | "linkedin_url" | "otherPlatform" | "professional_role" | "professional_summary" | "hourly_rate" | "profile_visibility" | "show_email" | "show_phone_number" | "show_location" | "allow_messages" | "show_online_status" | "email_job_matches" | "messages" | "application_updates" | "email_profile_views" | "weekly_digest" | "marketing_emails" | "push_notif_job_matches" | "push_notif_messages" | "push_notif_application_updates" | "push_notif_profile_views" | "urgent_messages" | "security_alerts" | "resume_cv" | "basic_information" | "professional_summary_completed" | "professional_experience" | "education" | "portfolio_items" | "skills_assessment" | "set_accessibility_preferences", ExtArgs["result"]["pwd_Profile"]>
   export type Pwd_ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | Pwd_Profile$applicationsArgs<ExtArgs>
     accessibility_needs?: boolean | Pwd_Profile$accessibility_needsArgs<ExtArgs>
@@ -5237,6 +5506,7 @@ export namespace Prisma {
     resumes?: boolean | Pwd_Profile$resumesArgs<ExtArgs>
     ai_match_results?: boolean | Pwd_Profile$ai_match_resultsArgs<ExtArgs>
     transactions?: boolean | Pwd_Profile$transactionsArgs<ExtArgs>
+    Saved_Jobs?: boolean | Pwd_Profile$Saved_JobsArgs<ExtArgs>
     _count?: boolean | Pwd_ProfileCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type Pwd_ProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5258,6 +5528,7 @@ export namespace Prisma {
       resumes: Prisma.$ResumesPayload<ExtArgs>[]
       ai_match_results: Prisma.$ai_match_resultsPayload<ExtArgs>[]
       transactions: Prisma.$transactionsPayload<ExtArgs>[]
+      Saved_Jobs: Prisma.$Saved_JobsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       first_name: string
@@ -5269,6 +5540,8 @@ export namespace Prisma {
       disability_severity: $Enums.Disability_Severity | null
       gender: $Enums.Gender | null
       rating: number | null
+      profile_views: number
+      interviews: number
       created_at: string | null
       updated_at: Date | null
       pwd_id: number
@@ -5280,11 +5553,37 @@ export namespace Prisma {
       skills: string[]
       portfolio_url: string | null
       github_url: string | null
+      linkedin_url: string | null
       otherPlatform: string[]
       professional_role: string | null
       professional_summary: string | null
+      hourly_rate: number | null
       profile_visibility: string | null
+      show_email: boolean
+      show_phone_number: boolean
+      show_location: boolean
+      allow_messages: boolean
+      show_online_status: boolean
+      email_job_matches: boolean
+      messages: boolean
+      application_updates: boolean
+      email_profile_views: boolean
+      weekly_digest: boolean
+      marketing_emails: boolean
+      push_notif_job_matches: boolean
+      push_notif_messages: boolean
+      push_notif_application_updates: boolean
+      push_notif_profile_views: boolean
+      urgent_messages: boolean
+      security_alerts: boolean
       resume_cv: string | null
+      basic_information: boolean
+      professional_summary_completed: boolean
+      professional_experience: boolean
+      education: boolean
+      portfolio_items: boolean
+      skills_assessment: boolean
+      set_accessibility_preferences: boolean
     }, ExtArgs["result"]["pwd_Profile"]>
     composites: {}
   }
@@ -5688,6 +5987,7 @@ export namespace Prisma {
     resumes<T extends Pwd_Profile$resumesArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$resumesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResumesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ai_match_results<T extends Pwd_Profile$ai_match_resultsArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$ai_match_resultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ai_match_resultsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transactions<T extends Pwd_Profile$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transactionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Saved_Jobs<T extends Pwd_Profile$Saved_JobsArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_Profile$Saved_JobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5726,6 +6026,8 @@ export namespace Prisma {
     readonly disability_severity: FieldRef<"Pwd_Profile", 'Disability_Severity'>
     readonly gender: FieldRef<"Pwd_Profile", 'Gender'>
     readonly rating: FieldRef<"Pwd_Profile", 'Float'>
+    readonly profile_views: FieldRef<"Pwd_Profile", 'Int'>
+    readonly interviews: FieldRef<"Pwd_Profile", 'Int'>
     readonly created_at: FieldRef<"Pwd_Profile", 'String'>
     readonly updated_at: FieldRef<"Pwd_Profile", 'DateTime'>
     readonly pwd_id: FieldRef<"Pwd_Profile", 'Int'>
@@ -5737,11 +6039,37 @@ export namespace Prisma {
     readonly skills: FieldRef<"Pwd_Profile", 'String[]'>
     readonly portfolio_url: FieldRef<"Pwd_Profile", 'String'>
     readonly github_url: FieldRef<"Pwd_Profile", 'String'>
+    readonly linkedin_url: FieldRef<"Pwd_Profile", 'String'>
     readonly otherPlatform: FieldRef<"Pwd_Profile", 'String[]'>
     readonly professional_role: FieldRef<"Pwd_Profile", 'String'>
     readonly professional_summary: FieldRef<"Pwd_Profile", 'String'>
+    readonly hourly_rate: FieldRef<"Pwd_Profile", 'Int'>
     readonly profile_visibility: FieldRef<"Pwd_Profile", 'String'>
+    readonly show_email: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly show_phone_number: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly show_location: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly allow_messages: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly show_online_status: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly email_job_matches: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly messages: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly application_updates: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly email_profile_views: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly weekly_digest: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly marketing_emails: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly push_notif_job_matches: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly push_notif_messages: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly push_notif_application_updates: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly push_notif_profile_views: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly urgent_messages: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly security_alerts: FieldRef<"Pwd_Profile", 'Boolean'>
     readonly resume_cv: FieldRef<"Pwd_Profile", 'String'>
+    readonly basic_information: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly professional_summary_completed: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly professional_experience: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly education: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly portfolio_items: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly skills_assessment: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly set_accessibility_preferences: FieldRef<"Pwd_Profile", 'Boolean'>
   }
     
 
@@ -6327,6 +6655,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TransactionsScalarFieldEnum | TransactionsScalarFieldEnum[]
+  }
+
+  /**
+   * Pwd_Profile.Saved_Jobs
+   */
+  export type Pwd_Profile$Saved_JobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Saved_Jobs
+     */
+    select?: Saved_JobsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Saved_Jobs
+     */
+    omit?: Saved_JobsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Saved_JobsInclude<ExtArgs> | null
+    where?: Saved_JobsWhereInput
+    orderBy?: Saved_JobsOrderByWithRelationInput | Saved_JobsOrderByWithRelationInput[]
+    cursor?: Saved_JobsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Saved_JobsScalarFieldEnum | Saved_JobsScalarFieldEnum[]
   }
 
   /**
@@ -10949,12 +11301,16 @@ export namespace Prisma {
     rating: number | null
     employer_id: number | null
     user_id: number | null
+    profile_views: number | null
+    interviews: number | null
   }
 
   export type Employer_ProfileSumAggregateOutputType = {
     rating: number | null
     employer_id: number | null
     user_id: number | null
+    profile_views: number | null
+    interviews: number | null
   }
 
   export type Employer_ProfileMinAggregateOutputType = {
@@ -10965,13 +11321,16 @@ export namespace Prisma {
     user_id: number | null
     address: string | null
     profile_picture: string | null
-    LinkedIn_profile: string | null
-    Other_Social_Media: string | null
+    profile_views: number | null
+    interviews: number | null
     company_name: string | null
     company_email: string | null
     company_phone: string | null
     company_address: string | null
-    company_website: string | null
+    company_social_media: string | null
+    company_website_portfolio: string | null
+    company_github_profile: string | null
+    company_description: string | null
     contact_person_fullname: string | null
     contact_person_job_title: string | null
     contact_person_phone_number: string | null
@@ -10979,6 +11338,10 @@ export namespace Prisma {
     businessRegistration: string | null
     governmentId: string | null
     taxDocuments: string | null
+    industryPreference: string | null
+    set_company_profile: boolean | null
+    set_jobRoles_requirements: boolean | null
+    set_work_environment: boolean | null
   }
 
   export type Employer_ProfileMaxAggregateOutputType = {
@@ -10989,13 +11352,16 @@ export namespace Prisma {
     user_id: number | null
     address: string | null
     profile_picture: string | null
-    LinkedIn_profile: string | null
-    Other_Social_Media: string | null
+    profile_views: number | null
+    interviews: number | null
     company_name: string | null
     company_email: string | null
     company_phone: string | null
     company_address: string | null
-    company_website: string | null
+    company_social_media: string | null
+    company_website_portfolio: string | null
+    company_github_profile: string | null
+    company_description: string | null
     contact_person_fullname: string | null
     contact_person_job_title: string | null
     contact_person_phone_number: string | null
@@ -11003,6 +11369,10 @@ export namespace Prisma {
     businessRegistration: string | null
     governmentId: string | null
     taxDocuments: string | null
+    industryPreference: string | null
+    set_company_profile: boolean | null
+    set_jobRoles_requirements: boolean | null
+    set_work_environment: boolean | null
   }
 
   export type Employer_ProfileCountAggregateOutputType = {
@@ -11013,13 +11383,17 @@ export namespace Prisma {
     user_id: number
     address: number
     profile_picture: number
-    LinkedIn_profile: number
-    Other_Social_Media: number
+    profile_views: number
+    interviews: number
     company_name: number
     company_email: number
     company_phone: number
     company_address: number
-    company_website: number
+    company_social_media: number
+    company_website_portfolio: number
+    company_github_profile: number
+    company_other_portfolio: number
+    company_description: number
     contact_person_fullname: number
     contact_person_job_title: number
     contact_person_phone_number: number
@@ -11027,6 +11401,14 @@ export namespace Prisma {
     businessRegistration: number
     governmentId: number
     taxDocuments: number
+    industryPreference: number
+    jobRolesTypicallyHire: number
+    requiredPreferredSkills: number
+    workArrangement: number
+    accessibilityFeatures: number
+    set_company_profile: number
+    set_jobRoles_requirements: number
+    set_work_environment: number
     _all: number
   }
 
@@ -11035,12 +11417,16 @@ export namespace Prisma {
     rating?: true
     employer_id?: true
     user_id?: true
+    profile_views?: true
+    interviews?: true
   }
 
   export type Employer_ProfileSumAggregateInputType = {
     rating?: true
     employer_id?: true
     user_id?: true
+    profile_views?: true
+    interviews?: true
   }
 
   export type Employer_ProfileMinAggregateInputType = {
@@ -11051,13 +11437,16 @@ export namespace Prisma {
     user_id?: true
     address?: true
     profile_picture?: true
-    LinkedIn_profile?: true
-    Other_Social_Media?: true
+    profile_views?: true
+    interviews?: true
     company_name?: true
     company_email?: true
     company_phone?: true
     company_address?: true
-    company_website?: true
+    company_social_media?: true
+    company_website_portfolio?: true
+    company_github_profile?: true
+    company_description?: true
     contact_person_fullname?: true
     contact_person_job_title?: true
     contact_person_phone_number?: true
@@ -11065,6 +11454,10 @@ export namespace Prisma {
     businessRegistration?: true
     governmentId?: true
     taxDocuments?: true
+    industryPreference?: true
+    set_company_profile?: true
+    set_jobRoles_requirements?: true
+    set_work_environment?: true
   }
 
   export type Employer_ProfileMaxAggregateInputType = {
@@ -11075,13 +11468,16 @@ export namespace Prisma {
     user_id?: true
     address?: true
     profile_picture?: true
-    LinkedIn_profile?: true
-    Other_Social_Media?: true
+    profile_views?: true
+    interviews?: true
     company_name?: true
     company_email?: true
     company_phone?: true
     company_address?: true
-    company_website?: true
+    company_social_media?: true
+    company_website_portfolio?: true
+    company_github_profile?: true
+    company_description?: true
     contact_person_fullname?: true
     contact_person_job_title?: true
     contact_person_phone_number?: true
@@ -11089,6 +11485,10 @@ export namespace Prisma {
     businessRegistration?: true
     governmentId?: true
     taxDocuments?: true
+    industryPreference?: true
+    set_company_profile?: true
+    set_jobRoles_requirements?: true
+    set_work_environment?: true
   }
 
   export type Employer_ProfileCountAggregateInputType = {
@@ -11099,13 +11499,17 @@ export namespace Prisma {
     user_id?: true
     address?: true
     profile_picture?: true
-    LinkedIn_profile?: true
-    Other_Social_Media?: true
+    profile_views?: true
+    interviews?: true
     company_name?: true
     company_email?: true
     company_phone?: true
     company_address?: true
-    company_website?: true
+    company_social_media?: true
+    company_website_portfolio?: true
+    company_github_profile?: true
+    company_other_portfolio?: true
+    company_description?: true
     contact_person_fullname?: true
     contact_person_job_title?: true
     contact_person_phone_number?: true
@@ -11113,6 +11517,14 @@ export namespace Prisma {
     businessRegistration?: true
     governmentId?: true
     taxDocuments?: true
+    industryPreference?: true
+    jobRolesTypicallyHire?: true
+    requiredPreferredSkills?: true
+    workArrangement?: true
+    accessibilityFeatures?: true
+    set_company_profile?: true
+    set_jobRoles_requirements?: true
+    set_work_environment?: true
     _all?: true
   }
 
@@ -11210,13 +11622,17 @@ export namespace Prisma {
     user_id: number
     address: string
     profile_picture: string | null
-    LinkedIn_profile: string | null
-    Other_Social_Media: string | null
+    profile_views: number
+    interviews: number
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website: string | null
+    company_social_media: string | null
+    company_website_portfolio: string | null
+    company_github_profile: string | null
+    company_other_portfolio: string[]
+    company_description: string | null
     contact_person_fullname: string | null
     contact_person_job_title: string | null
     contact_person_phone_number: string | null
@@ -11224,6 +11640,14 @@ export namespace Prisma {
     businessRegistration: string | null
     governmentId: string | null
     taxDocuments: string | null
+    industryPreference: string | null
+    jobRolesTypicallyHire: string[]
+    requiredPreferredSkills: string[]
+    workArrangement: string[]
+    accessibilityFeatures: string[]
+    set_company_profile: boolean
+    set_jobRoles_requirements: boolean
+    set_work_environment: boolean
     _count: Employer_ProfileCountAggregateOutputType | null
     _avg: Employer_ProfileAvgAggregateOutputType | null
     _sum: Employer_ProfileSumAggregateOutputType | null
@@ -11253,13 +11677,17 @@ export namespace Prisma {
     user_id?: boolean
     address?: boolean
     profile_picture?: boolean
-    LinkedIn_profile?: boolean
-    Other_Social_Media?: boolean
+    profile_views?: boolean
+    interviews?: boolean
     company_name?: boolean
     company_email?: boolean
     company_phone?: boolean
     company_address?: boolean
-    company_website?: boolean
+    company_social_media?: boolean
+    company_website_portfolio?: boolean
+    company_github_profile?: boolean
+    company_other_portfolio?: boolean
+    company_description?: boolean
     contact_person_fullname?: boolean
     contact_person_job_title?: boolean
     contact_person_phone_number?: boolean
@@ -11267,9 +11695,19 @@ export namespace Prisma {
     businessRegistration?: boolean
     governmentId?: boolean
     taxDocuments?: boolean
+    industryPreference?: boolean
+    jobRolesTypicallyHire?: boolean
+    requiredPreferredSkills?: boolean
+    workArrangement?: boolean
+    accessibilityFeatures?: boolean
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
     job_listings?: boolean | Employer_Profile$job_listingsArgs<ExtArgs>
     transactions?: boolean | Employer_Profile$transactionsArgs<ExtArgs>
+    Applications?: boolean | Employer_Profile$ApplicationsArgs<ExtArgs>
+    Saved_Jobs?: boolean | Employer_Profile$Saved_JobsArgs<ExtArgs>
     _count?: boolean | Employer_ProfileCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["employer_Profile"]>
 
@@ -11281,13 +11719,17 @@ export namespace Prisma {
     user_id?: boolean
     address?: boolean
     profile_picture?: boolean
-    LinkedIn_profile?: boolean
-    Other_Social_Media?: boolean
+    profile_views?: boolean
+    interviews?: boolean
     company_name?: boolean
     company_email?: boolean
     company_phone?: boolean
     company_address?: boolean
-    company_website?: boolean
+    company_social_media?: boolean
+    company_website_portfolio?: boolean
+    company_github_profile?: boolean
+    company_other_portfolio?: boolean
+    company_description?: boolean
     contact_person_fullname?: boolean
     contact_person_job_title?: boolean
     contact_person_phone_number?: boolean
@@ -11295,6 +11737,14 @@ export namespace Prisma {
     businessRegistration?: boolean
     governmentId?: boolean
     taxDocuments?: boolean
+    industryPreference?: boolean
+    jobRolesTypicallyHire?: boolean
+    requiredPreferredSkills?: boolean
+    workArrangement?: boolean
+    accessibilityFeatures?: boolean
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["employer_Profile"]>
 
@@ -11306,13 +11756,17 @@ export namespace Prisma {
     user_id?: boolean
     address?: boolean
     profile_picture?: boolean
-    LinkedIn_profile?: boolean
-    Other_Social_Media?: boolean
+    profile_views?: boolean
+    interviews?: boolean
     company_name?: boolean
     company_email?: boolean
     company_phone?: boolean
     company_address?: boolean
-    company_website?: boolean
+    company_social_media?: boolean
+    company_website_portfolio?: boolean
+    company_github_profile?: boolean
+    company_other_portfolio?: boolean
+    company_description?: boolean
     contact_person_fullname?: boolean
     contact_person_job_title?: boolean
     contact_person_phone_number?: boolean
@@ -11320,6 +11774,14 @@ export namespace Prisma {
     businessRegistration?: boolean
     governmentId?: boolean
     taxDocuments?: boolean
+    industryPreference?: boolean
+    jobRolesTypicallyHire?: boolean
+    requiredPreferredSkills?: boolean
+    workArrangement?: boolean
+    accessibilityFeatures?: boolean
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["employer_Profile"]>
 
@@ -11331,13 +11793,17 @@ export namespace Prisma {
     user_id?: boolean
     address?: boolean
     profile_picture?: boolean
-    LinkedIn_profile?: boolean
-    Other_Social_Media?: boolean
+    profile_views?: boolean
+    interviews?: boolean
     company_name?: boolean
     company_email?: boolean
     company_phone?: boolean
     company_address?: boolean
-    company_website?: boolean
+    company_social_media?: boolean
+    company_website_portfolio?: boolean
+    company_github_profile?: boolean
+    company_other_portfolio?: boolean
+    company_description?: boolean
     contact_person_fullname?: boolean
     contact_person_job_title?: boolean
     contact_person_phone_number?: boolean
@@ -11345,13 +11811,23 @@ export namespace Prisma {
     businessRegistration?: boolean
     governmentId?: boolean
     taxDocuments?: boolean
+    industryPreference?: boolean
+    jobRolesTypicallyHire?: boolean
+    requiredPreferredSkills?: boolean
+    workArrangement?: boolean
+    accessibilityFeatures?: boolean
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
   }
 
-  export type Employer_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"rating" | "created_at" | "updated_at" | "employer_id" | "user_id" | "address" | "profile_picture" | "LinkedIn_profile" | "Other_Social_Media" | "company_name" | "company_email" | "company_phone" | "company_address" | "company_website" | "contact_person_fullname" | "contact_person_job_title" | "contact_person_phone_number" | "date_of_birth" | "businessRegistration" | "governmentId" | "taxDocuments", ExtArgs["result"]["employer_Profile"]>
+  export type Employer_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"rating" | "created_at" | "updated_at" | "employer_id" | "user_id" | "address" | "profile_picture" | "profile_views" | "interviews" | "company_name" | "company_email" | "company_phone" | "company_address" | "company_social_media" | "company_website_portfolio" | "company_github_profile" | "company_other_portfolio" | "company_description" | "contact_person_fullname" | "contact_person_job_title" | "contact_person_phone_number" | "date_of_birth" | "businessRegistration" | "governmentId" | "taxDocuments" | "industryPreference" | "jobRolesTypicallyHire" | "requiredPreferredSkills" | "workArrangement" | "accessibilityFeatures" | "set_company_profile" | "set_jobRoles_requirements" | "set_work_environment", ExtArgs["result"]["employer_Profile"]>
   export type Employer_ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UsersDefaultArgs<ExtArgs>
     job_listings?: boolean | Employer_Profile$job_listingsArgs<ExtArgs>
     transactions?: boolean | Employer_Profile$transactionsArgs<ExtArgs>
+    Applications?: boolean | Employer_Profile$ApplicationsArgs<ExtArgs>
+    Saved_Jobs?: boolean | Employer_Profile$Saved_JobsArgs<ExtArgs>
     _count?: boolean | Employer_ProfileCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type Employer_ProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11367,6 +11843,8 @@ export namespace Prisma {
       user: Prisma.$UsersPayload<ExtArgs>
       job_listings: Prisma.$Job_ListingsPayload<ExtArgs>[]
       transactions: Prisma.$transactionsPayload<ExtArgs>[]
+      Applications: Prisma.$ApplicationsPayload<ExtArgs>[]
+      Saved_Jobs: Prisma.$Saved_JobsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       rating: number
@@ -11376,13 +11854,17 @@ export namespace Prisma {
       user_id: number
       address: string
       profile_picture: string | null
-      LinkedIn_profile: string | null
-      Other_Social_Media: string | null
+      profile_views: number
+      interviews: number
       company_name: string
       company_email: string
       company_phone: string
       company_address: string
-      company_website: string | null
+      company_social_media: string | null
+      company_website_portfolio: string | null
+      company_github_profile: string | null
+      company_other_portfolio: string[]
+      company_description: string | null
       contact_person_fullname: string | null
       contact_person_job_title: string | null
       contact_person_phone_number: string | null
@@ -11390,6 +11872,14 @@ export namespace Prisma {
       businessRegistration: string | null
       governmentId: string | null
       taxDocuments: string | null
+      industryPreference: string | null
+      jobRolesTypicallyHire: string[]
+      requiredPreferredSkills: string[]
+      workArrangement: string[]
+      accessibilityFeatures: string[]
+      set_company_profile: boolean
+      set_jobRoles_requirements: boolean
+      set_work_environment: boolean
     }, ExtArgs["result"]["employer_Profile"]>
     composites: {}
   }
@@ -11787,6 +12277,8 @@ export namespace Prisma {
     user<T extends UsersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsersDefaultArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     job_listings<T extends Employer_Profile$job_listingsArgs<ExtArgs> = {}>(args?: Subset<T, Employer_Profile$job_listingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Job_ListingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transactions<T extends Employer_Profile$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Employer_Profile$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transactionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Applications<T extends Employer_Profile$ApplicationsArgs<ExtArgs> = {}>(args?: Subset<T, Employer_Profile$ApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Saved_Jobs<T extends Employer_Profile$Saved_JobsArgs<ExtArgs> = {}>(args?: Subset<T, Employer_Profile$Saved_JobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11823,13 +12315,17 @@ export namespace Prisma {
     readonly user_id: FieldRef<"Employer_Profile", 'Int'>
     readonly address: FieldRef<"Employer_Profile", 'String'>
     readonly profile_picture: FieldRef<"Employer_Profile", 'String'>
-    readonly LinkedIn_profile: FieldRef<"Employer_Profile", 'String'>
-    readonly Other_Social_Media: FieldRef<"Employer_Profile", 'String'>
+    readonly profile_views: FieldRef<"Employer_Profile", 'Int'>
+    readonly interviews: FieldRef<"Employer_Profile", 'Int'>
     readonly company_name: FieldRef<"Employer_Profile", 'String'>
     readonly company_email: FieldRef<"Employer_Profile", 'String'>
     readonly company_phone: FieldRef<"Employer_Profile", 'String'>
     readonly company_address: FieldRef<"Employer_Profile", 'String'>
-    readonly company_website: FieldRef<"Employer_Profile", 'String'>
+    readonly company_social_media: FieldRef<"Employer_Profile", 'String'>
+    readonly company_website_portfolio: FieldRef<"Employer_Profile", 'String'>
+    readonly company_github_profile: FieldRef<"Employer_Profile", 'String'>
+    readonly company_other_portfolio: FieldRef<"Employer_Profile", 'String[]'>
+    readonly company_description: FieldRef<"Employer_Profile", 'String'>
     readonly contact_person_fullname: FieldRef<"Employer_Profile", 'String'>
     readonly contact_person_job_title: FieldRef<"Employer_Profile", 'String'>
     readonly contact_person_phone_number: FieldRef<"Employer_Profile", 'String'>
@@ -11837,6 +12333,14 @@ export namespace Prisma {
     readonly businessRegistration: FieldRef<"Employer_Profile", 'String'>
     readonly governmentId: FieldRef<"Employer_Profile", 'String'>
     readonly taxDocuments: FieldRef<"Employer_Profile", 'String'>
+    readonly industryPreference: FieldRef<"Employer_Profile", 'String'>
+    readonly jobRolesTypicallyHire: FieldRef<"Employer_Profile", 'String[]'>
+    readonly requiredPreferredSkills: FieldRef<"Employer_Profile", 'String[]'>
+    readonly workArrangement: FieldRef<"Employer_Profile", 'String[]'>
+    readonly accessibilityFeatures: FieldRef<"Employer_Profile", 'String[]'>
+    readonly set_company_profile: FieldRef<"Employer_Profile", 'Boolean'>
+    readonly set_jobRoles_requirements: FieldRef<"Employer_Profile", 'Boolean'>
+    readonly set_work_environment: FieldRef<"Employer_Profile", 'Boolean'>
   }
     
 
@@ -12278,6 +12782,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TransactionsScalarFieldEnum | TransactionsScalarFieldEnum[]
+  }
+
+  /**
+   * Employer_Profile.Applications
+   */
+  export type Employer_Profile$ApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Applications
+     */
+    select?: ApplicationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Applications
+     */
+    omit?: ApplicationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationsInclude<ExtArgs> | null
+    where?: ApplicationsWhereInput
+    orderBy?: ApplicationsOrderByWithRelationInput | ApplicationsOrderByWithRelationInput[]
+    cursor?: ApplicationsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationsScalarFieldEnum | ApplicationsScalarFieldEnum[]
+  }
+
+  /**
+   * Employer_Profile.Saved_Jobs
+   */
+  export type Employer_Profile$Saved_JobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Saved_Jobs
+     */
+    select?: Saved_JobsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Saved_Jobs
+     */
+    omit?: Saved_JobsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Saved_JobsInclude<ExtArgs> | null
+    where?: Saved_JobsWhereInput
+    orderBy?: Saved_JobsOrderByWithRelationInput | Saved_JobsOrderByWithRelationInput[]
+    cursor?: Saved_JobsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Saved_JobsScalarFieldEnum | Saved_JobsScalarFieldEnum[]
   }
 
   /**
@@ -16920,6 +17472,7 @@ export namespace Prisma {
     application_id: number | null
     job_id: number | null
     pwd_id: number | null
+    employer_id: number | null
     resume_id: number | null
     proposed_salary: Decimal | null
   }
@@ -16928,6 +17481,7 @@ export namespace Prisma {
     application_id: number | null
     job_id: number | null
     pwd_id: number | null
+    employer_id: number | null
     resume_id: number | null
     proposed_salary: Decimal | null
   }
@@ -16936,9 +17490,12 @@ export namespace Prisma {
     application_id: number | null
     job_id: number | null
     pwd_id: number | null
+    employer_id: number | null
     resume_id: number | null
     custom_message: string | null
     proposed_salary: Decimal | null
+    work_experience: string | null
+    portfolio_links: string | null
     submitted_at: Date | null
     updated_at: Date | null
     status_changed_at: Date | null
@@ -16948,9 +17505,12 @@ export namespace Prisma {
     application_id: number | null
     job_id: number | null
     pwd_id: number | null
+    employer_id: number | null
     resume_id: number | null
     custom_message: string | null
     proposed_salary: Decimal | null
+    work_experience: string | null
+    portfolio_links: string | null
     submitted_at: Date | null
     updated_at: Date | null
     status_changed_at: Date | null
@@ -16960,9 +17520,12 @@ export namespace Prisma {
     application_id: number
     job_id: number
     pwd_id: number
+    employer_id: number
     resume_id: number
     custom_message: number
     proposed_salary: number
+    work_experience: number
+    portfolio_links: number
     submitted_at: number
     updated_at: number
     status_changed_at: number
@@ -16974,6 +17537,7 @@ export namespace Prisma {
     application_id?: true
     job_id?: true
     pwd_id?: true
+    employer_id?: true
     resume_id?: true
     proposed_salary?: true
   }
@@ -16982,6 +17546,7 @@ export namespace Prisma {
     application_id?: true
     job_id?: true
     pwd_id?: true
+    employer_id?: true
     resume_id?: true
     proposed_salary?: true
   }
@@ -16990,9 +17555,12 @@ export namespace Prisma {
     application_id?: true
     job_id?: true
     pwd_id?: true
+    employer_id?: true
     resume_id?: true
     custom_message?: true
     proposed_salary?: true
+    work_experience?: true
+    portfolio_links?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17002,9 +17570,12 @@ export namespace Prisma {
     application_id?: true
     job_id?: true
     pwd_id?: true
+    employer_id?: true
     resume_id?: true
     custom_message?: true
     proposed_salary?: true
+    work_experience?: true
+    portfolio_links?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17014,9 +17585,12 @@ export namespace Prisma {
     application_id?: true
     job_id?: true
     pwd_id?: true
+    employer_id?: true
     resume_id?: true
     custom_message?: true
     proposed_salary?: true
+    work_experience?: true
+    portfolio_links?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17113,9 +17687,12 @@ export namespace Prisma {
     application_id: number
     job_id: number
     pwd_id: number
+    employer_id: number
     resume_id: number
     custom_message: string
     proposed_salary: Decimal
+    work_experience: string | null
+    portfolio_links: string | null
     submitted_at: Date
     updated_at: Date
     status_changed_at: Date
@@ -17144,14 +17721,18 @@ export namespace Prisma {
     application_id?: boolean
     job_id?: boolean
     pwd_id?: boolean
+    employer_id?: boolean
     resume_id?: boolean
     custom_message?: boolean
     proposed_salary?: boolean
+    work_experience?: boolean
+    portfolio_links?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
+    employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
     resume?: boolean | ResumesDefaultArgs<ExtArgs>
     reviews?: boolean | Applications$reviewsArgs<ExtArgs>
     transactions?: boolean | Applications$transactionsArgs<ExtArgs>
@@ -17162,14 +17743,18 @@ export namespace Prisma {
     application_id?: boolean
     job_id?: boolean
     pwd_id?: boolean
+    employer_id?: boolean
     resume_id?: boolean
     custom_message?: boolean
     proposed_salary?: boolean
+    work_experience?: boolean
+    portfolio_links?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
+    employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
     resume?: boolean | ResumesDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["applications"]>
 
@@ -17177,14 +17762,18 @@ export namespace Prisma {
     application_id?: boolean
     job_id?: boolean
     pwd_id?: boolean
+    employer_id?: boolean
     resume_id?: boolean
     custom_message?: boolean
     proposed_salary?: boolean
+    work_experience?: boolean
+    portfolio_links?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
+    employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
     resume?: boolean | ResumesDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["applications"]>
 
@@ -17192,18 +17781,22 @@ export namespace Prisma {
     application_id?: boolean
     job_id?: boolean
     pwd_id?: boolean
+    employer_id?: boolean
     resume_id?: boolean
     custom_message?: boolean
     proposed_salary?: boolean
+    work_experience?: boolean
+    portfolio_links?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
   }
 
-  export type ApplicationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"application_id" | "job_id" | "pwd_id" | "resume_id" | "custom_message" | "proposed_salary" | "submitted_at" | "updated_at" | "status_changed_at", ExtArgs["result"]["applications"]>
+  export type ApplicationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"application_id" | "job_id" | "pwd_id" | "employer_id" | "resume_id" | "custom_message" | "proposed_salary" | "work_experience" | "portfolio_links" | "submitted_at" | "updated_at" | "status_changed_at", ExtArgs["result"]["applications"]>
   export type ApplicationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
+    employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
     resume?: boolean | ResumesDefaultArgs<ExtArgs>
     reviews?: boolean | Applications$reviewsArgs<ExtArgs>
     transactions?: boolean | Applications$transactionsArgs<ExtArgs>
@@ -17212,11 +17805,13 @@ export namespace Prisma {
   export type ApplicationsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
+    employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
     resume?: boolean | ResumesDefaultArgs<ExtArgs>
   }
   export type ApplicationsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
+    employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
     resume?: boolean | ResumesDefaultArgs<ExtArgs>
   }
 
@@ -17225,6 +17820,7 @@ export namespace Prisma {
     objects: {
       job_listing: Prisma.$Job_ListingsPayload<ExtArgs>
       pwd_profile: Prisma.$Pwd_ProfilePayload<ExtArgs>
+      employer_profile: Prisma.$Employer_ProfilePayload<ExtArgs>
       resume: Prisma.$ResumesPayload<ExtArgs>
       reviews: Prisma.$reviewsPayload<ExtArgs>[]
       transactions: Prisma.$transactionsPayload<ExtArgs>[]
@@ -17233,9 +17829,12 @@ export namespace Prisma {
       application_id: number
       job_id: number
       pwd_id: number
+      employer_id: number
       resume_id: number
       custom_message: string
       proposed_salary: Prisma.Decimal
+      work_experience: string | null
+      portfolio_links: string | null
       submitted_at: Date
       updated_at: Date
       status_changed_at: Date
@@ -17635,6 +18234,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     job_listing<T extends Job_ListingsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Job_ListingsDefaultArgs<ExtArgs>>): Prisma__Job_ListingsClient<$Result.GetResult<Prisma.$Job_ListingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     pwd_profile<T extends Pwd_ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_ProfileDefaultArgs<ExtArgs>>): Prisma__Pwd_ProfileClient<$Result.GetResult<Prisma.$Pwd_ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    employer_profile<T extends Employer_ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Employer_ProfileDefaultArgs<ExtArgs>>): Prisma__Employer_ProfileClient<$Result.GetResult<Prisma.$Employer_ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     resume<T extends ResumesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ResumesDefaultArgs<ExtArgs>>): Prisma__ResumesClient<$Result.GetResult<Prisma.$ResumesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     reviews<T extends Applications$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Applications$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$reviewsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transactions<T extends Applications$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Applications$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transactionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -17670,9 +18270,12 @@ export namespace Prisma {
     readonly application_id: FieldRef<"Applications", 'Int'>
     readonly job_id: FieldRef<"Applications", 'Int'>
     readonly pwd_id: FieldRef<"Applications", 'Int'>
+    readonly employer_id: FieldRef<"Applications", 'Int'>
     readonly resume_id: FieldRef<"Applications", 'Int'>
     readonly custom_message: FieldRef<"Applications", 'String'>
     readonly proposed_salary: FieldRef<"Applications", 'Decimal'>
+    readonly work_experience: FieldRef<"Applications", 'String'>
+    readonly portfolio_links: FieldRef<"Applications", 'String'>
     readonly submitted_at: FieldRef<"Applications", 'DateTime'>
     readonly updated_at: FieldRef<"Applications", 'DateTime'>
     readonly status_changed_at: FieldRef<"Applications", 'DateTime'>
@@ -21665,357 +22268,399 @@ export namespace Prisma {
 
 
   /**
-   * Model Job_Categories
+   * Model Saved_Jobs
    */
 
-  export type AggregateJob_Categories = {
-    _count: Job_CategoriesCountAggregateOutputType | null
-    _avg: Job_CategoriesAvgAggregateOutputType | null
-    _sum: Job_CategoriesSumAggregateOutputType | null
-    _min: Job_CategoriesMinAggregateOutputType | null
-    _max: Job_CategoriesMaxAggregateOutputType | null
+  export type AggregateSaved_Jobs = {
+    _count: Saved_JobsCountAggregateOutputType | null
+    _avg: Saved_JobsAvgAggregateOutputType | null
+    _sum: Saved_JobsSumAggregateOutputType | null
+    _min: Saved_JobsMinAggregateOutputType | null
+    _max: Saved_JobsMaxAggregateOutputType | null
   }
 
-  export type Job_CategoriesAvgAggregateOutputType = {
-    category_id: number | null
+  export type Saved_JobsAvgAggregateOutputType = {
+    savedJob_id: number | null
+    job_id: number | null
+    pwd_id: number | null
+    employer_id: number | null
   }
 
-  export type Job_CategoriesSumAggregateOutputType = {
-    category_id: number | null
+  export type Saved_JobsSumAggregateOutputType = {
+    savedJob_id: number | null
+    job_id: number | null
+    pwd_id: number | null
+    employer_id: number | null
   }
 
-  export type Job_CategoriesMinAggregateOutputType = {
-    category_id: number | null
-    name: string | null
-    description: string | null
+  export type Saved_JobsMinAggregateOutputType = {
+    savedJob_id: number | null
+    job_id: number | null
+    pwd_id: number | null
+    employer_id: number | null
   }
 
-  export type Job_CategoriesMaxAggregateOutputType = {
-    category_id: number | null
-    name: string | null
-    description: string | null
+  export type Saved_JobsMaxAggregateOutputType = {
+    savedJob_id: number | null
+    job_id: number | null
+    pwd_id: number | null
+    employer_id: number | null
   }
 
-  export type Job_CategoriesCountAggregateOutputType = {
-    category_id: number
-    name: number
-    description: number
+  export type Saved_JobsCountAggregateOutputType = {
+    savedJob_id: number
+    job_id: number
+    pwd_id: number
+    employer_id: number
     _all: number
   }
 
 
-  export type Job_CategoriesAvgAggregateInputType = {
-    category_id?: true
+  export type Saved_JobsAvgAggregateInputType = {
+    savedJob_id?: true
+    job_id?: true
+    pwd_id?: true
+    employer_id?: true
   }
 
-  export type Job_CategoriesSumAggregateInputType = {
-    category_id?: true
+  export type Saved_JobsSumAggregateInputType = {
+    savedJob_id?: true
+    job_id?: true
+    pwd_id?: true
+    employer_id?: true
   }
 
-  export type Job_CategoriesMinAggregateInputType = {
-    category_id?: true
-    name?: true
-    description?: true
+  export type Saved_JobsMinAggregateInputType = {
+    savedJob_id?: true
+    job_id?: true
+    pwd_id?: true
+    employer_id?: true
   }
 
-  export type Job_CategoriesMaxAggregateInputType = {
-    category_id?: true
-    name?: true
-    description?: true
+  export type Saved_JobsMaxAggregateInputType = {
+    savedJob_id?: true
+    job_id?: true
+    pwd_id?: true
+    employer_id?: true
   }
 
-  export type Job_CategoriesCountAggregateInputType = {
-    category_id?: true
-    name?: true
-    description?: true
+  export type Saved_JobsCountAggregateInputType = {
+    savedJob_id?: true
+    job_id?: true
+    pwd_id?: true
+    employer_id?: true
     _all?: true
   }
 
-  export type Job_CategoriesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Saved_JobsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Job_Categories to aggregate.
+     * Filter which Saved_Jobs to aggregate.
      */
-    where?: Job_CategoriesWhereInput
+    where?: Saved_JobsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Job_Categories to fetch.
+     * Determine the order of Saved_Jobs to fetch.
      */
-    orderBy?: Job_CategoriesOrderByWithRelationInput | Job_CategoriesOrderByWithRelationInput[]
+    orderBy?: Saved_JobsOrderByWithRelationInput | Saved_JobsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: Job_CategoriesWhereUniqueInput
+    cursor?: Saved_JobsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Job_Categories from the position of the cursor.
+     * Take `±n` Saved_Jobs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Job_Categories.
+     * Skip the first `n` Saved_Jobs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Job_Categories
+     * Count returned Saved_Jobs
     **/
-    _count?: true | Job_CategoriesCountAggregateInputType
+    _count?: true | Saved_JobsCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: Job_CategoriesAvgAggregateInputType
+    _avg?: Saved_JobsAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: Job_CategoriesSumAggregateInputType
+    _sum?: Saved_JobsSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: Job_CategoriesMinAggregateInputType
+    _min?: Saved_JobsMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: Job_CategoriesMaxAggregateInputType
+    _max?: Saved_JobsMaxAggregateInputType
   }
 
-  export type GetJob_CategoriesAggregateType<T extends Job_CategoriesAggregateArgs> = {
-        [P in keyof T & keyof AggregateJob_Categories]: P extends '_count' | 'count'
+  export type GetSaved_JobsAggregateType<T extends Saved_JobsAggregateArgs> = {
+        [P in keyof T & keyof AggregateSaved_Jobs]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateJob_Categories[P]>
-      : GetScalarType<T[P], AggregateJob_Categories[P]>
+        : GetScalarType<T[P], AggregateSaved_Jobs[P]>
+      : GetScalarType<T[P], AggregateSaved_Jobs[P]>
   }
 
 
 
 
-  export type Job_CategoriesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: Job_CategoriesWhereInput
-    orderBy?: Job_CategoriesOrderByWithAggregationInput | Job_CategoriesOrderByWithAggregationInput[]
-    by: Job_CategoriesScalarFieldEnum[] | Job_CategoriesScalarFieldEnum
-    having?: Job_CategoriesScalarWhereWithAggregatesInput
+  export type Saved_JobsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Saved_JobsWhereInput
+    orderBy?: Saved_JobsOrderByWithAggregationInput | Saved_JobsOrderByWithAggregationInput[]
+    by: Saved_JobsScalarFieldEnum[] | Saved_JobsScalarFieldEnum
+    having?: Saved_JobsScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: Job_CategoriesCountAggregateInputType | true
-    _avg?: Job_CategoriesAvgAggregateInputType
-    _sum?: Job_CategoriesSumAggregateInputType
-    _min?: Job_CategoriesMinAggregateInputType
-    _max?: Job_CategoriesMaxAggregateInputType
+    _count?: Saved_JobsCountAggregateInputType | true
+    _avg?: Saved_JobsAvgAggregateInputType
+    _sum?: Saved_JobsSumAggregateInputType
+    _min?: Saved_JobsMinAggregateInputType
+    _max?: Saved_JobsMaxAggregateInputType
   }
 
-  export type Job_CategoriesGroupByOutputType = {
-    category_id: number
-    name: string
-    description: string
-    _count: Job_CategoriesCountAggregateOutputType | null
-    _avg: Job_CategoriesAvgAggregateOutputType | null
-    _sum: Job_CategoriesSumAggregateOutputType | null
-    _min: Job_CategoriesMinAggregateOutputType | null
-    _max: Job_CategoriesMaxAggregateOutputType | null
+  export type Saved_JobsGroupByOutputType = {
+    savedJob_id: number
+    job_id: number
+    pwd_id: number
+    employer_id: number
+    _count: Saved_JobsCountAggregateOutputType | null
+    _avg: Saved_JobsAvgAggregateOutputType | null
+    _sum: Saved_JobsSumAggregateOutputType | null
+    _min: Saved_JobsMinAggregateOutputType | null
+    _max: Saved_JobsMaxAggregateOutputType | null
   }
 
-  type GetJob_CategoriesGroupByPayload<T extends Job_CategoriesGroupByArgs> = Prisma.PrismaPromise<
+  type GetSaved_JobsGroupByPayload<T extends Saved_JobsGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<Job_CategoriesGroupByOutputType, T['by']> &
+      PickEnumerable<Saved_JobsGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof Job_CategoriesGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof Saved_JobsGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], Job_CategoriesGroupByOutputType[P]>
-            : GetScalarType<T[P], Job_CategoriesGroupByOutputType[P]>
+              : GetScalarType<T[P], Saved_JobsGroupByOutputType[P]>
+            : GetScalarType<T[P], Saved_JobsGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type Job_CategoriesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    category_id?: boolean
-    name?: boolean
-    description?: boolean
-    job_listings?: boolean | Job_Categories$job_listingsArgs<ExtArgs>
-    _count?: boolean | Job_CategoriesCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["job_Categories"]>
+  export type Saved_JobsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    savedJob_id?: boolean
+    job_id?: boolean
+    pwd_id?: boolean
+    employer_id?: boolean
+    job_listings?: boolean | Job_ListingsDefaultArgs<ExtArgs>
+    pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
+    employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["saved_Jobs"]>
 
-  export type Job_CategoriesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    category_id?: boolean
-    name?: boolean
-    description?: boolean
-  }, ExtArgs["result"]["job_Categories"]>
+  export type Saved_JobsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    savedJob_id?: boolean
+    job_id?: boolean
+    pwd_id?: boolean
+    employer_id?: boolean
+    job_listings?: boolean | Job_ListingsDefaultArgs<ExtArgs>
+    pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
+    employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["saved_Jobs"]>
 
-  export type Job_CategoriesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    category_id?: boolean
-    name?: boolean
-    description?: boolean
-  }, ExtArgs["result"]["job_Categories"]>
+  export type Saved_JobsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    savedJob_id?: boolean
+    job_id?: boolean
+    pwd_id?: boolean
+    employer_id?: boolean
+    job_listings?: boolean | Job_ListingsDefaultArgs<ExtArgs>
+    pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
+    employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["saved_Jobs"]>
 
-  export type Job_CategoriesSelectScalar = {
-    category_id?: boolean
-    name?: boolean
-    description?: boolean
+  export type Saved_JobsSelectScalar = {
+    savedJob_id?: boolean
+    job_id?: boolean
+    pwd_id?: boolean
+    employer_id?: boolean
   }
 
-  export type Job_CategoriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"category_id" | "name" | "description", ExtArgs["result"]["job_Categories"]>
-  export type Job_CategoriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    job_listings?: boolean | Job_Categories$job_listingsArgs<ExtArgs>
-    _count?: boolean | Job_CategoriesCountOutputTypeDefaultArgs<ExtArgs>
+  export type Saved_JobsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"savedJob_id" | "job_id" | "pwd_id" | "employer_id", ExtArgs["result"]["saved_Jobs"]>
+  export type Saved_JobsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    job_listings?: boolean | Job_ListingsDefaultArgs<ExtArgs>
+    pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
+    employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
   }
-  export type Job_CategoriesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type Job_CategoriesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type Saved_JobsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    job_listings?: boolean | Job_ListingsDefaultArgs<ExtArgs>
+    pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
+    employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
+  }
+  export type Saved_JobsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    job_listings?: boolean | Job_ListingsDefaultArgs<ExtArgs>
+    pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
+    employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
+  }
 
-  export type $Job_CategoriesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Job_Categories"
+  export type $Saved_JobsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Saved_Jobs"
     objects: {
-      job_listings: Prisma.$Job_ListingsPayload<ExtArgs>[]
+      job_listings: Prisma.$Job_ListingsPayload<ExtArgs>
+      pwd_profile: Prisma.$Pwd_ProfilePayload<ExtArgs>
+      employer_profile: Prisma.$Employer_ProfilePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      category_id: number
-      name: string
-      description: string
-    }, ExtArgs["result"]["job_Categories"]>
+      savedJob_id: number
+      job_id: number
+      pwd_id: number
+      employer_id: number
+    }, ExtArgs["result"]["saved_Jobs"]>
     composites: {}
   }
 
-  type Job_CategoriesGetPayload<S extends boolean | null | undefined | Job_CategoriesDefaultArgs> = $Result.GetResult<Prisma.$Job_CategoriesPayload, S>
+  type Saved_JobsGetPayload<S extends boolean | null | undefined | Saved_JobsDefaultArgs> = $Result.GetResult<Prisma.$Saved_JobsPayload, S>
 
-  type Job_CategoriesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<Job_CategoriesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: Job_CategoriesCountAggregateInputType | true
+  type Saved_JobsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<Saved_JobsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Saved_JobsCountAggregateInputType | true
     }
 
-  export interface Job_CategoriesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Job_Categories'], meta: { name: 'Job_Categories' } }
+  export interface Saved_JobsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Saved_Jobs'], meta: { name: 'Saved_Jobs' } }
     /**
-     * Find zero or one Job_Categories that matches the filter.
-     * @param {Job_CategoriesFindUniqueArgs} args - Arguments to find a Job_Categories
+     * Find zero or one Saved_Jobs that matches the filter.
+     * @param {Saved_JobsFindUniqueArgs} args - Arguments to find a Saved_Jobs
      * @example
-     * // Get one Job_Categories
-     * const job_Categories = await prisma.job_Categories.findUnique({
+     * // Get one Saved_Jobs
+     * const saved_Jobs = await prisma.saved_Jobs.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends Job_CategoriesFindUniqueArgs>(args: SelectSubset<T, Job_CategoriesFindUniqueArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends Saved_JobsFindUniqueArgs>(args: SelectSubset<T, Saved_JobsFindUniqueArgs<ExtArgs>>): Prisma__Saved_JobsClient<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Job_Categories that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Saved_Jobs that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {Job_CategoriesFindUniqueOrThrowArgs} args - Arguments to find a Job_Categories
+     * @param {Saved_JobsFindUniqueOrThrowArgs} args - Arguments to find a Saved_Jobs
      * @example
-     * // Get one Job_Categories
-     * const job_Categories = await prisma.job_Categories.findUniqueOrThrow({
+     * // Get one Saved_Jobs
+     * const saved_Jobs = await prisma.saved_Jobs.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends Job_CategoriesFindUniqueOrThrowArgs>(args: SelectSubset<T, Job_CategoriesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends Saved_JobsFindUniqueOrThrowArgs>(args: SelectSubset<T, Saved_JobsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Saved_JobsClient<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Job_Categories that matches the filter.
+     * Find the first Saved_Jobs that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesFindFirstArgs} args - Arguments to find a Job_Categories
+     * @param {Saved_JobsFindFirstArgs} args - Arguments to find a Saved_Jobs
      * @example
-     * // Get one Job_Categories
-     * const job_Categories = await prisma.job_Categories.findFirst({
+     * // Get one Saved_Jobs
+     * const saved_Jobs = await prisma.saved_Jobs.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends Job_CategoriesFindFirstArgs>(args?: SelectSubset<T, Job_CategoriesFindFirstArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends Saved_JobsFindFirstArgs>(args?: SelectSubset<T, Saved_JobsFindFirstArgs<ExtArgs>>): Prisma__Saved_JobsClient<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Job_Categories that matches the filter or
+     * Find the first Saved_Jobs that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesFindFirstOrThrowArgs} args - Arguments to find a Job_Categories
+     * @param {Saved_JobsFindFirstOrThrowArgs} args - Arguments to find a Saved_Jobs
      * @example
-     * // Get one Job_Categories
-     * const job_Categories = await prisma.job_Categories.findFirstOrThrow({
+     * // Get one Saved_Jobs
+     * const saved_Jobs = await prisma.saved_Jobs.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends Job_CategoriesFindFirstOrThrowArgs>(args?: SelectSubset<T, Job_CategoriesFindFirstOrThrowArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends Saved_JobsFindFirstOrThrowArgs>(args?: SelectSubset<T, Saved_JobsFindFirstOrThrowArgs<ExtArgs>>): Prisma__Saved_JobsClient<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Job_Categories that matches the filter.
+     * Find zero or more Saved_Jobs that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {Saved_JobsFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Job_Categories
-     * const job_Categories = await prisma.job_Categories.findMany()
+     * // Get all Saved_Jobs
+     * const saved_Jobs = await prisma.saved_Jobs.findMany()
      * 
-     * // Get first 10 Job_Categories
-     * const job_Categories = await prisma.job_Categories.findMany({ take: 10 })
+     * // Get first 10 Saved_Jobs
+     * const saved_Jobs = await prisma.saved_Jobs.findMany({ take: 10 })
      * 
-     * // Only select the `category_id`
-     * const job_CategoriesWithCategory_idOnly = await prisma.job_Categories.findMany({ select: { category_id: true } })
+     * // Only select the `savedJob_id`
+     * const saved_JobsWithSavedJob_idOnly = await prisma.saved_Jobs.findMany({ select: { savedJob_id: true } })
      * 
      */
-    findMany<T extends Job_CategoriesFindManyArgs>(args?: SelectSubset<T, Job_CategoriesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends Saved_JobsFindManyArgs>(args?: SelectSubset<T, Saved_JobsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Job_Categories.
-     * @param {Job_CategoriesCreateArgs} args - Arguments to create a Job_Categories.
+     * Create a Saved_Jobs.
+     * @param {Saved_JobsCreateArgs} args - Arguments to create a Saved_Jobs.
      * @example
-     * // Create one Job_Categories
-     * const Job_Categories = await prisma.job_Categories.create({
+     * // Create one Saved_Jobs
+     * const Saved_Jobs = await prisma.saved_Jobs.create({
      *   data: {
-     *     // ... data to create a Job_Categories
+     *     // ... data to create a Saved_Jobs
      *   }
      * })
      * 
      */
-    create<T extends Job_CategoriesCreateArgs>(args: SelectSubset<T, Job_CategoriesCreateArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends Saved_JobsCreateArgs>(args: SelectSubset<T, Saved_JobsCreateArgs<ExtArgs>>): Prisma__Saved_JobsClient<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Job_Categories.
-     * @param {Job_CategoriesCreateManyArgs} args - Arguments to create many Job_Categories.
+     * Create many Saved_Jobs.
+     * @param {Saved_JobsCreateManyArgs} args - Arguments to create many Saved_Jobs.
      * @example
-     * // Create many Job_Categories
-     * const job_Categories = await prisma.job_Categories.createMany({
+     * // Create many Saved_Jobs
+     * const saved_Jobs = await prisma.saved_Jobs.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends Job_CategoriesCreateManyArgs>(args?: SelectSubset<T, Job_CategoriesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends Saved_JobsCreateManyArgs>(args?: SelectSubset<T, Saved_JobsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Job_Categories and returns the data saved in the database.
-     * @param {Job_CategoriesCreateManyAndReturnArgs} args - Arguments to create many Job_Categories.
+     * Create many Saved_Jobs and returns the data saved in the database.
+     * @param {Saved_JobsCreateManyAndReturnArgs} args - Arguments to create many Saved_Jobs.
      * @example
-     * // Create many Job_Categories
-     * const job_Categories = await prisma.job_Categories.createManyAndReturn({
+     * // Create many Saved_Jobs
+     * const saved_Jobs = await prisma.saved_Jobs.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Job_Categories and only return the `category_id`
-     * const job_CategoriesWithCategory_idOnly = await prisma.job_Categories.createManyAndReturn({
-     *   select: { category_id: true },
+     * // Create many Saved_Jobs and only return the `savedJob_id`
+     * const saved_JobsWithSavedJob_idOnly = await prisma.saved_Jobs.createManyAndReturn({
+     *   select: { savedJob_id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -22024,28 +22669,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends Job_CategoriesCreateManyAndReturnArgs>(args?: SelectSubset<T, Job_CategoriesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends Saved_JobsCreateManyAndReturnArgs>(args?: SelectSubset<T, Saved_JobsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Job_Categories.
-     * @param {Job_CategoriesDeleteArgs} args - Arguments to delete one Job_Categories.
+     * Delete a Saved_Jobs.
+     * @param {Saved_JobsDeleteArgs} args - Arguments to delete one Saved_Jobs.
      * @example
-     * // Delete one Job_Categories
-     * const Job_Categories = await prisma.job_Categories.delete({
+     * // Delete one Saved_Jobs
+     * const Saved_Jobs = await prisma.saved_Jobs.delete({
      *   where: {
-     *     // ... filter to delete one Job_Categories
+     *     // ... filter to delete one Saved_Jobs
      *   }
      * })
      * 
      */
-    delete<T extends Job_CategoriesDeleteArgs>(args: SelectSubset<T, Job_CategoriesDeleteArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends Saved_JobsDeleteArgs>(args: SelectSubset<T, Saved_JobsDeleteArgs<ExtArgs>>): Prisma__Saved_JobsClient<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Job_Categories.
-     * @param {Job_CategoriesUpdateArgs} args - Arguments to update one Job_Categories.
+     * Update one Saved_Jobs.
+     * @param {Saved_JobsUpdateArgs} args - Arguments to update one Saved_Jobs.
      * @example
-     * // Update one Job_Categories
-     * const job_Categories = await prisma.job_Categories.update({
+     * // Update one Saved_Jobs
+     * const saved_Jobs = await prisma.saved_Jobs.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -22055,30 +22700,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends Job_CategoriesUpdateArgs>(args: SelectSubset<T, Job_CategoriesUpdateArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends Saved_JobsUpdateArgs>(args: SelectSubset<T, Saved_JobsUpdateArgs<ExtArgs>>): Prisma__Saved_JobsClient<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Job_Categories.
-     * @param {Job_CategoriesDeleteManyArgs} args - Arguments to filter Job_Categories to delete.
+     * Delete zero or more Saved_Jobs.
+     * @param {Saved_JobsDeleteManyArgs} args - Arguments to filter Saved_Jobs to delete.
      * @example
-     * // Delete a few Job_Categories
-     * const { count } = await prisma.job_Categories.deleteMany({
+     * // Delete a few Saved_Jobs
+     * const { count } = await prisma.saved_Jobs.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends Job_CategoriesDeleteManyArgs>(args?: SelectSubset<T, Job_CategoriesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends Saved_JobsDeleteManyArgs>(args?: SelectSubset<T, Saved_JobsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Job_Categories.
+     * Update zero or more Saved_Jobs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {Saved_JobsUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Job_Categories
-     * const job_Categories = await prisma.job_Categories.updateMany({
+     * // Update many Saved_Jobs
+     * const saved_Jobs = await prisma.saved_Jobs.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -22088,14 +22733,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends Job_CategoriesUpdateManyArgs>(args: SelectSubset<T, Job_CategoriesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends Saved_JobsUpdateManyArgs>(args: SelectSubset<T, Saved_JobsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Job_Categories and returns the data updated in the database.
-     * @param {Job_CategoriesUpdateManyAndReturnArgs} args - Arguments to update many Job_Categories.
+     * Update zero or more Saved_Jobs and returns the data updated in the database.
+     * @param {Saved_JobsUpdateManyAndReturnArgs} args - Arguments to update many Saved_Jobs.
      * @example
-     * // Update many Job_Categories
-     * const job_Categories = await prisma.job_Categories.updateManyAndReturn({
+     * // Update many Saved_Jobs
+     * const saved_Jobs = await prisma.saved_Jobs.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -22104,9 +22749,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Job_Categories and only return the `category_id`
-     * const job_CategoriesWithCategory_idOnly = await prisma.job_Categories.updateManyAndReturn({
-     *   select: { category_id: true },
+     * // Update zero or more Saved_Jobs and only return the `savedJob_id`
+     * const saved_JobsWithSavedJob_idOnly = await prisma.saved_Jobs.updateManyAndReturn({
+     *   select: { savedJob_id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -22118,56 +22763,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends Job_CategoriesUpdateManyAndReturnArgs>(args: SelectSubset<T, Job_CategoriesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends Saved_JobsUpdateManyAndReturnArgs>(args: SelectSubset<T, Saved_JobsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Job_Categories.
-     * @param {Job_CategoriesUpsertArgs} args - Arguments to update or create a Job_Categories.
+     * Create or update one Saved_Jobs.
+     * @param {Saved_JobsUpsertArgs} args - Arguments to update or create a Saved_Jobs.
      * @example
-     * // Update or create a Job_Categories
-     * const job_Categories = await prisma.job_Categories.upsert({
+     * // Update or create a Saved_Jobs
+     * const saved_Jobs = await prisma.saved_Jobs.upsert({
      *   create: {
-     *     // ... data to create a Job_Categories
+     *     // ... data to create a Saved_Jobs
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Job_Categories we want to update
+     *     // ... the filter for the Saved_Jobs we want to update
      *   }
      * })
      */
-    upsert<T extends Job_CategoriesUpsertArgs>(args: SelectSubset<T, Job_CategoriesUpsertArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends Saved_JobsUpsertArgs>(args: SelectSubset<T, Saved_JobsUpsertArgs<ExtArgs>>): Prisma__Saved_JobsClient<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Job_Categories.
+     * Count the number of Saved_Jobs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesCountArgs} args - Arguments to filter Job_Categories to count.
+     * @param {Saved_JobsCountArgs} args - Arguments to filter Saved_Jobs to count.
      * @example
-     * // Count the number of Job_Categories
-     * const count = await prisma.job_Categories.count({
+     * // Count the number of Saved_Jobs
+     * const count = await prisma.saved_Jobs.count({
      *   where: {
-     *     // ... the filter for the Job_Categories we want to count
+     *     // ... the filter for the Saved_Jobs we want to count
      *   }
      * })
     **/
-    count<T extends Job_CategoriesCountArgs>(
-      args?: Subset<T, Job_CategoriesCountArgs>,
+    count<T extends Saved_JobsCountArgs>(
+      args?: Subset<T, Saved_JobsCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], Job_CategoriesCountAggregateOutputType>
+          : GetScalarType<T['select'], Saved_JobsCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Job_Categories.
+     * Allows you to perform aggregations operations on a Saved_Jobs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {Saved_JobsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -22187,13 +22832,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends Job_CategoriesAggregateArgs>(args: Subset<T, Job_CategoriesAggregateArgs>): Prisma.PrismaPromise<GetJob_CategoriesAggregateType<T>>
+    aggregate<T extends Saved_JobsAggregateArgs>(args: Subset<T, Saved_JobsAggregateArgs>): Prisma.PrismaPromise<GetSaved_JobsAggregateType<T>>
 
     /**
-     * Group by Job_Categories.
+     * Group by Saved_Jobs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Job_CategoriesGroupByArgs} args - Group by arguments.
+     * @param {Saved_JobsGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -22208,14 +22853,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends Job_CategoriesGroupByArgs,
+      T extends Saved_JobsGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Job_CategoriesGroupByArgs['orderBy'] }
-        : { orderBy?: Job_CategoriesGroupByArgs['orderBy'] },
+        ? { orderBy: Saved_JobsGroupByArgs['orderBy'] }
+        : { orderBy?: Saved_JobsGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -22264,22 +22909,24 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, Job_CategoriesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetJob_CategoriesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, Saved_JobsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSaved_JobsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Job_Categories model
+   * Fields of the Saved_Jobs model
    */
-  readonly fields: Job_CategoriesFieldRefs;
+  readonly fields: Saved_JobsFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Job_Categories.
+   * The delegate class that acts as a "Promise-like" for Saved_Jobs.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__Job_CategoriesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__Saved_JobsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    job_listings<T extends Job_Categories$job_listingsArgs<ExtArgs> = {}>(args?: Subset<T, Job_Categories$job_listingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Job_ListingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    job_listings<T extends Job_ListingsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Job_ListingsDefaultArgs<ExtArgs>>): Prisma__Job_ListingsClient<$Result.GetResult<Prisma.$Job_ListingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    pwd_profile<T extends Pwd_ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_ProfileDefaultArgs<ExtArgs>>): Prisma__Pwd_ProfileClient<$Result.GetResult<Prisma.$Pwd_ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    employer_profile<T extends Employer_ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Employer_ProfileDefaultArgs<ExtArgs>>): Prisma__Employer_ProfileClient<$Result.GetResult<Prisma.$Employer_ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -22306,439 +22953,424 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Job_Categories model
+   * Fields of the Saved_Jobs model
    */
-  interface Job_CategoriesFieldRefs {
-    readonly category_id: FieldRef<"Job_Categories", 'Int'>
-    readonly name: FieldRef<"Job_Categories", 'String'>
-    readonly description: FieldRef<"Job_Categories", 'String'>
+  interface Saved_JobsFieldRefs {
+    readonly savedJob_id: FieldRef<"Saved_Jobs", 'Int'>
+    readonly job_id: FieldRef<"Saved_Jobs", 'Int'>
+    readonly pwd_id: FieldRef<"Saved_Jobs", 'Int'>
+    readonly employer_id: FieldRef<"Saved_Jobs", 'Int'>
   }
     
 
   // Custom InputTypes
   /**
-   * Job_Categories findUnique
+   * Saved_Jobs findUnique
    */
-  export type Job_CategoriesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Saved_JobsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Job_Categories
+     * Select specific fields to fetch from the Saved_Jobs
      */
-    select?: Job_CategoriesSelect<ExtArgs> | null
+    select?: Saved_JobsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Job_Categories
+     * Omit specific fields from the Saved_Jobs
      */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
+    omit?: Saved_JobsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: Job_CategoriesInclude<ExtArgs> | null
+    include?: Saved_JobsInclude<ExtArgs> | null
     /**
-     * Filter, which Job_Categories to fetch.
+     * Filter, which Saved_Jobs to fetch.
      */
-    where: Job_CategoriesWhereUniqueInput
+    where: Saved_JobsWhereUniqueInput
   }
 
   /**
-   * Job_Categories findUniqueOrThrow
+   * Saved_Jobs findUniqueOrThrow
    */
-  export type Job_CategoriesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Saved_JobsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Job_Categories
+     * Select specific fields to fetch from the Saved_Jobs
      */
-    select?: Job_CategoriesSelect<ExtArgs> | null
+    select?: Saved_JobsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Job_Categories
+     * Omit specific fields from the Saved_Jobs
      */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
+    omit?: Saved_JobsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: Job_CategoriesInclude<ExtArgs> | null
+    include?: Saved_JobsInclude<ExtArgs> | null
     /**
-     * Filter, which Job_Categories to fetch.
+     * Filter, which Saved_Jobs to fetch.
      */
-    where: Job_CategoriesWhereUniqueInput
+    where: Saved_JobsWhereUniqueInput
   }
 
   /**
-   * Job_Categories findFirst
+   * Saved_Jobs findFirst
    */
-  export type Job_CategoriesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Saved_JobsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Job_Categories
+     * Select specific fields to fetch from the Saved_Jobs
      */
-    select?: Job_CategoriesSelect<ExtArgs> | null
+    select?: Saved_JobsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Job_Categories
+     * Omit specific fields from the Saved_Jobs
      */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
+    omit?: Saved_JobsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: Job_CategoriesInclude<ExtArgs> | null
+    include?: Saved_JobsInclude<ExtArgs> | null
     /**
-     * Filter, which Job_Categories to fetch.
+     * Filter, which Saved_Jobs to fetch.
      */
-    where?: Job_CategoriesWhereInput
+    where?: Saved_JobsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Job_Categories to fetch.
+     * Determine the order of Saved_Jobs to fetch.
      */
-    orderBy?: Job_CategoriesOrderByWithRelationInput | Job_CategoriesOrderByWithRelationInput[]
+    orderBy?: Saved_JobsOrderByWithRelationInput | Saved_JobsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Job_Categories.
+     * Sets the position for searching for Saved_Jobs.
      */
-    cursor?: Job_CategoriesWhereUniqueInput
+    cursor?: Saved_JobsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Job_Categories from the position of the cursor.
+     * Take `±n` Saved_Jobs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Job_Categories.
+     * Skip the first `n` Saved_Jobs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Job_Categories.
+     * Filter by unique combinations of Saved_Jobs.
      */
-    distinct?: Job_CategoriesScalarFieldEnum | Job_CategoriesScalarFieldEnum[]
+    distinct?: Saved_JobsScalarFieldEnum | Saved_JobsScalarFieldEnum[]
   }
 
   /**
-   * Job_Categories findFirstOrThrow
+   * Saved_Jobs findFirstOrThrow
    */
-  export type Job_CategoriesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Saved_JobsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Job_Categories
+     * Select specific fields to fetch from the Saved_Jobs
      */
-    select?: Job_CategoriesSelect<ExtArgs> | null
+    select?: Saved_JobsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Job_Categories
+     * Omit specific fields from the Saved_Jobs
      */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
+    omit?: Saved_JobsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: Job_CategoriesInclude<ExtArgs> | null
+    include?: Saved_JobsInclude<ExtArgs> | null
     /**
-     * Filter, which Job_Categories to fetch.
+     * Filter, which Saved_Jobs to fetch.
      */
-    where?: Job_CategoriesWhereInput
+    where?: Saved_JobsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Job_Categories to fetch.
+     * Determine the order of Saved_Jobs to fetch.
      */
-    orderBy?: Job_CategoriesOrderByWithRelationInput | Job_CategoriesOrderByWithRelationInput[]
+    orderBy?: Saved_JobsOrderByWithRelationInput | Saved_JobsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Job_Categories.
+     * Sets the position for searching for Saved_Jobs.
      */
-    cursor?: Job_CategoriesWhereUniqueInput
+    cursor?: Saved_JobsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Job_Categories from the position of the cursor.
+     * Take `±n` Saved_Jobs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Job_Categories.
+     * Skip the first `n` Saved_Jobs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Job_Categories.
+     * Filter by unique combinations of Saved_Jobs.
      */
-    distinct?: Job_CategoriesScalarFieldEnum | Job_CategoriesScalarFieldEnum[]
+    distinct?: Saved_JobsScalarFieldEnum | Saved_JobsScalarFieldEnum[]
   }
 
   /**
-   * Job_Categories findMany
+   * Saved_Jobs findMany
    */
-  export type Job_CategoriesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Saved_JobsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Job_Categories
+     * Select specific fields to fetch from the Saved_Jobs
      */
-    select?: Job_CategoriesSelect<ExtArgs> | null
+    select?: Saved_JobsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Job_Categories
+     * Omit specific fields from the Saved_Jobs
      */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
+    omit?: Saved_JobsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: Job_CategoriesInclude<ExtArgs> | null
+    include?: Saved_JobsInclude<ExtArgs> | null
     /**
-     * Filter, which Job_Categories to fetch.
+     * Filter, which Saved_Jobs to fetch.
      */
-    where?: Job_CategoriesWhereInput
+    where?: Saved_JobsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Job_Categories to fetch.
+     * Determine the order of Saved_Jobs to fetch.
      */
-    orderBy?: Job_CategoriesOrderByWithRelationInput | Job_CategoriesOrderByWithRelationInput[]
+    orderBy?: Saved_JobsOrderByWithRelationInput | Saved_JobsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Job_Categories.
+     * Sets the position for listing Saved_Jobs.
      */
-    cursor?: Job_CategoriesWhereUniqueInput
+    cursor?: Saved_JobsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Job_Categories from the position of the cursor.
+     * Take `±n` Saved_Jobs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Job_Categories.
+     * Skip the first `n` Saved_Jobs.
      */
     skip?: number
-    distinct?: Job_CategoriesScalarFieldEnum | Job_CategoriesScalarFieldEnum[]
+    distinct?: Saved_JobsScalarFieldEnum | Saved_JobsScalarFieldEnum[]
   }
 
   /**
-   * Job_Categories create
+   * Saved_Jobs create
    */
-  export type Job_CategoriesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Saved_JobsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Job_Categories
+     * Select specific fields to fetch from the Saved_Jobs
      */
-    select?: Job_CategoriesSelect<ExtArgs> | null
+    select?: Saved_JobsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Job_Categories
+     * Omit specific fields from the Saved_Jobs
      */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
+    omit?: Saved_JobsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: Job_CategoriesInclude<ExtArgs> | null
+    include?: Saved_JobsInclude<ExtArgs> | null
     /**
-     * The data needed to create a Job_Categories.
+     * The data needed to create a Saved_Jobs.
      */
-    data: XOR<Job_CategoriesCreateInput, Job_CategoriesUncheckedCreateInput>
+    data: XOR<Saved_JobsCreateInput, Saved_JobsUncheckedCreateInput>
   }
 
   /**
-   * Job_Categories createMany
+   * Saved_Jobs createMany
    */
-  export type Job_CategoriesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Saved_JobsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Job_Categories.
+     * The data used to create many Saved_Jobs.
      */
-    data: Job_CategoriesCreateManyInput | Job_CategoriesCreateManyInput[]
+    data: Saved_JobsCreateManyInput | Saved_JobsCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Job_Categories createManyAndReturn
+   * Saved_Jobs createManyAndReturn
    */
-  export type Job_CategoriesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Saved_JobsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Job_Categories
+     * Select specific fields to fetch from the Saved_Jobs
      */
-    select?: Job_CategoriesSelectCreateManyAndReturn<ExtArgs> | null
+    select?: Saved_JobsSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Job_Categories
+     * Omit specific fields from the Saved_Jobs
      */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
+    omit?: Saved_JobsOmit<ExtArgs> | null
     /**
-     * The data used to create many Job_Categories.
+     * The data used to create many Saved_Jobs.
      */
-    data: Job_CategoriesCreateManyInput | Job_CategoriesCreateManyInput[]
+    data: Saved_JobsCreateManyInput | Saved_JobsCreateManyInput[]
     skipDuplicates?: boolean
-  }
-
-  /**
-   * Job_Categories update
-   */
-  export type Job_CategoriesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Job_Categories.
-     */
-    data: XOR<Job_CategoriesUpdateInput, Job_CategoriesUncheckedUpdateInput>
-    /**
-     * Choose, which Job_Categories to update.
-     */
-    where: Job_CategoriesWhereUniqueInput
+    include?: Saved_JobsIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Job_Categories updateMany
+   * Saved_Jobs update
    */
-  export type Job_CategoriesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Saved_JobsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Job_Categories.
+     * Select specific fields to fetch from the Saved_Jobs
      */
-    data: XOR<Job_CategoriesUpdateManyMutationInput, Job_CategoriesUncheckedUpdateManyInput>
+    select?: Saved_JobsSelect<ExtArgs> | null
     /**
-     * Filter which Job_Categories to update
+     * Omit specific fields from the Saved_Jobs
      */
-    where?: Job_CategoriesWhereInput
+    omit?: Saved_JobsOmit<ExtArgs> | null
     /**
-     * Limit how many Job_Categories to update.
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Saved_JobsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Saved_Jobs.
+     */
+    data: XOR<Saved_JobsUpdateInput, Saved_JobsUncheckedUpdateInput>
+    /**
+     * Choose, which Saved_Jobs to update.
+     */
+    where: Saved_JobsWhereUniqueInput
+  }
+
+  /**
+   * Saved_Jobs updateMany
+   */
+  export type Saved_JobsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Saved_Jobs.
+     */
+    data: XOR<Saved_JobsUpdateManyMutationInput, Saved_JobsUncheckedUpdateManyInput>
+    /**
+     * Filter which Saved_Jobs to update
+     */
+    where?: Saved_JobsWhereInput
+    /**
+     * Limit how many Saved_Jobs to update.
      */
     limit?: number
   }
 
   /**
-   * Job_Categories updateManyAndReturn
+   * Saved_Jobs updateManyAndReturn
    */
-  export type Job_CategoriesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Saved_JobsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Job_Categories
+     * Select specific fields to fetch from the Saved_Jobs
      */
-    select?: Job_CategoriesSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: Saved_JobsSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Job_Categories
+     * Omit specific fields from the Saved_Jobs
      */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
+    omit?: Saved_JobsOmit<ExtArgs> | null
     /**
-     * The data used to update Job_Categories.
+     * The data used to update Saved_Jobs.
      */
-    data: XOR<Job_CategoriesUpdateManyMutationInput, Job_CategoriesUncheckedUpdateManyInput>
+    data: XOR<Saved_JobsUpdateManyMutationInput, Saved_JobsUncheckedUpdateManyInput>
     /**
-     * Filter which Job_Categories to update
+     * Filter which Saved_Jobs to update
      */
-    where?: Job_CategoriesWhereInput
+    where?: Saved_JobsWhereInput
     /**
-     * Limit how many Job_Categories to update.
+     * Limit how many Saved_Jobs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Saved_JobsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Saved_Jobs upsert
+   */
+  export type Saved_JobsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Saved_Jobs
+     */
+    select?: Saved_JobsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Saved_Jobs
+     */
+    omit?: Saved_JobsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Saved_JobsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Saved_Jobs to update in case it exists.
+     */
+    where: Saved_JobsWhereUniqueInput
+    /**
+     * In case the Saved_Jobs found by the `where` argument doesn't exist, create a new Saved_Jobs with this data.
+     */
+    create: XOR<Saved_JobsCreateInput, Saved_JobsUncheckedCreateInput>
+    /**
+     * In case the Saved_Jobs was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<Saved_JobsUpdateInput, Saved_JobsUncheckedUpdateInput>
+  }
+
+  /**
+   * Saved_Jobs delete
+   */
+  export type Saved_JobsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Saved_Jobs
+     */
+    select?: Saved_JobsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Saved_Jobs
+     */
+    omit?: Saved_JobsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Saved_JobsInclude<ExtArgs> | null
+    /**
+     * Filter which Saved_Jobs to delete.
+     */
+    where: Saved_JobsWhereUniqueInput
+  }
+
+  /**
+   * Saved_Jobs deleteMany
+   */
+  export type Saved_JobsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Saved_Jobs to delete
+     */
+    where?: Saved_JobsWhereInput
+    /**
+     * Limit how many Saved_Jobs to delete.
      */
     limit?: number
   }
 
   /**
-   * Job_Categories upsert
+   * Saved_Jobs without action
    */
-  export type Job_CategoriesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Saved_JobsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Job_Categories
+     * Select specific fields to fetch from the Saved_Jobs
      */
-    select?: Job_CategoriesSelect<ExtArgs> | null
+    select?: Saved_JobsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Job_Categories
+     * Omit specific fields from the Saved_Jobs
      */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
+    omit?: Saved_JobsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Job_Categories to update in case it exists.
-     */
-    where: Job_CategoriesWhereUniqueInput
-    /**
-     * In case the Job_Categories found by the `where` argument doesn't exist, create a new Job_Categories with this data.
-     */
-    create: XOR<Job_CategoriesCreateInput, Job_CategoriesUncheckedCreateInput>
-    /**
-     * In case the Job_Categories was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<Job_CategoriesUpdateInput, Job_CategoriesUncheckedUpdateInput>
-  }
-
-  /**
-   * Job_Categories delete
-   */
-  export type Job_CategoriesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_CategoriesInclude<ExtArgs> | null
-    /**
-     * Filter which Job_Categories to delete.
-     */
-    where: Job_CategoriesWhereUniqueInput
-  }
-
-  /**
-   * Job_Categories deleteMany
-   */
-  export type Job_CategoriesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Job_Categories to delete
-     */
-    where?: Job_CategoriesWhereInput
-    /**
-     * Limit how many Job_Categories to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Job_Categories.job_listings
-   */
-  export type Job_Categories$job_listingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Listings
-     */
-    select?: Job_ListingsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Listings
-     */
-    omit?: Job_ListingsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_ListingsInclude<ExtArgs> | null
-    where?: Job_ListingsWhereInput
-    orderBy?: Job_ListingsOrderByWithRelationInput | Job_ListingsOrderByWithRelationInput[]
-    cursor?: Job_ListingsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Job_ListingsScalarFieldEnum | Job_ListingsScalarFieldEnum[]
-  }
-
-  /**
-   * Job_Categories without action
-   */
-  export type Job_CategoriesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Job_Categories
-     */
-    select?: Job_CategoriesSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Job_Categories
-     */
-    omit?: Job_CategoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Job_CategoriesInclude<ExtArgs> | null
+    include?: Saved_JobsInclude<ExtArgs> | null
   }
 
 
@@ -22757,72 +23389,67 @@ export namespace Prisma {
   export type Job_ListingsAvgAggregateOutputType = {
     job_id: number | null
     employer_id: number | null
-    category_id: number | null
-    salary_min: Decimal | null
-    salary_max: Decimal | null
-    applications_count: number | null
+    salary_min: number | null
+    salary_max: number | null
   }
 
   export type Job_ListingsSumAggregateOutputType = {
     job_id: number | null
     employer_id: number | null
-    category_id: number | null
-    salary_min: Decimal | null
-    salary_max: Decimal | null
-    applications_count: number | null
+    salary_min: number | null
+    salary_max: number | null
   }
 
   export type Job_ListingsMinAggregateOutputType = {
     job_id: number | null
+    job_code: string | null
     employer_id: number | null
-    category_id: number | null
-    title: string | null
+    jobtitle: string | null
+    jobCategory: string | null
     description: string | null
-    skills_required: string | null
-    employment_type: $Enums.EmploymentType | null
-    work_arrangement: $Enums.WorkArrangement | null
-    salary_min: Decimal | null
-    salary_max: Decimal | null
-    salary_type: $Enums.SalaryType | null
+    employment_type: string | null
+    work_arrangement: string | null
+    salary_min: number | null
+    salary_max: number | null
+    salary_type: string | null
     location_city: string | null
     location_province: string | null
     location_country: string | null
-    accessibility_features: string | null
-    experience_level: $Enums.ExperienceLevel | null
-    application_deadline: Date | null
-    applications_count: number | null
+    application_deadline: string | null
+    experience_level: string | null
+    job_status: string | null
     created_at: Date | null
     updated_at: Date | null
   }
 
   export type Job_ListingsMaxAggregateOutputType = {
     job_id: number | null
+    job_code: string | null
     employer_id: number | null
-    category_id: number | null
-    title: string | null
+    jobtitle: string | null
+    jobCategory: string | null
     description: string | null
-    skills_required: string | null
-    employment_type: $Enums.EmploymentType | null
-    work_arrangement: $Enums.WorkArrangement | null
-    salary_min: Decimal | null
-    salary_max: Decimal | null
-    salary_type: $Enums.SalaryType | null
+    employment_type: string | null
+    work_arrangement: string | null
+    salary_min: number | null
+    salary_max: number | null
+    salary_type: string | null
     location_city: string | null
     location_province: string | null
     location_country: string | null
-    accessibility_features: string | null
-    experience_level: $Enums.ExperienceLevel | null
-    application_deadline: Date | null
-    applications_count: number | null
+    application_deadline: string | null
+    experience_level: string | null
+    job_status: string | null
     created_at: Date | null
     updated_at: Date | null
   }
 
   export type Job_ListingsCountAggregateOutputType = {
     job_id: number
+    job_code: number
     employer_id: number
-    category_id: number
-    title: number
+    jobtitle: number
+    jobCategory: number
     description: number
     skills_required: number
     employment_type: number
@@ -22833,10 +23460,10 @@ export namespace Prisma {
     location_city: number
     location_province: number
     location_country: number
-    accessibility_features: number
-    experience_level: number
     application_deadline: number
-    applications_count: number
+    workplace_accessibility_features: number
+    experience_level: number
+    job_status: number
     created_at: number
     updated_at: number
     _all: number
@@ -22846,28 +23473,24 @@ export namespace Prisma {
   export type Job_ListingsAvgAggregateInputType = {
     job_id?: true
     employer_id?: true
-    category_id?: true
     salary_min?: true
     salary_max?: true
-    applications_count?: true
   }
 
   export type Job_ListingsSumAggregateInputType = {
     job_id?: true
     employer_id?: true
-    category_id?: true
     salary_min?: true
     salary_max?: true
-    applications_count?: true
   }
 
   export type Job_ListingsMinAggregateInputType = {
     job_id?: true
+    job_code?: true
     employer_id?: true
-    category_id?: true
-    title?: true
+    jobtitle?: true
+    jobCategory?: true
     description?: true
-    skills_required?: true
     employment_type?: true
     work_arrangement?: true
     salary_min?: true
@@ -22876,21 +23499,20 @@ export namespace Prisma {
     location_city?: true
     location_province?: true
     location_country?: true
-    accessibility_features?: true
-    experience_level?: true
     application_deadline?: true
-    applications_count?: true
+    experience_level?: true
+    job_status?: true
     created_at?: true
     updated_at?: true
   }
 
   export type Job_ListingsMaxAggregateInputType = {
     job_id?: true
+    job_code?: true
     employer_id?: true
-    category_id?: true
-    title?: true
+    jobtitle?: true
+    jobCategory?: true
     description?: true
-    skills_required?: true
     employment_type?: true
     work_arrangement?: true
     salary_min?: true
@@ -22899,19 +23521,19 @@ export namespace Prisma {
     location_city?: true
     location_province?: true
     location_country?: true
-    accessibility_features?: true
-    experience_level?: true
     application_deadline?: true
-    applications_count?: true
+    experience_level?: true
+    job_status?: true
     created_at?: true
     updated_at?: true
   }
 
   export type Job_ListingsCountAggregateInputType = {
     job_id?: true
+    job_code?: true
     employer_id?: true
-    category_id?: true
-    title?: true
+    jobtitle?: true
+    jobCategory?: true
     description?: true
     skills_required?: true
     employment_type?: true
@@ -22922,10 +23544,10 @@ export namespace Prisma {
     location_city?: true
     location_province?: true
     location_country?: true
-    accessibility_features?: true
-    experience_level?: true
     application_deadline?: true
-    applications_count?: true
+    workplace_accessibility_features?: true
+    experience_level?: true
+    job_status?: true
     created_at?: true
     updated_at?: true
     _all?: true
@@ -23019,23 +23641,24 @@ export namespace Prisma {
 
   export type Job_ListingsGroupByOutputType = {
     job_id: number
+    job_code: string | null
     employer_id: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal
-    salary_max: Decimal
-    salary_type: $Enums.SalaryType
+    jobtitle: string
+    jobCategory: string
+    description: string | null
+    skills_required: string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date
-    applications_count: number
+    application_deadline: string | null
+    workplace_accessibility_features: string[]
+    experience_level: string
+    job_status: string
     created_at: Date
     updated_at: Date
     _count: Job_ListingsCountAggregateOutputType | null
@@ -23061,9 +23684,10 @@ export namespace Prisma {
 
   export type Job_ListingsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     job_id?: boolean
+    job_code?: boolean
     employer_id?: boolean
-    category_id?: boolean
-    title?: boolean
+    jobtitle?: boolean
+    jobCategory?: boolean
     description?: boolean
     skills_required?: boolean
     employment_type?: boolean
@@ -23074,24 +23698,25 @@ export namespace Prisma {
     location_city?: boolean
     location_province?: boolean
     location_country?: boolean
-    accessibility_features?: boolean
-    experience_level?: boolean
     application_deadline?: boolean
-    applications_count?: boolean
+    workplace_accessibility_features?: boolean
+    experience_level?: boolean
+    job_status?: boolean
     created_at?: boolean
     updated_at?: boolean
     applications?: boolean | Job_Listings$applicationsArgs<ExtArgs>
-    category?: boolean | Job_CategoriesDefaultArgs<ExtArgs>
     employer?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
     ai_match_results?: boolean | Job_Listings$ai_match_resultsArgs<ExtArgs>
+    Saved_Jobs?: boolean | Job_Listings$Saved_JobsArgs<ExtArgs>
     _count?: boolean | Job_ListingsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["job_Listings"]>
 
   export type Job_ListingsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     job_id?: boolean
+    job_code?: boolean
     employer_id?: boolean
-    category_id?: boolean
-    title?: boolean
+    jobtitle?: boolean
+    jobCategory?: boolean
     description?: boolean
     skills_required?: boolean
     employment_type?: boolean
@@ -23102,21 +23727,21 @@ export namespace Prisma {
     location_city?: boolean
     location_province?: boolean
     location_country?: boolean
-    accessibility_features?: boolean
-    experience_level?: boolean
     application_deadline?: boolean
-    applications_count?: boolean
+    workplace_accessibility_features?: boolean
+    experience_level?: boolean
+    job_status?: boolean
     created_at?: boolean
     updated_at?: boolean
-    category?: boolean | Job_CategoriesDefaultArgs<ExtArgs>
     employer?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["job_Listings"]>
 
   export type Job_ListingsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     job_id?: boolean
+    job_code?: boolean
     employer_id?: boolean
-    category_id?: boolean
-    title?: boolean
+    jobtitle?: boolean
+    jobCategory?: boolean
     description?: boolean
     skills_required?: boolean
     employment_type?: boolean
@@ -23127,21 +23752,21 @@ export namespace Prisma {
     location_city?: boolean
     location_province?: boolean
     location_country?: boolean
-    accessibility_features?: boolean
-    experience_level?: boolean
     application_deadline?: boolean
-    applications_count?: boolean
+    workplace_accessibility_features?: boolean
+    experience_level?: boolean
+    job_status?: boolean
     created_at?: boolean
     updated_at?: boolean
-    category?: boolean | Job_CategoriesDefaultArgs<ExtArgs>
     employer?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["job_Listings"]>
 
   export type Job_ListingsSelectScalar = {
     job_id?: boolean
+    job_code?: boolean
     employer_id?: boolean
-    category_id?: boolean
-    title?: boolean
+    jobtitle?: boolean
+    jobCategory?: boolean
     description?: boolean
     skills_required?: boolean
     employment_type?: boolean
@@ -23152,28 +23777,26 @@ export namespace Prisma {
     location_city?: boolean
     location_province?: boolean
     location_country?: boolean
-    accessibility_features?: boolean
-    experience_level?: boolean
     application_deadline?: boolean
-    applications_count?: boolean
+    workplace_accessibility_features?: boolean
+    experience_level?: boolean
+    job_status?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type Job_ListingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"job_id" | "employer_id" | "category_id" | "title" | "description" | "skills_required" | "employment_type" | "work_arrangement" | "salary_min" | "salary_max" | "salary_type" | "location_city" | "location_province" | "location_country" | "accessibility_features" | "experience_level" | "application_deadline" | "applications_count" | "created_at" | "updated_at", ExtArgs["result"]["job_Listings"]>
+  export type Job_ListingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"job_id" | "job_code" | "employer_id" | "jobtitle" | "jobCategory" | "description" | "skills_required" | "employment_type" | "work_arrangement" | "salary_min" | "salary_max" | "salary_type" | "location_city" | "location_province" | "location_country" | "application_deadline" | "workplace_accessibility_features" | "experience_level" | "job_status" | "created_at" | "updated_at", ExtArgs["result"]["job_Listings"]>
   export type Job_ListingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | Job_Listings$applicationsArgs<ExtArgs>
-    category?: boolean | Job_CategoriesDefaultArgs<ExtArgs>
     employer?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
     ai_match_results?: boolean | Job_Listings$ai_match_resultsArgs<ExtArgs>
+    Saved_Jobs?: boolean | Job_Listings$Saved_JobsArgs<ExtArgs>
     _count?: boolean | Job_ListingsCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type Job_ListingsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    category?: boolean | Job_CategoriesDefaultArgs<ExtArgs>
     employer?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
   }
   export type Job_ListingsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    category?: boolean | Job_CategoriesDefaultArgs<ExtArgs>
     employer?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
   }
 
@@ -23181,29 +23804,30 @@ export namespace Prisma {
     name: "Job_Listings"
     objects: {
       applications: Prisma.$ApplicationsPayload<ExtArgs>[]
-      category: Prisma.$Job_CategoriesPayload<ExtArgs>
       employer: Prisma.$Employer_ProfilePayload<ExtArgs>
       ai_match_results: Prisma.$ai_match_resultsPayload<ExtArgs>[]
+      Saved_Jobs: Prisma.$Saved_JobsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       job_id: number
+      job_code: string | null
       employer_id: number
-      category_id: number
-      title: string
-      description: string
-      skills_required: string
-      employment_type: $Enums.EmploymentType
-      work_arrangement: $Enums.WorkArrangement
-      salary_min: Prisma.Decimal
-      salary_max: Prisma.Decimal
-      salary_type: $Enums.SalaryType
+      jobtitle: string
+      jobCategory: string
+      description: string | null
+      skills_required: string[]
+      employment_type: string
+      work_arrangement: string
+      salary_min: number
+      salary_max: number
+      salary_type: string
       location_city: string
       location_province: string
       location_country: string
-      accessibility_features: string
-      experience_level: $Enums.ExperienceLevel
-      application_deadline: Date
-      applications_count: number
+      application_deadline: string | null
+      workplace_accessibility_features: string[]
+      experience_level: string
+      job_status: string
       created_at: Date
       updated_at: Date
     }, ExtArgs["result"]["job_Listings"]>
@@ -23601,9 +24225,9 @@ export namespace Prisma {
   export interface Prisma__Job_ListingsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     applications<T extends Job_Listings$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, Job_Listings$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    category<T extends Job_CategoriesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Job_CategoriesDefaultArgs<ExtArgs>>): Prisma__Job_CategoriesClient<$Result.GetResult<Prisma.$Job_CategoriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     employer<T extends Employer_ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Employer_ProfileDefaultArgs<ExtArgs>>): Prisma__Employer_ProfileClient<$Result.GetResult<Prisma.$Employer_ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     ai_match_results<T extends Job_Listings$ai_match_resultsArgs<ExtArgs> = {}>(args?: Subset<T, Job_Listings$ai_match_resultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ai_match_resultsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Saved_Jobs<T extends Job_Listings$Saved_JobsArgs<ExtArgs> = {}>(args?: Subset<T, Job_Listings$Saved_JobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Saved_JobsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23634,23 +24258,24 @@ export namespace Prisma {
    */
   interface Job_ListingsFieldRefs {
     readonly job_id: FieldRef<"Job_Listings", 'Int'>
+    readonly job_code: FieldRef<"Job_Listings", 'String'>
     readonly employer_id: FieldRef<"Job_Listings", 'Int'>
-    readonly category_id: FieldRef<"Job_Listings", 'Int'>
-    readonly title: FieldRef<"Job_Listings", 'String'>
+    readonly jobtitle: FieldRef<"Job_Listings", 'String'>
+    readonly jobCategory: FieldRef<"Job_Listings", 'String'>
     readonly description: FieldRef<"Job_Listings", 'String'>
-    readonly skills_required: FieldRef<"Job_Listings", 'String'>
-    readonly employment_type: FieldRef<"Job_Listings", 'EmploymentType'>
-    readonly work_arrangement: FieldRef<"Job_Listings", 'WorkArrangement'>
-    readonly salary_min: FieldRef<"Job_Listings", 'Decimal'>
-    readonly salary_max: FieldRef<"Job_Listings", 'Decimal'>
-    readonly salary_type: FieldRef<"Job_Listings", 'SalaryType'>
+    readonly skills_required: FieldRef<"Job_Listings", 'String[]'>
+    readonly employment_type: FieldRef<"Job_Listings", 'String'>
+    readonly work_arrangement: FieldRef<"Job_Listings", 'String'>
+    readonly salary_min: FieldRef<"Job_Listings", 'Int'>
+    readonly salary_max: FieldRef<"Job_Listings", 'Int'>
+    readonly salary_type: FieldRef<"Job_Listings", 'String'>
     readonly location_city: FieldRef<"Job_Listings", 'String'>
     readonly location_province: FieldRef<"Job_Listings", 'String'>
     readonly location_country: FieldRef<"Job_Listings", 'String'>
-    readonly accessibility_features: FieldRef<"Job_Listings", 'String'>
-    readonly experience_level: FieldRef<"Job_Listings", 'ExperienceLevel'>
-    readonly application_deadline: FieldRef<"Job_Listings", 'DateTime'>
-    readonly applications_count: FieldRef<"Job_Listings", 'Int'>
+    readonly application_deadline: FieldRef<"Job_Listings", 'String'>
+    readonly workplace_accessibility_features: FieldRef<"Job_Listings", 'String[]'>
+    readonly experience_level: FieldRef<"Job_Listings", 'String'>
+    readonly job_status: FieldRef<"Job_Listings", 'String'>
     readonly created_at: FieldRef<"Job_Listings", 'DateTime'>
     readonly updated_at: FieldRef<"Job_Listings", 'DateTime'>
   }
@@ -24094,6 +24719,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Ai_match_resultsScalarFieldEnum | Ai_match_resultsScalarFieldEnum[]
+  }
+
+  /**
+   * Job_Listings.Saved_Jobs
+   */
+  export type Job_Listings$Saved_JobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Saved_Jobs
+     */
+    select?: Saved_JobsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Saved_Jobs
+     */
+    omit?: Saved_JobsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Saved_JobsInclude<ExtArgs> | null
+    where?: Saved_JobsWhereInput
+    orderBy?: Saved_JobsOrderByWithRelationInput | Saved_JobsOrderByWithRelationInput[]
+    cursor?: Saved_JobsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Saved_JobsScalarFieldEnum | Saved_JobsScalarFieldEnum[]
   }
 
   /**
@@ -28764,6 +29413,8 @@ export namespace Prisma {
     disability_severity: 'disability_severity',
     gender: 'gender',
     rating: 'rating',
+    profile_views: 'profile_views',
+    interviews: 'interviews',
     created_at: 'created_at',
     updated_at: 'updated_at',
     pwd_id: 'pwd_id',
@@ -28775,11 +29426,37 @@ export namespace Prisma {
     skills: 'skills',
     portfolio_url: 'portfolio_url',
     github_url: 'github_url',
+    linkedin_url: 'linkedin_url',
     otherPlatform: 'otherPlatform',
     professional_role: 'professional_role',
     professional_summary: 'professional_summary',
+    hourly_rate: 'hourly_rate',
     profile_visibility: 'profile_visibility',
-    resume_cv: 'resume_cv'
+    show_email: 'show_email',
+    show_phone_number: 'show_phone_number',
+    show_location: 'show_location',
+    allow_messages: 'allow_messages',
+    show_online_status: 'show_online_status',
+    email_job_matches: 'email_job_matches',
+    messages: 'messages',
+    application_updates: 'application_updates',
+    email_profile_views: 'email_profile_views',
+    weekly_digest: 'weekly_digest',
+    marketing_emails: 'marketing_emails',
+    push_notif_job_matches: 'push_notif_job_matches',
+    push_notif_messages: 'push_notif_messages',
+    push_notif_application_updates: 'push_notif_application_updates',
+    push_notif_profile_views: 'push_notif_profile_views',
+    urgent_messages: 'urgent_messages',
+    security_alerts: 'security_alerts',
+    resume_cv: 'resume_cv',
+    basic_information: 'basic_information',
+    professional_summary_completed: 'professional_summary_completed',
+    professional_experience: 'professional_experience',
+    education: 'education',
+    portfolio_items: 'portfolio_items',
+    skills_assessment: 'skills_assessment',
+    set_accessibility_preferences: 'set_accessibility_preferences'
   };
 
   export type Pwd_ProfileScalarFieldEnum = (typeof Pwd_ProfileScalarFieldEnum)[keyof typeof Pwd_ProfileScalarFieldEnum]
@@ -28854,20 +29531,32 @@ export namespace Prisma {
     user_id: 'user_id',
     address: 'address',
     profile_picture: 'profile_picture',
-    LinkedIn_profile: 'LinkedIn_profile',
-    Other_Social_Media: 'Other_Social_Media',
+    profile_views: 'profile_views',
+    interviews: 'interviews',
     company_name: 'company_name',
     company_email: 'company_email',
     company_phone: 'company_phone',
     company_address: 'company_address',
-    company_website: 'company_website',
+    company_social_media: 'company_social_media',
+    company_website_portfolio: 'company_website_portfolio',
+    company_github_profile: 'company_github_profile',
+    company_other_portfolio: 'company_other_portfolio',
+    company_description: 'company_description',
     contact_person_fullname: 'contact_person_fullname',
     contact_person_job_title: 'contact_person_job_title',
     contact_person_phone_number: 'contact_person_phone_number',
     date_of_birth: 'date_of_birth',
     businessRegistration: 'businessRegistration',
     governmentId: 'governmentId',
-    taxDocuments: 'taxDocuments'
+    taxDocuments: 'taxDocuments',
+    industryPreference: 'industryPreference',
+    jobRolesTypicallyHire: 'jobRolesTypicallyHire',
+    requiredPreferredSkills: 'requiredPreferredSkills',
+    workArrangement: 'workArrangement',
+    accessibilityFeatures: 'accessibilityFeatures',
+    set_company_profile: 'set_company_profile',
+    set_jobRoles_requirements: 'set_jobRoles_requirements',
+    set_work_environment: 'set_work_environment'
   };
 
   export type Employer_ProfileScalarFieldEnum = (typeof Employer_ProfileScalarFieldEnum)[keyof typeof Employer_ProfileScalarFieldEnum]
@@ -28932,9 +29621,12 @@ export namespace Prisma {
     application_id: 'application_id',
     job_id: 'job_id',
     pwd_id: 'pwd_id',
+    employer_id: 'employer_id',
     resume_id: 'resume_id',
     custom_message: 'custom_message',
     proposed_salary: 'proposed_salary',
+    work_experience: 'work_experience',
+    portfolio_links: 'portfolio_links',
     submitted_at: 'submitted_at',
     updated_at: 'updated_at',
     status_changed_at: 'status_changed_at'
@@ -28990,20 +29682,22 @@ export namespace Prisma {
   export type NotificationsScalarFieldEnum = (typeof NotificationsScalarFieldEnum)[keyof typeof NotificationsScalarFieldEnum]
 
 
-  export const Job_CategoriesScalarFieldEnum: {
-    category_id: 'category_id',
-    name: 'name',
-    description: 'description'
+  export const Saved_JobsScalarFieldEnum: {
+    savedJob_id: 'savedJob_id',
+    job_id: 'job_id',
+    pwd_id: 'pwd_id',
+    employer_id: 'employer_id'
   };
 
-  export type Job_CategoriesScalarFieldEnum = (typeof Job_CategoriesScalarFieldEnum)[keyof typeof Job_CategoriesScalarFieldEnum]
+  export type Saved_JobsScalarFieldEnum = (typeof Saved_JobsScalarFieldEnum)[keyof typeof Saved_JobsScalarFieldEnum]
 
 
   export const Job_ListingsScalarFieldEnum: {
     job_id: 'job_id',
+    job_code: 'job_code',
     employer_id: 'employer_id',
-    category_id: 'category_id',
-    title: 'title',
+    jobtitle: 'jobtitle',
+    jobCategory: 'jobCategory',
     description: 'description',
     skills_required: 'skills_required',
     employment_type: 'employment_type',
@@ -29014,10 +29708,10 @@ export namespace Prisma {
     location_city: 'location_city',
     location_province: 'location_province',
     location_country: 'location_country',
-    accessibility_features: 'accessibility_features',
-    experience_level: 'experience_level',
     application_deadline: 'application_deadline',
-    applications_count: 'applications_count',
+    workplace_accessibility_features: 'workplace_accessibility_features',
+    experience_level: 'experience_level',
+    job_status: 'job_status',
     created_at: 'created_at',
     updated_at: 'updated_at'
   };
@@ -29302,62 +29996,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'EmploymentType'
-   */
-  export type EnumEmploymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentType'>
-    
-
-
-  /**
-   * Reference to a field of type 'EmploymentType[]'
-   */
-  export type ListEnumEmploymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentType[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'WorkArrangement'
-   */
-  export type EnumWorkArrangementFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorkArrangement'>
-    
-
-
-  /**
-   * Reference to a field of type 'WorkArrangement[]'
-   */
-  export type ListEnumWorkArrangementFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorkArrangement[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'SalaryType'
-   */
-  export type EnumSalaryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SalaryType'>
-    
-
-
-  /**
-   * Reference to a field of type 'SalaryType[]'
-   */
-  export type ListEnumSalaryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SalaryType[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'ExperienceLevel'
-   */
-  export type EnumExperienceLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExperienceLevel'>
-    
-
-
-  /**
-   * Reference to a field of type 'ExperienceLevel[]'
-   */
-  export type ListEnumExperienceLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExperienceLevel[]'>
-    
-
-
-  /**
    * Reference to a field of type 'TicketCategory'
    */
   export type EnumTicketCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TicketCategory'>
@@ -29539,6 +30177,8 @@ export namespace Prisma {
     disability_severity?: EnumDisability_SeverityNullableFilter<"Pwd_Profile"> | $Enums.Disability_Severity | null
     gender?: EnumGenderNullableFilter<"Pwd_Profile"> | $Enums.Gender | null
     rating?: FloatNullableFilter<"Pwd_Profile"> | number | null
+    profile_views?: IntFilter<"Pwd_Profile"> | number
+    interviews?: IntFilter<"Pwd_Profile"> | number
     created_at?: StringNullableFilter<"Pwd_Profile"> | string | null
     updated_at?: DateTimeNullableFilter<"Pwd_Profile"> | Date | string | null
     pwd_id?: IntFilter<"Pwd_Profile"> | number
@@ -29550,11 +30190,37 @@ export namespace Prisma {
     skills?: StringNullableListFilter<"Pwd_Profile">
     portfolio_url?: StringNullableFilter<"Pwd_Profile"> | string | null
     github_url?: StringNullableFilter<"Pwd_Profile"> | string | null
+    linkedin_url?: StringNullableFilter<"Pwd_Profile"> | string | null
     otherPlatform?: StringNullableListFilter<"Pwd_Profile">
     professional_role?: StringNullableFilter<"Pwd_Profile"> | string | null
     professional_summary?: StringNullableFilter<"Pwd_Profile"> | string | null
+    hourly_rate?: IntNullableFilter<"Pwd_Profile"> | number | null
     profile_visibility?: StringNullableFilter<"Pwd_Profile"> | string | null
+    show_email?: BoolFilter<"Pwd_Profile"> | boolean
+    show_phone_number?: BoolFilter<"Pwd_Profile"> | boolean
+    show_location?: BoolFilter<"Pwd_Profile"> | boolean
+    allow_messages?: BoolFilter<"Pwd_Profile"> | boolean
+    show_online_status?: BoolFilter<"Pwd_Profile"> | boolean
+    email_job_matches?: BoolFilter<"Pwd_Profile"> | boolean
+    messages?: BoolFilter<"Pwd_Profile"> | boolean
+    application_updates?: BoolFilter<"Pwd_Profile"> | boolean
+    email_profile_views?: BoolFilter<"Pwd_Profile"> | boolean
+    weekly_digest?: BoolFilter<"Pwd_Profile"> | boolean
+    marketing_emails?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_job_matches?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_messages?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_application_updates?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_profile_views?: BoolFilter<"Pwd_Profile"> | boolean
+    urgent_messages?: BoolFilter<"Pwd_Profile"> | boolean
+    security_alerts?: BoolFilter<"Pwd_Profile"> | boolean
     resume_cv?: StringNullableFilter<"Pwd_Profile"> | string | null
+    basic_information?: BoolFilter<"Pwd_Profile"> | boolean
+    professional_summary_completed?: BoolFilter<"Pwd_Profile"> | boolean
+    professional_experience?: BoolFilter<"Pwd_Profile"> | boolean
+    education?: BoolFilter<"Pwd_Profile"> | boolean
+    portfolio_items?: BoolFilter<"Pwd_Profile"> | boolean
+    skills_assessment?: BoolFilter<"Pwd_Profile"> | boolean
+    set_accessibility_preferences?: BoolFilter<"Pwd_Profile"> | boolean
     applications?: ApplicationsListRelationFilter
     accessibility_needs?: Pwd_Accessibility_NeedsListRelationFilter
     educations?: Pwd_EducationListRelationFilter
@@ -29564,6 +30230,7 @@ export namespace Prisma {
     resumes?: ResumesListRelationFilter
     ai_match_results?: Ai_match_resultsListRelationFilter
     transactions?: TransactionsListRelationFilter
+    Saved_Jobs?: Saved_JobsListRelationFilter
   }
 
   export type Pwd_ProfileOrderByWithRelationInput = {
@@ -29576,6 +30243,8 @@ export namespace Prisma {
     disability_severity?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     rating?: SortOrderInput | SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
     created_at?: SortOrderInput | SortOrder
     updated_at?: SortOrderInput | SortOrder
     pwd_id?: SortOrder
@@ -29587,11 +30256,37 @@ export namespace Prisma {
     skills?: SortOrder
     portfolio_url?: SortOrderInput | SortOrder
     github_url?: SortOrderInput | SortOrder
+    linkedin_url?: SortOrderInput | SortOrder
     otherPlatform?: SortOrder
     professional_role?: SortOrderInput | SortOrder
     professional_summary?: SortOrderInput | SortOrder
+    hourly_rate?: SortOrderInput | SortOrder
     profile_visibility?: SortOrderInput | SortOrder
+    show_email?: SortOrder
+    show_phone_number?: SortOrder
+    show_location?: SortOrder
+    allow_messages?: SortOrder
+    show_online_status?: SortOrder
+    email_job_matches?: SortOrder
+    messages?: SortOrder
+    application_updates?: SortOrder
+    email_profile_views?: SortOrder
+    weekly_digest?: SortOrder
+    marketing_emails?: SortOrder
+    push_notif_job_matches?: SortOrder
+    push_notif_messages?: SortOrder
+    push_notif_application_updates?: SortOrder
+    push_notif_profile_views?: SortOrder
+    urgent_messages?: SortOrder
+    security_alerts?: SortOrder
     resume_cv?: SortOrderInput | SortOrder
+    basic_information?: SortOrder
+    professional_summary_completed?: SortOrder
+    professional_experience?: SortOrder
+    education?: SortOrder
+    portfolio_items?: SortOrder
+    skills_assessment?: SortOrder
+    set_accessibility_preferences?: SortOrder
     applications?: ApplicationsOrderByRelationAggregateInput
     accessibility_needs?: Pwd_Accessibility_NeedsOrderByRelationAggregateInput
     educations?: Pwd_EducationOrderByRelationAggregateInput
@@ -29601,6 +30296,7 @@ export namespace Prisma {
     resumes?: ResumesOrderByRelationAggregateInput
     ai_match_results?: ai_match_resultsOrderByRelationAggregateInput
     transactions?: transactionsOrderByRelationAggregateInput
+    Saved_Jobs?: Saved_JobsOrderByRelationAggregateInput
   }
 
   export type Pwd_ProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -29618,6 +30314,8 @@ export namespace Prisma {
     disability_severity?: EnumDisability_SeverityNullableFilter<"Pwd_Profile"> | $Enums.Disability_Severity | null
     gender?: EnumGenderNullableFilter<"Pwd_Profile"> | $Enums.Gender | null
     rating?: FloatNullableFilter<"Pwd_Profile"> | number | null
+    profile_views?: IntFilter<"Pwd_Profile"> | number
+    interviews?: IntFilter<"Pwd_Profile"> | number
     created_at?: StringNullableFilter<"Pwd_Profile"> | string | null
     updated_at?: DateTimeNullableFilter<"Pwd_Profile"> | Date | string | null
     date_of_birth?: StringNullableFilter<"Pwd_Profile"> | string | null
@@ -29627,11 +30325,37 @@ export namespace Prisma {
     skills?: StringNullableListFilter<"Pwd_Profile">
     portfolio_url?: StringNullableFilter<"Pwd_Profile"> | string | null
     github_url?: StringNullableFilter<"Pwd_Profile"> | string | null
+    linkedin_url?: StringNullableFilter<"Pwd_Profile"> | string | null
     otherPlatform?: StringNullableListFilter<"Pwd_Profile">
     professional_role?: StringNullableFilter<"Pwd_Profile"> | string | null
     professional_summary?: StringNullableFilter<"Pwd_Profile"> | string | null
+    hourly_rate?: IntNullableFilter<"Pwd_Profile"> | number | null
     profile_visibility?: StringNullableFilter<"Pwd_Profile"> | string | null
+    show_email?: BoolFilter<"Pwd_Profile"> | boolean
+    show_phone_number?: BoolFilter<"Pwd_Profile"> | boolean
+    show_location?: BoolFilter<"Pwd_Profile"> | boolean
+    allow_messages?: BoolFilter<"Pwd_Profile"> | boolean
+    show_online_status?: BoolFilter<"Pwd_Profile"> | boolean
+    email_job_matches?: BoolFilter<"Pwd_Profile"> | boolean
+    messages?: BoolFilter<"Pwd_Profile"> | boolean
+    application_updates?: BoolFilter<"Pwd_Profile"> | boolean
+    email_profile_views?: BoolFilter<"Pwd_Profile"> | boolean
+    weekly_digest?: BoolFilter<"Pwd_Profile"> | boolean
+    marketing_emails?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_job_matches?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_messages?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_application_updates?: BoolFilter<"Pwd_Profile"> | boolean
+    push_notif_profile_views?: BoolFilter<"Pwd_Profile"> | boolean
+    urgent_messages?: BoolFilter<"Pwd_Profile"> | boolean
+    security_alerts?: BoolFilter<"Pwd_Profile"> | boolean
     resume_cv?: StringNullableFilter<"Pwd_Profile"> | string | null
+    basic_information?: BoolFilter<"Pwd_Profile"> | boolean
+    professional_summary_completed?: BoolFilter<"Pwd_Profile"> | boolean
+    professional_experience?: BoolFilter<"Pwd_Profile"> | boolean
+    education?: BoolFilter<"Pwd_Profile"> | boolean
+    portfolio_items?: BoolFilter<"Pwd_Profile"> | boolean
+    skills_assessment?: BoolFilter<"Pwd_Profile"> | boolean
+    set_accessibility_preferences?: BoolFilter<"Pwd_Profile"> | boolean
     applications?: ApplicationsListRelationFilter
     accessibility_needs?: Pwd_Accessibility_NeedsListRelationFilter
     educations?: Pwd_EducationListRelationFilter
@@ -29641,6 +30365,7 @@ export namespace Prisma {
     resumes?: ResumesListRelationFilter
     ai_match_results?: Ai_match_resultsListRelationFilter
     transactions?: TransactionsListRelationFilter
+    Saved_Jobs?: Saved_JobsListRelationFilter
   }, "pwd_id" | "user_id">
 
   export type Pwd_ProfileOrderByWithAggregationInput = {
@@ -29653,6 +30378,8 @@ export namespace Prisma {
     disability_severity?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     rating?: SortOrderInput | SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
     created_at?: SortOrderInput | SortOrder
     updated_at?: SortOrderInput | SortOrder
     pwd_id?: SortOrder
@@ -29664,11 +30391,37 @@ export namespace Prisma {
     skills?: SortOrder
     portfolio_url?: SortOrderInput | SortOrder
     github_url?: SortOrderInput | SortOrder
+    linkedin_url?: SortOrderInput | SortOrder
     otherPlatform?: SortOrder
     professional_role?: SortOrderInput | SortOrder
     professional_summary?: SortOrderInput | SortOrder
+    hourly_rate?: SortOrderInput | SortOrder
     profile_visibility?: SortOrderInput | SortOrder
+    show_email?: SortOrder
+    show_phone_number?: SortOrder
+    show_location?: SortOrder
+    allow_messages?: SortOrder
+    show_online_status?: SortOrder
+    email_job_matches?: SortOrder
+    messages?: SortOrder
+    application_updates?: SortOrder
+    email_profile_views?: SortOrder
+    weekly_digest?: SortOrder
+    marketing_emails?: SortOrder
+    push_notif_job_matches?: SortOrder
+    push_notif_messages?: SortOrder
+    push_notif_application_updates?: SortOrder
+    push_notif_profile_views?: SortOrder
+    urgent_messages?: SortOrder
+    security_alerts?: SortOrder
     resume_cv?: SortOrderInput | SortOrder
+    basic_information?: SortOrder
+    professional_summary_completed?: SortOrder
+    professional_experience?: SortOrder
+    education?: SortOrder
+    portfolio_items?: SortOrder
+    skills_assessment?: SortOrder
+    set_accessibility_preferences?: SortOrder
     _count?: Pwd_ProfileCountOrderByAggregateInput
     _avg?: Pwd_ProfileAvgOrderByAggregateInput
     _max?: Pwd_ProfileMaxOrderByAggregateInput
@@ -29689,6 +30442,8 @@ export namespace Prisma {
     disability_severity?: EnumDisability_SeverityNullableWithAggregatesFilter<"Pwd_Profile"> | $Enums.Disability_Severity | null
     gender?: EnumGenderNullableWithAggregatesFilter<"Pwd_Profile"> | $Enums.Gender | null
     rating?: FloatNullableWithAggregatesFilter<"Pwd_Profile"> | number | null
+    profile_views?: IntWithAggregatesFilter<"Pwd_Profile"> | number
+    interviews?: IntWithAggregatesFilter<"Pwd_Profile"> | number
     created_at?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     updated_at?: DateTimeNullableWithAggregatesFilter<"Pwd_Profile"> | Date | string | null
     pwd_id?: IntWithAggregatesFilter<"Pwd_Profile"> | number
@@ -29700,11 +30455,37 @@ export namespace Prisma {
     skills?: StringNullableListFilter<"Pwd_Profile">
     portfolio_url?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     github_url?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
+    linkedin_url?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     otherPlatform?: StringNullableListFilter<"Pwd_Profile">
     professional_role?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
     professional_summary?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
+    hourly_rate?: IntNullableWithAggregatesFilter<"Pwd_Profile"> | number | null
     profile_visibility?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
+    show_email?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    show_phone_number?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    show_location?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    allow_messages?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    show_online_status?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    email_job_matches?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    messages?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    application_updates?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    email_profile_views?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    weekly_digest?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    marketing_emails?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    push_notif_job_matches?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    push_notif_messages?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    push_notif_application_updates?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    push_notif_profile_views?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    urgent_messages?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    security_alerts?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
     resume_cv?: StringNullableWithAggregatesFilter<"Pwd_Profile"> | string | null
+    basic_information?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    professional_summary_completed?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    professional_experience?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    education?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    portfolio_items?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    skills_assessment?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    set_accessibility_preferences?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
   }
 
   export type Pwd_ExperienceWhereInput = {
@@ -30031,13 +30812,17 @@ export namespace Prisma {
     user_id?: IntFilter<"Employer_Profile"> | number
     address?: StringFilter<"Employer_Profile"> | string
     profile_picture?: StringNullableFilter<"Employer_Profile"> | string | null
-    LinkedIn_profile?: StringNullableFilter<"Employer_Profile"> | string | null
-    Other_Social_Media?: StringNullableFilter<"Employer_Profile"> | string | null
+    profile_views?: IntFilter<"Employer_Profile"> | number
+    interviews?: IntFilter<"Employer_Profile"> | number
     company_name?: StringFilter<"Employer_Profile"> | string
     company_email?: StringFilter<"Employer_Profile"> | string
     company_phone?: StringFilter<"Employer_Profile"> | string
     company_address?: StringFilter<"Employer_Profile"> | string
-    company_website?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_social_media?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_website_portfolio?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_github_profile?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_other_portfolio?: StringNullableListFilter<"Employer_Profile">
+    company_description?: StringNullableFilter<"Employer_Profile"> | string | null
     contact_person_fullname?: StringNullableFilter<"Employer_Profile"> | string | null
     contact_person_job_title?: StringNullableFilter<"Employer_Profile"> | string | null
     contact_person_phone_number?: StringNullableFilter<"Employer_Profile"> | string | null
@@ -30045,9 +30830,19 @@ export namespace Prisma {
     businessRegistration?: StringNullableFilter<"Employer_Profile"> | string | null
     governmentId?: StringNullableFilter<"Employer_Profile"> | string | null
     taxDocuments?: StringNullableFilter<"Employer_Profile"> | string | null
+    industryPreference?: StringNullableFilter<"Employer_Profile"> | string | null
+    jobRolesTypicallyHire?: StringNullableListFilter<"Employer_Profile">
+    requiredPreferredSkills?: StringNullableListFilter<"Employer_Profile">
+    workArrangement?: StringNullableListFilter<"Employer_Profile">
+    accessibilityFeatures?: StringNullableListFilter<"Employer_Profile">
+    set_company_profile?: BoolFilter<"Employer_Profile"> | boolean
+    set_jobRoles_requirements?: BoolFilter<"Employer_Profile"> | boolean
+    set_work_environment?: BoolFilter<"Employer_Profile"> | boolean
     user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
     job_listings?: Job_ListingsListRelationFilter
     transactions?: TransactionsListRelationFilter
+    Applications?: ApplicationsListRelationFilter
+    Saved_Jobs?: Saved_JobsListRelationFilter
   }
 
   export type Employer_ProfileOrderByWithRelationInput = {
@@ -30058,13 +30853,17 @@ export namespace Prisma {
     user_id?: SortOrder
     address?: SortOrder
     profile_picture?: SortOrderInput | SortOrder
-    LinkedIn_profile?: SortOrderInput | SortOrder
-    Other_Social_Media?: SortOrderInput | SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
     company_name?: SortOrder
     company_email?: SortOrder
     company_phone?: SortOrder
     company_address?: SortOrder
-    company_website?: SortOrderInput | SortOrder
+    company_social_media?: SortOrderInput | SortOrder
+    company_website_portfolio?: SortOrderInput | SortOrder
+    company_github_profile?: SortOrderInput | SortOrder
+    company_other_portfolio?: SortOrder
+    company_description?: SortOrderInput | SortOrder
     contact_person_fullname?: SortOrderInput | SortOrder
     contact_person_job_title?: SortOrderInput | SortOrder
     contact_person_phone_number?: SortOrderInput | SortOrder
@@ -30072,9 +30871,19 @@ export namespace Prisma {
     businessRegistration?: SortOrderInput | SortOrder
     governmentId?: SortOrderInput | SortOrder
     taxDocuments?: SortOrderInput | SortOrder
+    industryPreference?: SortOrderInput | SortOrder
+    jobRolesTypicallyHire?: SortOrder
+    requiredPreferredSkills?: SortOrder
+    workArrangement?: SortOrder
+    accessibilityFeatures?: SortOrder
+    set_company_profile?: SortOrder
+    set_jobRoles_requirements?: SortOrder
+    set_work_environment?: SortOrder
     user?: UsersOrderByWithRelationInput
     job_listings?: Job_ListingsOrderByRelationAggregateInput
     transactions?: transactionsOrderByRelationAggregateInput
+    Applications?: ApplicationsOrderByRelationAggregateInput
+    Saved_Jobs?: Saved_JobsOrderByRelationAggregateInput
   }
 
   export type Employer_ProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -30089,12 +30898,16 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Employer_Profile"> | Date | string
     address?: StringFilter<"Employer_Profile"> | string
     profile_picture?: StringNullableFilter<"Employer_Profile"> | string | null
-    LinkedIn_profile?: StringNullableFilter<"Employer_Profile"> | string | null
-    Other_Social_Media?: StringNullableFilter<"Employer_Profile"> | string | null
+    profile_views?: IntFilter<"Employer_Profile"> | number
+    interviews?: IntFilter<"Employer_Profile"> | number
     company_name?: StringFilter<"Employer_Profile"> | string
     company_phone?: StringFilter<"Employer_Profile"> | string
     company_address?: StringFilter<"Employer_Profile"> | string
-    company_website?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_social_media?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_website_portfolio?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_github_profile?: StringNullableFilter<"Employer_Profile"> | string | null
+    company_other_portfolio?: StringNullableListFilter<"Employer_Profile">
+    company_description?: StringNullableFilter<"Employer_Profile"> | string | null
     contact_person_fullname?: StringNullableFilter<"Employer_Profile"> | string | null
     contact_person_job_title?: StringNullableFilter<"Employer_Profile"> | string | null
     contact_person_phone_number?: StringNullableFilter<"Employer_Profile"> | string | null
@@ -30102,9 +30915,19 @@ export namespace Prisma {
     businessRegistration?: StringNullableFilter<"Employer_Profile"> | string | null
     governmentId?: StringNullableFilter<"Employer_Profile"> | string | null
     taxDocuments?: StringNullableFilter<"Employer_Profile"> | string | null
+    industryPreference?: StringNullableFilter<"Employer_Profile"> | string | null
+    jobRolesTypicallyHire?: StringNullableListFilter<"Employer_Profile">
+    requiredPreferredSkills?: StringNullableListFilter<"Employer_Profile">
+    workArrangement?: StringNullableListFilter<"Employer_Profile">
+    accessibilityFeatures?: StringNullableListFilter<"Employer_Profile">
+    set_company_profile?: BoolFilter<"Employer_Profile"> | boolean
+    set_jobRoles_requirements?: BoolFilter<"Employer_Profile"> | boolean
+    set_work_environment?: BoolFilter<"Employer_Profile"> | boolean
     user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
     job_listings?: Job_ListingsListRelationFilter
     transactions?: TransactionsListRelationFilter
+    Applications?: ApplicationsListRelationFilter
+    Saved_Jobs?: Saved_JobsListRelationFilter
   }, "employer_id" | "user_id" | "company_email">
 
   export type Employer_ProfileOrderByWithAggregationInput = {
@@ -30115,13 +30938,17 @@ export namespace Prisma {
     user_id?: SortOrder
     address?: SortOrder
     profile_picture?: SortOrderInput | SortOrder
-    LinkedIn_profile?: SortOrderInput | SortOrder
-    Other_Social_Media?: SortOrderInput | SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
     company_name?: SortOrder
     company_email?: SortOrder
     company_phone?: SortOrder
     company_address?: SortOrder
-    company_website?: SortOrderInput | SortOrder
+    company_social_media?: SortOrderInput | SortOrder
+    company_website_portfolio?: SortOrderInput | SortOrder
+    company_github_profile?: SortOrderInput | SortOrder
+    company_other_portfolio?: SortOrder
+    company_description?: SortOrderInput | SortOrder
     contact_person_fullname?: SortOrderInput | SortOrder
     contact_person_job_title?: SortOrderInput | SortOrder
     contact_person_phone_number?: SortOrderInput | SortOrder
@@ -30129,6 +30956,14 @@ export namespace Prisma {
     businessRegistration?: SortOrderInput | SortOrder
     governmentId?: SortOrderInput | SortOrder
     taxDocuments?: SortOrderInput | SortOrder
+    industryPreference?: SortOrderInput | SortOrder
+    jobRolesTypicallyHire?: SortOrder
+    requiredPreferredSkills?: SortOrder
+    workArrangement?: SortOrder
+    accessibilityFeatures?: SortOrder
+    set_company_profile?: SortOrder
+    set_jobRoles_requirements?: SortOrder
+    set_work_environment?: SortOrder
     _count?: Employer_ProfileCountOrderByAggregateInput
     _avg?: Employer_ProfileAvgOrderByAggregateInput
     _max?: Employer_ProfileMaxOrderByAggregateInput
@@ -30147,13 +30982,17 @@ export namespace Prisma {
     user_id?: IntWithAggregatesFilter<"Employer_Profile"> | number
     address?: StringWithAggregatesFilter<"Employer_Profile"> | string
     profile_picture?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
-    LinkedIn_profile?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
-    Other_Social_Media?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
+    profile_views?: IntWithAggregatesFilter<"Employer_Profile"> | number
+    interviews?: IntWithAggregatesFilter<"Employer_Profile"> | number
     company_name?: StringWithAggregatesFilter<"Employer_Profile"> | string
     company_email?: StringWithAggregatesFilter<"Employer_Profile"> | string
     company_phone?: StringWithAggregatesFilter<"Employer_Profile"> | string
     company_address?: StringWithAggregatesFilter<"Employer_Profile"> | string
-    company_website?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
+    company_social_media?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
+    company_website_portfolio?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
+    company_github_profile?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
+    company_other_portfolio?: StringNullableListFilter<"Employer_Profile">
+    company_description?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
     contact_person_fullname?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
     contact_person_job_title?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
     contact_person_phone_number?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
@@ -30161,6 +31000,14 @@ export namespace Prisma {
     businessRegistration?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
     governmentId?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
     taxDocuments?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
+    industryPreference?: StringNullableWithAggregatesFilter<"Employer_Profile"> | string | null
+    jobRolesTypicallyHire?: StringNullableListFilter<"Employer_Profile">
+    requiredPreferredSkills?: StringNullableListFilter<"Employer_Profile">
+    workArrangement?: StringNullableListFilter<"Employer_Profile">
+    accessibilityFeatures?: StringNullableListFilter<"Employer_Profile">
+    set_company_profile?: BoolWithAggregatesFilter<"Employer_Profile"> | boolean
+    set_jobRoles_requirements?: BoolWithAggregatesFilter<"Employer_Profile"> | boolean
+    set_work_environment?: BoolWithAggregatesFilter<"Employer_Profile"> | boolean
   }
 
   export type ResumesWhereInput = {
@@ -30462,14 +31309,18 @@ export namespace Prisma {
     application_id?: IntFilter<"Applications"> | number
     job_id?: IntFilter<"Applications"> | number
     pwd_id?: IntFilter<"Applications"> | number
+    employer_id?: IntFilter<"Applications"> | number
     resume_id?: IntFilter<"Applications"> | number
     custom_message?: StringFilter<"Applications"> | string
     proposed_salary?: DecimalFilter<"Applications"> | Decimal | DecimalJsLike | number | string
+    work_experience?: StringNullableFilter<"Applications"> | string | null
+    portfolio_links?: StringNullableFilter<"Applications"> | string | null
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
     job_listing?: XOR<Job_ListingsScalarRelationFilter, Job_ListingsWhereInput>
     pwd_profile?: XOR<Pwd_ProfileScalarRelationFilter, Pwd_ProfileWhereInput>
+    employer_profile?: XOR<Employer_ProfileScalarRelationFilter, Employer_ProfileWhereInput>
     resume?: XOR<ResumesScalarRelationFilter, ResumesWhereInput>
     reviews?: ReviewsListRelationFilter
     transactions?: TransactionsListRelationFilter
@@ -30479,14 +31330,18 @@ export namespace Prisma {
     application_id?: SortOrder
     job_id?: SortOrder
     pwd_id?: SortOrder
+    employer_id?: SortOrder
     resume_id?: SortOrder
     custom_message?: SortOrder
     proposed_salary?: SortOrder
+    work_experience?: SortOrderInput | SortOrder
+    portfolio_links?: SortOrderInput | SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
     job_listing?: Job_ListingsOrderByWithRelationInput
     pwd_profile?: Pwd_ProfileOrderByWithRelationInput
+    employer_profile?: Employer_ProfileOrderByWithRelationInput
     resume?: ResumesOrderByWithRelationInput
     reviews?: reviewsOrderByRelationAggregateInput
     transactions?: transactionsOrderByRelationAggregateInput
@@ -30499,14 +31354,18 @@ export namespace Prisma {
     NOT?: ApplicationsWhereInput | ApplicationsWhereInput[]
     job_id?: IntFilter<"Applications"> | number
     pwd_id?: IntFilter<"Applications"> | number
+    employer_id?: IntFilter<"Applications"> | number
     resume_id?: IntFilter<"Applications"> | number
     custom_message?: StringFilter<"Applications"> | string
     proposed_salary?: DecimalFilter<"Applications"> | Decimal | DecimalJsLike | number | string
+    work_experience?: StringNullableFilter<"Applications"> | string | null
+    portfolio_links?: StringNullableFilter<"Applications"> | string | null
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
     job_listing?: XOR<Job_ListingsScalarRelationFilter, Job_ListingsWhereInput>
     pwd_profile?: XOR<Pwd_ProfileScalarRelationFilter, Pwd_ProfileWhereInput>
+    employer_profile?: XOR<Employer_ProfileScalarRelationFilter, Employer_ProfileWhereInput>
     resume?: XOR<ResumesScalarRelationFilter, ResumesWhereInput>
     reviews?: ReviewsListRelationFilter
     transactions?: TransactionsListRelationFilter
@@ -30516,9 +31375,12 @@ export namespace Prisma {
     application_id?: SortOrder
     job_id?: SortOrder
     pwd_id?: SortOrder
+    employer_id?: SortOrder
     resume_id?: SortOrder
     custom_message?: SortOrder
     proposed_salary?: SortOrder
+    work_experience?: SortOrderInput | SortOrder
+    portfolio_links?: SortOrderInput | SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -30536,9 +31398,12 @@ export namespace Prisma {
     application_id?: IntWithAggregatesFilter<"Applications"> | number
     job_id?: IntWithAggregatesFilter<"Applications"> | number
     pwd_id?: IntWithAggregatesFilter<"Applications"> | number
+    employer_id?: IntWithAggregatesFilter<"Applications"> | number
     resume_id?: IntWithAggregatesFilter<"Applications"> | number
     custom_message?: StringWithAggregatesFilter<"Applications"> | string
     proposed_salary?: DecimalWithAggregatesFilter<"Applications"> | Decimal | DecimalJsLike | number | string
+    work_experience?: StringNullableWithAggregatesFilter<"Applications"> | string | null
+    portfolio_links?: StringNullableWithAggregatesFilter<"Applications"> | string | null
     submitted_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
@@ -30797,51 +31662,62 @@ export namespace Prisma {
     read_at?: DateTimeNullableWithAggregatesFilter<"Notifications"> | Date | string | null
   }
 
-  export type Job_CategoriesWhereInput = {
-    AND?: Job_CategoriesWhereInput | Job_CategoriesWhereInput[]
-    OR?: Job_CategoriesWhereInput[]
-    NOT?: Job_CategoriesWhereInput | Job_CategoriesWhereInput[]
-    category_id?: IntFilter<"Job_Categories"> | number
-    name?: StringFilter<"Job_Categories"> | string
-    description?: StringFilter<"Job_Categories"> | string
-    job_listings?: Job_ListingsListRelationFilter
+  export type Saved_JobsWhereInput = {
+    AND?: Saved_JobsWhereInput | Saved_JobsWhereInput[]
+    OR?: Saved_JobsWhereInput[]
+    NOT?: Saved_JobsWhereInput | Saved_JobsWhereInput[]
+    savedJob_id?: IntFilter<"Saved_Jobs"> | number
+    job_id?: IntFilter<"Saved_Jobs"> | number
+    pwd_id?: IntFilter<"Saved_Jobs"> | number
+    employer_id?: IntFilter<"Saved_Jobs"> | number
+    job_listings?: XOR<Job_ListingsScalarRelationFilter, Job_ListingsWhereInput>
+    pwd_profile?: XOR<Pwd_ProfileScalarRelationFilter, Pwd_ProfileWhereInput>
+    employer_profile?: XOR<Employer_ProfileScalarRelationFilter, Employer_ProfileWhereInput>
   }
 
-  export type Job_CategoriesOrderByWithRelationInput = {
-    category_id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    job_listings?: Job_ListingsOrderByRelationAggregateInput
+  export type Saved_JobsOrderByWithRelationInput = {
+    savedJob_id?: SortOrder
+    job_id?: SortOrder
+    pwd_id?: SortOrder
+    employer_id?: SortOrder
+    job_listings?: Job_ListingsOrderByWithRelationInput
+    pwd_profile?: Pwd_ProfileOrderByWithRelationInput
+    employer_profile?: Employer_ProfileOrderByWithRelationInput
   }
 
-  export type Job_CategoriesWhereUniqueInput = Prisma.AtLeast<{
-    category_id?: number
-    name?: string
-    AND?: Job_CategoriesWhereInput | Job_CategoriesWhereInput[]
-    OR?: Job_CategoriesWhereInput[]
-    NOT?: Job_CategoriesWhereInput | Job_CategoriesWhereInput[]
-    description?: StringFilter<"Job_Categories"> | string
-    job_listings?: Job_ListingsListRelationFilter
-  }, "category_id" | "name">
+  export type Saved_JobsWhereUniqueInput = Prisma.AtLeast<{
+    savedJob_id?: number
+    AND?: Saved_JobsWhereInput | Saved_JobsWhereInput[]
+    OR?: Saved_JobsWhereInput[]
+    NOT?: Saved_JobsWhereInput | Saved_JobsWhereInput[]
+    job_id?: IntFilter<"Saved_Jobs"> | number
+    pwd_id?: IntFilter<"Saved_Jobs"> | number
+    employer_id?: IntFilter<"Saved_Jobs"> | number
+    job_listings?: XOR<Job_ListingsScalarRelationFilter, Job_ListingsWhereInput>
+    pwd_profile?: XOR<Pwd_ProfileScalarRelationFilter, Pwd_ProfileWhereInput>
+    employer_profile?: XOR<Employer_ProfileScalarRelationFilter, Employer_ProfileWhereInput>
+  }, "savedJob_id">
 
-  export type Job_CategoriesOrderByWithAggregationInput = {
-    category_id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    _count?: Job_CategoriesCountOrderByAggregateInput
-    _avg?: Job_CategoriesAvgOrderByAggregateInput
-    _max?: Job_CategoriesMaxOrderByAggregateInput
-    _min?: Job_CategoriesMinOrderByAggregateInput
-    _sum?: Job_CategoriesSumOrderByAggregateInput
+  export type Saved_JobsOrderByWithAggregationInput = {
+    savedJob_id?: SortOrder
+    job_id?: SortOrder
+    pwd_id?: SortOrder
+    employer_id?: SortOrder
+    _count?: Saved_JobsCountOrderByAggregateInput
+    _avg?: Saved_JobsAvgOrderByAggregateInput
+    _max?: Saved_JobsMaxOrderByAggregateInput
+    _min?: Saved_JobsMinOrderByAggregateInput
+    _sum?: Saved_JobsSumOrderByAggregateInput
   }
 
-  export type Job_CategoriesScalarWhereWithAggregatesInput = {
-    AND?: Job_CategoriesScalarWhereWithAggregatesInput | Job_CategoriesScalarWhereWithAggregatesInput[]
-    OR?: Job_CategoriesScalarWhereWithAggregatesInput[]
-    NOT?: Job_CategoriesScalarWhereWithAggregatesInput | Job_CategoriesScalarWhereWithAggregatesInput[]
-    category_id?: IntWithAggregatesFilter<"Job_Categories"> | number
-    name?: StringWithAggregatesFilter<"Job_Categories"> | string
-    description?: StringWithAggregatesFilter<"Job_Categories"> | string
+  export type Saved_JobsScalarWhereWithAggregatesInput = {
+    AND?: Saved_JobsScalarWhereWithAggregatesInput | Saved_JobsScalarWhereWithAggregatesInput[]
+    OR?: Saved_JobsScalarWhereWithAggregatesInput[]
+    NOT?: Saved_JobsScalarWhereWithAggregatesInput | Saved_JobsScalarWhereWithAggregatesInput[]
+    savedJob_id?: IntWithAggregatesFilter<"Saved_Jobs"> | number
+    job_id?: IntWithAggregatesFilter<"Saved_Jobs"> | number
+    pwd_id?: IntWithAggregatesFilter<"Saved_Jobs"> | number
+    employer_id?: IntWithAggregatesFilter<"Saved_Jobs"> | number
   }
 
   export type Job_ListingsWhereInput = {
@@ -30849,37 +31725,39 @@ export namespace Prisma {
     OR?: Job_ListingsWhereInput[]
     NOT?: Job_ListingsWhereInput | Job_ListingsWhereInput[]
     job_id?: IntFilter<"Job_Listings"> | number
+    job_code?: StringNullableFilter<"Job_Listings"> | string | null
     employer_id?: IntFilter<"Job_Listings"> | number
-    category_id?: IntFilter<"Job_Listings"> | number
-    title?: StringFilter<"Job_Listings"> | string
-    description?: StringFilter<"Job_Listings"> | string
-    skills_required?: StringFilter<"Job_Listings"> | string
-    employment_type?: EnumEmploymentTypeFilter<"Job_Listings"> | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFilter<"Job_Listings"> | $Enums.WorkArrangement
-    salary_min?: DecimalFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFilter<"Job_Listings"> | $Enums.SalaryType
+    jobtitle?: StringFilter<"Job_Listings"> | string
+    jobCategory?: StringFilter<"Job_Listings"> | string
+    description?: StringNullableFilter<"Job_Listings"> | string | null
+    skills_required?: StringNullableListFilter<"Job_Listings">
+    employment_type?: StringFilter<"Job_Listings"> | string
+    work_arrangement?: StringFilter<"Job_Listings"> | string
+    salary_min?: IntFilter<"Job_Listings"> | number
+    salary_max?: IntFilter<"Job_Listings"> | number
+    salary_type?: StringFilter<"Job_Listings"> | string
     location_city?: StringFilter<"Job_Listings"> | string
     location_province?: StringFilter<"Job_Listings"> | string
     location_country?: StringFilter<"Job_Listings"> | string
-    accessibility_features?: StringFilter<"Job_Listings"> | string
-    experience_level?: EnumExperienceLevelFilter<"Job_Listings"> | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFilter<"Job_Listings"> | Date | string
-    applications_count?: IntFilter<"Job_Listings"> | number
+    application_deadline?: StringNullableFilter<"Job_Listings"> | string | null
+    workplace_accessibility_features?: StringNullableListFilter<"Job_Listings">
+    experience_level?: StringFilter<"Job_Listings"> | string
+    job_status?: StringFilter<"Job_Listings"> | string
     created_at?: DateTimeFilter<"Job_Listings"> | Date | string
     updated_at?: DateTimeFilter<"Job_Listings"> | Date | string
     applications?: ApplicationsListRelationFilter
-    category?: XOR<Job_CategoriesScalarRelationFilter, Job_CategoriesWhereInput>
     employer?: XOR<Employer_ProfileScalarRelationFilter, Employer_ProfileWhereInput>
     ai_match_results?: Ai_match_resultsListRelationFilter
+    Saved_Jobs?: Saved_JobsListRelationFilter
   }
 
   export type Job_ListingsOrderByWithRelationInput = {
     job_id?: SortOrder
+    job_code?: SortOrderInput | SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
+    jobtitle?: SortOrder
+    jobCategory?: SortOrder
+    description?: SortOrderInput | SortOrder
     skills_required?: SortOrder
     employment_type?: SortOrder
     work_arrangement?: SortOrder
@@ -30889,54 +31767,56 @@ export namespace Prisma {
     location_city?: SortOrder
     location_province?: SortOrder
     location_country?: SortOrder
-    accessibility_features?: SortOrder
+    application_deadline?: SortOrderInput | SortOrder
+    workplace_accessibility_features?: SortOrder
     experience_level?: SortOrder
-    application_deadline?: SortOrder
-    applications_count?: SortOrder
+    job_status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     applications?: ApplicationsOrderByRelationAggregateInput
-    category?: Job_CategoriesOrderByWithRelationInput
     employer?: Employer_ProfileOrderByWithRelationInput
     ai_match_results?: ai_match_resultsOrderByRelationAggregateInput
+    Saved_Jobs?: Saved_JobsOrderByRelationAggregateInput
   }
 
   export type Job_ListingsWhereUniqueInput = Prisma.AtLeast<{
     job_id?: number
+    job_code?: string
     AND?: Job_ListingsWhereInput | Job_ListingsWhereInput[]
     OR?: Job_ListingsWhereInput[]
     NOT?: Job_ListingsWhereInput | Job_ListingsWhereInput[]
     employer_id?: IntFilter<"Job_Listings"> | number
-    category_id?: IntFilter<"Job_Listings"> | number
-    title?: StringFilter<"Job_Listings"> | string
-    description?: StringFilter<"Job_Listings"> | string
-    skills_required?: StringFilter<"Job_Listings"> | string
-    employment_type?: EnumEmploymentTypeFilter<"Job_Listings"> | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFilter<"Job_Listings"> | $Enums.WorkArrangement
-    salary_min?: DecimalFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFilter<"Job_Listings"> | $Enums.SalaryType
+    jobtitle?: StringFilter<"Job_Listings"> | string
+    jobCategory?: StringFilter<"Job_Listings"> | string
+    description?: StringNullableFilter<"Job_Listings"> | string | null
+    skills_required?: StringNullableListFilter<"Job_Listings">
+    employment_type?: StringFilter<"Job_Listings"> | string
+    work_arrangement?: StringFilter<"Job_Listings"> | string
+    salary_min?: IntFilter<"Job_Listings"> | number
+    salary_max?: IntFilter<"Job_Listings"> | number
+    salary_type?: StringFilter<"Job_Listings"> | string
     location_city?: StringFilter<"Job_Listings"> | string
     location_province?: StringFilter<"Job_Listings"> | string
     location_country?: StringFilter<"Job_Listings"> | string
-    accessibility_features?: StringFilter<"Job_Listings"> | string
-    experience_level?: EnumExperienceLevelFilter<"Job_Listings"> | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFilter<"Job_Listings"> | Date | string
-    applications_count?: IntFilter<"Job_Listings"> | number
+    application_deadline?: StringNullableFilter<"Job_Listings"> | string | null
+    workplace_accessibility_features?: StringNullableListFilter<"Job_Listings">
+    experience_level?: StringFilter<"Job_Listings"> | string
+    job_status?: StringFilter<"Job_Listings"> | string
     created_at?: DateTimeFilter<"Job_Listings"> | Date | string
     updated_at?: DateTimeFilter<"Job_Listings"> | Date | string
     applications?: ApplicationsListRelationFilter
-    category?: XOR<Job_CategoriesScalarRelationFilter, Job_CategoriesWhereInput>
     employer?: XOR<Employer_ProfileScalarRelationFilter, Employer_ProfileWhereInput>
     ai_match_results?: Ai_match_resultsListRelationFilter
-  }, "job_id">
+    Saved_Jobs?: Saved_JobsListRelationFilter
+  }, "job_id" | "job_code">
 
   export type Job_ListingsOrderByWithAggregationInput = {
     job_id?: SortOrder
+    job_code?: SortOrderInput | SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
+    jobtitle?: SortOrder
+    jobCategory?: SortOrder
+    description?: SortOrderInput | SortOrder
     skills_required?: SortOrder
     employment_type?: SortOrder
     work_arrangement?: SortOrder
@@ -30946,10 +31826,10 @@ export namespace Prisma {
     location_city?: SortOrder
     location_province?: SortOrder
     location_country?: SortOrder
-    accessibility_features?: SortOrder
+    application_deadline?: SortOrderInput | SortOrder
+    workplace_accessibility_features?: SortOrder
     experience_level?: SortOrder
-    application_deadline?: SortOrder
-    applications_count?: SortOrder
+    job_status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     _count?: Job_ListingsCountOrderByAggregateInput
@@ -30964,23 +31844,24 @@ export namespace Prisma {
     OR?: Job_ListingsScalarWhereWithAggregatesInput[]
     NOT?: Job_ListingsScalarWhereWithAggregatesInput | Job_ListingsScalarWhereWithAggregatesInput[]
     job_id?: IntWithAggregatesFilter<"Job_Listings"> | number
+    job_code?: StringNullableWithAggregatesFilter<"Job_Listings"> | string | null
     employer_id?: IntWithAggregatesFilter<"Job_Listings"> | number
-    category_id?: IntWithAggregatesFilter<"Job_Listings"> | number
-    title?: StringWithAggregatesFilter<"Job_Listings"> | string
-    description?: StringWithAggregatesFilter<"Job_Listings"> | string
-    skills_required?: StringWithAggregatesFilter<"Job_Listings"> | string
-    employment_type?: EnumEmploymentTypeWithAggregatesFilter<"Job_Listings"> | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementWithAggregatesFilter<"Job_Listings"> | $Enums.WorkArrangement
-    salary_min?: DecimalWithAggregatesFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalWithAggregatesFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeWithAggregatesFilter<"Job_Listings"> | $Enums.SalaryType
+    jobtitle?: StringWithAggregatesFilter<"Job_Listings"> | string
+    jobCategory?: StringWithAggregatesFilter<"Job_Listings"> | string
+    description?: StringNullableWithAggregatesFilter<"Job_Listings"> | string | null
+    skills_required?: StringNullableListFilter<"Job_Listings">
+    employment_type?: StringWithAggregatesFilter<"Job_Listings"> | string
+    work_arrangement?: StringWithAggregatesFilter<"Job_Listings"> | string
+    salary_min?: IntWithAggregatesFilter<"Job_Listings"> | number
+    salary_max?: IntWithAggregatesFilter<"Job_Listings"> | number
+    salary_type?: StringWithAggregatesFilter<"Job_Listings"> | string
     location_city?: StringWithAggregatesFilter<"Job_Listings"> | string
     location_province?: StringWithAggregatesFilter<"Job_Listings"> | string
     location_country?: StringWithAggregatesFilter<"Job_Listings"> | string
-    accessibility_features?: StringWithAggregatesFilter<"Job_Listings"> | string
-    experience_level?: EnumExperienceLevelWithAggregatesFilter<"Job_Listings"> | $Enums.ExperienceLevel
-    application_deadline?: DateTimeWithAggregatesFilter<"Job_Listings"> | Date | string
-    applications_count?: IntWithAggregatesFilter<"Job_Listings"> | number
+    application_deadline?: StringNullableWithAggregatesFilter<"Job_Listings"> | string | null
+    workplace_accessibility_features?: StringNullableListFilter<"Job_Listings">
+    experience_level?: StringWithAggregatesFilter<"Job_Listings"> | string
+    job_status?: StringWithAggregatesFilter<"Job_Listings"> | string
     created_at?: DateTimeWithAggregatesFilter<"Job_Listings"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Job_Listings"> | Date | string
   }
@@ -31428,6 +32309,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     date_of_birth?: string | null
@@ -31437,11 +32320,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -31451,6 +32360,7 @@ export namespace Prisma {
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileUncheckedCreateInput = {
@@ -31463,6 +32373,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     pwd_id?: number
@@ -31474,11 +32386,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -31487,6 +32425,7 @@ export namespace Prisma {
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileUpdateInput = {
@@ -31499,6 +32438,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31508,11 +32449,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -31522,6 +32489,7 @@ export namespace Prisma {
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileUncheckedUpdateInput = {
@@ -31534,6 +32502,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pwd_id?: IntFieldUpdateOperationsInput | number
@@ -31545,11 +32515,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -31558,6 +32554,7 @@ export namespace Prisma {
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileCreateManyInput = {
@@ -31570,6 +32567,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     pwd_id?: number
@@ -31581,11 +32580,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
   }
 
   export type Pwd_ProfileUpdateManyMutationInput = {
@@ -31598,6 +32623,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31607,11 +32634,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type Pwd_ProfileUncheckedUpdateManyInput = {
@@ -31624,6 +32677,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pwd_id?: IntFieldUpdateOperationsInput | number
@@ -31635,11 +32690,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type Pwd_ExperienceCreateInput = {
@@ -31975,13 +33056,17 @@ export namespace Prisma {
     updated_at?: Date | string
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
+    profile_views: number
+    interviews: number
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -31989,9 +33074,19 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
     user: UsersCreateNestedOneWithoutEmployer_ProfileInput
     job_listings?: Job_ListingsCreateNestedManyWithoutEmployerInput
     transactions?: transactionsCreateNestedManyWithoutPayerInput
+    Applications?: ApplicationsCreateNestedManyWithoutEmployer_profileInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutEmployer_profileInput
   }
 
   export type Employer_ProfileUncheckedCreateInput = {
@@ -32002,13 +33097,17 @@ export namespace Prisma {
     user_id: number
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
+    profile_views: number
+    interviews: number
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -32016,8 +33115,18 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
     job_listings?: Job_ListingsUncheckedCreateNestedManyWithoutEmployerInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayerInput
+    Applications?: ApplicationsUncheckedCreateNestedManyWithoutEmployer_profileInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutEmployer_profileInput
   }
 
   export type Employer_ProfileUpdateInput = {
@@ -32026,13 +33135,17 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32040,9 +33153,19 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
     user?: UsersUpdateOneRequiredWithoutEmployer_ProfileNestedInput
     job_listings?: Job_ListingsUpdateManyWithoutEmployerNestedInput
     transactions?: transactionsUpdateManyWithoutPayerNestedInput
+    Applications?: ApplicationsUpdateManyWithoutEmployer_profileNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutEmployer_profileNestedInput
   }
 
   export type Employer_ProfileUncheckedUpdateInput = {
@@ -32053,13 +33176,17 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32067,8 +33194,18 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
     job_listings?: Job_ListingsUncheckedUpdateManyWithoutEmployerNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayerNestedInput
+    Applications?: ApplicationsUncheckedUpdateManyWithoutEmployer_profileNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutEmployer_profileNestedInput
   }
 
   export type Employer_ProfileCreateManyInput = {
@@ -32079,13 +33216,17 @@ export namespace Prisma {
     user_id: number
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
+    profile_views: number
+    interviews: number
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -32093,6 +33234,14 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
   }
 
   export type Employer_ProfileUpdateManyMutationInput = {
@@ -32101,13 +33250,17 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32115,6 +33268,14 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type Employer_ProfileUncheckedUpdateManyInput = {
@@ -32125,13 +33286,17 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32139,6 +33304,14 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ResumesCreateInput = {
@@ -32436,11 +33609,14 @@ export namespace Prisma {
   export type ApplicationsCreateInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
     job_listing: Job_ListingsCreateNestedOneWithoutApplicationsInput
     pwd_profile: Pwd_ProfileCreateNestedOneWithoutApplicationsInput
+    employer_profile: Employer_ProfileCreateNestedOneWithoutApplicationsInput
     resume: ResumesCreateNestedOneWithoutApplicationsInput
     reviews?: reviewsCreateNestedManyWithoutApplicationInput
     transactions?: transactionsCreateNestedManyWithoutApplicationInput
@@ -32450,9 +33626,12 @@ export namespace Prisma {
     application_id?: number
     job_id: number
     pwd_id: number
+    employer_id: number
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -32463,11 +33642,14 @@ export namespace Prisma {
   export type ApplicationsUpdateInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
     job_listing?: Job_ListingsUpdateOneRequiredWithoutApplicationsNestedInput
     pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
+    employer_profile?: Employer_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
     resume?: ResumesUpdateOneRequiredWithoutApplicationsNestedInput
     reviews?: reviewsUpdateManyWithoutApplicationNestedInput
     transactions?: transactionsUpdateManyWithoutApplicationNestedInput
@@ -32477,9 +33659,12 @@ export namespace Prisma {
     application_id?: IntFieldUpdateOperationsInput | number
     job_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32491,9 +33676,12 @@ export namespace Prisma {
     application_id?: number
     job_id: number
     pwd_id: number
+    employer_id: number
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -32502,6 +33690,8 @@ export namespace Prisma {
   export type ApplicationsUpdateManyMutationInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32511,9 +33701,12 @@ export namespace Prisma {
     application_id?: IntFieldUpdateOperationsInput | number
     job_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32769,209 +33962,222 @@ export namespace Prisma {
     read_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type Job_CategoriesCreateInput = {
-    name: string
-    description: string
-    job_listings?: Job_ListingsCreateNestedManyWithoutCategoryInput
+  export type Saved_JobsCreateInput = {
+    job_listings: Job_ListingsCreateNestedOneWithoutSaved_JobsInput
+    pwd_profile: Pwd_ProfileCreateNestedOneWithoutSaved_JobsInput
+    employer_profile: Employer_ProfileCreateNestedOneWithoutSaved_JobsInput
   }
 
-  export type Job_CategoriesUncheckedCreateInput = {
-    category_id?: number
-    name: string
-    description: string
-    job_listings?: Job_ListingsUncheckedCreateNestedManyWithoutCategoryInput
+  export type Saved_JobsUncheckedCreateInput = {
+    savedJob_id?: number
+    job_id: number
+    pwd_id: number
+    employer_id: number
   }
 
-  export type Job_CategoriesUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    job_listings?: Job_ListingsUpdateManyWithoutCategoryNestedInput
+  export type Saved_JobsUpdateInput = {
+    job_listings?: Job_ListingsUpdateOneRequiredWithoutSaved_JobsNestedInput
+    pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutSaved_JobsNestedInput
+    employer_profile?: Employer_ProfileUpdateOneRequiredWithoutSaved_JobsNestedInput
   }
 
-  export type Job_CategoriesUncheckedUpdateInput = {
-    category_id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    job_listings?: Job_ListingsUncheckedUpdateManyWithoutCategoryNestedInput
+  export type Saved_JobsUncheckedUpdateInput = {
+    savedJob_id?: IntFieldUpdateOperationsInput | number
+    job_id?: IntFieldUpdateOperationsInput | number
+    pwd_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type Job_CategoriesCreateManyInput = {
-    category_id?: number
-    name: string
-    description: string
+  export type Saved_JobsCreateManyInput = {
+    savedJob_id?: number
+    job_id: number
+    pwd_id: number
+    employer_id: number
   }
 
-  export type Job_CategoriesUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+  export type Saved_JobsUpdateManyMutationInput = {
+
   }
 
-  export type Job_CategoriesUncheckedUpdateManyInput = {
-    category_id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+  export type Saved_JobsUncheckedUpdateManyInput = {
+    savedJob_id?: IntFieldUpdateOperationsInput | number
+    job_id?: IntFieldUpdateOperationsInput | number
+    pwd_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type Job_ListingsCreateInput = {
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsCreateNestedManyWithoutJob_listingInput
-    category: Job_CategoriesCreateNestedOneWithoutJob_listingsInput
     employer: Employer_ProfileCreateNestedOneWithoutJob_listingsInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutJob_listingInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutJob_listingsInput
   }
 
   export type Job_ListingsUncheckedCreateInput = {
     job_id?: number
+    job_code?: string | null
     employer_id: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsUncheckedCreateNestedManyWithoutJob_listingInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutJob_listingInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutJob_listingsInput
   }
 
   export type Job_ListingsUpdateInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUpdateManyWithoutJob_listingNestedInput
-    category?: Job_CategoriesUpdateOneRequiredWithoutJob_listingsNestedInput
     employer?: Employer_ProfileUpdateOneRequiredWithoutJob_listingsNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutJob_listingNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutJob_listingsNestedInput
   }
 
   export type Job_ListingsUncheckedUpdateInput = {
     job_id?: IntFieldUpdateOperationsInput | number
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
     employer_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUncheckedUpdateManyWithoutJob_listingNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutJob_listingNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutJob_listingsNestedInput
   }
 
   export type Job_ListingsCreateManyInput = {
     job_id?: number
+    job_code?: string | null
     employer_id: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
   }
 
   export type Job_ListingsUpdateManyMutationInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type Job_ListingsUncheckedUpdateManyInput = {
     job_id?: IntFieldUpdateOperationsInput | number
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
     employer_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -33593,6 +34799,17 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type ApplicationsListRelationFilter = {
     every?: ApplicationsWhereInput
     some?: ApplicationsWhereInput
@@ -33646,6 +34863,12 @@ export namespace Prisma {
     none?: transactionsWhereInput
   }
 
+  export type Saved_JobsListRelationFilter = {
+    every?: Saved_JobsWhereInput
+    some?: Saved_JobsWhereInput
+    none?: Saved_JobsWhereInput
+  }
+
   export type ApplicationsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -33678,6 +34901,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type Saved_JobsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type Pwd_ProfileCountOrderByAggregateInput = {
     first_name?: SortOrder
     last_name?: SortOrder
@@ -33688,6 +34915,8 @@ export namespace Prisma {
     disability_severity?: SortOrder
     gender?: SortOrder
     rating?: SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     pwd_id?: SortOrder
@@ -33699,17 +34928,46 @@ export namespace Prisma {
     skills?: SortOrder
     portfolio_url?: SortOrder
     github_url?: SortOrder
+    linkedin_url?: SortOrder
     otherPlatform?: SortOrder
     professional_role?: SortOrder
     professional_summary?: SortOrder
+    hourly_rate?: SortOrder
     profile_visibility?: SortOrder
+    show_email?: SortOrder
+    show_phone_number?: SortOrder
+    show_location?: SortOrder
+    allow_messages?: SortOrder
+    show_online_status?: SortOrder
+    email_job_matches?: SortOrder
+    messages?: SortOrder
+    application_updates?: SortOrder
+    email_profile_views?: SortOrder
+    weekly_digest?: SortOrder
+    marketing_emails?: SortOrder
+    push_notif_job_matches?: SortOrder
+    push_notif_messages?: SortOrder
+    push_notif_application_updates?: SortOrder
+    push_notif_profile_views?: SortOrder
+    urgent_messages?: SortOrder
+    security_alerts?: SortOrder
     resume_cv?: SortOrder
+    basic_information?: SortOrder
+    professional_summary_completed?: SortOrder
+    professional_experience?: SortOrder
+    education?: SortOrder
+    portfolio_items?: SortOrder
+    skills_assessment?: SortOrder
+    set_accessibility_preferences?: SortOrder
   }
 
   export type Pwd_ProfileAvgOrderByAggregateInput = {
     rating?: SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
     pwd_id?: SortOrder
     user_id?: SortOrder
+    hourly_rate?: SortOrder
   }
 
   export type Pwd_ProfileMaxOrderByAggregateInput = {
@@ -33722,6 +34980,8 @@ export namespace Prisma {
     disability_severity?: SortOrder
     gender?: SortOrder
     rating?: SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     pwd_id?: SortOrder
@@ -33731,10 +34991,36 @@ export namespace Prisma {
     profession?: SortOrder
     portfolio_url?: SortOrder
     github_url?: SortOrder
+    linkedin_url?: SortOrder
     professional_role?: SortOrder
     professional_summary?: SortOrder
+    hourly_rate?: SortOrder
     profile_visibility?: SortOrder
+    show_email?: SortOrder
+    show_phone_number?: SortOrder
+    show_location?: SortOrder
+    allow_messages?: SortOrder
+    show_online_status?: SortOrder
+    email_job_matches?: SortOrder
+    messages?: SortOrder
+    application_updates?: SortOrder
+    email_profile_views?: SortOrder
+    weekly_digest?: SortOrder
+    marketing_emails?: SortOrder
+    push_notif_job_matches?: SortOrder
+    push_notif_messages?: SortOrder
+    push_notif_application_updates?: SortOrder
+    push_notif_profile_views?: SortOrder
+    urgent_messages?: SortOrder
+    security_alerts?: SortOrder
     resume_cv?: SortOrder
+    basic_information?: SortOrder
+    professional_summary_completed?: SortOrder
+    professional_experience?: SortOrder
+    education?: SortOrder
+    portfolio_items?: SortOrder
+    skills_assessment?: SortOrder
+    set_accessibility_preferences?: SortOrder
   }
 
   export type Pwd_ProfileMinOrderByAggregateInput = {
@@ -33747,6 +35033,8 @@ export namespace Prisma {
     disability_severity?: SortOrder
     gender?: SortOrder
     rating?: SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     pwd_id?: SortOrder
@@ -33756,16 +35044,45 @@ export namespace Prisma {
     profession?: SortOrder
     portfolio_url?: SortOrder
     github_url?: SortOrder
+    linkedin_url?: SortOrder
     professional_role?: SortOrder
     professional_summary?: SortOrder
+    hourly_rate?: SortOrder
     profile_visibility?: SortOrder
+    show_email?: SortOrder
+    show_phone_number?: SortOrder
+    show_location?: SortOrder
+    allow_messages?: SortOrder
+    show_online_status?: SortOrder
+    email_job_matches?: SortOrder
+    messages?: SortOrder
+    application_updates?: SortOrder
+    email_profile_views?: SortOrder
+    weekly_digest?: SortOrder
+    marketing_emails?: SortOrder
+    push_notif_job_matches?: SortOrder
+    push_notif_messages?: SortOrder
+    push_notif_application_updates?: SortOrder
+    push_notif_profile_views?: SortOrder
+    urgent_messages?: SortOrder
+    security_alerts?: SortOrder
     resume_cv?: SortOrder
+    basic_information?: SortOrder
+    professional_summary_completed?: SortOrder
+    professional_experience?: SortOrder
+    education?: SortOrder
+    portfolio_items?: SortOrder
+    skills_assessment?: SortOrder
+    set_accessibility_preferences?: SortOrder
   }
 
   export type Pwd_ProfileSumOrderByAggregateInput = {
     rating?: SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
     pwd_id?: SortOrder
     user_id?: SortOrder
+    hourly_rate?: SortOrder
   }
 
   export type EnumDisability_SeverityNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -33816,6 +35133,22 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -34054,13 +35387,17 @@ export namespace Prisma {
     user_id?: SortOrder
     address?: SortOrder
     profile_picture?: SortOrder
-    LinkedIn_profile?: SortOrder
-    Other_Social_Media?: SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
     company_name?: SortOrder
     company_email?: SortOrder
     company_phone?: SortOrder
     company_address?: SortOrder
-    company_website?: SortOrder
+    company_social_media?: SortOrder
+    company_website_portfolio?: SortOrder
+    company_github_profile?: SortOrder
+    company_other_portfolio?: SortOrder
+    company_description?: SortOrder
     contact_person_fullname?: SortOrder
     contact_person_job_title?: SortOrder
     contact_person_phone_number?: SortOrder
@@ -34068,12 +35405,22 @@ export namespace Prisma {
     businessRegistration?: SortOrder
     governmentId?: SortOrder
     taxDocuments?: SortOrder
+    industryPreference?: SortOrder
+    jobRolesTypicallyHire?: SortOrder
+    requiredPreferredSkills?: SortOrder
+    workArrangement?: SortOrder
+    accessibilityFeatures?: SortOrder
+    set_company_profile?: SortOrder
+    set_jobRoles_requirements?: SortOrder
+    set_work_environment?: SortOrder
   }
 
   export type Employer_ProfileAvgOrderByAggregateInput = {
     rating?: SortOrder
     employer_id?: SortOrder
     user_id?: SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
   }
 
   export type Employer_ProfileMaxOrderByAggregateInput = {
@@ -34084,13 +35431,16 @@ export namespace Prisma {
     user_id?: SortOrder
     address?: SortOrder
     profile_picture?: SortOrder
-    LinkedIn_profile?: SortOrder
-    Other_Social_Media?: SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
     company_name?: SortOrder
     company_email?: SortOrder
     company_phone?: SortOrder
     company_address?: SortOrder
-    company_website?: SortOrder
+    company_social_media?: SortOrder
+    company_website_portfolio?: SortOrder
+    company_github_profile?: SortOrder
+    company_description?: SortOrder
     contact_person_fullname?: SortOrder
     contact_person_job_title?: SortOrder
     contact_person_phone_number?: SortOrder
@@ -34098,6 +35448,10 @@ export namespace Prisma {
     businessRegistration?: SortOrder
     governmentId?: SortOrder
     taxDocuments?: SortOrder
+    industryPreference?: SortOrder
+    set_company_profile?: SortOrder
+    set_jobRoles_requirements?: SortOrder
+    set_work_environment?: SortOrder
   }
 
   export type Employer_ProfileMinOrderByAggregateInput = {
@@ -34108,13 +35462,16 @@ export namespace Prisma {
     user_id?: SortOrder
     address?: SortOrder
     profile_picture?: SortOrder
-    LinkedIn_profile?: SortOrder
-    Other_Social_Media?: SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
     company_name?: SortOrder
     company_email?: SortOrder
     company_phone?: SortOrder
     company_address?: SortOrder
-    company_website?: SortOrder
+    company_social_media?: SortOrder
+    company_website_portfolio?: SortOrder
+    company_github_profile?: SortOrder
+    company_description?: SortOrder
     contact_person_fullname?: SortOrder
     contact_person_job_title?: SortOrder
     contact_person_phone_number?: SortOrder
@@ -34122,12 +35479,18 @@ export namespace Prisma {
     businessRegistration?: SortOrder
     governmentId?: SortOrder
     taxDocuments?: SortOrder
+    industryPreference?: SortOrder
+    set_company_profile?: SortOrder
+    set_jobRoles_requirements?: SortOrder
+    set_work_environment?: SortOrder
   }
 
   export type Employer_ProfileSumOrderByAggregateInput = {
     rating?: SortOrder
     employer_id?: SortOrder
     user_id?: SortOrder
+    profile_views?: SortOrder
+    interviews?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -34379,6 +35742,11 @@ export namespace Prisma {
     isNot?: Job_ListingsWhereInput
   }
 
+  export type Employer_ProfileScalarRelationFilter = {
+    is?: Employer_ProfileWhereInput
+    isNot?: Employer_ProfileWhereInput
+  }
+
   export type ResumesScalarRelationFilter = {
     is?: ResumesWhereInput
     isNot?: ResumesWhereInput
@@ -34388,9 +35756,12 @@ export namespace Prisma {
     application_id?: SortOrder
     job_id?: SortOrder
     pwd_id?: SortOrder
+    employer_id?: SortOrder
     resume_id?: SortOrder
     custom_message?: SortOrder
     proposed_salary?: SortOrder
+    work_experience?: SortOrder
+    portfolio_links?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -34400,6 +35771,7 @@ export namespace Prisma {
     application_id?: SortOrder
     job_id?: SortOrder
     pwd_id?: SortOrder
+    employer_id?: SortOrder
     resume_id?: SortOrder
     proposed_salary?: SortOrder
   }
@@ -34408,9 +35780,12 @@ export namespace Prisma {
     application_id?: SortOrder
     job_id?: SortOrder
     pwd_id?: SortOrder
+    employer_id?: SortOrder
     resume_id?: SortOrder
     custom_message?: SortOrder
     proposed_salary?: SortOrder
+    work_experience?: SortOrder
+    portfolio_links?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -34420,9 +35795,12 @@ export namespace Prisma {
     application_id?: SortOrder
     job_id?: SortOrder
     pwd_id?: SortOrder
+    employer_id?: SortOrder
     resume_id?: SortOrder
     custom_message?: SortOrder
     proposed_salary?: SortOrder
+    work_experience?: SortOrder
+    portfolio_links?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -34432,6 +35810,7 @@ export namespace Prisma {
     application_id?: SortOrder
     job_id?: SortOrder
     pwd_id?: SortOrder
+    employer_id?: SortOrder
     resume_id?: SortOrder
     proposed_salary?: SortOrder
   }
@@ -34525,11 +35904,6 @@ export namespace Prisma {
     in?: $Enums.TransactionStatus[] | ListEnumTransactionStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.TransactionStatus[] | ListEnumTransactionStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumTransactionStatusFilter<$PrismaModel> | $Enums.TransactionStatus
-  }
-
-  export type Employer_ProfileScalarRelationFilter = {
-    is?: Employer_ProfileWhereInput
-    isNot?: Employer_ProfileWhereInput
   }
 
   export type transactionsCountOrderByAggregateInput = {
@@ -34653,70 +36027,47 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
-  export type Job_CategoriesCountOrderByAggregateInput = {
-    category_id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
+  export type Saved_JobsCountOrderByAggregateInput = {
+    savedJob_id?: SortOrder
+    job_id?: SortOrder
+    pwd_id?: SortOrder
+    employer_id?: SortOrder
   }
 
-  export type Job_CategoriesAvgOrderByAggregateInput = {
-    category_id?: SortOrder
+  export type Saved_JobsAvgOrderByAggregateInput = {
+    savedJob_id?: SortOrder
+    job_id?: SortOrder
+    pwd_id?: SortOrder
+    employer_id?: SortOrder
   }
 
-  export type Job_CategoriesMaxOrderByAggregateInput = {
-    category_id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
+  export type Saved_JobsMaxOrderByAggregateInput = {
+    savedJob_id?: SortOrder
+    job_id?: SortOrder
+    pwd_id?: SortOrder
+    employer_id?: SortOrder
   }
 
-  export type Job_CategoriesMinOrderByAggregateInput = {
-    category_id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
+  export type Saved_JobsMinOrderByAggregateInput = {
+    savedJob_id?: SortOrder
+    job_id?: SortOrder
+    pwd_id?: SortOrder
+    employer_id?: SortOrder
   }
 
-  export type Job_CategoriesSumOrderByAggregateInput = {
-    category_id?: SortOrder
-  }
-
-  export type EnumEmploymentTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.EmploymentType | EnumEmploymentTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumEmploymentTypeFilter<$PrismaModel> | $Enums.EmploymentType
-  }
-
-  export type EnumWorkArrangementFilter<$PrismaModel = never> = {
-    equals?: $Enums.WorkArrangement | EnumWorkArrangementFieldRefInput<$PrismaModel>
-    in?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    not?: NestedEnumWorkArrangementFilter<$PrismaModel> | $Enums.WorkArrangement
-  }
-
-  export type EnumSalaryTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.SalaryType | EnumSalaryTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumSalaryTypeFilter<$PrismaModel> | $Enums.SalaryType
-  }
-
-  export type EnumExperienceLevelFilter<$PrismaModel = never> = {
-    equals?: $Enums.ExperienceLevel | EnumExperienceLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumExperienceLevelFilter<$PrismaModel> | $Enums.ExperienceLevel
-  }
-
-  export type Job_CategoriesScalarRelationFilter = {
-    is?: Job_CategoriesWhereInput
-    isNot?: Job_CategoriesWhereInput
+  export type Saved_JobsSumOrderByAggregateInput = {
+    savedJob_id?: SortOrder
+    job_id?: SortOrder
+    pwd_id?: SortOrder
+    employer_id?: SortOrder
   }
 
   export type Job_ListingsCountOrderByAggregateInput = {
     job_id?: SortOrder
+    job_code?: SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
-    title?: SortOrder
+    jobtitle?: SortOrder
+    jobCategory?: SortOrder
     description?: SortOrder
     skills_required?: SortOrder
     employment_type?: SortOrder
@@ -34727,10 +36078,10 @@ export namespace Prisma {
     location_city?: SortOrder
     location_province?: SortOrder
     location_country?: SortOrder
-    accessibility_features?: SortOrder
-    experience_level?: SortOrder
     application_deadline?: SortOrder
-    applications_count?: SortOrder
+    workplace_accessibility_features?: SortOrder
+    experience_level?: SortOrder
+    job_status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -34738,19 +36089,17 @@ export namespace Prisma {
   export type Job_ListingsAvgOrderByAggregateInput = {
     job_id?: SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
     salary_min?: SortOrder
     salary_max?: SortOrder
-    applications_count?: SortOrder
   }
 
   export type Job_ListingsMaxOrderByAggregateInput = {
     job_id?: SortOrder
+    job_code?: SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
-    title?: SortOrder
+    jobtitle?: SortOrder
+    jobCategory?: SortOrder
     description?: SortOrder
-    skills_required?: SortOrder
     employment_type?: SortOrder
     work_arrangement?: SortOrder
     salary_min?: SortOrder
@@ -34759,21 +36108,20 @@ export namespace Prisma {
     location_city?: SortOrder
     location_province?: SortOrder
     location_country?: SortOrder
-    accessibility_features?: SortOrder
-    experience_level?: SortOrder
     application_deadline?: SortOrder
-    applications_count?: SortOrder
+    experience_level?: SortOrder
+    job_status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
 
   export type Job_ListingsMinOrderByAggregateInput = {
     job_id?: SortOrder
+    job_code?: SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
-    title?: SortOrder
+    jobtitle?: SortOrder
+    jobCategory?: SortOrder
     description?: SortOrder
-    skills_required?: SortOrder
     employment_type?: SortOrder
     work_arrangement?: SortOrder
     salary_min?: SortOrder
@@ -34782,10 +36130,9 @@ export namespace Prisma {
     location_city?: SortOrder
     location_province?: SortOrder
     location_country?: SortOrder
-    accessibility_features?: SortOrder
-    experience_level?: SortOrder
     application_deadline?: SortOrder
-    applications_count?: SortOrder
+    experience_level?: SortOrder
+    job_status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -34793,50 +36140,8 @@ export namespace Prisma {
   export type Job_ListingsSumOrderByAggregateInput = {
     job_id?: SortOrder
     employer_id?: SortOrder
-    category_id?: SortOrder
     salary_min?: SortOrder
     salary_max?: SortOrder
-    applications_count?: SortOrder
-  }
-
-  export type EnumEmploymentTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.EmploymentType | EnumEmploymentTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumEmploymentTypeWithAggregatesFilter<$PrismaModel> | $Enums.EmploymentType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumEmploymentTypeFilter<$PrismaModel>
-    _max?: NestedEnumEmploymentTypeFilter<$PrismaModel>
-  }
-
-  export type EnumWorkArrangementWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.WorkArrangement | EnumWorkArrangementFieldRefInput<$PrismaModel>
-    in?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    not?: NestedEnumWorkArrangementWithAggregatesFilter<$PrismaModel> | $Enums.WorkArrangement
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumWorkArrangementFilter<$PrismaModel>
-    _max?: NestedEnumWorkArrangementFilter<$PrismaModel>
-  }
-
-  export type EnumSalaryTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.SalaryType | EnumSalaryTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumSalaryTypeWithAggregatesFilter<$PrismaModel> | $Enums.SalaryType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumSalaryTypeFilter<$PrismaModel>
-    _max?: NestedEnumSalaryTypeFilter<$PrismaModel>
-  }
-
-  export type EnumExperienceLevelWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ExperienceLevel | EnumExperienceLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumExperienceLevelWithAggregatesFilter<$PrismaModel> | $Enums.ExperienceLevel
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumExperienceLevelFilter<$PrismaModel>
-    _max?: NestedEnumExperienceLevelFilter<$PrismaModel>
   }
 
   export type EnumTicketCategoryFilter<$PrismaModel = never> = {
@@ -35685,6 +36990,13 @@ export namespace Prisma {
     connect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
   }
 
+  export type Saved_JobsCreateNestedManyWithoutPwd_profileInput = {
+    create?: XOR<Saved_JobsCreateWithoutPwd_profileInput, Saved_JobsUncheckedCreateWithoutPwd_profileInput> | Saved_JobsCreateWithoutPwd_profileInput[] | Saved_JobsUncheckedCreateWithoutPwd_profileInput[]
+    connectOrCreate?: Saved_JobsCreateOrConnectWithoutPwd_profileInput | Saved_JobsCreateOrConnectWithoutPwd_profileInput[]
+    createMany?: Saved_JobsCreateManyPwd_profileInputEnvelope
+    connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+  }
+
   export type ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput = {
     create?: XOR<ApplicationsCreateWithoutPwd_profileInput, ApplicationsUncheckedCreateWithoutPwd_profileInput> | ApplicationsCreateWithoutPwd_profileInput[] | ApplicationsUncheckedCreateWithoutPwd_profileInput[]
     connectOrCreate?: ApplicationsCreateOrConnectWithoutPwd_profileInput | ApplicationsCreateOrConnectWithoutPwd_profileInput[]
@@ -35741,6 +37053,13 @@ export namespace Prisma {
     connect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
   }
 
+  export type Saved_JobsUncheckedCreateNestedManyWithoutPwd_profileInput = {
+    create?: XOR<Saved_JobsCreateWithoutPwd_profileInput, Saved_JobsUncheckedCreateWithoutPwd_profileInput> | Saved_JobsCreateWithoutPwd_profileInput[] | Saved_JobsUncheckedCreateWithoutPwd_profileInput[]
+    connectOrCreate?: Saved_JobsCreateOrConnectWithoutPwd_profileInput | Saved_JobsCreateOrConnectWithoutPwd_profileInput[]
+    createMany?: Saved_JobsCreateManyPwd_profileInputEnvelope
+    connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+  }
+
   export type NullableEnumDisability_SeverityFieldUpdateOperationsInput = {
     set?: $Enums.Disability_Severity | null
   }
@@ -35774,6 +37093,14 @@ export namespace Prisma {
   export type Pwd_ProfileUpdateotherPlatformInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type ApplicationsUpdateManyWithoutPwd_profileNestedInput = {
@@ -35896,6 +37223,20 @@ export namespace Prisma {
     deleteMany?: transactionsScalarWhereInput | transactionsScalarWhereInput[]
   }
 
+  export type Saved_JobsUpdateManyWithoutPwd_profileNestedInput = {
+    create?: XOR<Saved_JobsCreateWithoutPwd_profileInput, Saved_JobsUncheckedCreateWithoutPwd_profileInput> | Saved_JobsCreateWithoutPwd_profileInput[] | Saved_JobsUncheckedCreateWithoutPwd_profileInput[]
+    connectOrCreate?: Saved_JobsCreateOrConnectWithoutPwd_profileInput | Saved_JobsCreateOrConnectWithoutPwd_profileInput[]
+    upsert?: Saved_JobsUpsertWithWhereUniqueWithoutPwd_profileInput | Saved_JobsUpsertWithWhereUniqueWithoutPwd_profileInput[]
+    createMany?: Saved_JobsCreateManyPwd_profileInputEnvelope
+    set?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    disconnect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    delete?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    update?: Saved_JobsUpdateWithWhereUniqueWithoutPwd_profileInput | Saved_JobsUpdateWithWhereUniqueWithoutPwd_profileInput[]
+    updateMany?: Saved_JobsUpdateManyWithWhereWithoutPwd_profileInput | Saved_JobsUpdateManyWithWhereWithoutPwd_profileInput[]
+    deleteMany?: Saved_JobsScalarWhereInput | Saved_JobsScalarWhereInput[]
+  }
+
   export type ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput = {
     create?: XOR<ApplicationsCreateWithoutPwd_profileInput, ApplicationsUncheckedCreateWithoutPwd_profileInput> | ApplicationsCreateWithoutPwd_profileInput[] | ApplicationsUncheckedCreateWithoutPwd_profileInput[]
     connectOrCreate?: ApplicationsCreateOrConnectWithoutPwd_profileInput | ApplicationsCreateOrConnectWithoutPwd_profileInput[]
@@ -36008,6 +37349,20 @@ export namespace Prisma {
     deleteMany?: transactionsScalarWhereInput | transactionsScalarWhereInput[]
   }
 
+  export type Saved_JobsUncheckedUpdateManyWithoutPwd_profileNestedInput = {
+    create?: XOR<Saved_JobsCreateWithoutPwd_profileInput, Saved_JobsUncheckedCreateWithoutPwd_profileInput> | Saved_JobsCreateWithoutPwd_profileInput[] | Saved_JobsUncheckedCreateWithoutPwd_profileInput[]
+    connectOrCreate?: Saved_JobsCreateOrConnectWithoutPwd_profileInput | Saved_JobsCreateOrConnectWithoutPwd_profileInput[]
+    upsert?: Saved_JobsUpsertWithWhereUniqueWithoutPwd_profileInput | Saved_JobsUpsertWithWhereUniqueWithoutPwd_profileInput[]
+    createMany?: Saved_JobsCreateManyPwd_profileInputEnvelope
+    set?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    disconnect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    delete?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    update?: Saved_JobsUpdateWithWhereUniqueWithoutPwd_profileInput | Saved_JobsUpdateWithWhereUniqueWithoutPwd_profileInput[]
+    updateMany?: Saved_JobsUpdateManyWithWhereWithoutPwd_profileInput | Saved_JobsUpdateManyWithWhereWithoutPwd_profileInput[]
+    deleteMany?: Saved_JobsScalarWhereInput | Saved_JobsScalarWhereInput[]
+  }
+
   export type Pwd_ProfileCreateNestedOneWithoutExperiencesInput = {
     create?: XOR<Pwd_ProfileCreateWithoutExperiencesInput, Pwd_ProfileUncheckedCreateWithoutExperiencesInput>
     connectOrCreate?: Pwd_ProfileCreateOrConnectWithoutExperiencesInput
@@ -36113,6 +37468,26 @@ export namespace Prisma {
     update?: XOR<XOR<Pwd_ProfileUpdateToOneWithWhereWithoutJob_preferencesInput, Pwd_ProfileUpdateWithoutJob_preferencesInput>, Pwd_ProfileUncheckedUpdateWithoutJob_preferencesInput>
   }
 
+  export type Employer_ProfileCreatecompany_other_portfolioInput = {
+    set: string[]
+  }
+
+  export type Employer_ProfileCreatejobRolesTypicallyHireInput = {
+    set: string[]
+  }
+
+  export type Employer_ProfileCreaterequiredPreferredSkillsInput = {
+    set: string[]
+  }
+
+  export type Employer_ProfileCreateworkArrangementInput = {
+    set: string[]
+  }
+
+  export type Employer_ProfileCreateaccessibilityFeaturesInput = {
+    set: string[]
+  }
+
   export type UsersCreateNestedOneWithoutEmployer_ProfileInput = {
     create?: XOR<UsersCreateWithoutEmployer_ProfileInput, UsersUncheckedCreateWithoutEmployer_ProfileInput>
     connectOrCreate?: UsersCreateOrConnectWithoutEmployer_ProfileInput
@@ -36133,6 +37508,20 @@ export namespace Prisma {
     connect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
   }
 
+  export type ApplicationsCreateNestedManyWithoutEmployer_profileInput = {
+    create?: XOR<ApplicationsCreateWithoutEmployer_profileInput, ApplicationsUncheckedCreateWithoutEmployer_profileInput> | ApplicationsCreateWithoutEmployer_profileInput[] | ApplicationsUncheckedCreateWithoutEmployer_profileInput[]
+    connectOrCreate?: ApplicationsCreateOrConnectWithoutEmployer_profileInput | ApplicationsCreateOrConnectWithoutEmployer_profileInput[]
+    createMany?: ApplicationsCreateManyEmployer_profileInputEnvelope
+    connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+  }
+
+  export type Saved_JobsCreateNestedManyWithoutEmployer_profileInput = {
+    create?: XOR<Saved_JobsCreateWithoutEmployer_profileInput, Saved_JobsUncheckedCreateWithoutEmployer_profileInput> | Saved_JobsCreateWithoutEmployer_profileInput[] | Saved_JobsUncheckedCreateWithoutEmployer_profileInput[]
+    connectOrCreate?: Saved_JobsCreateOrConnectWithoutEmployer_profileInput | Saved_JobsCreateOrConnectWithoutEmployer_profileInput[]
+    createMany?: Saved_JobsCreateManyEmployer_profileInputEnvelope
+    connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+  }
+
   export type Job_ListingsUncheckedCreateNestedManyWithoutEmployerInput = {
     create?: XOR<Job_ListingsCreateWithoutEmployerInput, Job_ListingsUncheckedCreateWithoutEmployerInput> | Job_ListingsCreateWithoutEmployerInput[] | Job_ListingsUncheckedCreateWithoutEmployerInput[]
     connectOrCreate?: Job_ListingsCreateOrConnectWithoutEmployerInput | Job_ListingsCreateOrConnectWithoutEmployerInput[]
@@ -36147,12 +37536,51 @@ export namespace Prisma {
     connect?: transactionsWhereUniqueInput | transactionsWhereUniqueInput[]
   }
 
+  export type ApplicationsUncheckedCreateNestedManyWithoutEmployer_profileInput = {
+    create?: XOR<ApplicationsCreateWithoutEmployer_profileInput, ApplicationsUncheckedCreateWithoutEmployer_profileInput> | ApplicationsCreateWithoutEmployer_profileInput[] | ApplicationsUncheckedCreateWithoutEmployer_profileInput[]
+    connectOrCreate?: ApplicationsCreateOrConnectWithoutEmployer_profileInput | ApplicationsCreateOrConnectWithoutEmployer_profileInput[]
+    createMany?: ApplicationsCreateManyEmployer_profileInputEnvelope
+    connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+  }
+
+  export type Saved_JobsUncheckedCreateNestedManyWithoutEmployer_profileInput = {
+    create?: XOR<Saved_JobsCreateWithoutEmployer_profileInput, Saved_JobsUncheckedCreateWithoutEmployer_profileInput> | Saved_JobsCreateWithoutEmployer_profileInput[] | Saved_JobsUncheckedCreateWithoutEmployer_profileInput[]
+    connectOrCreate?: Saved_JobsCreateOrConnectWithoutEmployer_profileInput | Saved_JobsCreateOrConnectWithoutEmployer_profileInput[]
+    createMany?: Saved_JobsCreateManyEmployer_profileInputEnvelope
+    connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+  }
+
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type Employer_ProfileUpdatecompany_other_portfolioInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type Employer_ProfileUpdatejobRolesTypicallyHireInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type Employer_ProfileUpdaterequiredPreferredSkillsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type Employer_ProfileUpdateworkArrangementInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type Employer_ProfileUpdateaccessibilityFeaturesInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type UsersUpdateOneRequiredWithoutEmployer_ProfileNestedInput = {
@@ -36191,6 +37619,34 @@ export namespace Prisma {
     deleteMany?: transactionsScalarWhereInput | transactionsScalarWhereInput[]
   }
 
+  export type ApplicationsUpdateManyWithoutEmployer_profileNestedInput = {
+    create?: XOR<ApplicationsCreateWithoutEmployer_profileInput, ApplicationsUncheckedCreateWithoutEmployer_profileInput> | ApplicationsCreateWithoutEmployer_profileInput[] | ApplicationsUncheckedCreateWithoutEmployer_profileInput[]
+    connectOrCreate?: ApplicationsCreateOrConnectWithoutEmployer_profileInput | ApplicationsCreateOrConnectWithoutEmployer_profileInput[]
+    upsert?: ApplicationsUpsertWithWhereUniqueWithoutEmployer_profileInput | ApplicationsUpsertWithWhereUniqueWithoutEmployer_profileInput[]
+    createMany?: ApplicationsCreateManyEmployer_profileInputEnvelope
+    set?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    disconnect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    delete?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    update?: ApplicationsUpdateWithWhereUniqueWithoutEmployer_profileInput | ApplicationsUpdateWithWhereUniqueWithoutEmployer_profileInput[]
+    updateMany?: ApplicationsUpdateManyWithWhereWithoutEmployer_profileInput | ApplicationsUpdateManyWithWhereWithoutEmployer_profileInput[]
+    deleteMany?: ApplicationsScalarWhereInput | ApplicationsScalarWhereInput[]
+  }
+
+  export type Saved_JobsUpdateManyWithoutEmployer_profileNestedInput = {
+    create?: XOR<Saved_JobsCreateWithoutEmployer_profileInput, Saved_JobsUncheckedCreateWithoutEmployer_profileInput> | Saved_JobsCreateWithoutEmployer_profileInput[] | Saved_JobsUncheckedCreateWithoutEmployer_profileInput[]
+    connectOrCreate?: Saved_JobsCreateOrConnectWithoutEmployer_profileInput | Saved_JobsCreateOrConnectWithoutEmployer_profileInput[]
+    upsert?: Saved_JobsUpsertWithWhereUniqueWithoutEmployer_profileInput | Saved_JobsUpsertWithWhereUniqueWithoutEmployer_profileInput[]
+    createMany?: Saved_JobsCreateManyEmployer_profileInputEnvelope
+    set?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    disconnect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    delete?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    update?: Saved_JobsUpdateWithWhereUniqueWithoutEmployer_profileInput | Saved_JobsUpdateWithWhereUniqueWithoutEmployer_profileInput[]
+    updateMany?: Saved_JobsUpdateManyWithWhereWithoutEmployer_profileInput | Saved_JobsUpdateManyWithWhereWithoutEmployer_profileInput[]
+    deleteMany?: Saved_JobsScalarWhereInput | Saved_JobsScalarWhereInput[]
+  }
+
   export type Job_ListingsUncheckedUpdateManyWithoutEmployerNestedInput = {
     create?: XOR<Job_ListingsCreateWithoutEmployerInput, Job_ListingsUncheckedCreateWithoutEmployerInput> | Job_ListingsCreateWithoutEmployerInput[] | Job_ListingsUncheckedCreateWithoutEmployerInput[]
     connectOrCreate?: Job_ListingsCreateOrConnectWithoutEmployerInput | Job_ListingsCreateOrConnectWithoutEmployerInput[]
@@ -36217,6 +37673,34 @@ export namespace Prisma {
     update?: transactionsUpdateWithWhereUniqueWithoutPayerInput | transactionsUpdateWithWhereUniqueWithoutPayerInput[]
     updateMany?: transactionsUpdateManyWithWhereWithoutPayerInput | transactionsUpdateManyWithWhereWithoutPayerInput[]
     deleteMany?: transactionsScalarWhereInput | transactionsScalarWhereInput[]
+  }
+
+  export type ApplicationsUncheckedUpdateManyWithoutEmployer_profileNestedInput = {
+    create?: XOR<ApplicationsCreateWithoutEmployer_profileInput, ApplicationsUncheckedCreateWithoutEmployer_profileInput> | ApplicationsCreateWithoutEmployer_profileInput[] | ApplicationsUncheckedCreateWithoutEmployer_profileInput[]
+    connectOrCreate?: ApplicationsCreateOrConnectWithoutEmployer_profileInput | ApplicationsCreateOrConnectWithoutEmployer_profileInput[]
+    upsert?: ApplicationsUpsertWithWhereUniqueWithoutEmployer_profileInput | ApplicationsUpsertWithWhereUniqueWithoutEmployer_profileInput[]
+    createMany?: ApplicationsCreateManyEmployer_profileInputEnvelope
+    set?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    disconnect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    delete?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
+    update?: ApplicationsUpdateWithWhereUniqueWithoutEmployer_profileInput | ApplicationsUpdateWithWhereUniqueWithoutEmployer_profileInput[]
+    updateMany?: ApplicationsUpdateManyWithWhereWithoutEmployer_profileInput | ApplicationsUpdateManyWithWhereWithoutEmployer_profileInput[]
+    deleteMany?: ApplicationsScalarWhereInput | ApplicationsScalarWhereInput[]
+  }
+
+  export type Saved_JobsUncheckedUpdateManyWithoutEmployer_profileNestedInput = {
+    create?: XOR<Saved_JobsCreateWithoutEmployer_profileInput, Saved_JobsUncheckedCreateWithoutEmployer_profileInput> | Saved_JobsCreateWithoutEmployer_profileInput[] | Saved_JobsUncheckedCreateWithoutEmployer_profileInput[]
+    connectOrCreate?: Saved_JobsCreateOrConnectWithoutEmployer_profileInput | Saved_JobsCreateOrConnectWithoutEmployer_profileInput[]
+    upsert?: Saved_JobsUpsertWithWhereUniqueWithoutEmployer_profileInput | Saved_JobsUpsertWithWhereUniqueWithoutEmployer_profileInput[]
+    createMany?: Saved_JobsCreateManyEmployer_profileInputEnvelope
+    set?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    disconnect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    delete?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    update?: Saved_JobsUpdateWithWhereUniqueWithoutEmployer_profileInput | Saved_JobsUpdateWithWhereUniqueWithoutEmployer_profileInput[]
+    updateMany?: Saved_JobsUpdateManyWithWhereWithoutEmployer_profileInput | Saved_JobsUpdateManyWithWhereWithoutEmployer_profileInput[]
+    deleteMany?: Saved_JobsScalarWhereInput | Saved_JobsScalarWhereInput[]
   }
 
   export type ApplicationsCreateNestedManyWithoutResumeInput = {
@@ -36397,6 +37881,12 @@ export namespace Prisma {
     connect?: Pwd_ProfileWhereUniqueInput
   }
 
+  export type Employer_ProfileCreateNestedOneWithoutApplicationsInput = {
+    create?: XOR<Employer_ProfileCreateWithoutApplicationsInput, Employer_ProfileUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: Employer_ProfileCreateOrConnectWithoutApplicationsInput
+    connect?: Employer_ProfileWhereUniqueInput
+  }
+
   export type ResumesCreateNestedOneWithoutApplicationsInput = {
     create?: XOR<ResumesCreateWithoutApplicationsInput, ResumesUncheckedCreateWithoutApplicationsInput>
     connectOrCreate?: ResumesCreateOrConnectWithoutApplicationsInput
@@ -36445,6 +37935,14 @@ export namespace Prisma {
     upsert?: Pwd_ProfileUpsertWithoutApplicationsInput
     connect?: Pwd_ProfileWhereUniqueInput
     update?: XOR<XOR<Pwd_ProfileUpdateToOneWithWhereWithoutApplicationsInput, Pwd_ProfileUpdateWithoutApplicationsInput>, Pwd_ProfileUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type Employer_ProfileUpdateOneRequiredWithoutApplicationsNestedInput = {
+    create?: XOR<Employer_ProfileCreateWithoutApplicationsInput, Employer_ProfileUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: Employer_ProfileCreateOrConnectWithoutApplicationsInput
+    upsert?: Employer_ProfileUpsertWithoutApplicationsInput
+    connect?: Employer_ProfileWhereUniqueInput
+    update?: XOR<XOR<Employer_ProfileUpdateToOneWithWhereWithoutApplicationsInput, Employer_ProfileUpdateWithoutApplicationsInput>, Employer_ProfileUncheckedUpdateWithoutApplicationsInput>
   }
 
   export type ResumesUpdateOneRequiredWithoutApplicationsNestedInput = {
@@ -36621,46 +38119,54 @@ export namespace Prisma {
     update?: XOR<XOR<UsersUpdateToOneWithWhereWithoutNotificationsInput, UsersUpdateWithoutNotificationsInput>, UsersUncheckedUpdateWithoutNotificationsInput>
   }
 
-  export type Job_ListingsCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<Job_ListingsCreateWithoutCategoryInput, Job_ListingsUncheckedCreateWithoutCategoryInput> | Job_ListingsCreateWithoutCategoryInput[] | Job_ListingsUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: Job_ListingsCreateOrConnectWithoutCategoryInput | Job_ListingsCreateOrConnectWithoutCategoryInput[]
-    createMany?: Job_ListingsCreateManyCategoryInputEnvelope
-    connect?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
+  export type Job_ListingsCreateNestedOneWithoutSaved_JobsInput = {
+    create?: XOR<Job_ListingsCreateWithoutSaved_JobsInput, Job_ListingsUncheckedCreateWithoutSaved_JobsInput>
+    connectOrCreate?: Job_ListingsCreateOrConnectWithoutSaved_JobsInput
+    connect?: Job_ListingsWhereUniqueInput
   }
 
-  export type Job_ListingsUncheckedCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<Job_ListingsCreateWithoutCategoryInput, Job_ListingsUncheckedCreateWithoutCategoryInput> | Job_ListingsCreateWithoutCategoryInput[] | Job_ListingsUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: Job_ListingsCreateOrConnectWithoutCategoryInput | Job_ListingsCreateOrConnectWithoutCategoryInput[]
-    createMany?: Job_ListingsCreateManyCategoryInputEnvelope
-    connect?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
+  export type Pwd_ProfileCreateNestedOneWithoutSaved_JobsInput = {
+    create?: XOR<Pwd_ProfileCreateWithoutSaved_JobsInput, Pwd_ProfileUncheckedCreateWithoutSaved_JobsInput>
+    connectOrCreate?: Pwd_ProfileCreateOrConnectWithoutSaved_JobsInput
+    connect?: Pwd_ProfileWhereUniqueInput
   }
 
-  export type Job_ListingsUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<Job_ListingsCreateWithoutCategoryInput, Job_ListingsUncheckedCreateWithoutCategoryInput> | Job_ListingsCreateWithoutCategoryInput[] | Job_ListingsUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: Job_ListingsCreateOrConnectWithoutCategoryInput | Job_ListingsCreateOrConnectWithoutCategoryInput[]
-    upsert?: Job_ListingsUpsertWithWhereUniqueWithoutCategoryInput | Job_ListingsUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: Job_ListingsCreateManyCategoryInputEnvelope
-    set?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    disconnect?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    delete?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    connect?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    update?: Job_ListingsUpdateWithWhereUniqueWithoutCategoryInput | Job_ListingsUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: Job_ListingsUpdateManyWithWhereWithoutCategoryInput | Job_ListingsUpdateManyWithWhereWithoutCategoryInput[]
-    deleteMany?: Job_ListingsScalarWhereInput | Job_ListingsScalarWhereInput[]
+  export type Employer_ProfileCreateNestedOneWithoutSaved_JobsInput = {
+    create?: XOR<Employer_ProfileCreateWithoutSaved_JobsInput, Employer_ProfileUncheckedCreateWithoutSaved_JobsInput>
+    connectOrCreate?: Employer_ProfileCreateOrConnectWithoutSaved_JobsInput
+    connect?: Employer_ProfileWhereUniqueInput
   }
 
-  export type Job_ListingsUncheckedUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<Job_ListingsCreateWithoutCategoryInput, Job_ListingsUncheckedCreateWithoutCategoryInput> | Job_ListingsCreateWithoutCategoryInput[] | Job_ListingsUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: Job_ListingsCreateOrConnectWithoutCategoryInput | Job_ListingsCreateOrConnectWithoutCategoryInput[]
-    upsert?: Job_ListingsUpsertWithWhereUniqueWithoutCategoryInput | Job_ListingsUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: Job_ListingsCreateManyCategoryInputEnvelope
-    set?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    disconnect?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    delete?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    connect?: Job_ListingsWhereUniqueInput | Job_ListingsWhereUniqueInput[]
-    update?: Job_ListingsUpdateWithWhereUniqueWithoutCategoryInput | Job_ListingsUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: Job_ListingsUpdateManyWithWhereWithoutCategoryInput | Job_ListingsUpdateManyWithWhereWithoutCategoryInput[]
-    deleteMany?: Job_ListingsScalarWhereInput | Job_ListingsScalarWhereInput[]
+  export type Job_ListingsUpdateOneRequiredWithoutSaved_JobsNestedInput = {
+    create?: XOR<Job_ListingsCreateWithoutSaved_JobsInput, Job_ListingsUncheckedCreateWithoutSaved_JobsInput>
+    connectOrCreate?: Job_ListingsCreateOrConnectWithoutSaved_JobsInput
+    upsert?: Job_ListingsUpsertWithoutSaved_JobsInput
+    connect?: Job_ListingsWhereUniqueInput
+    update?: XOR<XOR<Job_ListingsUpdateToOneWithWhereWithoutSaved_JobsInput, Job_ListingsUpdateWithoutSaved_JobsInput>, Job_ListingsUncheckedUpdateWithoutSaved_JobsInput>
+  }
+
+  export type Pwd_ProfileUpdateOneRequiredWithoutSaved_JobsNestedInput = {
+    create?: XOR<Pwd_ProfileCreateWithoutSaved_JobsInput, Pwd_ProfileUncheckedCreateWithoutSaved_JobsInput>
+    connectOrCreate?: Pwd_ProfileCreateOrConnectWithoutSaved_JobsInput
+    upsert?: Pwd_ProfileUpsertWithoutSaved_JobsInput
+    connect?: Pwd_ProfileWhereUniqueInput
+    update?: XOR<XOR<Pwd_ProfileUpdateToOneWithWhereWithoutSaved_JobsInput, Pwd_ProfileUpdateWithoutSaved_JobsInput>, Pwd_ProfileUncheckedUpdateWithoutSaved_JobsInput>
+  }
+
+  export type Employer_ProfileUpdateOneRequiredWithoutSaved_JobsNestedInput = {
+    create?: XOR<Employer_ProfileCreateWithoutSaved_JobsInput, Employer_ProfileUncheckedCreateWithoutSaved_JobsInput>
+    connectOrCreate?: Employer_ProfileCreateOrConnectWithoutSaved_JobsInput
+    upsert?: Employer_ProfileUpsertWithoutSaved_JobsInput
+    connect?: Employer_ProfileWhereUniqueInput
+    update?: XOR<XOR<Employer_ProfileUpdateToOneWithWhereWithoutSaved_JobsInput, Employer_ProfileUpdateWithoutSaved_JobsInput>, Employer_ProfileUncheckedUpdateWithoutSaved_JobsInput>
+  }
+
+  export type Job_ListingsCreateskills_requiredInput = {
+    set: string[]
+  }
+
+  export type Job_ListingsCreateworkplace_accessibility_featuresInput = {
+    set: string[]
   }
 
   export type ApplicationsCreateNestedManyWithoutJob_listingInput = {
@@ -36668,12 +38174,6 @@ export namespace Prisma {
     connectOrCreate?: ApplicationsCreateOrConnectWithoutJob_listingInput | ApplicationsCreateOrConnectWithoutJob_listingInput[]
     createMany?: ApplicationsCreateManyJob_listingInputEnvelope
     connect?: ApplicationsWhereUniqueInput | ApplicationsWhereUniqueInput[]
-  }
-
-  export type Job_CategoriesCreateNestedOneWithoutJob_listingsInput = {
-    create?: XOR<Job_CategoriesCreateWithoutJob_listingsInput, Job_CategoriesUncheckedCreateWithoutJob_listingsInput>
-    connectOrCreate?: Job_CategoriesCreateOrConnectWithoutJob_listingsInput
-    connect?: Job_CategoriesWhereUniqueInput
   }
 
   export type Employer_ProfileCreateNestedOneWithoutJob_listingsInput = {
@@ -36687,6 +38187,13 @@ export namespace Prisma {
     connectOrCreate?: ai_match_resultsCreateOrConnectWithoutJob_listingInput | ai_match_resultsCreateOrConnectWithoutJob_listingInput[]
     createMany?: ai_match_resultsCreateManyJob_listingInputEnvelope
     connect?: ai_match_resultsWhereUniqueInput | ai_match_resultsWhereUniqueInput[]
+  }
+
+  export type Saved_JobsCreateNestedManyWithoutJob_listingsInput = {
+    create?: XOR<Saved_JobsCreateWithoutJob_listingsInput, Saved_JobsUncheckedCreateWithoutJob_listingsInput> | Saved_JobsCreateWithoutJob_listingsInput[] | Saved_JobsUncheckedCreateWithoutJob_listingsInput[]
+    connectOrCreate?: Saved_JobsCreateOrConnectWithoutJob_listingsInput | Saved_JobsCreateOrConnectWithoutJob_listingsInput[]
+    createMany?: Saved_JobsCreateManyJob_listingsInputEnvelope
+    connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
   }
 
   export type ApplicationsUncheckedCreateNestedManyWithoutJob_listingInput = {
@@ -36703,20 +38210,21 @@ export namespace Prisma {
     connect?: ai_match_resultsWhereUniqueInput | ai_match_resultsWhereUniqueInput[]
   }
 
-  export type EnumEmploymentTypeFieldUpdateOperationsInput = {
-    set?: $Enums.EmploymentType
+  export type Saved_JobsUncheckedCreateNestedManyWithoutJob_listingsInput = {
+    create?: XOR<Saved_JobsCreateWithoutJob_listingsInput, Saved_JobsUncheckedCreateWithoutJob_listingsInput> | Saved_JobsCreateWithoutJob_listingsInput[] | Saved_JobsUncheckedCreateWithoutJob_listingsInput[]
+    connectOrCreate?: Saved_JobsCreateOrConnectWithoutJob_listingsInput | Saved_JobsCreateOrConnectWithoutJob_listingsInput[]
+    createMany?: Saved_JobsCreateManyJob_listingsInputEnvelope
+    connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
   }
 
-  export type EnumWorkArrangementFieldUpdateOperationsInput = {
-    set?: $Enums.WorkArrangement
+  export type Job_ListingsUpdateskills_requiredInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
-  export type EnumSalaryTypeFieldUpdateOperationsInput = {
-    set?: $Enums.SalaryType
-  }
-
-  export type EnumExperienceLevelFieldUpdateOperationsInput = {
-    set?: $Enums.ExperienceLevel
+  export type Job_ListingsUpdateworkplace_accessibility_featuresInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type ApplicationsUpdateManyWithoutJob_listingNestedInput = {
@@ -36731,14 +38239,6 @@ export namespace Prisma {
     update?: ApplicationsUpdateWithWhereUniqueWithoutJob_listingInput | ApplicationsUpdateWithWhereUniqueWithoutJob_listingInput[]
     updateMany?: ApplicationsUpdateManyWithWhereWithoutJob_listingInput | ApplicationsUpdateManyWithWhereWithoutJob_listingInput[]
     deleteMany?: ApplicationsScalarWhereInput | ApplicationsScalarWhereInput[]
-  }
-
-  export type Job_CategoriesUpdateOneRequiredWithoutJob_listingsNestedInput = {
-    create?: XOR<Job_CategoriesCreateWithoutJob_listingsInput, Job_CategoriesUncheckedCreateWithoutJob_listingsInput>
-    connectOrCreate?: Job_CategoriesCreateOrConnectWithoutJob_listingsInput
-    upsert?: Job_CategoriesUpsertWithoutJob_listingsInput
-    connect?: Job_CategoriesWhereUniqueInput
-    update?: XOR<XOR<Job_CategoriesUpdateToOneWithWhereWithoutJob_listingsInput, Job_CategoriesUpdateWithoutJob_listingsInput>, Job_CategoriesUncheckedUpdateWithoutJob_listingsInput>
   }
 
   export type Employer_ProfileUpdateOneRequiredWithoutJob_listingsNestedInput = {
@@ -36761,6 +38261,20 @@ export namespace Prisma {
     update?: ai_match_resultsUpdateWithWhereUniqueWithoutJob_listingInput | ai_match_resultsUpdateWithWhereUniqueWithoutJob_listingInput[]
     updateMany?: ai_match_resultsUpdateManyWithWhereWithoutJob_listingInput | ai_match_resultsUpdateManyWithWhereWithoutJob_listingInput[]
     deleteMany?: ai_match_resultsScalarWhereInput | ai_match_resultsScalarWhereInput[]
+  }
+
+  export type Saved_JobsUpdateManyWithoutJob_listingsNestedInput = {
+    create?: XOR<Saved_JobsCreateWithoutJob_listingsInput, Saved_JobsUncheckedCreateWithoutJob_listingsInput> | Saved_JobsCreateWithoutJob_listingsInput[] | Saved_JobsUncheckedCreateWithoutJob_listingsInput[]
+    connectOrCreate?: Saved_JobsCreateOrConnectWithoutJob_listingsInput | Saved_JobsCreateOrConnectWithoutJob_listingsInput[]
+    upsert?: Saved_JobsUpsertWithWhereUniqueWithoutJob_listingsInput | Saved_JobsUpsertWithWhereUniqueWithoutJob_listingsInput[]
+    createMany?: Saved_JobsCreateManyJob_listingsInputEnvelope
+    set?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    disconnect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    delete?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    update?: Saved_JobsUpdateWithWhereUniqueWithoutJob_listingsInput | Saved_JobsUpdateWithWhereUniqueWithoutJob_listingsInput[]
+    updateMany?: Saved_JobsUpdateManyWithWhereWithoutJob_listingsInput | Saved_JobsUpdateManyWithWhereWithoutJob_listingsInput[]
+    deleteMany?: Saved_JobsScalarWhereInput | Saved_JobsScalarWhereInput[]
   }
 
   export type ApplicationsUncheckedUpdateManyWithoutJob_listingNestedInput = {
@@ -36789,6 +38303,20 @@ export namespace Prisma {
     update?: ai_match_resultsUpdateWithWhereUniqueWithoutJob_listingInput | ai_match_resultsUpdateWithWhereUniqueWithoutJob_listingInput[]
     updateMany?: ai_match_resultsUpdateManyWithWhereWithoutJob_listingInput | ai_match_resultsUpdateManyWithWhereWithoutJob_listingInput[]
     deleteMany?: ai_match_resultsScalarWhereInput | ai_match_resultsScalarWhereInput[]
+  }
+
+  export type Saved_JobsUncheckedUpdateManyWithoutJob_listingsNestedInput = {
+    create?: XOR<Saved_JobsCreateWithoutJob_listingsInput, Saved_JobsUncheckedCreateWithoutJob_listingsInput> | Saved_JobsCreateWithoutJob_listingsInput[] | Saved_JobsUncheckedCreateWithoutJob_listingsInput[]
+    connectOrCreate?: Saved_JobsCreateOrConnectWithoutJob_listingsInput | Saved_JobsCreateOrConnectWithoutJob_listingsInput[]
+    upsert?: Saved_JobsUpsertWithWhereUniqueWithoutJob_listingsInput | Saved_JobsUpsertWithWhereUniqueWithoutJob_listingsInput[]
+    createMany?: Saved_JobsCreateManyJob_listingsInputEnvelope
+    set?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    disconnect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    delete?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    connect?: Saved_JobsWhereUniqueInput | Saved_JobsWhereUniqueInput[]
+    update?: Saved_JobsUpdateWithWhereUniqueWithoutJob_listingsInput | Saved_JobsUpdateWithWhereUniqueWithoutJob_listingsInput[]
+    updateMany?: Saved_JobsUpdateManyWithWhereWithoutJob_listingsInput | Saved_JobsUpdateManyWithWhereWithoutJob_listingsInput[]
+    deleteMany?: Saved_JobsScalarWhereInput | Saved_JobsScalarWhereInput[]
   }
 
   export type UsersCreateNestedOneWithoutAssigned_ticketsInput = {
@@ -37135,6 +38663,22 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -37271,74 +38815,6 @@ export namespace Prisma {
     _max?: NestedEnumTransactionStatusFilter<$PrismaModel>
   }
 
-  export type NestedEnumEmploymentTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.EmploymentType | EnumEmploymentTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumEmploymentTypeFilter<$PrismaModel> | $Enums.EmploymentType
-  }
-
-  export type NestedEnumWorkArrangementFilter<$PrismaModel = never> = {
-    equals?: $Enums.WorkArrangement | EnumWorkArrangementFieldRefInput<$PrismaModel>
-    in?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    not?: NestedEnumWorkArrangementFilter<$PrismaModel> | $Enums.WorkArrangement
-  }
-
-  export type NestedEnumSalaryTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.SalaryType | EnumSalaryTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumSalaryTypeFilter<$PrismaModel> | $Enums.SalaryType
-  }
-
-  export type NestedEnumExperienceLevelFilter<$PrismaModel = never> = {
-    equals?: $Enums.ExperienceLevel | EnumExperienceLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumExperienceLevelFilter<$PrismaModel> | $Enums.ExperienceLevel
-  }
-
-  export type NestedEnumEmploymentTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.EmploymentType | EnumEmploymentTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EmploymentType[] | ListEnumEmploymentTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumEmploymentTypeWithAggregatesFilter<$PrismaModel> | $Enums.EmploymentType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumEmploymentTypeFilter<$PrismaModel>
-    _max?: NestedEnumEmploymentTypeFilter<$PrismaModel>
-  }
-
-  export type NestedEnumWorkArrangementWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.WorkArrangement | EnumWorkArrangementFieldRefInput<$PrismaModel>
-    in?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WorkArrangement[] | ListEnumWorkArrangementFieldRefInput<$PrismaModel>
-    not?: NestedEnumWorkArrangementWithAggregatesFilter<$PrismaModel> | $Enums.WorkArrangement
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumWorkArrangementFilter<$PrismaModel>
-    _max?: NestedEnumWorkArrangementFilter<$PrismaModel>
-  }
-
-  export type NestedEnumSalaryTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.SalaryType | EnumSalaryTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.SalaryType[] | ListEnumSalaryTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumSalaryTypeWithAggregatesFilter<$PrismaModel> | $Enums.SalaryType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumSalaryTypeFilter<$PrismaModel>
-    _max?: NestedEnumSalaryTypeFilter<$PrismaModel>
-  }
-
-  export type NestedEnumExperienceLevelWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ExperienceLevel | EnumExperienceLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ExperienceLevel[] | ListEnumExperienceLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumExperienceLevelWithAggregatesFilter<$PrismaModel> | $Enums.ExperienceLevel
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumExperienceLevelFilter<$PrismaModel>
-    _max?: NestedEnumExperienceLevelFilter<$PrismaModel>
-  }
-
   export type NestedEnumTicketCategoryFilter<$PrismaModel = never> = {
     equals?: $Enums.TicketCategory | EnumTicketCategoryFieldRefInput<$PrismaModel>
     in?: $Enums.TicketCategory[] | ListEnumTicketCategoryFieldRefInput<$PrismaModel>
@@ -37436,13 +38912,17 @@ export namespace Prisma {
     updated_at?: Date | string
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
+    profile_views: number
+    interviews: number
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -37450,8 +38930,18 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
     job_listings?: Job_ListingsCreateNestedManyWithoutEmployerInput
     transactions?: transactionsCreateNestedManyWithoutPayerInput
+    Applications?: ApplicationsCreateNestedManyWithoutEmployer_profileInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutEmployer_profileInput
   }
 
   export type Employer_ProfileUncheckedCreateWithoutUserInput = {
@@ -37461,13 +38951,17 @@ export namespace Prisma {
     employer_id?: number
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
+    profile_views: number
+    interviews: number
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -37475,8 +38969,18 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
     job_listings?: Job_ListingsUncheckedCreateNestedManyWithoutEmployerInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayerInput
+    Applications?: ApplicationsUncheckedCreateNestedManyWithoutEmployer_profileInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutEmployer_profileInput
   }
 
   export type Employer_ProfileCreateOrConnectWithoutUserInput = {
@@ -37523,6 +39027,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     date_of_birth?: string | null
@@ -37532,11 +39038,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -37545,6 +39077,7 @@ export namespace Prisma {
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileUncheckedCreateWithoutUserInput = {
@@ -37557,6 +39090,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     pwd_id?: number
@@ -37567,11 +39102,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -37580,6 +39141,7 @@ export namespace Prisma {
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileCreateOrConnectWithoutUserInput = {
@@ -37877,13 +39439,17 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37891,8 +39457,18 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
     job_listings?: Job_ListingsUpdateManyWithoutEmployerNestedInput
     transactions?: transactionsUpdateManyWithoutPayerNestedInput
+    Applications?: ApplicationsUpdateManyWithoutEmployer_profileNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutEmployer_profileNestedInput
   }
 
   export type Employer_ProfileUncheckedUpdateWithoutUserInput = {
@@ -37902,13 +39478,17 @@ export namespace Prisma {
     employer_id?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37916,8 +39496,18 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
     job_listings?: Job_ListingsUncheckedUpdateManyWithoutEmployerNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayerNestedInput
+    Applications?: ApplicationsUncheckedUpdateManyWithoutEmployer_profileNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutEmployer_profileNestedInput
   }
 
   export type NotificationsUpsertWithWhereUniqueWithoutUserInput = {
@@ -37971,6 +39561,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37980,11 +39572,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -37993,6 +39611,7 @@ export namespace Prisma {
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileUncheckedUpdateWithoutUserInput = {
@@ -38005,6 +39624,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pwd_id?: IntFieldUpdateOperationsInput | number
@@ -38015,11 +39636,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -38028,6 +39675,7 @@ export namespace Prisma {
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type chatbot_logsUpsertWithWhereUniqueWithoutUserInput = {
@@ -38234,10 +39882,13 @@ export namespace Prisma {
   export type ApplicationsCreateWithoutPwd_profileInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
     job_listing: Job_ListingsCreateNestedOneWithoutApplicationsInput
+    employer_profile: Employer_ProfileCreateNestedOneWithoutApplicationsInput
     resume: ResumesCreateNestedOneWithoutApplicationsInput
     reviews?: reviewsCreateNestedManyWithoutApplicationInput
     transactions?: transactionsCreateNestedManyWithoutApplicationInput
@@ -38246,9 +39897,12 @@ export namespace Prisma {
   export type ApplicationsUncheckedCreateWithoutPwd_profileInput = {
     application_id?: number
     job_id: number
+    employer_id: number
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -38547,6 +40201,27 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type Saved_JobsCreateWithoutPwd_profileInput = {
+    job_listings: Job_ListingsCreateNestedOneWithoutSaved_JobsInput
+    employer_profile: Employer_ProfileCreateNestedOneWithoutSaved_JobsInput
+  }
+
+  export type Saved_JobsUncheckedCreateWithoutPwd_profileInput = {
+    savedJob_id?: number
+    job_id: number
+    employer_id: number
+  }
+
+  export type Saved_JobsCreateOrConnectWithoutPwd_profileInput = {
+    where: Saved_JobsWhereUniqueInput
+    create: XOR<Saved_JobsCreateWithoutPwd_profileInput, Saved_JobsUncheckedCreateWithoutPwd_profileInput>
+  }
+
+  export type Saved_JobsCreateManyPwd_profileInputEnvelope = {
+    data: Saved_JobsCreateManyPwd_profileInput | Saved_JobsCreateManyPwd_profileInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ApplicationsUpsertWithWhereUniqueWithoutPwd_profileInput = {
     where: ApplicationsWhereUniqueInput
     update: XOR<ApplicationsUpdateWithoutPwd_profileInput, ApplicationsUncheckedUpdateWithoutPwd_profileInput>
@@ -38570,9 +40245,12 @@ export namespace Prisma {
     application_id?: IntFilter<"Applications"> | number
     job_id?: IntFilter<"Applications"> | number
     pwd_id?: IntFilter<"Applications"> | number
+    employer_id?: IntFilter<"Applications"> | number
     resume_id?: IntFilter<"Applications"> | number
     custom_message?: StringFilter<"Applications"> | string
     proposed_salary?: DecimalFilter<"Applications"> | Decimal | DecimalJsLike | number | string
+    work_experience?: StringNullableFilter<"Applications"> | string | null
+    portfolio_links?: StringNullableFilter<"Applications"> | string | null
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
@@ -38857,6 +40535,32 @@ export namespace Prisma {
     processed_at?: DateTimeFilter<"transactions"> | Date | string
   }
 
+  export type Saved_JobsUpsertWithWhereUniqueWithoutPwd_profileInput = {
+    where: Saved_JobsWhereUniqueInput
+    update: XOR<Saved_JobsUpdateWithoutPwd_profileInput, Saved_JobsUncheckedUpdateWithoutPwd_profileInput>
+    create: XOR<Saved_JobsCreateWithoutPwd_profileInput, Saved_JobsUncheckedCreateWithoutPwd_profileInput>
+  }
+
+  export type Saved_JobsUpdateWithWhereUniqueWithoutPwd_profileInput = {
+    where: Saved_JobsWhereUniqueInput
+    data: XOR<Saved_JobsUpdateWithoutPwd_profileInput, Saved_JobsUncheckedUpdateWithoutPwd_profileInput>
+  }
+
+  export type Saved_JobsUpdateManyWithWhereWithoutPwd_profileInput = {
+    where: Saved_JobsScalarWhereInput
+    data: XOR<Saved_JobsUpdateManyMutationInput, Saved_JobsUncheckedUpdateManyWithoutPwd_profileInput>
+  }
+
+  export type Saved_JobsScalarWhereInput = {
+    AND?: Saved_JobsScalarWhereInput | Saved_JobsScalarWhereInput[]
+    OR?: Saved_JobsScalarWhereInput[]
+    NOT?: Saved_JobsScalarWhereInput | Saved_JobsScalarWhereInput[]
+    savedJob_id?: IntFilter<"Saved_Jobs"> | number
+    job_id?: IntFilter<"Saved_Jobs"> | number
+    pwd_id?: IntFilter<"Saved_Jobs"> | number
+    employer_id?: IntFilter<"Saved_Jobs"> | number
+  }
+
   export type Pwd_ProfileCreateWithoutExperiencesInput = {
     first_name?: string
     last_name?: string
@@ -38867,6 +40571,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     date_of_birth?: string | null
@@ -38876,11 +40582,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -38889,6 +40621,7 @@ export namespace Prisma {
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileUncheckedCreateWithoutExperiencesInput = {
@@ -38901,6 +40634,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     pwd_id?: number
@@ -38912,11 +40647,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -38924,6 +40685,7 @@ export namespace Prisma {
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileCreateOrConnectWithoutExperiencesInput = {
@@ -38952,6 +40714,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38961,11 +40725,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -38974,6 +40764,7 @@ export namespace Prisma {
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileUncheckedUpdateWithoutExperiencesInput = {
@@ -38986,6 +40777,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pwd_id?: IntFieldUpdateOperationsInput | number
@@ -38997,11 +40790,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -39009,6 +40828,7 @@ export namespace Prisma {
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileCreateWithoutAccessibility_needsInput = {
@@ -39021,6 +40841,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     date_of_birth?: string | null
@@ -39030,11 +40852,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
@@ -39043,6 +40891,7 @@ export namespace Prisma {
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileUncheckedCreateWithoutAccessibility_needsInput = {
@@ -39055,6 +40904,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     pwd_id?: number
@@ -39066,11 +40917,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -39078,6 +40955,7 @@ export namespace Prisma {
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileCreateOrConnectWithoutAccessibility_needsInput = {
@@ -39106,6 +40984,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39115,11 +40995,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
@@ -39128,6 +41034,7 @@ export namespace Prisma {
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileUncheckedUpdateWithoutAccessibility_needsInput = {
@@ -39140,6 +41047,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pwd_id?: IntFieldUpdateOperationsInput | number
@@ -39151,11 +41060,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -39163,6 +41098,7 @@ export namespace Prisma {
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileCreateWithoutEducationsInput = {
@@ -39175,6 +41111,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     date_of_birth?: string | null
@@ -39184,11 +41122,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
@@ -39197,6 +41161,7 @@ export namespace Prisma {
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileUncheckedCreateWithoutEducationsInput = {
@@ -39209,6 +41174,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     pwd_id?: number
@@ -39220,11 +41187,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -39232,6 +41225,7 @@ export namespace Prisma {
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileCreateOrConnectWithoutEducationsInput = {
@@ -39260,6 +41254,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39269,11 +41265,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
@@ -39282,6 +41304,7 @@ export namespace Prisma {
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileUncheckedUpdateWithoutEducationsInput = {
@@ -39294,6 +41317,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pwd_id?: IntFieldUpdateOperationsInput | number
@@ -39305,11 +41330,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -39317,6 +41368,7 @@ export namespace Prisma {
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileCreateWithoutJob_preferencesInput = {
@@ -39329,6 +41381,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     date_of_birth?: string | null
@@ -39338,11 +41392,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -39351,6 +41431,7 @@ export namespace Prisma {
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileUncheckedCreateWithoutJob_preferencesInput = {
@@ -39363,6 +41444,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     pwd_id?: number
@@ -39374,11 +41457,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -39386,6 +41495,7 @@ export namespace Prisma {
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileCreateOrConnectWithoutJob_preferencesInput = {
@@ -39414,6 +41524,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39423,11 +41535,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -39436,6 +41574,7 @@ export namespace Prisma {
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileUncheckedUpdateWithoutJob_preferencesInput = {
@@ -39448,6 +41587,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pwd_id?: IntFieldUpdateOperationsInput | number
@@ -39459,11 +41600,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -39471,6 +41638,7 @@ export namespace Prisma {
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type UsersCreateWithoutEmployer_ProfileInput = {
@@ -39524,50 +41692,54 @@ export namespace Prisma {
   }
 
   export type Job_ListingsCreateWithoutEmployerInput = {
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsCreateNestedManyWithoutJob_listingInput
-    category: Job_CategoriesCreateNestedOneWithoutJob_listingsInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutJob_listingInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutJob_listingsInput
   }
 
   export type Job_ListingsUncheckedCreateWithoutEmployerInput = {
     job_id?: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsUncheckedCreateNestedManyWithoutJob_listingInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutJob_listingInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutJob_listingsInput
   }
 
   export type Job_ListingsCreateOrConnectWithoutEmployerInput = {
@@ -39612,6 +41784,68 @@ export namespace Prisma {
 
   export type transactionsCreateManyPayerInputEnvelope = {
     data: transactionsCreateManyPayerInput | transactionsCreateManyPayerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ApplicationsCreateWithoutEmployer_profileInput = {
+    custom_message: string
+    proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
+    submitted_at: Date | string
+    updated_at?: Date | string
+    status_changed_at: Date | string
+    job_listing: Job_ListingsCreateNestedOneWithoutApplicationsInput
+    pwd_profile: Pwd_ProfileCreateNestedOneWithoutApplicationsInput
+    resume: ResumesCreateNestedOneWithoutApplicationsInput
+    reviews?: reviewsCreateNestedManyWithoutApplicationInput
+    transactions?: transactionsCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationsUncheckedCreateWithoutEmployer_profileInput = {
+    application_id?: number
+    job_id: number
+    pwd_id: number
+    resume_id: number
+    custom_message: string
+    proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
+    submitted_at: Date | string
+    updated_at?: Date | string
+    status_changed_at: Date | string
+    reviews?: reviewsUncheckedCreateNestedManyWithoutApplicationInput
+    transactions?: transactionsUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationsCreateOrConnectWithoutEmployer_profileInput = {
+    where: ApplicationsWhereUniqueInput
+    create: XOR<ApplicationsCreateWithoutEmployer_profileInput, ApplicationsUncheckedCreateWithoutEmployer_profileInput>
+  }
+
+  export type ApplicationsCreateManyEmployer_profileInputEnvelope = {
+    data: ApplicationsCreateManyEmployer_profileInput | ApplicationsCreateManyEmployer_profileInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type Saved_JobsCreateWithoutEmployer_profileInput = {
+    job_listings: Job_ListingsCreateNestedOneWithoutSaved_JobsInput
+    pwd_profile: Pwd_ProfileCreateNestedOneWithoutSaved_JobsInput
+  }
+
+  export type Saved_JobsUncheckedCreateWithoutEmployer_profileInput = {
+    savedJob_id?: number
+    job_id: number
+    pwd_id: number
+  }
+
+  export type Saved_JobsCreateOrConnectWithoutEmployer_profileInput = {
+    where: Saved_JobsWhereUniqueInput
+    create: XOR<Saved_JobsCreateWithoutEmployer_profileInput, Saved_JobsUncheckedCreateWithoutEmployer_profileInput>
+  }
+
+  export type Saved_JobsCreateManyEmployer_profileInputEnvelope = {
+    data: Saved_JobsCreateManyEmployer_profileInput | Saved_JobsCreateManyEmployer_profileInput[]
     skipDuplicates?: boolean
   }
 
@@ -39692,23 +41926,24 @@ export namespace Prisma {
     OR?: Job_ListingsScalarWhereInput[]
     NOT?: Job_ListingsScalarWhereInput | Job_ListingsScalarWhereInput[]
     job_id?: IntFilter<"Job_Listings"> | number
+    job_code?: StringNullableFilter<"Job_Listings"> | string | null
     employer_id?: IntFilter<"Job_Listings"> | number
-    category_id?: IntFilter<"Job_Listings"> | number
-    title?: StringFilter<"Job_Listings"> | string
-    description?: StringFilter<"Job_Listings"> | string
-    skills_required?: StringFilter<"Job_Listings"> | string
-    employment_type?: EnumEmploymentTypeFilter<"Job_Listings"> | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFilter<"Job_Listings"> | $Enums.WorkArrangement
-    salary_min?: DecimalFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFilter<"Job_Listings"> | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFilter<"Job_Listings"> | $Enums.SalaryType
+    jobtitle?: StringFilter<"Job_Listings"> | string
+    jobCategory?: StringFilter<"Job_Listings"> | string
+    description?: StringNullableFilter<"Job_Listings"> | string | null
+    skills_required?: StringNullableListFilter<"Job_Listings">
+    employment_type?: StringFilter<"Job_Listings"> | string
+    work_arrangement?: StringFilter<"Job_Listings"> | string
+    salary_min?: IntFilter<"Job_Listings"> | number
+    salary_max?: IntFilter<"Job_Listings"> | number
+    salary_type?: StringFilter<"Job_Listings"> | string
     location_city?: StringFilter<"Job_Listings"> | string
     location_province?: StringFilter<"Job_Listings"> | string
     location_country?: StringFilter<"Job_Listings"> | string
-    accessibility_features?: StringFilter<"Job_Listings"> | string
-    experience_level?: EnumExperienceLevelFilter<"Job_Listings"> | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFilter<"Job_Listings"> | Date | string
-    applications_count?: IntFilter<"Job_Listings"> | number
+    application_deadline?: StringNullableFilter<"Job_Listings"> | string | null
+    workplace_accessibility_features?: StringNullableListFilter<"Job_Listings">
+    experience_level?: StringFilter<"Job_Listings"> | string
+    job_status?: StringFilter<"Job_Listings"> | string
     created_at?: DateTimeFilter<"Job_Listings"> | Date | string
     updated_at?: DateTimeFilter<"Job_Listings"> | Date | string
   }
@@ -39729,14 +41964,49 @@ export namespace Prisma {
     data: XOR<transactionsUpdateManyMutationInput, transactionsUncheckedUpdateManyWithoutPayerInput>
   }
 
+  export type ApplicationsUpsertWithWhereUniqueWithoutEmployer_profileInput = {
+    where: ApplicationsWhereUniqueInput
+    update: XOR<ApplicationsUpdateWithoutEmployer_profileInput, ApplicationsUncheckedUpdateWithoutEmployer_profileInput>
+    create: XOR<ApplicationsCreateWithoutEmployer_profileInput, ApplicationsUncheckedCreateWithoutEmployer_profileInput>
+  }
+
+  export type ApplicationsUpdateWithWhereUniqueWithoutEmployer_profileInput = {
+    where: ApplicationsWhereUniqueInput
+    data: XOR<ApplicationsUpdateWithoutEmployer_profileInput, ApplicationsUncheckedUpdateWithoutEmployer_profileInput>
+  }
+
+  export type ApplicationsUpdateManyWithWhereWithoutEmployer_profileInput = {
+    where: ApplicationsScalarWhereInput
+    data: XOR<ApplicationsUpdateManyMutationInput, ApplicationsUncheckedUpdateManyWithoutEmployer_profileInput>
+  }
+
+  export type Saved_JobsUpsertWithWhereUniqueWithoutEmployer_profileInput = {
+    where: Saved_JobsWhereUniqueInput
+    update: XOR<Saved_JobsUpdateWithoutEmployer_profileInput, Saved_JobsUncheckedUpdateWithoutEmployer_profileInput>
+    create: XOR<Saved_JobsCreateWithoutEmployer_profileInput, Saved_JobsUncheckedCreateWithoutEmployer_profileInput>
+  }
+
+  export type Saved_JobsUpdateWithWhereUniqueWithoutEmployer_profileInput = {
+    where: Saved_JobsWhereUniqueInput
+    data: XOR<Saved_JobsUpdateWithoutEmployer_profileInput, Saved_JobsUncheckedUpdateWithoutEmployer_profileInput>
+  }
+
+  export type Saved_JobsUpdateManyWithWhereWithoutEmployer_profileInput = {
+    where: Saved_JobsScalarWhereInput
+    data: XOR<Saved_JobsUpdateManyMutationInput, Saved_JobsUncheckedUpdateManyWithoutEmployer_profileInput>
+  }
+
   export type ApplicationsCreateWithoutResumeInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
     job_listing: Job_ListingsCreateNestedOneWithoutApplicationsInput
     pwd_profile: Pwd_ProfileCreateNestedOneWithoutApplicationsInput
+    employer_profile: Employer_ProfileCreateNestedOneWithoutApplicationsInput
     reviews?: reviewsCreateNestedManyWithoutApplicationInput
     transactions?: transactionsCreateNestedManyWithoutApplicationInput
   }
@@ -39745,8 +42015,11 @@ export namespace Prisma {
     application_id?: number
     job_id: number
     pwd_id: number
+    employer_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -39774,6 +42047,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     date_of_birth?: string | null
@@ -39783,11 +42058,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -39796,6 +42097,7 @@ export namespace Prisma {
     user: UsersCreateNestedOneWithoutPwd_ProfileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileUncheckedCreateWithoutResumesInput = {
@@ -39808,6 +42110,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     pwd_id?: number
@@ -39819,11 +42123,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -39831,6 +42161,7 @@ export namespace Prisma {
     job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileCreateOrConnectWithoutResumesInput = {
@@ -39875,6 +42206,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39884,11 +42217,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -39897,6 +42256,7 @@ export namespace Prisma {
     user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileUncheckedUpdateWithoutResumesInput = {
@@ -39909,6 +42269,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pwd_id?: IntFieldUpdateOperationsInput | number
@@ -39920,11 +42282,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -39932,6 +42320,7 @@ export namespace Prisma {
     job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Chat_MessageCreateWithoutThreadInput = {
@@ -40342,50 +42731,54 @@ export namespace Prisma {
   }
 
   export type Job_ListingsCreateWithoutApplicationsInput = {
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
-    category: Job_CategoriesCreateNestedOneWithoutJob_listingsInput
     employer: Employer_ProfileCreateNestedOneWithoutJob_listingsInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutJob_listingInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutJob_listingsInput
   }
 
   export type Job_ListingsUncheckedCreateWithoutApplicationsInput = {
     job_id?: number
+    job_code?: string | null
     employer_id: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutJob_listingInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutJob_listingsInput
   }
 
   export type Job_ListingsCreateOrConnectWithoutApplicationsInput = {
@@ -40403,6 +42796,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     date_of_birth?: string | null
@@ -40412,11 +42807,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
@@ -40425,6 +42846,7 @@ export namespace Prisma {
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileUncheckedCreateWithoutApplicationsInput = {
@@ -40437,6 +42859,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     pwd_id?: number
@@ -40448,11 +42872,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -40460,11 +42910,94 @@ export namespace Prisma {
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileCreateOrConnectWithoutApplicationsInput = {
     where: Pwd_ProfileWhereUniqueInput
     create: XOR<Pwd_ProfileCreateWithoutApplicationsInput, Pwd_ProfileUncheckedCreateWithoutApplicationsInput>
+  }
+
+  export type Employer_ProfileCreateWithoutApplicationsInput = {
+    rating?: number
+    created_at: string
+    updated_at?: Date | string
+    address: string
+    profile_picture?: string | null
+    profile_views: number
+    interviews: number
+    company_name: string
+    company_email: string
+    company_phone: string
+    company_address: string
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
+    contact_person_fullname?: string | null
+    contact_person_job_title?: string | null
+    contact_person_phone_number?: string | null
+    date_of_birth?: string | null
+    businessRegistration?: string | null
+    governmentId?: string | null
+    taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
+    user: UsersCreateNestedOneWithoutEmployer_ProfileInput
+    job_listings?: Job_ListingsCreateNestedManyWithoutEmployerInput
+    transactions?: transactionsCreateNestedManyWithoutPayerInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutEmployer_profileInput
+  }
+
+  export type Employer_ProfileUncheckedCreateWithoutApplicationsInput = {
+    rating?: number
+    created_at: string
+    updated_at?: Date | string
+    employer_id?: number
+    user_id: number
+    address: string
+    profile_picture?: string | null
+    profile_views: number
+    interviews: number
+    company_name: string
+    company_email: string
+    company_phone: string
+    company_address: string
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
+    contact_person_fullname?: string | null
+    contact_person_job_title?: string | null
+    contact_person_phone_number?: string | null
+    date_of_birth?: string | null
+    businessRegistration?: string | null
+    governmentId?: string | null
+    taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
+    job_listings?: Job_ListingsUncheckedCreateNestedManyWithoutEmployerInput
+    transactions?: transactionsUncheckedCreateNestedManyWithoutPayerInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutEmployer_profileInput
+  }
+
+  export type Employer_ProfileCreateOrConnectWithoutApplicationsInput = {
+    where: Employer_ProfileWhereUniqueInput
+    create: XOR<Employer_ProfileCreateWithoutApplicationsInput, Employer_ProfileUncheckedCreateWithoutApplicationsInput>
   }
 
   export type ResumesCreateWithoutApplicationsInput = {
@@ -40581,50 +43114,54 @@ export namespace Prisma {
   }
 
   export type Job_ListingsUpdateWithoutApplicationsInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: Job_CategoriesUpdateOneRequiredWithoutJob_listingsNestedInput
     employer?: Employer_ProfileUpdateOneRequiredWithoutJob_listingsNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutJob_listingNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutJob_listingsNestedInput
   }
 
   export type Job_ListingsUncheckedUpdateWithoutApplicationsInput = {
     job_id?: IntFieldUpdateOperationsInput | number
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
     employer_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutJob_listingNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutJob_listingsNestedInput
   }
 
   export type Pwd_ProfileUpsertWithoutApplicationsInput = {
@@ -40648,6 +43185,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40657,11 +43196,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
@@ -40670,6 +43235,7 @@ export namespace Prisma {
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileUncheckedUpdateWithoutApplicationsInput = {
@@ -40682,6 +43248,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pwd_id?: IntFieldUpdateOperationsInput | number
@@ -40693,11 +43261,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -40705,6 +43299,95 @@ export namespace Prisma {
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutPwd_profileNestedInput
+  }
+
+  export type Employer_ProfileUpsertWithoutApplicationsInput = {
+    update: XOR<Employer_ProfileUpdateWithoutApplicationsInput, Employer_ProfileUncheckedUpdateWithoutApplicationsInput>
+    create: XOR<Employer_ProfileCreateWithoutApplicationsInput, Employer_ProfileUncheckedCreateWithoutApplicationsInput>
+    where?: Employer_ProfileWhereInput
+  }
+
+  export type Employer_ProfileUpdateToOneWithWhereWithoutApplicationsInput = {
+    where?: Employer_ProfileWhereInput
+    data: XOR<Employer_ProfileUpdateWithoutApplicationsInput, Employer_ProfileUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type Employer_ProfileUpdateWithoutApplicationsInput = {
+    rating?: FloatFieldUpdateOperationsInput | number
+    created_at?: StringFieldUpdateOperationsInput | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    address?: StringFieldUpdateOperationsInput | string
+    profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
+    company_name?: StringFieldUpdateOperationsInput | string
+    company_email?: StringFieldUpdateOperationsInput | string
+    company_phone?: StringFieldUpdateOperationsInput | string
+    company_address?: StringFieldUpdateOperationsInput | string
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
+    businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
+    governmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
+    user?: UsersUpdateOneRequiredWithoutEmployer_ProfileNestedInput
+    job_listings?: Job_ListingsUpdateManyWithoutEmployerNestedInput
+    transactions?: transactionsUpdateManyWithoutPayerNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutEmployer_profileNestedInput
+  }
+
+  export type Employer_ProfileUncheckedUpdateWithoutApplicationsInput = {
+    rating?: FloatFieldUpdateOperationsInput | number
+    created_at?: StringFieldUpdateOperationsInput | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    employer_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    address?: StringFieldUpdateOperationsInput | string
+    profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
+    company_name?: StringFieldUpdateOperationsInput | string
+    company_email?: StringFieldUpdateOperationsInput | string
+    company_phone?: StringFieldUpdateOperationsInput | string
+    company_address?: StringFieldUpdateOperationsInput | string
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
+    businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
+    governmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
+    job_listings?: Job_ListingsUncheckedUpdateManyWithoutEmployerNestedInput
+    transactions?: transactionsUncheckedUpdateManyWithoutPayerNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutEmployer_profileNestedInput
   }
 
   export type ResumesUpsertWithoutApplicationsInput = {
@@ -40782,11 +43465,14 @@ export namespace Prisma {
   export type ApplicationsCreateWithoutReviewsInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
     job_listing: Job_ListingsCreateNestedOneWithoutApplicationsInput
     pwd_profile: Pwd_ProfileCreateNestedOneWithoutApplicationsInput
+    employer_profile: Employer_ProfileCreateNestedOneWithoutApplicationsInput
     resume: ResumesCreateNestedOneWithoutApplicationsInput
     transactions?: transactionsCreateNestedManyWithoutApplicationInput
   }
@@ -40795,9 +43481,12 @@ export namespace Prisma {
     application_id?: number
     job_id: number
     pwd_id: number
+    employer_id: number
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -40923,11 +43612,14 @@ export namespace Prisma {
   export type ApplicationsUpdateWithoutReviewsInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
     job_listing?: Job_ListingsUpdateOneRequiredWithoutApplicationsNestedInput
     pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
+    employer_profile?: Employer_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
     resume?: ResumesUpdateOneRequiredWithoutApplicationsNestedInput
     transactions?: transactionsUpdateManyWithoutApplicationNestedInput
   }
@@ -40936,9 +43628,12 @@ export namespace Prisma {
     application_id?: IntFieldUpdateOperationsInput | number
     job_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41060,11 +43755,14 @@ export namespace Prisma {
   export type ApplicationsCreateWithoutTransactionsInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
     job_listing: Job_ListingsCreateNestedOneWithoutApplicationsInput
     pwd_profile: Pwd_ProfileCreateNestedOneWithoutApplicationsInput
+    employer_profile: Employer_ProfileCreateNestedOneWithoutApplicationsInput
     resume: ResumesCreateNestedOneWithoutApplicationsInput
     reviews?: reviewsCreateNestedManyWithoutApplicationInput
   }
@@ -41073,9 +43771,12 @@ export namespace Prisma {
     application_id?: number
     job_id: number
     pwd_id: number
+    employer_id: number
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -41097,6 +43798,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     date_of_birth?: string | null
@@ -41106,11 +43809,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -41119,6 +43848,7 @@ export namespace Prisma {
     user: UsersCreateNestedOneWithoutPwd_ProfileInput
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileUncheckedCreateWithoutTransactionsInput = {
@@ -41131,6 +43861,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     pwd_id?: number
@@ -41142,11 +43874,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -41154,6 +43912,7 @@ export namespace Prisma {
     job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileCreateOrConnectWithoutTransactionsInput = {
@@ -41167,13 +43926,17 @@ export namespace Prisma {
     updated_at?: Date | string
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
+    profile_views: number
+    interviews: number
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -41181,8 +43944,18 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
     user: UsersCreateNestedOneWithoutEmployer_ProfileInput
     job_listings?: Job_ListingsCreateNestedManyWithoutEmployerInput
+    Applications?: ApplicationsCreateNestedManyWithoutEmployer_profileInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutEmployer_profileInput
   }
 
   export type Employer_ProfileUncheckedCreateWithoutTransactionsInput = {
@@ -41193,13 +43966,17 @@ export namespace Prisma {
     user_id: number
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
+    profile_views: number
+    interviews: number
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -41207,7 +43984,17 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
     job_listings?: Job_ListingsUncheckedCreateNestedManyWithoutEmployerInput
+    Applications?: ApplicationsUncheckedCreateNestedManyWithoutEmployer_profileInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutEmployer_profileInput
   }
 
   export type Employer_ProfileCreateOrConnectWithoutTransactionsInput = {
@@ -41229,11 +44016,14 @@ export namespace Prisma {
   export type ApplicationsUpdateWithoutTransactionsInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
     job_listing?: Job_ListingsUpdateOneRequiredWithoutApplicationsNestedInput
     pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
+    employer_profile?: Employer_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
     resume?: ResumesUpdateOneRequiredWithoutApplicationsNestedInput
     reviews?: reviewsUpdateManyWithoutApplicationNestedInput
   }
@@ -41242,9 +44032,12 @@ export namespace Prisma {
     application_id?: IntFieldUpdateOperationsInput | number
     job_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41272,6 +44065,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41281,11 +44076,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -41294,6 +44115,7 @@ export namespace Prisma {
     user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileUncheckedUpdateWithoutTransactionsInput = {
@@ -41306,6 +44128,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pwd_id?: IntFieldUpdateOperationsInput | number
@@ -41317,11 +44141,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -41329,6 +44179,7 @@ export namespace Prisma {
     job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Employer_ProfileUpsertWithoutTransactionsInput = {
@@ -41348,13 +44199,17 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41362,8 +44217,18 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
     user?: UsersUpdateOneRequiredWithoutEmployer_ProfileNestedInput
     job_listings?: Job_ListingsUpdateManyWithoutEmployerNestedInput
+    Applications?: ApplicationsUpdateManyWithoutEmployer_profileNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutEmployer_profileNestedInput
   }
 
   export type Employer_ProfileUncheckedUpdateWithoutTransactionsInput = {
@@ -41374,13 +44239,17 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41388,7 +44257,17 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
     job_listings?: Job_ListingsUncheckedUpdateManyWithoutEmployerNestedInput
+    Applications?: ApplicationsUncheckedUpdateManyWithoutEmployer_profileNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutEmployer_profileNestedInput
   }
 
   export type UsersCreateWithoutNotificationsInput = {
@@ -41497,22 +44376,24 @@ export namespace Prisma {
     withdrawal_requests?: withdrawal_requestsUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type Job_ListingsCreateWithoutCategoryInput = {
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+  export type Job_ListingsCreateWithoutSaved_JobsInput = {
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsCreateNestedManyWithoutJob_listingInput
@@ -41520,63 +44401,549 @@ export namespace Prisma {
     ai_match_results?: ai_match_resultsCreateNestedManyWithoutJob_listingInput
   }
 
-  export type Job_ListingsUncheckedCreateWithoutCategoryInput = {
+  export type Job_ListingsUncheckedCreateWithoutSaved_JobsInput = {
     job_id?: number
+    job_code?: string | null
     employer_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsUncheckedCreateNestedManyWithoutJob_listingInput
     ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutJob_listingInput
   }
 
-  export type Job_ListingsCreateOrConnectWithoutCategoryInput = {
+  export type Job_ListingsCreateOrConnectWithoutSaved_JobsInput = {
     where: Job_ListingsWhereUniqueInput
-    create: XOR<Job_ListingsCreateWithoutCategoryInput, Job_ListingsUncheckedCreateWithoutCategoryInput>
+    create: XOR<Job_ListingsCreateWithoutSaved_JobsInput, Job_ListingsUncheckedCreateWithoutSaved_JobsInput>
   }
 
-  export type Job_ListingsCreateManyCategoryInputEnvelope = {
-    data: Job_ListingsCreateManyCategoryInput | Job_ListingsCreateManyCategoryInput[]
-    skipDuplicates?: boolean
+  export type Pwd_ProfileCreateWithoutSaved_JobsInput = {
+    first_name?: string
+    last_name?: string
+    middle_name?: string
+    profile_picture?: string | null
+    bio?: string | null
+    disability_Type?: string | null
+    disability_severity?: $Enums.Disability_Severity | null
+    gender?: $Enums.Gender | null
+    rating?: number | null
+    profile_views: number
+    interviews: number
+    created_at?: string | null
+    updated_at?: Date | string | null
+    date_of_birth?: string | null
+    address?: string | null
+    pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
+    profession?: string | null
+    skills?: Pwd_ProfileCreateskillsInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    linkedin_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
+    professional_role?: string | null
+    professional_summary?: string | null
+    hourly_rate?: number | null
+    profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
+    resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
+    applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
+    educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
+    experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsCreateNestedManyWithoutPwd_profileInput
+    user: UsersCreateNestedOneWithoutPwd_ProfileInput
+    resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
+    ai_match_results?: ai_match_resultsCreateNestedManyWithoutPwd_profileInput
+    transactions?: transactionsCreateNestedManyWithoutPayeeInput
   }
 
-  export type Job_ListingsUpsertWithWhereUniqueWithoutCategoryInput = {
-    where: Job_ListingsWhereUniqueInput
-    update: XOR<Job_ListingsUpdateWithoutCategoryInput, Job_ListingsUncheckedUpdateWithoutCategoryInput>
-    create: XOR<Job_ListingsCreateWithoutCategoryInput, Job_ListingsUncheckedCreateWithoutCategoryInput>
+  export type Pwd_ProfileUncheckedCreateWithoutSaved_JobsInput = {
+    first_name?: string
+    last_name?: string
+    middle_name?: string
+    profile_picture?: string | null
+    bio?: string | null
+    disability_Type?: string | null
+    disability_severity?: $Enums.Disability_Severity | null
+    gender?: $Enums.Gender | null
+    rating?: number | null
+    profile_views: number
+    interviews: number
+    created_at?: string | null
+    updated_at?: Date | string | null
+    pwd_id?: number
+    user_id: number
+    date_of_birth?: string | null
+    address?: string | null
+    pwd_document?: Pwd_ProfileCreatepwd_documentInput | string[]
+    profession?: string | null
+    skills?: Pwd_ProfileCreateskillsInput | string[]
+    portfolio_url?: string | null
+    github_url?: string | null
+    linkedin_url?: string | null
+    otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
+    professional_role?: string | null
+    professional_summary?: string | null
+    hourly_rate?: number | null
+    profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
+    resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
+    applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
+    educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
+    experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
+    resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
+    ai_match_results?: ai_match_resultsUncheckedCreateNestedManyWithoutPwd_profileInput
+    transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
   }
 
-  export type Job_ListingsUpdateWithWhereUniqueWithoutCategoryInput = {
-    where: Job_ListingsWhereUniqueInput
-    data: XOR<Job_ListingsUpdateWithoutCategoryInput, Job_ListingsUncheckedUpdateWithoutCategoryInput>
+  export type Pwd_ProfileCreateOrConnectWithoutSaved_JobsInput = {
+    where: Pwd_ProfileWhereUniqueInput
+    create: XOR<Pwd_ProfileCreateWithoutSaved_JobsInput, Pwd_ProfileUncheckedCreateWithoutSaved_JobsInput>
   }
 
-  export type Job_ListingsUpdateManyWithWhereWithoutCategoryInput = {
-    where: Job_ListingsScalarWhereInput
-    data: XOR<Job_ListingsUpdateManyMutationInput, Job_ListingsUncheckedUpdateManyWithoutCategoryInput>
+  export type Employer_ProfileCreateWithoutSaved_JobsInput = {
+    rating?: number
+    created_at: string
+    updated_at?: Date | string
+    address: string
+    profile_picture?: string | null
+    profile_views: number
+    interviews: number
+    company_name: string
+    company_email: string
+    company_phone: string
+    company_address: string
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
+    contact_person_fullname?: string | null
+    contact_person_job_title?: string | null
+    contact_person_phone_number?: string | null
+    date_of_birth?: string | null
+    businessRegistration?: string | null
+    governmentId?: string | null
+    taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
+    user: UsersCreateNestedOneWithoutEmployer_ProfileInput
+    job_listings?: Job_ListingsCreateNestedManyWithoutEmployerInput
+    transactions?: transactionsCreateNestedManyWithoutPayerInput
+    Applications?: ApplicationsCreateNestedManyWithoutEmployer_profileInput
+  }
+
+  export type Employer_ProfileUncheckedCreateWithoutSaved_JobsInput = {
+    rating?: number
+    created_at: string
+    updated_at?: Date | string
+    employer_id?: number
+    user_id: number
+    address: string
+    profile_picture?: string | null
+    profile_views: number
+    interviews: number
+    company_name: string
+    company_email: string
+    company_phone: string
+    company_address: string
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
+    contact_person_fullname?: string | null
+    contact_person_job_title?: string | null
+    contact_person_phone_number?: string | null
+    date_of_birth?: string | null
+    businessRegistration?: string | null
+    governmentId?: string | null
+    taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
+    job_listings?: Job_ListingsUncheckedCreateNestedManyWithoutEmployerInput
+    transactions?: transactionsUncheckedCreateNestedManyWithoutPayerInput
+    Applications?: ApplicationsUncheckedCreateNestedManyWithoutEmployer_profileInput
+  }
+
+  export type Employer_ProfileCreateOrConnectWithoutSaved_JobsInput = {
+    where: Employer_ProfileWhereUniqueInput
+    create: XOR<Employer_ProfileCreateWithoutSaved_JobsInput, Employer_ProfileUncheckedCreateWithoutSaved_JobsInput>
+  }
+
+  export type Job_ListingsUpsertWithoutSaved_JobsInput = {
+    update: XOR<Job_ListingsUpdateWithoutSaved_JobsInput, Job_ListingsUncheckedUpdateWithoutSaved_JobsInput>
+    create: XOR<Job_ListingsCreateWithoutSaved_JobsInput, Job_ListingsUncheckedCreateWithoutSaved_JobsInput>
+    where?: Job_ListingsWhereInput
+  }
+
+  export type Job_ListingsUpdateToOneWithWhereWithoutSaved_JobsInput = {
+    where?: Job_ListingsWhereInput
+    data: XOR<Job_ListingsUpdateWithoutSaved_JobsInput, Job_ListingsUncheckedUpdateWithoutSaved_JobsInput>
+  }
+
+  export type Job_ListingsUpdateWithoutSaved_JobsInput = {
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
+    location_city?: StringFieldUpdateOperationsInput | string
+    location_province?: StringFieldUpdateOperationsInput | string
+    location_country?: StringFieldUpdateOperationsInput | string
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationsUpdateManyWithoutJob_listingNestedInput
+    employer?: Employer_ProfileUpdateOneRequiredWithoutJob_listingsNestedInput
+    ai_match_results?: ai_match_resultsUpdateManyWithoutJob_listingNestedInput
+  }
+
+  export type Job_ListingsUncheckedUpdateWithoutSaved_JobsInput = {
+    job_id?: IntFieldUpdateOperationsInput | number
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    employer_id?: IntFieldUpdateOperationsInput | number
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
+    location_city?: StringFieldUpdateOperationsInput | string
+    location_province?: StringFieldUpdateOperationsInput | string
+    location_country?: StringFieldUpdateOperationsInput | string
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationsUncheckedUpdateManyWithoutJob_listingNestedInput
+    ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutJob_listingNestedInput
+  }
+
+  export type Pwd_ProfileUpsertWithoutSaved_JobsInput = {
+    update: XOR<Pwd_ProfileUpdateWithoutSaved_JobsInput, Pwd_ProfileUncheckedUpdateWithoutSaved_JobsInput>
+    create: XOR<Pwd_ProfileCreateWithoutSaved_JobsInput, Pwd_ProfileUncheckedCreateWithoutSaved_JobsInput>
+    where?: Pwd_ProfileWhereInput
+  }
+
+  export type Pwd_ProfileUpdateToOneWithWhereWithoutSaved_JobsInput = {
+    where?: Pwd_ProfileWhereInput
+    data: XOR<Pwd_ProfileUpdateWithoutSaved_JobsInput, Pwd_ProfileUncheckedUpdateWithoutSaved_JobsInput>
+  }
+
+  export type Pwd_ProfileUpdateWithoutSaved_JobsInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: StringFieldUpdateOperationsInput | string
+    profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    disability_Type?: NullableStringFieldUpdateOperationsInput | string | null
+    disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
+    created_at?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
+    profession?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: Pwd_ProfileUpdateskillsInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
+    professional_role?: NullableStringFieldUpdateOperationsInput | string | null
+    professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
+    profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
+    resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
+    educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
+    experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUpdateManyWithoutPwd_profileNestedInput
+    user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
+    resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
+    ai_match_results?: ai_match_resultsUpdateManyWithoutPwd_profileNestedInput
+    transactions?: transactionsUpdateManyWithoutPayeeNestedInput
+  }
+
+  export type Pwd_ProfileUncheckedUpdateWithoutSaved_JobsInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: StringFieldUpdateOperationsInput | string
+    profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    disability_Type?: NullableStringFieldUpdateOperationsInput | string | null
+    disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
+    created_at?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    pwd_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    pwd_document?: Pwd_ProfileUpdatepwd_documentInput | string[]
+    profession?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: Pwd_ProfileUpdateskillsInput | string[]
+    portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
+    otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
+    professional_role?: NullableStringFieldUpdateOperationsInput | string | null
+    professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
+    profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
+    resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
+    accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
+    educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
+    experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
+    job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
+    resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
+    ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutPwd_profileNestedInput
+    transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
+  }
+
+  export type Employer_ProfileUpsertWithoutSaved_JobsInput = {
+    update: XOR<Employer_ProfileUpdateWithoutSaved_JobsInput, Employer_ProfileUncheckedUpdateWithoutSaved_JobsInput>
+    create: XOR<Employer_ProfileCreateWithoutSaved_JobsInput, Employer_ProfileUncheckedCreateWithoutSaved_JobsInput>
+    where?: Employer_ProfileWhereInput
+  }
+
+  export type Employer_ProfileUpdateToOneWithWhereWithoutSaved_JobsInput = {
+    where?: Employer_ProfileWhereInput
+    data: XOR<Employer_ProfileUpdateWithoutSaved_JobsInput, Employer_ProfileUncheckedUpdateWithoutSaved_JobsInput>
+  }
+
+  export type Employer_ProfileUpdateWithoutSaved_JobsInput = {
+    rating?: FloatFieldUpdateOperationsInput | number
+    created_at?: StringFieldUpdateOperationsInput | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    address?: StringFieldUpdateOperationsInput | string
+    profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
+    company_name?: StringFieldUpdateOperationsInput | string
+    company_email?: StringFieldUpdateOperationsInput | string
+    company_phone?: StringFieldUpdateOperationsInput | string
+    company_address?: StringFieldUpdateOperationsInput | string
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
+    businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
+    governmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
+    user?: UsersUpdateOneRequiredWithoutEmployer_ProfileNestedInput
+    job_listings?: Job_ListingsUpdateManyWithoutEmployerNestedInput
+    transactions?: transactionsUpdateManyWithoutPayerNestedInput
+    Applications?: ApplicationsUpdateManyWithoutEmployer_profileNestedInput
+  }
+
+  export type Employer_ProfileUncheckedUpdateWithoutSaved_JobsInput = {
+    rating?: FloatFieldUpdateOperationsInput | number
+    created_at?: StringFieldUpdateOperationsInput | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    employer_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    address?: StringFieldUpdateOperationsInput | string
+    profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
+    company_name?: StringFieldUpdateOperationsInput | string
+    company_email?: StringFieldUpdateOperationsInput | string
+    company_phone?: StringFieldUpdateOperationsInput | string
+    company_address?: StringFieldUpdateOperationsInput | string
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
+    contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
+    businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
+    governmentId?: NullableStringFieldUpdateOperationsInput | string | null
+    taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
+    job_listings?: Job_ListingsUncheckedUpdateManyWithoutEmployerNestedInput
+    transactions?: transactionsUncheckedUpdateManyWithoutPayerNestedInput
+    Applications?: ApplicationsUncheckedUpdateManyWithoutEmployer_profileNestedInput
   }
 
   export type ApplicationsCreateWithoutJob_listingInput = {
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
     pwd_profile: Pwd_ProfileCreateNestedOneWithoutApplicationsInput
+    employer_profile: Employer_ProfileCreateNestedOneWithoutApplicationsInput
     resume: ResumesCreateNestedOneWithoutApplicationsInput
     reviews?: reviewsCreateNestedManyWithoutApplicationInput
     transactions?: transactionsCreateNestedManyWithoutApplicationInput
@@ -41585,9 +44952,12 @@ export namespace Prisma {
   export type ApplicationsUncheckedCreateWithoutJob_listingInput = {
     application_id?: number
     pwd_id: number
+    employer_id: number
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -41605,35 +44975,23 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type Job_CategoriesCreateWithoutJob_listingsInput = {
-    name: string
-    description: string
-  }
-
-  export type Job_CategoriesUncheckedCreateWithoutJob_listingsInput = {
-    category_id?: number
-    name: string
-    description: string
-  }
-
-  export type Job_CategoriesCreateOrConnectWithoutJob_listingsInput = {
-    where: Job_CategoriesWhereUniqueInput
-    create: XOR<Job_CategoriesCreateWithoutJob_listingsInput, Job_CategoriesUncheckedCreateWithoutJob_listingsInput>
-  }
-
   export type Employer_ProfileCreateWithoutJob_listingsInput = {
     rating?: number
     created_at: string
     updated_at?: Date | string
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
+    profile_views: number
+    interviews: number
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -41641,8 +44999,18 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
     user: UsersCreateNestedOneWithoutEmployer_ProfileInput
     transactions?: transactionsCreateNestedManyWithoutPayerInput
+    Applications?: ApplicationsCreateNestedManyWithoutEmployer_profileInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutEmployer_profileInput
   }
 
   export type Employer_ProfileUncheckedCreateWithoutJob_listingsInput = {
@@ -41653,13 +45021,17 @@ export namespace Prisma {
     user_id: number
     address: string
     profile_picture?: string | null
-    LinkedIn_profile?: string | null
-    Other_Social_Media?: string | null
+    profile_views: number
+    interviews: number
     company_name: string
     company_email: string
     company_phone: string
     company_address: string
-    company_website?: string | null
+    company_social_media?: string | null
+    company_website_portfolio?: string | null
+    company_github_profile?: string | null
+    company_other_portfolio?: Employer_ProfileCreatecompany_other_portfolioInput | string[]
+    company_description?: string | null
     contact_person_fullname?: string | null
     contact_person_job_title?: string | null
     contact_person_phone_number?: string | null
@@ -41667,7 +45039,17 @@ export namespace Prisma {
     businessRegistration?: string | null
     governmentId?: string | null
     taxDocuments?: string | null
+    industryPreference?: string | null
+    jobRolesTypicallyHire?: Employer_ProfileCreatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileCreaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileCreateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileCreateaccessibilityFeaturesInput | string[]
+    set_company_profile?: boolean
+    set_jobRoles_requirements?: boolean
+    set_work_environment?: boolean
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayerInput
+    Applications?: ApplicationsUncheckedCreateNestedManyWithoutEmployer_profileInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutEmployer_profileInput
   }
 
   export type Employer_ProfileCreateOrConnectWithoutJob_listingsInput = {
@@ -41706,6 +45088,27 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type Saved_JobsCreateWithoutJob_listingsInput = {
+    pwd_profile: Pwd_ProfileCreateNestedOneWithoutSaved_JobsInput
+    employer_profile: Employer_ProfileCreateNestedOneWithoutSaved_JobsInput
+  }
+
+  export type Saved_JobsUncheckedCreateWithoutJob_listingsInput = {
+    savedJob_id?: number
+    pwd_id: number
+    employer_id: number
+  }
+
+  export type Saved_JobsCreateOrConnectWithoutJob_listingsInput = {
+    where: Saved_JobsWhereUniqueInput
+    create: XOR<Saved_JobsCreateWithoutJob_listingsInput, Saved_JobsUncheckedCreateWithoutJob_listingsInput>
+  }
+
+  export type Saved_JobsCreateManyJob_listingsInputEnvelope = {
+    data: Saved_JobsCreateManyJob_listingsInput | Saved_JobsCreateManyJob_listingsInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ApplicationsUpsertWithWhereUniqueWithoutJob_listingInput = {
     where: ApplicationsWhereUniqueInput
     update: XOR<ApplicationsUpdateWithoutJob_listingInput, ApplicationsUncheckedUpdateWithoutJob_listingInput>
@@ -41720,28 +45123,6 @@ export namespace Prisma {
   export type ApplicationsUpdateManyWithWhereWithoutJob_listingInput = {
     where: ApplicationsScalarWhereInput
     data: XOR<ApplicationsUpdateManyMutationInput, ApplicationsUncheckedUpdateManyWithoutJob_listingInput>
-  }
-
-  export type Job_CategoriesUpsertWithoutJob_listingsInput = {
-    update: XOR<Job_CategoriesUpdateWithoutJob_listingsInput, Job_CategoriesUncheckedUpdateWithoutJob_listingsInput>
-    create: XOR<Job_CategoriesCreateWithoutJob_listingsInput, Job_CategoriesUncheckedCreateWithoutJob_listingsInput>
-    where?: Job_CategoriesWhereInput
-  }
-
-  export type Job_CategoriesUpdateToOneWithWhereWithoutJob_listingsInput = {
-    where?: Job_CategoriesWhereInput
-    data: XOR<Job_CategoriesUpdateWithoutJob_listingsInput, Job_CategoriesUncheckedUpdateWithoutJob_listingsInput>
-  }
-
-  export type Job_CategoriesUpdateWithoutJob_listingsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type Job_CategoriesUncheckedUpdateWithoutJob_listingsInput = {
-    category_id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
   }
 
   export type Employer_ProfileUpsertWithoutJob_listingsInput = {
@@ -41761,13 +45142,17 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41775,8 +45160,18 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
     user?: UsersUpdateOneRequiredWithoutEmployer_ProfileNestedInput
     transactions?: transactionsUpdateManyWithoutPayerNestedInput
+    Applications?: ApplicationsUpdateManyWithoutEmployer_profileNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutEmployer_profileNestedInput
   }
 
   export type Employer_ProfileUncheckedUpdateWithoutJob_listingsInput = {
@@ -41787,13 +45182,17 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     address?: StringFieldUpdateOperationsInput | string
     profile_picture?: NullableStringFieldUpdateOperationsInput | string | null
-    LinkedIn_profile?: NullableStringFieldUpdateOperationsInput | string | null
-    Other_Social_Media?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     company_name?: StringFieldUpdateOperationsInput | string
     company_email?: StringFieldUpdateOperationsInput | string
     company_phone?: StringFieldUpdateOperationsInput | string
     company_address?: StringFieldUpdateOperationsInput | string
-    company_website?: NullableStringFieldUpdateOperationsInput | string | null
+    company_social_media?: NullableStringFieldUpdateOperationsInput | string | null
+    company_website_portfolio?: NullableStringFieldUpdateOperationsInput | string | null
+    company_github_profile?: NullableStringFieldUpdateOperationsInput | string | null
+    company_other_portfolio?: Employer_ProfileUpdatecompany_other_portfolioInput | string[]
+    company_description?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_fullname?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_job_title?: NullableStringFieldUpdateOperationsInput | string | null
     contact_person_phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41801,7 +45200,17 @@ export namespace Prisma {
     businessRegistration?: NullableStringFieldUpdateOperationsInput | string | null
     governmentId?: NullableStringFieldUpdateOperationsInput | string | null
     taxDocuments?: NullableStringFieldUpdateOperationsInput | string | null
+    industryPreference?: NullableStringFieldUpdateOperationsInput | string | null
+    jobRolesTypicallyHire?: Employer_ProfileUpdatejobRolesTypicallyHireInput | string[]
+    requiredPreferredSkills?: Employer_ProfileUpdaterequiredPreferredSkillsInput | string[]
+    workArrangement?: Employer_ProfileUpdateworkArrangementInput | string[]
+    accessibilityFeatures?: Employer_ProfileUpdateaccessibilityFeaturesInput | string[]
+    set_company_profile?: BoolFieldUpdateOperationsInput | boolean
+    set_jobRoles_requirements?: BoolFieldUpdateOperationsInput | boolean
+    set_work_environment?: BoolFieldUpdateOperationsInput | boolean
     transactions?: transactionsUncheckedUpdateManyWithoutPayerNestedInput
+    Applications?: ApplicationsUncheckedUpdateManyWithoutEmployer_profileNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutEmployer_profileNestedInput
   }
 
   export type ai_match_resultsUpsertWithWhereUniqueWithoutJob_listingInput = {
@@ -41818,6 +45227,22 @@ export namespace Prisma {
   export type ai_match_resultsUpdateManyWithWhereWithoutJob_listingInput = {
     where: ai_match_resultsScalarWhereInput
     data: XOR<ai_match_resultsUpdateManyMutationInput, ai_match_resultsUncheckedUpdateManyWithoutJob_listingInput>
+  }
+
+  export type Saved_JobsUpsertWithWhereUniqueWithoutJob_listingsInput = {
+    where: Saved_JobsWhereUniqueInput
+    update: XOR<Saved_JobsUpdateWithoutJob_listingsInput, Saved_JobsUncheckedUpdateWithoutJob_listingsInput>
+    create: XOR<Saved_JobsCreateWithoutJob_listingsInput, Saved_JobsUncheckedCreateWithoutJob_listingsInput>
+  }
+
+  export type Saved_JobsUpdateWithWhereUniqueWithoutJob_listingsInput = {
+    where: Saved_JobsWhereUniqueInput
+    data: XOR<Saved_JobsUpdateWithoutJob_listingsInput, Saved_JobsUncheckedUpdateWithoutJob_listingsInput>
+  }
+
+  export type Saved_JobsUpdateManyWithWhereWithoutJob_listingsInput = {
+    where: Saved_JobsScalarWhereInput
+    data: XOR<Saved_JobsUpdateManyMutationInput, Saved_JobsUncheckedUpdateManyWithoutJob_listingsInput>
   }
 
   export type UsersCreateWithoutAssigned_ticketsInput = {
@@ -42139,50 +45564,54 @@ export namespace Prisma {
   }
 
   export type Job_ListingsCreateWithoutAi_match_resultsInput = {
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsCreateNestedManyWithoutJob_listingInput
-    category: Job_CategoriesCreateNestedOneWithoutJob_listingsInput
     employer: Employer_ProfileCreateNestedOneWithoutJob_listingsInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutJob_listingsInput
   }
 
   export type Job_ListingsUncheckedCreateWithoutAi_match_resultsInput = {
     job_id?: number
+    job_code?: string | null
     employer_id: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
     applications?: ApplicationsUncheckedCreateNestedManyWithoutJob_listingInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutJob_listingsInput
   }
 
   export type Job_ListingsCreateOrConnectWithoutAi_match_resultsInput = {
@@ -42200,6 +45629,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     date_of_birth?: string | null
@@ -42209,11 +45640,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -42222,6 +45679,7 @@ export namespace Prisma {
     user: UsersCreateNestedOneWithoutPwd_ProfileInput
     resumes?: ResumesCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileUncheckedCreateWithoutAi_match_resultsInput = {
@@ -42234,6 +45692,8 @@ export namespace Prisma {
     disability_severity?: $Enums.Disability_Severity | null
     gender?: $Enums.Gender | null
     rating?: number | null
+    profile_views: number
+    interviews: number
     created_at?: string | null
     updated_at?: Date | string | null
     pwd_id?: number
@@ -42245,11 +45705,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileCreateskillsInput | string[]
     portfolio_url?: string | null
     github_url?: string | null
+    linkedin_url?: string | null
     otherPlatform?: Pwd_ProfileCreateotherPlatformInput | string[]
     professional_role?: string | null
     professional_summary?: string | null
+    hourly_rate?: number | null
     profile_visibility?: string | null
+    show_email?: boolean
+    show_phone_number?: boolean
+    show_location?: boolean
+    allow_messages?: boolean
+    show_online_status?: boolean
+    email_job_matches?: boolean
+    messages?: boolean
+    application_updates?: boolean
+    email_profile_views?: boolean
+    weekly_digest?: boolean
+    marketing_emails?: boolean
+    push_notif_job_matches?: boolean
+    push_notif_messages?: boolean
+    push_notif_application_updates?: boolean
+    push_notif_profile_views?: boolean
+    urgent_messages?: boolean
+    security_alerts?: boolean
     resume_cv?: string | null
+    basic_information?: boolean
+    professional_summary_completed?: boolean
+    professional_experience?: boolean
+    education?: boolean
+    portfolio_items?: boolean
+    skills_assessment?: boolean
+    set_accessibility_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -42257,6 +45743,7 @@ export namespace Prisma {
     job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedCreateNestedManyWithoutPwd_profileInput
     resumes?: ResumesUncheckedCreateNestedManyWithoutPwd_profileInput
     transactions?: transactionsUncheckedCreateNestedManyWithoutPayeeInput
+    Saved_Jobs?: Saved_JobsUncheckedCreateNestedManyWithoutPwd_profileInput
   }
 
   export type Pwd_ProfileCreateOrConnectWithoutAi_match_resultsInput = {
@@ -42276,50 +45763,54 @@ export namespace Prisma {
   }
 
   export type Job_ListingsUpdateWithoutAi_match_resultsInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUpdateManyWithoutJob_listingNestedInput
-    category?: Job_CategoriesUpdateOneRequiredWithoutJob_listingsNestedInput
     employer?: Employer_ProfileUpdateOneRequiredWithoutJob_listingsNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutJob_listingsNestedInput
   }
 
   export type Job_ListingsUncheckedUpdateWithoutAi_match_resultsInput = {
     job_id?: IntFieldUpdateOperationsInput | number
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
     employer_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUncheckedUpdateManyWithoutJob_listingNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutJob_listingsNestedInput
   }
 
   export type Pwd_ProfileUpsertWithoutAi_match_resultsInput = {
@@ -42343,6 +45834,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     date_of_birth?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42352,11 +45845,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -42365,6 +45884,7 @@ export namespace Prisma {
     user?: UsersUpdateOneRequiredWithoutPwd_ProfileNestedInput
     resumes?: ResumesUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type Pwd_ProfileUncheckedUpdateWithoutAi_match_resultsInput = {
@@ -42377,6 +45897,8 @@ export namespace Prisma {
     disability_severity?: NullableEnumDisability_SeverityFieldUpdateOperationsInput | $Enums.Disability_Severity | null
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    profile_views?: IntFieldUpdateOperationsInput | number
+    interviews?: IntFieldUpdateOperationsInput | number
     created_at?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pwd_id?: IntFieldUpdateOperationsInput | number
@@ -42388,11 +45910,37 @@ export namespace Prisma {
     skills?: Pwd_ProfileUpdateskillsInput | string[]
     portfolio_url?: NullableStringFieldUpdateOperationsInput | string | null
     github_url?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin_url?: NullableStringFieldUpdateOperationsInput | string | null
     otherPlatform?: Pwd_ProfileUpdateotherPlatformInput | string[]
     professional_role?: NullableStringFieldUpdateOperationsInput | string | null
     professional_summary?: NullableStringFieldUpdateOperationsInput | string | null
+    hourly_rate?: NullableIntFieldUpdateOperationsInput | number | null
     profile_visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    show_email?: BoolFieldUpdateOperationsInput | boolean
+    show_phone_number?: BoolFieldUpdateOperationsInput | boolean
+    show_location?: BoolFieldUpdateOperationsInput | boolean
+    allow_messages?: BoolFieldUpdateOperationsInput | boolean
+    show_online_status?: BoolFieldUpdateOperationsInput | boolean
+    email_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    messages?: BoolFieldUpdateOperationsInput | boolean
+    application_updates?: BoolFieldUpdateOperationsInput | boolean
+    email_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    weekly_digest?: BoolFieldUpdateOperationsInput | boolean
+    marketing_emails?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_job_matches?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_messages?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_application_updates?: BoolFieldUpdateOperationsInput | boolean
+    push_notif_profile_views?: BoolFieldUpdateOperationsInput | boolean
+    urgent_messages?: BoolFieldUpdateOperationsInput | boolean
+    security_alerts?: BoolFieldUpdateOperationsInput | boolean
     resume_cv?: NullableStringFieldUpdateOperationsInput | string | null
+    basic_information?: BoolFieldUpdateOperationsInput | boolean
+    professional_summary_completed?: BoolFieldUpdateOperationsInput | boolean
+    professional_experience?: BoolFieldUpdateOperationsInput | boolean
+    education?: BoolFieldUpdateOperationsInput | boolean
+    portfolio_items?: BoolFieldUpdateOperationsInput | boolean
+    skills_assessment?: BoolFieldUpdateOperationsInput | boolean
+    set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -42400,6 +45948,7 @@ export namespace Prisma {
     job_preferences?: Pwd_Job_Preferences_RequirementsUncheckedUpdateManyWithoutPwd_profileNestedInput
     resumes?: ResumesUncheckedUpdateManyWithoutPwd_profileNestedInput
     transactions?: transactionsUncheckedUpdateManyWithoutPayeeNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutPwd_profileNestedInput
   }
 
   export type UsersCreateWithoutChatbot_logsInput = {
@@ -42917,9 +46466,12 @@ export namespace Prisma {
   export type ApplicationsCreateManyPwd_profileInput = {
     application_id?: number
     job_id: number
+    employer_id: number
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43008,13 +46560,22 @@ export namespace Prisma {
     processed_at: Date | string
   }
 
+  export type Saved_JobsCreateManyPwd_profileInput = {
+    savedJob_id?: number
+    job_id: number
+    employer_id: number
+  }
+
   export type ApplicationsUpdateWithoutPwd_profileInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
     job_listing?: Job_ListingsUpdateOneRequiredWithoutApplicationsNestedInput
+    employer_profile?: Employer_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
     resume?: ResumesUpdateOneRequiredWithoutApplicationsNestedInput
     reviews?: reviewsUpdateManyWithoutApplicationNestedInput
     transactions?: transactionsUpdateManyWithoutApplicationNestedInput
@@ -43023,9 +46584,12 @@ export namespace Prisma {
   export type ApplicationsUncheckedUpdateWithoutPwd_profileInput = {
     application_id?: IntFieldUpdateOperationsInput | number
     job_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43036,9 +46600,12 @@ export namespace Prisma {
   export type ApplicationsUncheckedUpdateManyWithoutPwd_profileInput = {
     application_id?: IntFieldUpdateOperationsInput | number
     job_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43288,24 +46855,42 @@ export namespace Prisma {
     processed_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type Saved_JobsUpdateWithoutPwd_profileInput = {
+    job_listings?: Job_ListingsUpdateOneRequiredWithoutSaved_JobsNestedInput
+    employer_profile?: Employer_ProfileUpdateOneRequiredWithoutSaved_JobsNestedInput
+  }
+
+  export type Saved_JobsUncheckedUpdateWithoutPwd_profileInput = {
+    savedJob_id?: IntFieldUpdateOperationsInput | number
+    job_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type Saved_JobsUncheckedUpdateManyWithoutPwd_profileInput = {
+    savedJob_id?: IntFieldUpdateOperationsInput | number
+    job_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
+  }
+
   export type Job_ListingsCreateManyEmployerInput = {
     job_id?: number
-    category_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
+    job_code?: string | null
+    jobtitle: string
+    jobCategory: string
+    description?: string | null
+    skills_required?: Job_ListingsCreateskills_requiredInput | string[]
+    employment_type: string
+    work_arrangement: string
+    salary_min: number
+    salary_max: number
+    salary_type: string
     location_city: string
     location_province: string
     location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
+    application_deadline?: string | null
+    workplace_accessibility_features?: Job_ListingsCreateworkplace_accessibility_featuresInput | string[]
+    experience_level: string
+    job_status?: string
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -43323,71 +46908,96 @@ export namespace Prisma {
     processed_at: Date | string
   }
 
+  export type ApplicationsCreateManyEmployer_profileInput = {
+    application_id?: number
+    job_id: number
+    pwd_id: number
+    resume_id: number
+    custom_message: string
+    proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
+    submitted_at: Date | string
+    updated_at?: Date | string
+    status_changed_at: Date | string
+  }
+
+  export type Saved_JobsCreateManyEmployer_profileInput = {
+    savedJob_id?: number
+    job_id: number
+    pwd_id: number
+  }
+
   export type Job_ListingsUpdateWithoutEmployerInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUpdateManyWithoutJob_listingNestedInput
-    category?: Job_CategoriesUpdateOneRequiredWithoutJob_listingsNestedInput
     ai_match_results?: ai_match_resultsUpdateManyWithoutJob_listingNestedInput
+    Saved_Jobs?: Saved_JobsUpdateManyWithoutJob_listingsNestedInput
   }
 
   export type Job_ListingsUncheckedUpdateWithoutEmployerInput = {
     job_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationsUncheckedUpdateManyWithoutJob_listingNestedInput
     ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutJob_listingNestedInput
+    Saved_Jobs?: Saved_JobsUncheckedUpdateManyWithoutJob_listingsNestedInput
   }
 
   export type Job_ListingsUncheckedUpdateManyWithoutEmployerInput = {
     job_id?: IntFieldUpdateOperationsInput | number
-    category_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+    job_code?: NullableStringFieldUpdateOperationsInput | string | null
+    jobtitle?: StringFieldUpdateOperationsInput | string
+    jobCategory?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    skills_required?: Job_ListingsUpdateskills_requiredInput | string[]
+    employment_type?: StringFieldUpdateOperationsInput | string
+    work_arrangement?: StringFieldUpdateOperationsInput | string
+    salary_min?: IntFieldUpdateOperationsInput | number
+    salary_max?: IntFieldUpdateOperationsInput | number
+    salary_type?: StringFieldUpdateOperationsInput | string
     location_city?: StringFieldUpdateOperationsInput | string
     location_province?: StringFieldUpdateOperationsInput | string
     location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
+    application_deadline?: NullableStringFieldUpdateOperationsInput | string | null
+    workplace_accessibility_features?: Job_ListingsUpdateworkplace_accessibility_featuresInput | string[]
+    experience_level?: StringFieldUpdateOperationsInput | string
+    job_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -43430,12 +47040,77 @@ export namespace Prisma {
     processed_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ApplicationsUpdateWithoutEmployer_profileInput = {
+    custom_message?: StringFieldUpdateOperationsInput | string
+    proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    job_listing?: Job_ListingsUpdateOneRequiredWithoutApplicationsNestedInput
+    pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
+    resume?: ResumesUpdateOneRequiredWithoutApplicationsNestedInput
+    reviews?: reviewsUpdateManyWithoutApplicationNestedInput
+    transactions?: transactionsUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationsUncheckedUpdateWithoutEmployer_profileInput = {
+    application_id?: IntFieldUpdateOperationsInput | number
+    job_id?: IntFieldUpdateOperationsInput | number
+    pwd_id?: IntFieldUpdateOperationsInput | number
+    resume_id?: IntFieldUpdateOperationsInput | number
+    custom_message?: StringFieldUpdateOperationsInput | string
+    proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviews?: reviewsUncheckedUpdateManyWithoutApplicationNestedInput
+    transactions?: transactionsUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationsUncheckedUpdateManyWithoutEmployer_profileInput = {
+    application_id?: IntFieldUpdateOperationsInput | number
+    job_id?: IntFieldUpdateOperationsInput | number
+    pwd_id?: IntFieldUpdateOperationsInput | number
+    resume_id?: IntFieldUpdateOperationsInput | number
+    custom_message?: StringFieldUpdateOperationsInput | string
+    proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Saved_JobsUpdateWithoutEmployer_profileInput = {
+    job_listings?: Job_ListingsUpdateOneRequiredWithoutSaved_JobsNestedInput
+    pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutSaved_JobsNestedInput
+  }
+
+  export type Saved_JobsUncheckedUpdateWithoutEmployer_profileInput = {
+    savedJob_id?: IntFieldUpdateOperationsInput | number
+    job_id?: IntFieldUpdateOperationsInput | number
+    pwd_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type Saved_JobsUncheckedUpdateManyWithoutEmployer_profileInput = {
+    savedJob_id?: IntFieldUpdateOperationsInput | number
+    job_id?: IntFieldUpdateOperationsInput | number
+    pwd_id?: IntFieldUpdateOperationsInput | number
+  }
+
   export type ApplicationsCreateManyResumeInput = {
     application_id?: number
     job_id: number
     pwd_id: number
+    employer_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43444,11 +47119,14 @@ export namespace Prisma {
   export type ApplicationsUpdateWithoutResumeInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
     job_listing?: Job_ListingsUpdateOneRequiredWithoutApplicationsNestedInput
     pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
+    employer_profile?: Employer_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
     reviews?: reviewsUpdateManyWithoutApplicationNestedInput
     transactions?: transactionsUpdateManyWithoutApplicationNestedInput
   }
@@ -43457,8 +47135,11 @@ export namespace Prisma {
     application_id?: IntFieldUpdateOperationsInput | number
     job_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43470,8 +47151,11 @@ export namespace Prisma {
     application_id?: IntFieldUpdateOperationsInput | number
     job_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43602,103 +47286,15 @@ export namespace Prisma {
     processed_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type Job_ListingsCreateManyCategoryInput = {
-    job_id?: number
-    employer_id: number
-    title: string
-    description: string
-    skills_required: string
-    employment_type: $Enums.EmploymentType
-    work_arrangement: $Enums.WorkArrangement
-    salary_min: Decimal | DecimalJsLike | number | string
-    salary_max: Decimal | DecimalJsLike | number | string
-    salary_type: $Enums.SalaryType
-    location_city: string
-    location_province: string
-    location_country: string
-    accessibility_features: string
-    experience_level: $Enums.ExperienceLevel
-    application_deadline: Date | string
-    applications_count?: number
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type Job_ListingsUpdateWithoutCategoryInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
-    location_city?: StringFieldUpdateOperationsInput | string
-    location_province?: StringFieldUpdateOperationsInput | string
-    location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications?: ApplicationsUpdateManyWithoutJob_listingNestedInput
-    employer?: Employer_ProfileUpdateOneRequiredWithoutJob_listingsNestedInput
-    ai_match_results?: ai_match_resultsUpdateManyWithoutJob_listingNestedInput
-  }
-
-  export type Job_ListingsUncheckedUpdateWithoutCategoryInput = {
-    job_id?: IntFieldUpdateOperationsInput | number
-    employer_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
-    location_city?: StringFieldUpdateOperationsInput | string
-    location_province?: StringFieldUpdateOperationsInput | string
-    location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications?: ApplicationsUncheckedUpdateManyWithoutJob_listingNestedInput
-    ai_match_results?: ai_match_resultsUncheckedUpdateManyWithoutJob_listingNestedInput
-  }
-
-  export type Job_ListingsUncheckedUpdateManyWithoutCategoryInput = {
-    job_id?: IntFieldUpdateOperationsInput | number
-    employer_id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    skills_required?: StringFieldUpdateOperationsInput | string
-    employment_type?: EnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType
-    work_arrangement?: EnumWorkArrangementFieldUpdateOperationsInput | $Enums.WorkArrangement
-    salary_min?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_max?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    salary_type?: EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
-    location_city?: StringFieldUpdateOperationsInput | string
-    location_province?: StringFieldUpdateOperationsInput | string
-    location_country?: StringFieldUpdateOperationsInput | string
-    accessibility_features?: StringFieldUpdateOperationsInput | string
-    experience_level?: EnumExperienceLevelFieldUpdateOperationsInput | $Enums.ExperienceLevel
-    application_deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications_count?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type ApplicationsCreateManyJob_listingInput = {
     application_id?: number
     pwd_id: number
+    employer_id: number
     resume_id: number
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
+    work_experience?: string | null
+    portfolio_links?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43715,13 +47311,22 @@ export namespace Prisma {
     matched_on: Date | string
   }
 
+  export type Saved_JobsCreateManyJob_listingsInput = {
+    savedJob_id?: number
+    pwd_id: number
+    employer_id: number
+  }
+
   export type ApplicationsUpdateWithoutJob_listingInput = {
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
     pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
+    employer_profile?: Employer_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
     resume?: ResumesUpdateOneRequiredWithoutApplicationsNestedInput
     reviews?: reviewsUpdateManyWithoutApplicationNestedInput
     transactions?: transactionsUpdateManyWithoutApplicationNestedInput
@@ -43730,9 +47335,12 @@ export namespace Prisma {
   export type ApplicationsUncheckedUpdateWithoutJob_listingInput = {
     application_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43743,9 +47351,12 @@ export namespace Prisma {
   export type ApplicationsUncheckedUpdateManyWithoutJob_listingInput = {
     application_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
     resume_id?: IntFieldUpdateOperationsInput | number
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    work_experience?: NullableStringFieldUpdateOperationsInput | string | null
+    portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43781,6 +47392,23 @@ export namespace Prisma {
     location_match_score?: FloatFieldUpdateOperationsInput | number
     accessibility_match_score?: FloatFieldUpdateOperationsInput | number
     matched_on?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Saved_JobsUpdateWithoutJob_listingsInput = {
+    pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutSaved_JobsNestedInput
+    employer_profile?: Employer_ProfileUpdateOneRequiredWithoutSaved_JobsNestedInput
+  }
+
+  export type Saved_JobsUncheckedUpdateWithoutJob_listingsInput = {
+    savedJob_id?: IntFieldUpdateOperationsInput | number
+    pwd_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type Saved_JobsUncheckedUpdateManyWithoutJob_listingsInput = {
+    savedJob_id?: IntFieldUpdateOperationsInput | number
+    pwd_id?: IntFieldUpdateOperationsInput | number
+    employer_id?: IntFieldUpdateOperationsInput | number
   }
 
 

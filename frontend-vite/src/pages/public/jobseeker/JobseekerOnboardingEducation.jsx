@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import api from '../../../utils/api.js'
 import JobseekerHeader from '../../../components/ui/JobseekerHeader.jsx';
 import Stepper from '../../../components/ui/Stepper.jsx';
 import Spinner from '../../../components/ui/Spinner.jsx';
@@ -39,7 +40,6 @@ const JobseekerOnboardingEducation = () => {
   const [location, setLocation] = useState('');
   const [fieldOfStudy, setFieldOfStudy] = useState('');
   const [degree, setDegree] = useState('');
-  const [highestLevel, setHighestLevel] = useState('');
   const [graduationStatus, setGraduationStatus] = useState('Graduated');
   const [graduationYear, setGraduationYear] = useState('');
   const [additionalEducations, setAdditionalEducations] = useState([]);
@@ -71,22 +71,9 @@ const JobseekerOnboardingEducation = () => {
 
   const goBack = () => navigate(routeForStep('skills'));
 
-  const handleChange = (e) => {
-    
-    
-    
-    
-    
-    
-    
-  };
   // Form validation
   const validateForm = () => {
     const newErrors = {};
-    
-    if (!highestLevel) {
-      newErrors.highestLevel = "Please select your highest level of education";
-    }
     
     if (!institutionName.trim()) {
       newErrors.institutionName = "Institution name is required";
@@ -100,9 +87,7 @@ const JobseekerOnboardingEducation = () => {
       newErrors.fieldOfStudy = "Field of study is required";
     }
     
-    if (!degree) {
-      newErrors.degree = "Please select your degree type";
-    }
+    // Degree is optional based on the photo design
     
     if (graduationStatus === 'Graduated' && !graduationYear) {
       newErrors.graduationYear = "Graduation year is required";
@@ -117,12 +102,11 @@ const JobseekerOnboardingEducation = () => {
   // Check form validity on every change
   React.useEffect(() => {
     validateForm();
-  }, [highestLevel, institutionName, location, fieldOfStudy, degree, graduationStatus, graduationYear]);
+  }, [institutionName, location, fieldOfStudy, degree, graduationStatus, graduationYear]);
 
   const addAdditionalEducation = () => {
     if (additionalEducations.length < 5) {
       setAdditionalEducations([...additionalEducations, {
-        id: Date.now(),
         institutionName: '',
         location: '',
         fieldOfStudy: '',
@@ -144,18 +128,6 @@ const JobseekerOnboardingEducation = () => {
   };
 
   const handleNext = async () => {
-    console.log('Next button clicked in Education page');
-    console.log('Current form state:', { 
-      highestLevel, 
-      institutionName, 
-      location, 
-      fieldOfStudy, 
-      degree, 
-      graduationStatus, 
-      graduationYear,
-      isFormValid
-    });
-    
     if (!validateForm()) {
       console.log('Form validation failed:', errors);
       return;
@@ -168,68 +140,27 @@ const JobseekerOnboardingEducation = () => {
     const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
 
     const token = localStorage.getItem('authToken');
-    const educationData = {
-      highestLevel,
-      institutionName,
-      location,
-      fieldOfStudy,
-      degree,
-      graduationStatus,
-      graduationYear,
-      additionalEducations: additionalEducations.filter(edu => 
-        edu.institutionName.trim() && edu.location.trim() && edu.fieldOfStudy.trim()
-      )
-    };
+    const educationEntries = [{
+        institutionName,
+        location,
+        fieldOfStudy,
+        degree,
+        graduationStatus,
+        graduationYear,
+      },
+      ...additionalEducations
+    ];
+
+    const educationData = { educations: educationEntries };
     console.log('Submitting education data:', educationData);
 
     try {
-      // Check if we have a valid token
-      if (!token) {
-        console.log('No auth token found, proceeding with mock data');
-        // Wait for minimum loading time even for mock data
-        await minLoadingTime;
-        // Mock success for development
-        Swal.fire({
-          icon: 'success',
-          html: '<h5><b>Education Background</b></h5>\n<h6>You may now fillup your work experience data.</h6>',
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          toast: true,
-          position: 'bottom-end'
-        });
-        navigate(routeForStep('experience'));
-        setIsLoading(false);
-        return;
-      }
-
-      var url = "http://localhost:4000/onboard/pwd/onboard/education";
-      var headers = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-      
-      console.log('Attempting to connect to:', url);
-      
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(educationData)
-      });
+      const response = await api.post('/onboard/pwd/onboard/education', educationData);
 
       // Wait for both API call and minimum loading time
       await Promise.all([response, minLoadingTime]);
-
-      console.log('Response status:', response.status);
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log('API response:', data);
-      
-      if(data.success) {
+      if(response.data.success) {
         Swal.fire({
           icon: 'success',
           html: '<h5><b>Education Background</b></h5>\n<h6>You may now fillup your work experience data.</h6>',
@@ -270,9 +201,62 @@ const JobseekerOnboardingEducation = () => {
       setIsLoading(false);
     }
   };
-  const handleSkip = () => {
-    const ok = window.confirm('Education details help us match you with the right roles. Skip for now?');
-    if (ok) handleNext();
+  const handleSkip = async () => {
+    const shouldSkip = window.confirm('Education details help us match you with the right roles. Skip for now?');
+    if (shouldSkip) {
+      setIsLoading(true);
+      
+      // Add minimum loading time to see spinner (remove this in production)
+      const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
+
+      try {
+        // Send empty education data when skipping
+        const response = await api.post('/onboard/pwd/onboard/education', { educations: [] });
+
+        // Wait for both API call and minimum loading time
+        await Promise.all([response, minLoadingTime]);
+        
+        if(response.data.success) {
+          Swal.fire({
+            icon: 'success',
+            html: '<h5><b>Education Background</b></h5>\n<h6>You may now fillup your work experience data.</h6>',
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            toast: true,
+            position: 'bottom-end'
+          })
+          navigate(routeForStep('experience'))
+        } else {
+          console.error('API returned success: false', response.data);
+          alert('Failed to save education data. Please try again.');
+        }
+      } catch(error) {
+        console.error("Server error: ", error);
+        
+        // Check if it's a network error
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+          console.log('Network error detected, proceeding with mock data');
+          // Wait for minimum loading time even for network errors
+          await minLoadingTime;
+          Swal.fire({
+            icon: 'info',
+            title: 'Development Mode',
+            text: 'Server not available, proceeding with mock data.',
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            toast: true,
+            position: 'bottom-end'
+          });
+          navigate(routeForStep('experience'));
+        } else {
+          alert('Failed to connect to the server. Please try again later.');
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -300,150 +284,171 @@ const JobseekerOnboardingEducation = () => {
               }}
             />
           </div>
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
-            <h2 className="text-xl font-semibold text-gray-900 mt-6">Education & Qualifications</h2>
-            <p className="text-gray-600 mt-1">Tell us about your educational background.</p>
-
-            <div className="mt-4">
-              <label className="block text-sm text-gray-700 mb-1">Highest Level of Education Completed *</label>
-              <div className="relative">
-                <select 
-                  value={highestLevel} 
-                  onChange={(e) => setHighestLevel(e.target.value)} 
-                  className={`w-full appearance-none bg-white border rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                    errors.highestLevel ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                >
-                  <option value='' disabled hidden>Choose your highest level of education</option>
-                  <option value='High School'>High School</option>
-                  <option value='Vocational/Technical'>Vocational/Technical</option>
-                  <option value="Bachelor's Degree">Bachelor's Degree</option>
-                  <option value="Master's Degree">Master's Degree</option>
-                  <option value='Doctorate'>Doctorate</option>
-                </select>
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
-              </div>
-              {errors.highestLevel && (
-                <p className="mt-1 text-sm text-red-600">{errors.highestLevel}</p>
-              )}
-            </div>
-
-            <div className="mt-6 border border-gray-200 rounded-xl p-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm text-gray-700 mb-1">Institution Name*</label>
-                  <input 
-                    value={institutionName} 
-                    onChange={(e) => setinstitutionName(e.target.value)} 
-                    className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                      errors.institutionName ? 'border-red-500' : 'border-gray-200'
-                    }`}
-                    placeholder="e.g., University of the Philippines Cebu" 
-                  />
-                  {errors.institutionName && (
-                    <p className="mt-1 text-sm text-red-600">{errors.institutionName}</p>
-                  )}
-                </div>
-                <div>
-                  <label className="block text-sm text-gray-700 mb-1">Location*</label>
-                  <input 
-                    value={location} 
-                    onChange={(e) => setLocation(e.target.value)} 
-                    className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                      errors.location ? 'border-red-500' : 'border-gray-200'
-                    }`}
-                    placeholder="e.g., Cebu City, Philippines" 
-                  />
-                  {errors.location && (
-                    <p className="mt-1 text-sm text-red-600">{errors.location}</p>
-                  )}
-                </div>
-                <div>
-                  <label className="block text-sm text-gray-700 mb-1">Field of Study/Major*</label>
-                  <input 
-                    value={fieldOfStudy} 
-                    onChange={(e) => setFieldOfStudy(e.target.value)} 
-                    className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                      errors.fieldOfStudy ? 'border-red-500' : 'border-gray-200'
-                    }`}
-                    placeholder="e.g., Computer Science" 
-                  />
-                  {errors.fieldOfStudy && (
-                    <p className="mt-1 text-sm text-red-600">{errors.fieldOfStudy}</p>
-                  )}
-                </div>
-                <div>
-                  <label className="block text-sm text-gray-700 mb-1">Degree/Certificate*</label>
-                  <div className="relative">
-                    <select 
-                      value={degree} 
-                      onChange={(e) => setDegree(e.target.value)} 
-                      className={`w-full appearance-none bg-white border rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                        errors.degree ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                    >
-                      <option value='' disabled hidden>Select degree type</option>
-                      <option value="Certificate">Certificate</option>
-                      <option value="Diploma">Diploma</option>
-                      <option value="Bachelor's">Bachelor's</option>
-                      <option value="Master's">Master's</option>
-                      <option value="Doctorate">Doctorate</option>
-                    </select>
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
-                  </div>
-                  {errors.degree && (
-                    <p className="mt-1 text-sm text-red-600">{errors.degree}</p>
-                  )}
-                </div>
-                <div>
-                  <label className="block text-sm text-gray-700 mb-2">Graduation Details</label>
-                  <div className="flex items-center gap-4 text-sm text-gray-700">
-                    <label className="inline-flex items-center gap-2">
-                      <input type="radio" name="grad" checked={graduationStatus==='Graduated'} onChange={() => setGraduationStatus('Graduated')} /> Graduated
-                    </label>
-                    <label className="inline-flex items-center gap-2">
-                      <input type="radio" name="grad" checked={graduationStatus==='Currently Studying'} onChange={() => setGraduationStatus('Currently Studying')} /> Currently Studying
-                    </label>
-                    <label className="inline-flex items-center gap-2">
-                      <input type="radio" name="grad" checked={graduationStatus==='Did not complete'} onChange={() => setGraduationStatus('Did not complete')} /> Did not complete
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm text-gray-700 mb-1">Graduation Year</label>
-                  <div className="relative">
-                    <select 
-                      value={graduationYear} 
-                      onChange={(e) => setGraduationYear(e.target.value)} 
-                      className={`w-full appearance-none bg-white border rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                        errors.graduationYear ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                    >
-                      <option value="" hidden>Select graduation year</option>
-                      {Array.from({ length: 60 }).map((_, idx) => {
-                        const year = 2025 - idx;
-                        return <option value={year} key={year}>{year}</option>;
-                      })}
-                    </select>
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
-                  </div>
-                  {errors.graduationYear && (
-                    <p className="mt-1 text-sm text-red-600">{errors.graduationYear}</p>
-                  )}
-                </div>
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 lg:p-8">
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">Education & Qualifications</h2>
+                <p className="text-gray-600">Tell us about your educational background.</p>
               </div>
 
+              {/* Education Details Section */}
+              <div>
+                <div className="border border-gray-200 rounded-xl p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-sm font-medium text-gray-900">Education #1</h4>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Institution Name*</label>
+                      <input 
+                        value={institutionName} 
+                        onChange={(e) => setinstitutionName(e.target.value)} 
+                        className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                          errors.institutionName ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="e.g., University of the Philippines Cebu" 
+                      />
+                      {errors.institutionName && (
+                        <p className="mt-1 text-sm text-red-600">{errors.institutionName}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Location*</label>
+                      <input 
+                        value={location} 
+                        onChange={(e) => setLocation(e.target.value)} 
+                        className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                          errors.location ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="e.g., Cebu City, Philippines" 
+                      />
+                      {errors.location && (
+                        <p className="mt-1 text-sm text-red-600">{errors.location}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Field of Study/Major*</label>
+                      <input 
+                        value={fieldOfStudy} 
+                        onChange={(e) => setFieldOfStudy(e.target.value)} 
+                        className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                          errors.fieldOfStudy ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="e.g., Computer Science, Business Administration" 
+                      />
+                      {errors.fieldOfStudy && (
+                        <p className="mt-1 text-sm text-red-600">{errors.fieldOfStudy}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Degree/Certificate (Optional)</label>
+                      <div className="relative">
+                        <select 
+                          value={degree} 
+                          onChange={(e) => setDegree(e.target.value)} 
+                          className={`w-full appearance-none bg-white border rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                            errors.degree ? 'border-red-500' : 'border-gray-300'
+                          }`}
+                        >
+                          <option value='' disabled hidden>Select degree type</option>
+                          <option value="Certificate">Certificate</option>
+                          <option value="Diploma">Diploma</option>
+                          <option value="Bachelor's">Bachelor's</option>
+                          <option value="Master's">Master's</option>
+                          <option value="Doctorate">Doctorate</option>
+                        </select>
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </div>
+                      {errors.degree && (
+                        <p className="mt-1 text-sm text-red-600">{errors.degree}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Graduation Details</label>
+                      <div className="flex items-center gap-4 text-sm text-gray-700">
+                        <label className="inline-flex items-center gap-2">
+                          <input 
+                            type="radio" 
+                            name="grad" 
+                            checked={graduationStatus==='Graduated'} 
+                            onChange={() => setGraduationStatus('Graduated')}
+                            className="text-blue-600 focus:ring-blue-500"
+                          /> 
+                          Graduated
+                        </label>
+                        <label className="inline-flex items-center gap-2">
+                          <input 
+                            type="radio" 
+                            name="grad" 
+                            checked={graduationStatus==='Currently Studying'} 
+                            onChange={() => setGraduationStatus('Currently Studying')}
+                            className="text-blue-600 focus:ring-blue-500"
+                          /> 
+                          Currently Studying
+                        </label>
+                        <label className="inline-flex items-center gap-2">
+                          <input 
+                            type="radio" 
+                            name="grad" 
+                            checked={graduationStatus==='Did not complete'} 
+                            onChange={() => setGraduationStatus('Did not complete')}
+                            className="text-blue-600 focus:ring-blue-500"
+                          /> 
+                          Did not complete
+                        </label>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Graduation Year</label>
+                      <div className="relative">
+                        <select 
+                          value={graduationYear} 
+                          onChange={(e) => setGraduationYear(e.target.value)} 
+                          className={`w-full appearance-none bg-white border rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                            errors.graduationYear ? 'border-red-500' : 'border-gray-300'
+                          }`}
+                        >
+                          <option value="" hidden>Select graduation year</option>
+                          {Array.from({ length: 60 }).map((_, idx) => {
+                            const year = 2025 - idx;
+                            return <option value={year} key={year}>{year}</option>;
+                          })}
+                        </select>
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </div>
+                      {errors.graduationYear && (
+                        <p className="mt-1 text-sm text-red-600">{errors.graduationYear}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Add Another Education Section */}
               <div className="mt-6">
                 <button 
                   type="button" 
                   onClick={addAdditionalEducation}
                   disabled={additionalEducations.length >= 5}
-                  className="mx-auto flex items-center gap-2 border rounded-lg px-4 py-2 text-blue-600 border-blue-200 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-blue-300 hover:text-blue-600 transition-colors text-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span className="text-lg">＋</span> Add Another Education
+                  <div className="flex flex-col items-center">
+                    <svg className="w-5 h-5 mb-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span className="font-medium">Add Another Education</span>
+                  </div>
                 </button>
                 <p className="text-xs text-center text-gray-500 mt-2">
-                  You can add up to 5 additional education entries ({additionalEducations.length}/5)
+                  You can add up to 5 additional education entries
                 </p>
               </div>
 
@@ -451,7 +456,7 @@ const JobseekerOnboardingEducation = () => {
               {additionalEducations.map((edu, index) => (
                 <div key={edu.id} className="mt-6 border border-gray-200 rounded-xl p-4 bg-gray-50">
                   <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-sm font-medium text-gray-900">Additional Education #{index + 1}</h4>
+                    <h4 className="text-sm font-medium text-gray-900">Education #{index + 2}</h4>
                     <button
                       onClick={() => removeAdditionalEducation(edu.id)}
                       className="text-red-600 hover:text-red-800 text-sm"
@@ -548,50 +553,55 @@ const JobseekerOnboardingEducation = () => {
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-6 flex items-center justify-between">
-              <button 
-                onClick={goBack} 
-                disabled={isLoading}
-                className={`px-4 py-2 border rounded-lg transition-colors ${
-                  isLoading 
-                    ? 'text-gray-400 cursor-not-allowed' 
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                Back
-              </button>
-              <div className="flex items-center gap-3">
+              
+              {/* Navigation Buttons */}
+              <div className="flex items-center justify-between pt-6 border-t border-gray-200">
                 <button 
-                  onClick={handleSkip} 
+                  onClick={goBack} 
                   disabled={isLoading}
-                  className={`px-4 py-2 border rounded-lg transition-colors ${
-                    isLoading 
-                      ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-gray-700 hover:bg-gray-50'
-                  }`}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                 >
-                  Skip for now
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                  Back
                 </button>
-                <button 
-                  onClick={handleNext} 
-                  disabled={!isFormValid || isLoading}
-                  className={`px-4 py-2 text-white rounded-lg transition-all duration-200 flex items-center gap-2 ${
-                    isFormValid && !isLoading
-                      ? 'bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transform hover:scale-105' 
-                      : 'bg-gray-400 cursor-not-allowed'
-                  }`}
-                >
-                  {isLoading ? (
-                    <>
-                      <Spinner size="sm" color="white" />
-                      <span>Saving...</span>
-                    </>
-                  ) : (
-                    isFormValid ? 'Next' : 'Complete Form'
-                  )}
-                </button>
+                <div className="flex items-center gap-3">
+                  <button 
+                    onClick={handleSkip} 
+                    disabled={isLoading}
+                    className={`text-sm font-medium transition-colors ${
+                      isLoading 
+                        ? 'text-gray-400 cursor-not-allowed' 
+                        : 'text-blue-600 hover:text-blue-800'
+                    }`}
+                  >
+                    Skip for now
+                  </button>
+                  <button 
+                    onClick={handleNext} 
+                    disabled={!isFormValid || isLoading}
+                    className={`inline-flex items-center px-6 py-2 text-white text-sm font-medium rounded-lg transition-all duration-200 ${
+                      isFormValid && !isLoading
+                        ? 'bg-blue-600 hover:bg-blue-700' 
+                        : 'bg-gray-400 cursor-not-allowed'
+                    }`}
+                  >
+                    {isLoading ? (
+                      <>
+                        <Spinner size="sm" color="white" />
+                        <span className="ml-2">Saving...</span>
+                      </>
+                    ) : (
+                      <>
+                        Next
+                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -615,5 +625,3 @@ const JobseekerOnboardingEducation = () => {
 };
 
 export default JobseekerOnboardingEducation;
-
-

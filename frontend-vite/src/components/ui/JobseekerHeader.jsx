@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import api from '../../utils/api.js'
 import Logo from './Logo.jsx';
 import AnimatedHamburger from './AnimatedHamburger.jsx';
 
@@ -63,13 +64,15 @@ const IconButton = ({
   hasNotification = false,
   notificationCount = 0,
   disabled = false,
+  onClick = null,
 }) => (
   <div className="relative">
     <button
+      onClick={onClick}
       className={`p-1.5 transition-colors rounded-lg ${
         disabled 
           ? 'text-gray-300 cursor-not-allowed opacity-60' 
-          : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+          : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-700'
       }`}
       aria-label={label}
       disabled={disabled}
@@ -86,9 +89,14 @@ const IconButton = ({
 
 const JobseekerHeader = ({ disabled = false }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [fetchedProfile, setFetchedProfile] = useState();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isFindJobsOpen, setIsFindJobsOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [textSize, setTextSize] = useState('normal');
+  const [showTextSizeMenu, setShowTextSizeMenu] = useState(false);
   const dropdownRef = useRef(null);
   
   // Function to check if a nav link is active
@@ -127,6 +135,59 @@ const JobseekerHeader = ({ disabled = false }) => {
     setIsFindJobsOpen(false);
   };
 
+  // handle signout
+  const signOut = () => {
+    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
+    navigate('/signin');
+  }
+
+  // Accessibility functions
+  const applyAccessibilityStyles = (darkMode, size) => {
+    const root = document.documentElement;
+    console.log('Applying accessibility styles:', { darkMode, size });
+    
+    // Dark mode
+    if (darkMode) {
+      root.classList.add('dark');
+      console.log('Added dark class to root');
+    } else {
+      root.classList.remove('dark');
+      console.log('Removed dark class from root');
+    }
+
+    // Text size
+    root.classList.remove('text-small', 'text-normal', 'text-large', 'text-extra-large');
+    root.classList.add(`text-${size}`);
+    console.log(`Applied text-${size} class to root`);
+  };
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode;
+    console.log('Toggling dark mode to:', newDarkMode);
+    setIsDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', newDarkMode.toString());
+    applyAccessibilityStyles(newDarkMode, textSize);
+  };
+
+  const changeTextSize = (size) => {
+    console.log('Changing text size to:', size);
+    setTextSize(size);
+    localStorage.setItem('textSize', size);
+    applyAccessibilityStyles(isDarkMode, size);
+    setShowTextSizeMenu(false);
+  };
+
+  // Load saved accessibility preferences
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    const savedTextSize = localStorage.getItem('textSize') || 'normal';
+    
+    setIsDarkMode(savedDarkMode);
+    setTextSize(savedTextSize);
+    applyAccessibilityStyles(savedDarkMode, savedTextSize);
+  }, []);
+
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -137,12 +198,30 @@ const JobseekerHeader = ({ disabled = false }) => {
       if (!event.target.closest('.profile-dropdown-container')) {
         setIsProfileDropdownOpen(false);
       }
+      // Close text size menu when clicking outside
+      if (!event.target.closest('.text-size-container')) {
+        setShowTextSizeMenu(false);
+      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await api.get('/retrieve/header');
+        if(response.data.success) {
+          setFetchedProfile(response.data.data);
+        }
+      } catch(error) {
+        console.error("Failed to load profile:", error);
+      }
+    };
+    fetchProfile();
   }, []);
 
   return (
@@ -152,7 +231,7 @@ const JobseekerHeader = ({ disabled = false }) => {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/jobseeker/dashboard" className="flex-shrink-0">
-              <Logo showText={true} />
+              <Logo showText={true} asLink={false} />
             </Link>
           </div>
 
@@ -232,8 +311,8 @@ const JobseekerHeader = ({ disabled = false }) => {
           <div className="flex items-center space-x-4">
             {/* Icons - Always visible */}
             <div className="flex items-center space-x-3">
-              {/* Theme toggle */}
-              <IconButton label="Toggle theme" disabled={disabled}>
+              {/* Dark Mode Toggle */}
+              <IconButton label="Toggle dark mode" disabled={disabled} onClick={toggleDarkMode}>
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -249,10 +328,36 @@ const JobseekerHeader = ({ disabled = false }) => {
                 </svg>
               </IconButton>
 
-              {/* Text size */}
-              <IconButton label="Text size" disabled={disabled}>
-                <span className="font-bold text-xs">Tt</span>
-              </IconButton>
+              {/* Text Size */}
+              <div className="relative text-size-container">
+                <IconButton label="Text size" disabled={disabled} onClick={() => setShowTextSizeMenu(!showTextSizeMenu)}>
+                  <span className="font-bold text-sm">Tt</span>
+                </IconButton>
+                
+                {/* Text Size Dropdown */}
+                {showTextSizeMenu && !disabled && (
+                  <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+                    {[
+                      { size: 'small', label: 'Small' },
+                      { size: 'normal', label: 'Normal' },
+                      { size: 'large', label: 'Large' },
+                      { size: 'extra-large', label: 'Extra Large' }
+                    ].map(({ size, label }) => (
+                      <button
+                        key={size}
+                        onClick={() => changeTextSize(size)}
+                        className={`w-full text-left px-3 py-2 text-sm transition-colors ${
+                          textSize === size
+                            ? 'bg-blue-600 text-white'
+                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {/* Notifications */}
               <IconButton
@@ -286,11 +391,19 @@ const JobseekerHeader = ({ disabled = false }) => {
                 }`}
                 disabled={disabled}
               >
-                <img
-                  className="h-6 w-6 rounded-full object-cover border-2 border-gray-200"
-                  src="https://i.pravatar.cc/64"
-                  alt="Profile"
-                />
+                {fetchedProfile?.profile_picture ? (
+                  <img
+                    className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
+                    src={fetchedProfile.profile_picture}
+                    alt="Profile"
+                  /> 
+                ) : (
+                  <img
+                    className="h-8 w-8 rounded-full object-cover border-2 border-gray-200"
+                    src="https://i.pravatar.cc/64"
+                    alt="Profile"
+                  />
+                )}
                 <svg className="w-4 h-4 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -311,6 +424,7 @@ const JobseekerHeader = ({ disabled = false }) => {
                   <button
                     onClick={() => {
                       // Handle logout
+                      signOut();
                       setIsProfileDropdownOpen(false);
                     }}
                     className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50"

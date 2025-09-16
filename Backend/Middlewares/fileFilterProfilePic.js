@@ -1,12 +1,12 @@
 function fileFilter(req, file, cb) {
-  if (file.fieldname === 'profile_picture') {
+  if (file.fieldname === 'profilePhoto') {
     // Only jpg/png
     if (!file.originalname.match(/\.(jpg|jpeg|png)$/i)) {
       return cb(new Error('Only JPG and PNG images are allowed for profile picture'), false);
     }
   }
 
-  if (file.fieldname === 'resume_cv_file') {
+  if (file.fieldname === 'resume') {
     // Only pdf/doc/docx
     if (!file.originalname.match(/\.(pdf|doc|docx)$/i)) {
       return cb(new Error('Only PDF, DOC, DOCX files are allowed for resume'), false);
