@@ -3,17 +3,210 @@ import { Link } from 'react-router-dom';
 import JobseekerHeader from '../../components/ui/JobseekerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
+import api from '../../utils/api.js';
 
 const JobRecommendations = () => {
-  const [viewMode, setViewMode] = useState('ai-matches');
+  const [viewMode, setViewMode] = useState('all-jobs');
   const [sortBy, setSortBy] = useState('recent');
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoadingJobs, setIsLoadingJobs] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [savedJobsCount, setSavedJobsCount] = useState(3);
+  const [jobData, setJobData] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
+  const [error, setError] = useState(null);
+  const [appliedJobs, setAppliedJobs] = useState(new Set());
+  
+  // Filter states
+  const [filters, setFilters] = useState({
+    employmentType: '',
+    workArrangement: '',
+    experienceLevel: '',
+    salaryRange: '',
+    location: '',
+    skills: []
+  });
+  const [showFilters, setShowFilters] = useState(false);
 
-  // Mock job data - in real app, fetch this from backend
-  const jobData = [
+  // Fetch applied jobs to check which jobs user has already applied to
+  const fetchAppliedJobs = async () => {
+    try {
+      const response = await api.get('/api/applications/my-applications?limit=100');
+      if (response.data.success) {
+        const appliedJobIds = new Set(response.data.data.map(app => app.job.job_id));
+        setAppliedJobs(appliedJobIds);
+      }
+    } catch (error) {
+      console.error('Error fetching applied jobs:', error);
+    }
+  };
+
+  // Fetch jobs from backend
+  const fetchJobs = async () => {
+    try {
+      setIsLoadingJobs(true);
+      setError(null);
+      
+      console.log('Fetching jobs from API...');
+      const response = await api.get('/api/jobs/jobs?limit=50');
+      console.log('API Response:', response.data);
+      
+      if (response.data.success && response.data.data) {
+        console.log('Jobs found:', response.data.data.length);
+        console.log('First job:', response.data.data[0]);
+        
+        // Transform backend data to match frontend format
+        console.log('First job employer data:', response.data.data[0]?.employer);
+        const transformedJobs = response.data.data.map(job => ({
+          id: job.job_id,
+          title: job.jobtitle,
+          company: job.employer?.company_name || 'Unknown Company',
+          companyLogo: job.employer?.profile_picture || "https://via.placeholder.com/40",
+          matchScore: Math.floor(Math.random() * 40) + 30, // Random score 30-70%
+          type: job.employment_type,
+          location: `${job.location_city}, ${job.location_province}`,
+          salaryRange: {
+            min: job.salary_min || 0,
+            max: job.salary_max || 0,
+            currency: "PHP",
+            period: job.salary_type || "monthly"
+          },
+          level: job.experience_level,
+          requiredSkills: job.skills_required || [],
+          preferredSkills: [],
+          experienceYears: 0,
+          accessibilityFeatures: job.workplace_accessibility_features || [],
+          companyAccessibility: {
+            hasAccessibilityPolicy: true,
+            providesAccommodations: true,
+            inclusiveHiring: true
+          },
+          applicationStatus: "not_applied",
+          isSaved: false,
+          postedDate: new Date(job.created_at).toISOString().split('T')[0],
+          expiresDate: job.application_deadline || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          isActive: job.job_status === 'Active'
+        }));
+        
+        console.log('First transformed job companyLogo:', transformedJobs[0]?.companyLogo);
+        setJobData(transformedJobs);
+        
+        // Check saved status for all jobs
+        await checkSavedStatusForJobs(transformedJobs);
+      } else {
+        console.log('No jobs found in response:', response.data);
+        setError('Failed to fetch jobs');
+      }
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
+      setError('Failed to load jobs. Please try again.');
+    } finally {
+      setIsLoadingJobs(false);
+    }
+  };
+
+  // Check saved status for multiple jobs
+  const checkSavedStatusForJobs = async (jobs) => {
+    try {
+      const savedStatusPromises = jobs.map(async (job) => {
+        try {
+          const response = await api.get(`/api/saved-jobs/check/${job.id}`);
+          console.log(`Check saved status for job ${job.id}:`, response.data);
+          return { ...job, isSaved: response.data.data?.isSaved || false };
+        } catch (error) {
+          console.error(`Error checking saved status for job ${job.id}:`, error);
+          return { ...job, isSaved: false };
+        }
+      });
+      
+      const jobsWithSavedStatus = await Promise.all(savedStatusPromises);
+      setJobData(jobsWithSavedStatus);
+      
+      // Update saved jobs count
+      const savedCount = jobsWithSavedStatus.filter(job => job.isSaved).length;
+      setSavedJobsCount(savedCount);
+    } catch (error) {
+      console.error('Error checking saved status for jobs:', error);
+      setJobData(jobs); // Fallback to original jobs
+    }
+  };
+
+  // Load jobs on component mount
+  useEffect(() => {
+    fetchJobs();
+    fetchAppliedJobs();
+  }, []);
+
+  // Filter and sort jobs based on current settings
+  useEffect(() => {
+    let filtered = [...jobData];
+
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(job => 
+        job.title.toLowerCase().includes(query) ||
+        job.company.toLowerCase().includes(query) ||
+        job.requiredSkills.some(skill => skill.toLowerCase().includes(query)) ||
+        job.location.toLowerCase().includes(query)
+      );
+    }
+
+    // Apply other filters
+    if (filters.employmentType) {
+      filtered = filtered.filter(job => job.type === filters.employmentType);
+    }
+    if (filters.experienceLevel) {
+      filtered = filtered.filter(job => job.level === filters.experienceLevel);
+    }
+    if (filters.location) {
+      filtered = filtered.filter(job => 
+        job.location.toLowerCase().includes(filters.location.toLowerCase())
+      );
+    }
+    if (filters.salaryRange) {
+      const [min, max] = filters.salaryRange.split('-').map(Number);
+      filtered = filtered.filter(job => {
+        const jobSalary = (job.salaryRange.min + job.salaryRange.max) / 2;
+        return jobSalary >= min && jobSalary <= max;
+      });
+    }
+
+    // Apply sorting
+    switch (sortBy) {
+      case 'match-score':
+        filtered.sort((a, b) => b.matchScore - a.matchScore);
+        break;
+      case 'salary-high':
+        filtered.sort((a, b) => (b.salaryRange.max + b.salaryRange.min) - (a.salaryRange.max + a.salaryRange.min));
+        break;
+      case 'salary-low':
+        filtered.sort((a, b) => (a.salaryRange.max + a.salaryRange.min) - (b.salaryRange.max + b.salaryRange.min));
+        break;
+      case 'experience':
+        const experienceOrder = ['Entry Level', 'Mid Level', 'Senior Level', 'Executive Level'];
+        filtered.sort((a, b) => {
+          const aIndex = experienceOrder.indexOf(a.level);
+          const bIndex = experienceOrder.indexOf(b.level);
+          return aIndex - bIndex;
+        });
+        break;
+      case 'recent':
+      default:
+        filtered.sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate));
+        break;
+    }
+
+    // Apply view mode filter
+    if (viewMode === 'ai-matches') {
+      filtered = filtered.filter(job => job.matchScore >= 70);
+    }
+
+    setFilteredJobs(filtered);
+  }, [jobData, searchQuery, filters, sortBy, viewMode]);
+
+  // Mock job data fallback (remove this after testing)
+  const mockJobData = [
     {
       id: 1,
       title: "Frontend Developer",
@@ -295,34 +488,20 @@ const JobRecommendations = () => {
     }
   ];
 
-  // Load jobs on component mount
-  useEffect(() => {
-    const loadJobs = async () => {
-      setIsLoadingJobs(true);
-      // Simulate API call
-      setTimeout(() => {
-        setIsLoadingJobs(false);
-      }, 1000);
-    };
-    loadJobs();
-  }, []);
-
   // Helper function to format salary display
-  const formatSalary = (salary) => {
-    if (salary.isFixed) {
-      return `$${salary.min.toLocaleString()} (fixed)`;
+  const formatSalary = (salaryRange) => {
+    if (!salaryRange || (salaryRange.min === 0 && salaryRange.max === 0)) {
+      return 'Salary not specified';
     }
     
-    const periodText = salary.period === 'hourly' ? '/hour' : 
-                      salary.period === 'weekly' ? '/weekly' :
-                      salary.period === 'bi-weekly' ? '/bi-weekly' :
-                      salary.period === 'monthly' ? '/monthly' : '/yearly';
+    const period = salaryRange.period;
+    const periodText = period === 'monthly' ? 'month' : 
+                      period === 'weekly' ? 'week' : 
+                      period === 'biweekly' ? '2 weeks' : 
+                      period === 'yearly' ? 'year' : 
+                      period;
     
-    if (salary.min === salary.max) {
-      return `$${salary.min.toLocaleString()}${periodText}`;
-    }
-    
-    return `$${salary.min.toLocaleString()} - $${salary.max.toLocaleString()}${periodText}`;
+    return `₱${salaryRange.min.toLocaleString()} - ₱${salaryRange.max.toLocaleString()} ${salaryRange.currency} Per ${periodText}`;
   };
 
   // Helper function to get match score color
@@ -336,25 +515,88 @@ const JobRecommendations = () => {
   // Job action handlers
   const toggleJobSaved = async (jobId) => {
     try {
-      // API call to toggle saved status
-      // const response = await fetch(`/api/jobs/${jobId}/toggle-saved`, {
-      //   method: 'POST',
-      //   headers: { 'Authorization': `Bearer ${token}` }
-      // });
+      const job = jobData.find(j => j.id === jobId);
+      if (!job) return;
+
+      console.log('Toggling saved status for job:', jobId, 'Current status:', job.isSaved);
+
+      let response;
+      if (job.isSaved) {
+        // Unsave the job
+        console.log('Unsaving job:', jobId);
+        response = await api.delete(`/api/saved-jobs/unsave/${jobId}`);
+        console.log('Job unsaved:', response.data);
+      } else {
+        // Save the job
+        console.log('Saving job:', jobId);
+        response = await api.post('/api/saved-jobs/save', { jobId: jobId });
+        console.log('Job saved:', response.data);
+      }
       
-      // Update local state
-      const updatedJobs = jobData.map(job => 
-        job.id === jobId ? { ...job, isSaved: !job.isSaved } : job
-      );
+      // Update local state based on response
+      let updatedJobs;
+      if (job.isSaved) {
+        // Job was unsaved
+        updatedJobs = jobData.map(j => 
+          j.id === jobId ? { ...j, isSaved: false } : j
+        );
+        alert('Job removed from saved jobs');
+      } else {
+        // Job was saved (or already saved)
+        updatedJobs = jobData.map(j => 
+          j.id === jobId ? { ...j, isSaved: true } : j
+        );
+        if (response.data.success) {
+          alert('Job saved successfully!');
+        } else if (response.data.message === 'Job is already saved') {
+          alert('Job is already saved!');
+        } else {
+          alert('Job saved successfully!');
+        }
+      }
+      
+      setJobData(updatedJobs);
       
       // Update saved jobs count
       const newSavedCount = updatedJobs.filter(job => job.isSaved).length;
       setSavedJobsCount(newSavedCount);
       
-      console.log(`Toggling saved state for job ${jobId}`);
     } catch (error) {
       console.error('Error toggling job saved status:', error);
+      console.error('Error details:', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+        config: error.config
+      });
+      // Show error message to user
+      const errorMessage = error.response?.data?.error || error.response?.data?.message || error.message;
+      alert(`Failed to update saved status: ${errorMessage}. Please try again.`);
     }
+  };
+
+  // Filter update functions
+  const updateFilter = (filterType, value) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: value
+    }));
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      employmentType: '',
+      workArrangement: '',
+      experienceLevel: '',
+      salaryRange: '',
+      location: '',
+      skills: []
+    });
+  };
+
+  // Get unique values for filter options
+  const getUniqueValues = (field) => {
+    return [...new Set(jobData.map(job => job[field]).filter(Boolean))];
   };
 
   const applyToJob = async (jobId) => {
@@ -372,11 +614,16 @@ const JobRecommendations = () => {
   };
 
   // Pagination
-  const totalPages = 8;
   const jobsPerPage = 9; // Show 9 jobs (3x3 grid) for better visual balance
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
   const startIndex = (currentPage - 1) * jobsPerPage;
   const endIndex = startIndex + jobsPerPage;
-  const currentJobs = jobData.slice(startIndex, endIndex);
+  const currentJobs = filteredJobs.slice(startIndex, endIndex);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, filters, sortBy, viewMode]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -479,18 +726,98 @@ const JobRecommendations = () => {
                 </div>
 
                 {/* Filters Button */}
-                <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center space-x-2">
+                <button 
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center space-x-2"
+                >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
                   </svg>
                   <span>Filters</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className={`w-4 h-4 transition-transform ${showFilters ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
               </div>
             </div>
           </div>
+
+          {/* Filter Panel */}
+          {showFilters && (
+            <div className="bg-white rounded-lg shadow p-6 mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
+                <button
+                  onClick={clearFilters}
+                  className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  Clear All
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* Employment Type */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Employment Type</label>
+                  <select
+                    value={filters.employmentType}
+                    onChange={(e) => updateFilter('employmentType', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  >
+                    <option value="">All Types</option>
+                    {getUniqueValues('type').map(type => (
+                      <option key={type} value={type}>{type}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Experience Level */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Experience Level</label>
+                  <select
+                    value={filters.experienceLevel}
+                    onChange={(e) => updateFilter('experienceLevel', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  >
+                    <option value="">All Levels</option>
+                    {getUniqueValues('level').map(level => (
+                      <option key={level} value={level}>{level}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Salary Range */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Salary Range</label>
+                  <select
+                    value={filters.salaryRange}
+                    onChange={(e) => updateFilter('salaryRange', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  >
+                    <option value="">All Ranges</option>
+                    <option value="0-20000">₱0 - ₱20,000</option>
+                    <option value="20000-40000">₱20,000 - ₱40,000</option>
+                    <option value="40000-60000">₱40,000 - ₱60,000</option>
+                    <option value="60000-80000">₱60,000 - ₱80,000</option>
+                    <option value="80000-100000">₱80,000 - ₱100,000</option>
+                    <option value="100000-999999">₱100,000+</option>
+                  </select>
+                </div>
+
+                {/* Location */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                  <input
+                    type="text"
+                    value={filters.location}
+                    onChange={(e) => updateFilter('location', e.target.value)}
+                    placeholder="Enter city or province"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Job Grid */}
           {isLoadingJobs ? (
@@ -504,108 +831,110 @@ const JobRecommendations = () => {
                 </div>
               ))}
             </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <div className="text-red-500 text-lg font-medium mb-2">Error Loading Jobs</div>
+              <p className="text-gray-600 mb-4">{error}</p>
+              <button 
+                onClick={fetchJobs}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Try Again
+              </button>
+            </div>
+          ) : filteredJobs.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="text-gray-500 text-lg font-medium mb-2">No Jobs Found</div>
+              <p className="text-gray-600">
+                {searchQuery || Object.values(filters).some(f => f) 
+                  ? 'No jobs match your current filters. Try adjusting your search criteria.'
+                  : 'There are currently no job postings available.'
+                }
+              </p>
+            </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
-              {currentJobs.map((job) => (
-                <div key={job.id} className="border border-gray-200 rounded-lg p-4 lg:p-6 hover:shadow-md transition-shadow relative border-l-4 border-l-blue-500">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+              {filteredJobs.map((job) => (
+                <div key={job.id} className="bg-white border border-gray-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow relative border-l-4 border-l-blue-500">
                   
-                  {/* Job Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center space-x-3">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
+                    <div className="flex items-center space-x-2 mb-2 sm:mb-0">
                       <img 
                         src={job.companyLogo} 
                         alt={`${job.company} logo`}
-                        className="w-10 h-10 rounded"
+                        className="w-8 h-8 rounded-full object-cover"
                       />
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
-                        <p className="text-sm text-gray-600">{job.company}</p>
+                        <h4 className="font-semibold text-gray-900 text-sm sm:text-base">{job.title}</h4>
+                        <p className="text-xs sm:text-sm text-gray-600">{job.company}</p>
                       </div>
                     </div>
-                    <span className={`inline-block ${getMatchScoreColor(job.matchScore)} text-sm font-medium px-3 py-1 rounded-full`}>
+                    <div className="text-right">
+                      <span className={`inline-block ${getMatchScoreColor(job.matchScore)} text-xs font-medium px-2 py-1 rounded-full`}>
                       {job.matchScore}% Match
                     </span>
-                  </div>
-
-                  {/* Job Details */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4 mb-4">
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <span>{job.type}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                      <span>{job.location}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                      </svg>
-                      <span>{formatSalary(job.salary)}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M12 16h.01" />
-                      </svg>
-                      <span>{job.level}</span>
                     </div>
                   </div>
 
-                  {/* Skills */}
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-2">
+                  <div className="space-y-2 mb-3">
+                    <p className="text-xs sm:text-sm text-gray-600">
+                      {job.type} • {job.location}
+                    </p>
+                      <p className="text-xs sm:text-sm font-medium text-gray-900">
+                        {formatSalary(job.salaryRange)}
+                      </p>
+                    <p className="text-xs sm:text-sm text-gray-600">{job.level}</p>
+                  </div>
+
+                  <div className="mb-3">
+                    <div className="flex gap-1 mb-2 overflow-hidden">
                       {job.requiredSkills.slice(0, 4).map((skill, index) => (
-                        <span 
-                          key={index}
-                          className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800"
-                        >
+                        <span key={index} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded whitespace-nowrap flex-shrink-0">
                           {skill}
                         </span>
                       ))}
                     </div>
-                  </div>
-
-                  {/* Accessibility Features */}
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex gap-1 overflow-hidden">
                       {job.accessibilityFeatures.slice(0, 3).map((feature, index) => (
-                        <span 
-                          key={index}
-                          className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800"
-                        >
+                        <span key={index} className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded whitespace-nowrap flex-shrink-0">
                           {feature}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <div className="flex space-x-2">
                       <Link
                         to={`/jobseeker/job/${job.id}`}
-                        className="px-4 py-2 text-sm font-medium transition-colors flex items-center space-x-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg"
+                        state={{ from: '/find-job' }}
+                        className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center justify-center space-x-1 bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         </svg>
                         <span>View Details</span>
                       </Link>
                       
+                      {appliedJobs.has(job.id) ? (
+                        <button
+                          disabled
+                          className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium bg-green-100 text-green-800 cursor-not-allowed"
+                        >
+                          <span>Applied</span>
+                        </button>
+                      ) : (
                       <Link
-                        to={`/jobseeker/job/${job.id}`}
-                        className="px-4 py-2 text-sm font-medium transition-colors flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+                          to={`/jobseeker/submit-application/${job.id}`}
+                          className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center justify-center space-x-1 bg-blue-600 hover:bg-blue-700 text-white"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                         </svg>
                         <span>Apply Now</span>
                       </Link>
+                      )}
                     </div>
                     
                     <button
@@ -616,7 +945,7 @@ const JobRecommendations = () => {
                           : 'text-gray-400 hover:text-gray-600'
                       }`}
                     >
-                      <svg className="w-5 h-5" fill={job.isSaved ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5" fill={job.isSaved ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                       </svg>
                     </button>

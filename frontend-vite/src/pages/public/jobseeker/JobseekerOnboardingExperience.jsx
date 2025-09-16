@@ -362,9 +362,62 @@ const JobseekerOnboardingExperience = () => {
       setIsLoading(false);
     }
   };
-  const handleSkip = () => {
-    const ok = window.confirm('Adding your work history improves matching quality. Skip for now?');
-    if (ok) handleNext();
+  const handleSkip = async () => {
+    const shouldSkip = window.confirm('Adding your work history improves matching quality. Skip for now?');
+    if (shouldSkip) {
+      setIsLoading(true);
+      
+      // Add minimum loading time to see spinner (remove this in production)
+      const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000));
+
+      try {
+        // Send empty experience data when skipping
+        const response = await api.post('/onboard/pwd/onboard/work-experience', { experience: [] });
+
+        // Wait for both API call and minimum loading time
+        await Promise.all([response, minLoadingTime]);
+        
+        if(response.data.success) {
+          Swal.fire({
+            icon: 'success',
+            html: '<h5><b>Work Experience</b></h5>\n<h6>You may now fillup your Accessibility needs.</h6>',
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            toast: true,
+            position: 'bottom-end'
+          })
+          navigate(routeForStep('accessibility'))
+        } else {
+          console.error('API returned success: false', response.data);
+          alert('Failed to save work experience. Please try again.');
+        }
+      } catch(error) {
+        console.error("Server error: ", error);
+        
+        // Check if it's a network error
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+          console.log('Network error detected, proceeding with mock data');
+          // Wait for minimum loading time even for network errors
+          await minLoadingTime;
+          Swal.fire({
+            icon: 'info',
+            title: 'Development Mode',
+            text: 'Server not available, proceeding with mock data.',
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            toast: true,
+            position: 'bottom-end'
+          });
+          navigate(routeForStep('accessibility'));
+        } else {
+          alert('Failed to connect to the server. Please try again later.');
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -392,94 +445,105 @@ const JobseekerOnboardingExperience = () => {
               }}
             />
           </div>
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 lg:p-8">
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">Experience</h2>
+                <p className="text-gray-600">Tell us about your work experience. Add your work experience starting with your most recent position.</p>
+              </div>
 
-            <h2 className="text-xl font-semibold text-gray-900 mt-6">Experience</h2>
-            <p className="text-gray-600 mt-1">Add your work experience starting with your most recent position</p>
-
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Experience Details Section */}
               <div>
-                <label className="block text-sm text-gray-700 mb-1">Job Title*</label>
-                <input 
-                  value={jobTitle} 
-                  onChange={(e) => setJobTitle(e.target.value)} 
-                  className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                    errors.jobTitle ? 'border-red-500' : 'border-gray-200'
-                  }`}
-                  placeholder="e.g., Software Developer" 
-                />
-                {errors.jobTitle && (
-                  <p className="mt-1 text-sm text-red-600">{errors.jobTitle}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm text-gray-700 mb-1">Company*</label>
-                <input 
-                  value={company} 
-                  onChange={(e) => setCompany(e.target.value)} 
-                  className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                    errors.company ? 'border-red-500' : 'border-gray-200'
-                  }`}
-                  placeholder="e.g., Tech Solutions Inc." 
-                />
-                {errors.company && (
-                  <p className="mt-1 text-sm text-red-600">{errors.company}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm text-gray-700 mb-1">Location*</label>
-                <input 
-                  value={location} 
-                  onChange={(e) => setLocation(e.target.value)} 
-                  className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                    errors.location ? 'border-red-500' : 'border-gray-200'
-                  }`}
-                  placeholder="e.g., Cebu City, Manila, Makati" 
-                />
-                {errors.location && (
-                  <p className="mt-1 text-sm text-red-600">{errors.location}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm text-gray-700 mb-1">Country*</label>
-                <div className="relative">
-                  <select 
-                    value={country} 
-                    onChange={(e) => setCountry(e.target.value)} 
-                    className="w-full appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option>Philippines</option>
-                    <option>United States</option>
-                    <option>Canada</option>
-                    <option>Australia</option>
-                    <option>Singapore</option>
-                    <option>Other</option>
-                  </select>
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
-                </div>
-              </div>
-              <div className="md:col-span-2">
-                <label className="inline-flex items-center gap-2 text-sm text-gray-700">
-                  <input 
-                    type="checkbox" 
-                    checked={isCurrent} 
-                    onChange={(e) => setIsCurrent(e.target.checked)} 
-                  /> 
-                  I am currently working in this role
-                </label>
-              </div>
-              <div>
-                <label className="block text-sm text-gray-700 mb-1">Start Date*</label>
-                <div className="relative">
-                  <input 
-                    value={startDate ? startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
-                    onClick={() => setShowStartCalendar(true)}
-                    readOnly
-                    placeholder="Select start date"
-                    className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer ${
-                      errors.startDate ? 'border-red-500' : 'border-gray-200'
-                    }`}
-                  />
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Experience Details</h3>
+                <div className="border border-gray-200 rounded-xl p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Job Title*</label>
+                      <input 
+                        value={jobTitle} 
+                        onChange={(e) => setJobTitle(e.target.value)} 
+                        className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                          errors.jobTitle ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="e.g., Software Developer, Marketing Manager" 
+                      />
+                      {errors.jobTitle && (
+                        <p className="mt-1 text-sm text-red-600">{errors.jobTitle}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Company*</label>
+                      <input 
+                        value={company} 
+                        onChange={(e) => setCompany(e.target.value)} 
+                        className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                          errors.company ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="e.g., Cebu City, Philippines" 
+                      />
+                      {errors.company && (
+                        <p className="mt-1 text-sm text-red-600">{errors.company}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Location*</label>
+                      <input 
+                        value={location} 
+                        onChange={(e) => setLocation(e.target.value)} 
+                        className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                          errors.location ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="e.g., Cebu City, Manila, Makati" 
+                      />
+                      {errors.location && (
+                        <p className="mt-1 text-sm text-red-600">{errors.location}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Country*</label>
+                      <div className="relative">
+                        <select 
+                          value={country} 
+                          onChange={(e) => setCountry(e.target.value)} 
+                          className="w-full appearance-none bg-white border rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-300"
+                        >
+                          <option>Philippines</option>
+                          <option>United States</option>
+                          <option>Canada</option>
+                          <option>Australia</option>
+                          <option>Singapore</option>
+                          <option>Other</option>
+                        </select>
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="inline-flex items-center gap-2 text-sm text-gray-700">
+                        <input 
+                          type="checkbox" 
+                          checked={isCurrent} 
+                          onChange={(e) => setIsCurrent(e.target.checked)}
+                          className="text-blue-600 focus:ring-blue-500"
+                        /> 
+                        I am currently working in this role
+                      </label>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Start Date*</label>
+                      <div className="relative">
+                        <input 
+                          value={startDate ? startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
+                          onClick={() => setShowStartCalendar(true)}
+                          readOnly
+                          placeholder="Select start date"
+                          className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer ${
+                            errors.startDate ? 'border-red-500' : 'border-gray-300'
+                          }`}
+                        />
                   <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                     <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -563,19 +627,19 @@ const JobseekerOnboardingExperience = () => {
                   <p className="mt-1 text-sm text-red-600">{errors.startDate}</p>
                 )}
               </div>
-              <div>
-                <label className="block text-sm text-gray-700 mb-1">End Date*</label>
-                <div className="relative">
-                  <input 
-                    value={endDate ? endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
-                    onClick={() => !isCurrent && setShowEndCalendar(true)}
-                    readOnly
-                    placeholder="Select end date"
-                    disabled={isCurrent}
-                    className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                      errors.endDate ? 'border-red-500' : 'border-gray-200'
-                    } ${isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'cursor-pointer'}`}
-                  />
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">End Date*</label>
+                      <div className="relative">
+                        <input 
+                          value={endDate ? endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
+                          onClick={() => !isCurrent && setShowEndCalendar(true)}
+                          readOnly
+                          placeholder="Select end date"
+                          disabled={isCurrent}
+                          className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                            errors.endDate ? 'border-red-500' : 'border-gray-300'
+                          } ${isCurrent ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'cursor-pointer'}`}
+                        />
                   <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                     <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -659,55 +723,68 @@ const JobseekerOnboardingExperience = () => {
                   <p className="mt-1 text-sm text-red-600">{errors.endDate}</p>
                 )}
               </div>
-              <div>
-                <label className="block text-sm text-gray-700 mb-1">Employment Type</label>
-                <div className="relative">
-                  <select 
-                    value={employmentType} 
-                    onChange={(e) => setEmploymentType(e.target.value)} 
-                    className="w-full appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option>Full-time</option>
-                    <option>Part-time</option>
-                    <option>Contract</option>
-                    <option>Freelance</option>
-                    <option>Internship</option>
-                    <option>Volunteer</option>
-                  </select>
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Employment Type</label>
+                      <div className="relative">
+                        <select 
+                          value={employmentType} 
+                          onChange={(e) => setEmploymentType(e.target.value)} 
+                          className="w-full appearance-none bg-white border rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-300"
+                        >
+                          <option>Full Time</option>
+                          <option>Part-time</option>
+                          <option>Contract</option>
+                          <option>Freelance</option>
+                          <option>Internship</option>
+                          <option>Volunteer</option>
+                        </select>
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                      <textarea 
+                        value={description} 
+                        onChange={(e) => setDescription(e.target.value)} 
+                        rows="4" 
+                        className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-300" 
+                        placeholder="Describe your responsibilities, achievements, and key accomplishments in this role. Focus on specific results and skills you developed." 
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="md:col-span-2">
-                <label className="block text-sm text-gray-700 mb-1">Description</label>
-                <textarea 
-                  value={description} 
-                  onChange={(e) => setDescription(e.target.value)} 
-                  rows="4" 
-                  className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
-                  placeholder="Describe your responsibilities, achievements, and key accomplishments in this role." 
-                />
               </div>
             </div>
 
-            <div className="mt-6">
-              <button 
-                type="button" 
-                onClick={addAdditionalExperience}
-                disabled={additionalExperiences.length >= 5}
-                className="mx-auto flex items-center gap-2 border rounded-lg px-4 py-2 text-blue-600 border-blue-200 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <span className="text-lg">＋</span> Add Another Experience
-              </button>
-              <p className="text-xs text-center text-gray-500 mt-2">
-                You can add up to 5 additional work experiences ({additionalExperiences.length}/5)
-              </p>
-            </div>
+              {/* Add Another Experience Section */}
+              <div className="mt-6">
+                <button 
+                  type="button" 
+                  onClick={addAdditionalExperience}
+                  disabled={additionalExperiences.length >= 5}
+                  className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-blue-300 hover:text-blue-600 transition-colors text-center disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <div className="flex flex-col items-center">
+                    <svg className="w-5 h-5 mb-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span className="font-medium">Add Another Experience</span>
+                  </div>
+                </button>
+                <p className="text-xs text-center text-gray-500 mt-2">
+                  You can add up to 5 additional work experiences
+                </p>
+              </div>
 
             {/* Additional Experience Entries */}
             {additionalExperiences.map((exp, index) => (
               <div key={exp.id} className="mt-6 border border-gray-200 rounded-xl p-4 bg-gray-50">
                 <div className="flex items-center justify-between mb-4">
-                  <h4 className="text-sm font-medium text-gray-900">Additional Experience #{index + 1}</h4>
+                  <h4 className="text-sm font-medium text-gray-900">Experience #{index + 2}</h4>
                   <button
                     onClick={() => removeAdditionalExperience(exp.id)}
                     className="text-red-600 hover:text-red-800 text-sm"
@@ -968,7 +1045,7 @@ const JobseekerOnboardingExperience = () => {
                       )}
                     </div>
                   </div>
-                  <div>
+                  <div className="md:col-span-2">
                     <label className="block text-sm text-gray-700 mb-1">Employment Type</label>
                     <div className="relative">
                       <select 
@@ -1000,52 +1077,57 @@ const JobseekerOnboardingExperience = () => {
               </div>
             ))}
 
-            <div className="mt-6 flex items-center justify-between">
-              <button 
-                onClick={goBack} 
-                disabled={isLoading}
-                className={`px-4 py-2 border rounded-lg transition-colors ${
-                  isLoading 
-                    ? 'text-gray-400 cursor-not-allowed' 
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                Back
-              </button>
-              <div className="flex items-center gap-3">
+              {/* Navigation Buttons */}
+              <div className="flex items-center justify-between pt-6 border-t border-gray-200">
                 <button 
-                  onClick={handleSkip} 
+                  onClick={goBack} 
                   disabled={isLoading}
-                  className={`px-4 py-2 border rounded-lg transition-colors ${
-                    isLoading 
-                      ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-gray-700 hover:bg-gray-50'
-                  }`}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                 >
-                  Skip for now
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                  Back
                 </button>
-                <button 
-                  onClick={handleNext} 
-                  disabled={!isFormValid || isLoading}
-                  className={`px-4 py-2 text-white rounded-lg transition-all duration-200 flex items-center gap-2 ${
-                    isFormValid && !isLoading
-                      ? 'bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transform hover:scale-105' 
-                      : 'bg-gray-400 cursor-not-allowed'
-                  }`}
-                >
-                  {isLoading ? (
-                    <>
-                      <Spinner size="sm" color="white" />
-                      Saving...
-                    </>
-                  ) : (
-                    isFormValid ? 'Next' : 'Complete Form'
-                  )}
-                </button>
+                <div className="flex items-center gap-3">
+                  <button 
+                    onClick={handleSkip} 
+                    disabled={isLoading}
+                    className={`text-sm font-medium transition-colors ${
+                      isLoading 
+                        ? 'text-gray-400 cursor-not-allowed' 
+                        : 'text-blue-600 hover:text-blue-800'
+                    }`}
+                  >
+                    Skip for now
+                  </button>
+                  <button 
+                    onClick={handleNext} 
+                    disabled={!isFormValid || isLoading}
+                    className={`inline-flex items-center px-6 py-2 text-white text-sm font-medium rounded-lg transition-all duration-200 ${
+                      isFormValid && !isLoading
+                        ? 'bg-blue-600 hover:bg-blue-700' 
+                        : 'bg-gray-400 cursor-not-allowed'
+                    }`}
+                  >
+                    {isLoading ? (
+                      <>
+                        <Spinner size="sm" color="white" />
+                        <span className="ml-2">Saving...</span>
+                      </>
+                    ) : (
+                      <>
+                        Next
+                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
       </main>
 
       <footer className="bg-white border-t border-gray-100 mt-12">

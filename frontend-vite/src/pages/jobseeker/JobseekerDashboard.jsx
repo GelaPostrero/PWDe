@@ -8,22 +8,98 @@ import Chatbot from '../../components/ui/Chatbot.jsx';
 
 const JobseekerDashboard = () => {
   const navigate = useNavigate();
-  const [highContrast, setHighContrast] = useState(false);
-  const [largeText, setLargeText] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [textSize, setTextSize] = useState('normal');
+  const [screenReader, setScreenReader] = useState(false);
+  const [keyboardNavigation, setKeyboardNavigation] = useState(false);
+  const [focusIndicators, setFocusIndicators] = useState(true);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const [aiRecommendedJobs, setAiRecommendedJobs] = useState([]);
   const [isLoadingJobs, setIsLoadingJobs] = useState(true);
-  const [fetchedData, setFetchedData] = useState([]);
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
+  const [fetchedData, setFetchedData] = useState(null);
+  const [userStats, setUserStats] = useState({
+    applications: 0,
+    interviews: 0,
+    savedJobs: 0,
+    profileViews: 0
+  });
 
-  // Mock data - replace with real data from backend
-  const userProfile = {
-    name: fetchedData.fullname,
-    role: fetchedData.professional_role,
-    rating: fetchedData.rating,
-    profileViews: fetchedData.profile_views,
-    applications: fetchedData.applications,
-    interviews: fetchedData.interviews,
-    savedJobs: fetchedData.saved_jobs
+  // Accessibility functions
+  const applyAccessibilityStyles = (darkMode, size, screenReader, keyboardNav, focusInd, reducedMotion) => {
+    const root = document.documentElement;
+    console.log('Applying accessibility styles:', { darkMode, size, screenReader, keyboardNav, focusInd, reducedMotion });
+    
+    // Dark mode
+    if (darkMode) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+
+    // Text size
+    root.classList.remove('text-small', 'text-normal', 'text-large', 'text-extra-large');
+    root.classList.add(`text-${size}`);
+
+    // Screen reader optimizations
+    if (screenReader) {
+      root.classList.add('screen-reader-optimized');
+    } else {
+      root.classList.remove('screen-reader-optimized');
+    }
+
+    // Keyboard navigation
+    if (keyboardNav) {
+      root.classList.add('keyboard-navigation');
+    } else {
+      root.classList.remove('keyboard-navigation');
+    }
+
+    // Focus indicators
+    if (focusInd) {
+      root.classList.add('focus-indicators');
+    } else {
+      root.classList.remove('focus-indicators');
+    }
+
+    // Reduced motion
+    if (reducedMotion) {
+      root.classList.add('reduced-motion');
+    } else {
+      root.classList.remove('reduced-motion');
+    }
   };
+
+  // Load saved accessibility preferences
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    const savedTextSize = localStorage.getItem('textSize') || 'normal';
+    const savedScreenReader = localStorage.getItem('screenReader') === 'true';
+    const savedKeyboardNavigation = localStorage.getItem('keyboardNavigation') === 'true';
+    const savedFocusIndicators = localStorage.getItem('focusIndicators') !== 'false';
+    const savedReducedMotion = localStorage.getItem('reducedMotion') === 'true';
+
+    setIsDarkMode(savedDarkMode);
+    setTextSize(savedTextSize);
+    setScreenReader(savedScreenReader);
+    setKeyboardNavigation(savedKeyboardNavigation);
+    setFocusIndicators(savedFocusIndicators);
+    setReducedMotion(savedReducedMotion);
+
+    // Apply initial styles
+    applyAccessibilityStyles(savedDarkMode, savedTextSize, savedScreenReader, savedKeyboardNavigation, savedFocusIndicators, savedReducedMotion);
+  }, []);
+
+  // Real user profile data from backend
+  const userProfile = fetchedData ? {
+    name: fetchedData.fullname || `${fetchedData.firstname || ''} ${fetchedData.middlename || ''} ${fetchedData.lastname || ''}`.trim().replace(/\s+/g, ' ') || 'User',
+    role: fetchedData.professional_role || 'Professional',
+    rating: fetchedData.rating || 0,
+    profileViews: userStats.profileViews,
+    applications: userStats.applications,
+    interviews: userStats.interviews,
+    savedJobs: userStats.savedJobs
+  } : null;
 
   // Structured job data model - matches your backend schema
   const jobDataStructure = {
@@ -110,162 +186,146 @@ const JobseekerDashboard = () => {
     return Math.round(score);
   };
 
-  // Mock function to fetch jobs from backend
+  // Mock AI recommended jobs data
   const fetchRecommendedJobs = async () => {
     try {
       setIsLoadingJobs(true);
       
-      // This will be replaced with actual API call
-      // const response = await fetch('/api/jobs/recommended', {
-      //   headers: { 'Authorization': `Bearer ${token}` }
-      // });
-      // const jobs = await response.json();
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // For now, using mock data
-      const mockJobs = [
+      // Mock AI recommended jobs data
+      const mockRecommendedJobs = [
         {
           id: 1,
+          job_id: 1,
           title: "Frontend Developer",
-          company: "TechCorp Inc.",
+          jobtitle: "Frontend Developer",
+          company: "TechCorp Solutions",
           companyLogo: "https://via.placeholder.com/40",
-          matchScore: 95,
           type: "Full-time",
-          location: "Remote",
-          salary: {
-            min: 1000,
-            max: 5000,
-            currency: "USD",
-            period: "weekly",
-            isFixed: false
-          },
-          level: "Senior Level",
-          requiredSkills: ["React", "TypeScript", "Tailwind"],
-          preferredSkills: ["Figma", "Accessibility"],
-          experienceYears: 3,
-          accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-          companyAccessibility: {
-            hasAccessibilityPolicy: true,
-            providesAccommodations: true,
-            inclusiveHiring: true
-          },
-          applicationStatus: "not_applied",
-          isSaved: false,
-          postedDate: "2025-01-15",
-          expiresDate: "2025-02-15",
-          isActive: true
+          employment_type: "Full-time",
+          location: "Toronto, ON",
+          location_city: "Toronto",
+          salary: "$60,000 - $80,000",
+          salary_min: 60000,
+          salary_max: 80000,
+          level: "Mid-level",
+          experience_level: "Mid-level",
+          matchScore: 85,
+          matchReasons: ["Strong skills match", "Location preference", "Experience level"],
+          requiredSkills: ["React", "JavaScript", "CSS"],
+          skills_required: ["React", "JavaScript", "CSS"],
+          accessibilityFeatures: ["Wheelchair accessible", "Screen reader friendly"],
+          workplace_accessibility_features: ["Wheelchair accessible", "Screen reader friendly"]
         },
         {
           id: 2,
-          title: "Frontend Developer",
-          company: "TechCorp Inc.",
+          job_id: 2,
+          title: "UX Designer",
+          jobtitle: "UX Designer", 
+          company: "Design Studio Inc",
           companyLogo: "https://via.placeholder.com/40",
-          matchScore: 95,
-          type: "Part-time",
-          location: "Remote",
-          salary: {
-            min: 1000,
-            max: 5000,
-            currency: "USD",
-            period: "bi-weekly",
-            isFixed: false
-          },
-          level: "Mid-Level",
-          requiredSkills: ["React", "TypeScript", "Tailwind"],
-          preferredSkills: ["Figma", "Accessibility"],
-          experienceYears: 2,
-          accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-          companyAccessibility: {
-            hasAccessibilityPolicy: true,
-            providesAccommodations: true,
-            inclusiveHiring: true
-          },
-          applicationStatus: "not_applied",
-          isSaved: false,
-          postedDate: "2025-01-10",
-          expiresDate: "2025-02-10",
-          isActive: true
+          type: "Contract",
+          employment_type: "Contract",
+          location: "Vancouver, BC",
+          location_city: "Vancouver",
+          salary: "$50,000 - $70,000",
+          salary_min: 50000,
+          salary_max: 70000,
+          level: "Entry-level",
+          experience_level: "Entry-level",
+          matchScore: 72,
+          matchReasons: ["Skills alignment", "Remote work option"],
+          requiredSkills: ["Figma", "User Research", "Prototyping"],
+          skills_required: ["Figma", "User Research", "Prototyping"],
+          accessibilityFeatures: ["Flexible hours", "Remote work"],
+          workplace_accessibility_features: ["Flexible hours", "Remote work"]
         },
         {
           id: 3,
-          title: "UX/UI Designer",
-          company: "DesignHub",
+          job_id: 3,
+          title: "Data Analyst",
+          jobtitle: "Data Analyst",
+          company: "Analytics Pro",
           companyLogo: "https://via.placeholder.com/40",
-          matchScore: 88,
           type: "Full-time",
-          location: "Remote",
-          salary: {
-            min: 5000,
-            max: 5000,
-            currency: "USD",
-            period: "monthly",
-            isFixed: true
-          },
-          level: "Entry Level",
-          requiredSkills: ["Figma", "Adobe XD", "Prototyping"],
-          preferredSkills: ["Accessibility", "User Research"],
-          experienceYears: 1,
-          accessibilityFeatures: ["Accessible Office", "Remote Options"],
-          companyAccessibility: {
-            hasAccessibilityPolicy: true,
-            providesAccommodations: true,
-            inclusiveHiring: true
-          },
-          applicationStatus: "not_applied",
-          isSaved: false,
-          postedDate: "2025-01-12",
-          expiresDate: "2025-02-12",
-          isActive: true
-        },
-        {
-          id: 4,
-          title: "Content Writer",
-          company: "MediaGroup",
-          companyLogo: "https://via.placeholder.com/40",
-          matchScore: 82,
-          type: "Part-time",
-          location: "Remote",
-          salary: {
-            min: 10,
-            max: 10,
-            currency: "USD",
-            period: "hourly",
-            isFixed: true
-          },
-          level: "Entry-Level",
-          requiredSkills: ["SEO", "Blogging", "Content Strategy"],
-          preferredSkills: ["Social Media", "Analytics"],
-          experienceYears: 1,
-          accessibilityFeatures: ["Flexible Schedule", "Global Opportunity"],
-          companyAccessibility: {
-            hasAccessibilityPolicy: true,
-            providesAccommodations: true,
-            inclusiveHiring: true
-          },
-          applicationStatus: "not_applied",
-          isSaved: true,
-          postedDate: "2025-01-08",
-          expiresDate: "2025-02-08",
-          isActive: true
+          employment_type: "Full-time",
+          location: "Montreal, QC",
+          location_city: "Montreal",
+          salary: "$55,000 - $75,000",
+          salary_min: 55000,
+          salary_max: 75000,
+          level: "Mid-level",
+          experience_level: "Mid-level",
+          matchScore: 68,
+          matchReasons: ["Technical skills match", "Growth opportunity"],
+          requiredSkills: ["Python", "SQL", "Excel"],
+          skills_required: ["Python", "SQL", "Excel"],
+          accessibilityFeatures: ["Ergonomic workspace", "Assistive technology"],
+          workplace_accessibility_features: ["Ergonomic workspace", "Assistive technology"]
         }
       ];
-
-      // Calculate match scores based on user profile (when you have user data)
-      // mockJobs.forEach(job => {
-      //   job.matchScore = calculateMatchScore(job, userProfile);
-      // });
-
-      setAiRecommendedJobs(mockJobs);
+      
+      setAiRecommendedJobs(mockRecommendedJobs);
     } catch (error) {
-      console.error('Error fetching jobs:', error);
+      console.error('Error loading mock recommended jobs:', error);
+      setAiRecommendedJobs([]);
     } finally {
       setIsLoadingJobs(false);
     }
   };
 
-  // Load jobs on component mount
+  // Fetch user profile data
+  const fetchUserProfile = async () => {
+    try {
+      setIsLoadingProfile(true);
+      const response = await api.get('/retrieve/profile');
+      if (response.data.success) {
+        setFetchedData(response.data.data);
+      } else {
+        console.error('Profile fetch failed:', response.data);
+        setFetchedData(null);
+      }
+    } catch (error) {
+      console.error('Failed to fetch user profile:', error);
+      setFetchedData(null);
+    } finally {
+      setIsLoadingProfile(false);
+    }
+  };
+
+  // Fetch user statistics
+  const fetchUserStats = async () => {
+    try {
+      const [applicationsRes, savedJobsRes] = await Promise.all([
+        api.get('/api/applications/count'),
+        api.get('/api/saved-jobs/count')
+      ]);
+
+      setUserStats({
+        applications: applicationsRes.data.count || 0,
+        savedJobs: savedJobsRes.data.count || 0,
+        profileViews: fetchedData?.profile_views || 0,
+        interviews: 0 // This would come from a separate API
+      });
+    } catch (error) {
+      console.error('Failed to fetch user stats:', error);
+    }
+  };
+
+  // Load all data on component mount
   useEffect(() => {
+    fetchUserProfile();
     fetchRecommendedJobs();
   }, []);
+
+  // Fetch user stats when profile data is loaded
+  useEffect(() => {
+    if (fetchedData) {
+      fetchUserStats();
+    }
+  }, [fetchedData]);
 
   // Helper function to format salary display
   const formatSalary = (salary) => {
@@ -359,33 +419,71 @@ const JobseekerDashboard = () => {
     }
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get('/retrieve/dashboard');
-        if(response.data.success) {
-          setFetchedData(response.data.data);
-        }
-      } catch(error) {
-        console.error("Failed to load profile:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  // Profile completion tracking based on real data - matches profile page logic
+  const getProfileCompletionItems = () => {
+    if (!fetchedData) return [];
+    
+    return [
+      { text: 'Basic information', completed: !!fetchedData.basic_information },
+      { text: 'Professional summary', completed: !!fetchedData.professional_summary_completed },
+      { text: 'Professional experience', completed: !!fetchedData.workexperience },
+      { text: 'Education', completed: !!fetchedData.education },
+      { text: 'Add portfolio items', completed: !!fetchedData.portfolio_items },
+      { text: 'Complete skills assessment', completed: !!(fetchedData.skills && fetchedData.skills.length > 0) },
+      { text: 'Set accessibility preferences', completed: !!fetchedData.set_accessibility_preferences }
+    ];
+  };
 
-  const items = [
-    { text: 'Basic information', completed: fetchedData.basic_information },
-    { text: 'Professional experience', completed: fetchedData.workexperience },
-    { text: 'Education', completed: fetchedData.education },
-    { text: 'Add portfolio items', completed: fetchedData.portfolio_items },
-    { text: 'Complete skills assessment', completed: fetchedData.skills },
-    { text: 'Set accessibility preferences', completed: fetchedData.set_accessibility_preferences }
-  ];
-
+  const items = getProfileCompletionItems();
   const totalItems = items.length;
   const completedItems = items.filter(item => item.completed).length;
-  const progressPercentage = Math.round((completedItems / totalItems) * 100);
+  const progressPercentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
   const itemsLeft = totalItems - completedItems;
+
+  // Show loading state while data is being fetched
+  if (isLoadingProfile) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <JobseekerHeader disabled={false} />
+        <main className="flex-1">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="flex items-center justify-center h-64">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading dashboard...</p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Show error state if profile data failed to load
+  if (!fetchedData) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <JobseekerHeader disabled={false} />
+        <main className="flex-1">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="flex items-center justify-center h-64">
+              <div className="text-center">
+                <div className="text-red-500 text-6xl mb-4">⚠️</div>
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">Failed to Load Profile</h2>
+                <p className="text-gray-600 mb-4">There was an error loading your profile data.</p>
+                <button 
+                  onClick={fetchUserProfile}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Try Again
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -405,7 +503,7 @@ const JobseekerDashboard = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
                   {/* Profile Avatar */}
                   <div className="relative flex-shrink-0 flex justify-center sm:justify-start">
-                    {fetchedData.profile_picture ? (
+                    {fetchedData?.profile_picture ? (
                       <img
                         src={fetchedData.profile_picture}
                         alt="Profile"
@@ -548,17 +646,17 @@ const JobseekerDashboard = () => {
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {aiRecommendedJobs.map((job) => (
-                      <div key={job.id} className="border border-gray-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow relative border-l-4 border-l-blue-500">
+                      <div key={job.job_id || job.id} className="border border-gray-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow relative border-l-4 border-l-blue-500">
                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
                           <div className="flex items-center space-x-2 mb-2 sm:mb-0">
                             <img 
-                              src={job.companyLogo} 
-                              alt={`${job.company} logo`}
-                              className="w-8 h-8 rounded"
+                              src={job.employer?.profile_picture || job.companyLogo || "https://via.placeholder.com/40"} 
+                              alt={`${job.employer?.company_name || job.company} logo`}
+                              className="w-8 h-8 rounded-full object-cover"
                             />
                             <div>
-                              <h4 className="font-semibold text-gray-900 text-sm sm:text-base">{job.title}</h4>
-                              <p className="text-xs sm:text-sm text-gray-600">{job.company}</p>
+                              <h4 className="font-semibold text-gray-900 text-sm sm:text-base">{job.jobtitle || job.title}</h4>
+                              <p className="text-xs sm:text-sm text-gray-600">{job.employer?.company_name || job.company}</p>
                             </div>
                           </div>
                           <div className="text-right">
@@ -570,23 +668,28 @@ const JobseekerDashboard = () => {
 
                         <div className="space-y-2 mb-3">
                           <p className="text-xs sm:text-sm text-gray-600">
-                            {job.type} • {job.location}
+                            {job.employment_type || job.type} • {job.location_city || job.location}
                           </p>
-                          <p className="text-xs sm:text-sm font-medium text-gray-900">{formatSalary(job.salary)}</p>
-                          <p className="text-xs sm:text-sm text-gray-600">{job.level}</p>
+                          <p className="text-xs sm:text-sm font-medium text-gray-900">
+                            {job.salary_min && job.salary_max ? 
+                              `$${job.salary_min.toLocaleString()} - $${job.salary_max.toLocaleString()}` : 
+                              formatSalary(job.salary)
+                            }
+                          </p>
+                          <p className="text-xs sm:text-sm text-gray-600">{job.experience_level || job.level}</p>
                         </div>
 
                         <div className="mb-3">
-                          <div className="flex flex-wrap gap-1 mb-2">
-                            {job.requiredSkills.slice(0, 3).map((skill, index) => (
-                              <span key={index} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                          <div className="flex gap-1 mb-2 overflow-hidden">
+                            {(job.skills_required || job.requiredSkills || []).slice(0, 4).map((skill, index) => (
+                              <span key={index} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded whitespace-nowrap flex-shrink-0">
                                 {skill}
                               </span>
                             ))}
                           </div>
-                          <div className="flex flex-wrap gap-1">
-                            {job.accessibilityFeatures.slice(0, 2).map((feature, index) => (
-                              <span key={index} className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">
+                          <div className="flex gap-1 overflow-hidden">
+                            {(job.workplace_accessibility_features || job.accessibilityFeatures || []).slice(0, 3).map((feature, index) => (
+                              <span key={index} className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded whitespace-nowrap flex-shrink-0">
                                 {feature}
                               </span>
                             ))}
@@ -596,7 +699,8 @@ const JobseekerDashboard = () => {
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                           <div className="flex space-x-2">
                             <Link
-                              to={`/jobseeker/job/${job.id}`}
+                              to={`/jobseeker/job/${job.job_id || job.id}`}
+                              state={{ from: '/jobseeker/dashboard' }}
                               className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors flex items-center justify-center space-x-1 bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300"
                             >
                               <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -630,7 +734,7 @@ const JobseekerDashboard = () => {
                             onClick={() => toggleJobSaved(job.id)}
                             className={`p-2 rounded-lg transition-colors ${
                               job.isSaved 
-                                ? 'text-yellow-500 hover:text-yellow-600' 
+                                ? 'text-red-500 hover:text-red-600' 
                                 : 'text-gray-400 hover:text-gray-600'
                             }`}
                           >
@@ -649,12 +753,14 @@ const JobseekerDashboard = () => {
             {/* Right Column - Profile Completion, Quick Actions, Accessibility */}
             <div className="lg:col-span-1 space-y-4 sm:space-y-6">
               {/* Profile Completion */}
-              <div className="bg-white rounded-lg shadow p-4 sm:p-6">
-                <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Profile Completion</h3>
+              <div className="bg-white rounded-lg shadow p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Profile Completion</h3>
                 <div className="mb-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                  <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium text-gray-700">{progressPercentage}% Complete</span>
-                    <span className="text-xs sm:text-sm text-gray-500">{itemsLeft} item{itemsLeft !== 1 ? 's' : ''} left</span>
+                    <span className="text-sm text-gray-500">
+                      {itemsLeft} item{itemsLeft !== 1 ? 's' : ''} left
+                    </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div 
@@ -663,7 +769,6 @@ const JobseekerDashboard = () => {
                     ></div>
                   </div>
                 </div>
-
                 <div className="space-y-3 mb-4">
                   {items.map((item, index) => (
                     <div key={index} className="flex items-center space-x-3">
@@ -683,7 +788,7 @@ const JobseekerDashboard = () => {
                 
                 <Link 
                   to="/jobseeker/profile"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors text-sm sm:text-base text-center block"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors text-sm text-center block"
                 >
                   Complete Your Profile
                 </Link>
@@ -713,32 +818,133 @@ const JobseekerDashboard = () => {
               <div className="bg-white rounded-lg shadow p-4 sm:p-6">
                 <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Accessibility Tools</h3>
                 <div className="space-y-4">
+                  {/* Dark Mode */}
                   <div className="flex items-center justify-between">
-                    <span className="text-xs sm:text-sm font-medium text-gray-700">High Contrast</span>
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Dark Mode</span>
                     <button
-                      onClick={() => setHighContrast(!highContrast)}
+                      onClick={() => {
+                        const newDarkMode = !isDarkMode;
+                        setIsDarkMode(newDarkMode);
+                        localStorage.setItem('darkMode', newDarkMode.toString());
+                        applyAccessibilityStyles(newDarkMode, textSize, screenReader, keyboardNavigation, focusIndicators, reducedMotion);
+                      }}
                       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                        highContrast ? 'bg-blue-600' : 'bg-gray-200'
+                        isDarkMode ? 'bg-blue-600' : 'bg-gray-200'
                       }`}
                     >
                       <span
                         className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                          highContrast ? 'translate-x-6' : 'translate-x-1'
+                          isDarkMode ? 'translate-x-6' : 'translate-x-1'
                         }`}
                       />
                     </button>
                   </div>
+
+                  {/* Text Size */}
                   <div className="flex items-center justify-between">
                     <span className="text-xs sm:text-sm font-medium text-gray-700">Large Text</span>
                     <button
-                      onClick={() => setLargeText(!largeText)}
+                      onClick={() => {
+                        const newTextSize = textSize === 'normal' ? 'large' : 'normal';
+                        setTextSize(newTextSize);
+                        localStorage.setItem('textSize', newTextSize);
+                        applyAccessibilityStyles(isDarkMode, newTextSize, screenReader, keyboardNavigation, focusIndicators, reducedMotion);
+                      }}
                       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                        largeText ? 'bg-blue-600' : 'bg-gray-200'
+                        textSize === 'large' ? 'bg-blue-600' : 'bg-gray-200'
                       }`}
                     >
                       <span
                         className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                          largeText ? 'translate-x-6' : 'translate-x-1'
+                          textSize === 'large' ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Screen Reader Optimizations */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Screen Reader Optimized</span>
+                    <button
+                      onClick={() => {
+                        const newScreenReader = !screenReader;
+                        setScreenReader(newScreenReader);
+                        localStorage.setItem('screenReader', newScreenReader.toString());
+                        applyAccessibilityStyles(isDarkMode, textSize, newScreenReader, keyboardNavigation, focusIndicators, reducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        screenReader ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          screenReader ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Enhanced Keyboard Navigation */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Enhanced Keyboard Navigation</span>
+                    <button
+                      onClick={() => {
+                        const newKeyboardNavigation = !keyboardNavigation;
+                        setKeyboardNavigation(newKeyboardNavigation);
+                        localStorage.setItem('keyboardNavigation', newKeyboardNavigation.toString());
+                        applyAccessibilityStyles(isDarkMode, textSize, screenReader, newKeyboardNavigation, focusIndicators, reducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        keyboardNavigation ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          keyboardNavigation ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Enhanced Focus Indicators */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Enhanced Focus Indicators</span>
+                    <button
+                      onClick={() => {
+                        const newFocusIndicators = !focusIndicators;
+                        setFocusIndicators(newFocusIndicators);
+                        localStorage.setItem('focusIndicators', newFocusIndicators.toString());
+                        applyAccessibilityStyles(isDarkMode, textSize, screenReader, keyboardNavigation, newFocusIndicators, reducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        focusIndicators ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          focusIndicators ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Reduced Motion */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Reduced Motion</span>
+                    <button
+                      onClick={() => {
+                        const newReducedMotion = !reducedMotion;
+                        setReducedMotion(newReducedMotion);
+                        localStorage.setItem('reducedMotion', newReducedMotion.toString());
+                        applyAccessibilityStyles(isDarkMode, textSize, screenReader, keyboardNavigation, focusIndicators, newReducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        reducedMotion ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          reducedMotion ? 'translate-x-6' : 'translate-x-1'
                         }`}
                       />
                     </button>

@@ -10,6 +10,172 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Accessibility Features */
+:root {
+  --text-size-small: 0.875rem;    /* 14px */
+  --text-size-normal: 1rem;       /* 16px */
+  --text-size-large: 1.125rem;    /* 18px */
+  --text-size-extra-large: 1.25rem; /* 20px */
+}
+
+/* Text Size Classes */
+.text-small {
+  font-size: var(--text-size-small) !important;
+}
+
+.text-normal {
+  font-size: var(--text-size-normal) !important;
+}
+
+.text-large {
+  font-size: var(--text-size-large) !important;
+}
+
+.text-extra-large {
+  font-size: var(--text-size-extra-large) !important;
+}
+
+/* High Contrast Mode */
+.high-contrast {
+  --tw-bg-opacity: 1;
+  --tw-text-opacity: 1;
+}
+
+.high-contrast * {
+  background-color: white !important;
+  color: black !important;
+  border-color: black !important;
+}
+
+.high-contrast .dark * {
+  background-color: black !important;
+  color: white !important;
+  border-color: white !important;
+}
+
+/* Dark Mode Styles */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+.dark .bg-white {
+  background-color: #374151 !important;
+}
+
+.dark .text-gray-900 {
+  color: #f9fafb !important;
+}
+
+.dark .text-gray-700 {
+  color: #d1d5db !important;
+}
+
+.dark .text-gray-600 {
+  color: #9ca3af !important;
+}
+
+.dark .border-gray-200 {
+  border-color: #4b5563 !important;
+}
+
+.dark .border-gray-100 {
+  border-color: #6b7280 !important;
+}
+
+.dark .shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* PWD-Specific Accessibility Features */
+
+/* Screen Reader Optimizations */
+.screen-reader-optimized {
+  /* Enhanced ARIA labels and descriptions */
+}
+
+.screen-reader-optimized * {
+  /* Ensure all interactive elements have proper labels */
+}
+
+/* Keyboard Navigation Enhancements */
+.keyboard-navigation *:focus {
+  outline: 3px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+}
+
+.keyboard-navigation button:focus,
+.keyboard-navigation input:focus,
+.keyboard-navigation select:focus,
+.keyboard-navigation textarea:focus,
+.keyboard-navigation a:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5) !important;
+}
+
+/* Enhanced Focus Indicators */
+.focus-indicators *:focus {
+  outline: 2px solid #3b82f6 !important;
+  outline-offset: 1px !important;
+}
+
+.focus-indicators button:focus,
+.focus-indicators input:focus,
+.focus-indicators select:focus,
+.focus-indicators textarea:focus,
+.focus-indicators a:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Reduced Motion */
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+.reduced-motion .animate-spin {
+  animation: none !important;
+}
+
+.reduced-motion .animate-pulse {
+  animation: none !important;
+}
+
+.reduced-motion .animate-bounce {
+  animation: none !important;
+}
+
+/* Large Text Enhancements */
+.text-large {
+  line-height: 1.6 !important;
+}
+
+.text-extra-large {
+  line-height: 1.7 !important;
+}
+
+/* Improved contrast for better readability */
+.text-large,
+.text-extra-large {
+  color: #1f2937 !important;
+}
+
+.dark .text-large,
+.dark .text-extra-large {
+  color: #f9fafb !important;
+}
+
 /* Universal scrollbar hiding - except for chat messages */
 * {
   scrollbar-width: none; /* Firefox */
