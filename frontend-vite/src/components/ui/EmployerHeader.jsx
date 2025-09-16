@@ -5,12 +5,26 @@ import logo from '../../assets/pwdelogo.png';
 import AnimatedHamburger from './AnimatedHamburger.jsx';
 
 
-const Logo = ({ showText = false, to = '/', disabled = false }) => {
-  return (
-    <Link to={to} className="flex items-center space-x-2" aria-label="PWDe Home">
+const Logo = ({ showText = false, to = '/', disabled = false, asLink = true }) => {
+  const logoContent = (
+    <>
       <img src={logo} alt="PWDe Logo" className="w-8 h-8" />
       {showText && <h1 className="text-xl font-bold text-blue-500">PWDe</h1>}
-    </Link>
+    </>
+  );
+
+  if (asLink) {
+    return (
+      <Link to={to} className="flex items-center space-x-2" aria-label="PWDe Home">
+        {logoContent}
+      </Link>
+    );
+  }
+
+  return (
+    <div className="flex items-center space-x-2" aria-label="PWDe Home">
+      {logoContent}
+    </div>
   );
 };
 
@@ -20,13 +34,15 @@ const IconButton = ({
   hasNotification = false,
   notificationCount = 0,
   disabled = false,
+  onClick = null,
 }) => (
   <div className="relative">
     <button
+      onClick={onClick}
       className={`p-2 transition-colors rounded-lg ${
         disabled 
           ? 'text-gray-300 cursor-not-allowed opacity-60' 
-          : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+          : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-700'
       }`}
       aria-label={label}
       disabled={disabled}
@@ -47,6 +63,9 @@ const EmployerHeader = ({ disabled = false }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [fetchedProfile, setFetchedProfile] = useState();
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [textSize, setTextSize] = useState('normal');
+  const [showTextSizeMenu, setShowTextSizeMenu] = useState(false);
 
   const navigationLinks = [
     { name: 'Dashboard', path: '/employer/dashboard' },
@@ -88,6 +107,52 @@ const EmployerHeader = ({ disabled = false }) => {
     navigate('/signin');
   }
 
+  // Accessibility functions
+  const applyAccessibilityStyles = (darkMode, size) => {
+    const root = document.documentElement;
+    console.log('Applying accessibility styles:', { darkMode, size });
+    
+    // Dark mode
+    if (darkMode) {
+      root.classList.add('dark');
+      console.log('Added dark class to root');
+    } else {
+      root.classList.remove('dark');
+      console.log('Removed dark class from root');
+    }
+
+    // Text size
+    root.classList.remove('text-small', 'text-normal', 'text-large', 'text-extra-large');
+    root.classList.add(`text-${size}`);
+    console.log(`Applied text-${size} class to root`);
+  };
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode;
+    console.log('Toggling dark mode to:', newDarkMode);
+    setIsDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', newDarkMode.toString());
+    applyAccessibilityStyles(newDarkMode, textSize);
+  };
+
+  const changeTextSize = (size) => {
+    console.log('Changing text size to:', size);
+    setTextSize(size);
+    localStorage.setItem('textSize', size);
+    applyAccessibilityStyles(isDarkMode, size);
+    setShowTextSizeMenu(false);
+  };
+
+  // Load saved accessibility preferences
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    const savedTextSize = localStorage.getItem('textSize') || 'normal';
+    
+    setIsDarkMode(savedDarkMode);
+    setTextSize(savedTextSize);
+    applyAccessibilityStyles(savedDarkMode, savedTextSize);
+  }, []);
+
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -97,6 +162,10 @@ const EmployerHeader = ({ disabled = false }) => {
       // Close profile dropdown when clicking outside
       if (!event.target.closest('.profile-dropdown-container')) {
         setIsProfileDropdownOpen(false);
+      }
+      // Close text size menu when clicking outside
+      if (!event.target.closest('.text-size-container')) {
+        setShowTextSizeMenu(false);
       }
     };
 
@@ -161,8 +230,8 @@ const EmployerHeader = ({ disabled = false }) => {
           <div className="flex items-center space-x-4">
             {/* Icons - Always visible */}
             <div className="flex items-center space-x-3">
-              {/* Theme toggle */}
-              <IconButton label="Toggle theme" disabled={disabled}>
+              {/* Dark Mode Toggle */}
+              <IconButton label="Toggle dark mode" disabled={disabled} onClick={toggleDarkMode}>
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -178,10 +247,36 @@ const EmployerHeader = ({ disabled = false }) => {
                 </svg>
               </IconButton>
 
-              {/* Text size */}
-              <IconButton label="Text size" disabled={disabled}>
-                <span className="font-bold text-sm">Tt</span>
-              </IconButton>
+              {/* Text Size */}
+              <div className="relative text-size-container">
+                <IconButton label="Text size" disabled={disabled} onClick={() => setShowTextSizeMenu(!showTextSizeMenu)}>
+                  <span className="font-bold text-sm">Tt</span>
+                </IconButton>
+                
+                {/* Text Size Dropdown */}
+                {showTextSizeMenu && !disabled && (
+                  <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+                    {[
+                      { size: 'small', label: 'Small' },
+                      { size: 'normal', label: 'Normal' },
+                      { size: 'large', label: 'Large' },
+                      { size: 'extra-large', label: 'Extra Large' }
+                    ].map(({ size, label }) => (
+                      <button
+                        key={size}
+                        onClick={() => changeTextSize(size)}
+                        className={`w-full text-left px-3 py-2 text-sm transition-colors ${
+                          textSize === size
+                            ? 'bg-blue-600 text-white'
+                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {/* Notifications */}
               <IconButton

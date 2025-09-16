@@ -56,6 +56,7 @@ model Pwd_Profile {
   skills                         String[]
   portfolio_url                  String?
   github_url                     String?
+  linkedin_url                   String?
   otherPlatform                  String[]
   professional_role              String?
   professional_summary           String?
@@ -80,6 +81,7 @@ model Pwd_Profile {
   security_alerts                Boolean                            @default(true)
   resume_cv                      String?
   basic_information              Boolean                            @default(false)
+  professional_summary_completed Boolean                            @default(false)
   professional_experience        Boolean                            @default(false)
   education                      Boolean                            @default(false)
   portfolio_items                Boolean                            @default(false)
@@ -249,6 +251,8 @@ model Applications {
   resume_id         Int
   custom_message    String
   proposed_salary   Decimal          @db.Decimal(10, 2)
+  work_experience   String? // JSON string of selected work experiences
+  portfolio_links   String? // JSON string of portfolio links
   submitted_at      DateTime
   updated_at        DateTime         @updatedAt
   status_changed_at DateTime

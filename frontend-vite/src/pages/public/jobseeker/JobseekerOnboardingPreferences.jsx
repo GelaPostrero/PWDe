@@ -350,26 +350,26 @@ const JobseekerOnboardingPreferences = () => {
               </div>
             </div>
 
-            <div className="mt-2 flex items-center justify-between">
+            {/* Navigation Buttons */}
+            <div className="flex items-center justify-between pt-6 border-t border-gray-200">
               <button 
                 onClick={goBack} 
                 disabled={isLoading}
-                className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors ${
-                  isLoading 
-                    ? 'text-gray-400 cursor-not-allowed' 
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
+                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
               >
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
                 Back
               </button>
               <div className="flex items-center gap-3">
                 <button 
                   onClick={handleSkip} 
                   disabled={isLoading}
-                  className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-colors ${
+                  className={`text-sm font-medium transition-colors ${
                     isLoading 
                       ? 'text-gray-400 cursor-not-allowed' 
-                      : 'text-gray-700 hover:bg-gray-50'
+                      : 'text-blue-600 hover:text-blue-800'
                   }`}
                 >
                   Skip for now
@@ -377,19 +377,24 @@ const JobseekerOnboardingPreferences = () => {
                 <button 
                   onClick={handleNext} 
                   disabled={!isFormValid || isLoading}
-                  className={`px-4 py-2 border border-gray-200 hover:border-gray-300 rounded-lg transition-all duration-200 flex items-center gap-2 ${
+                  className={`inline-flex items-center px-6 py-2 text-white text-sm font-medium rounded-lg transition-all duration-200 ${
                     isFormValid && !isLoading
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg' 
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      ? 'bg-blue-600 hover:bg-blue-700' 
+                      : 'bg-gray-400 cursor-not-allowed'
                   }`}
                 >
                   {isLoading ? (
                     <>
                       <Spinner size="sm" color="white" />
-                      <span>Saving...</span>
+                      <span className="ml-2">Saving...</span>
                     </>
                   ) : (
-                    isFormValid ? 'Next' : 'Complete required fields'
+                    <>
+                      Next
+                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </>
                   )}
                 </button>
               </div>

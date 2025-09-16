@@ -206,6 +206,7 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
         summary,
         portfolioUrl,
         githubUrl,
+        linkedinUrl,
         otherPlatform,
         visibility
     } = req.body;
@@ -264,12 +265,15 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
                 professional_summary: summary,
                 portfolio_url: portfolioUrl,
                 github_url: githubUrl,
+                linkedin_url: linkedinUrl,
                 otherPlatform: parsedOtherPlatform,
                 profile_visibility: visibility,
                 profile_picture: profilePhoto ? profilePhoto.filename : null,
                 resume_cv: resume ? resume.filename : null,
                 profession: tempdata.assessment?.profession,
                 skills: tempdata.assessment?.skills || [],
+                basic_information: true, // Profile completion means basic info is complete
+                professional_summary_completed: !!(summary && summary.trim() !== ""), // Track if professional summary is provided
                 professional_experience: tempdata.work_experience?.professional_experience || false,
                 education: tempdata.education?.education || false,
                 skills_assessment: tempdata.assessment?.skills_assessment || false,

@@ -6,82 +6,102 @@ import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
 
 const EmployerDashboard = () => {
-  const [highContrast, setHighContrast] = useState(false);
-  const [largeText, setLargeText] = useState(true);
-  const [fetchedData, setFetchedData] = useState([]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [textSize, setTextSize] = useState('normal');
+  const [screenReader, setScreenReader] = useState(false);
+  const [keyboardNavigation, setKeyboardNavigation] = useState(false);
+  const [focusIndicators, setFocusIndicators] = useState(true);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [fetchedData, setFetchedData] = useState(null);
   const [fetchJob, setFetchJob] = useState([]);
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
+  const [isLoadingJobs, setIsLoadingJobs] = useState(true);
+  const [companyStats, setCompanyStats] = useState({
+    jobsPosted: 0,
+    applicationsReceived: 0,
+    interviewsScheduled: 0,
+    profileViews: 0
+  });
 
-  // Mock company data
-  const companyProfile = {
-    companylogo: fetchedData.companylogo,
-    name: fetchedData.company_name,
-    industry: fetchedData.industryPreference,
-    rating: fetchedData.rating,
-    profileViews: fetchedData.profile_views,
-    applications: fetchedData.applications,
-    interviews: fetchedData.interviews,
-    savedJobs: fetchedData.saved_jobs
+  // Accessibility functions
+  const applyAccessibilityStyles = (darkMode, size, screenReader, keyboardNav, focusInd, reducedMotion) => {
+    const root = document.documentElement;
+    console.log('Applying accessibility styles:', { darkMode, size, screenReader, keyboardNav, focusInd, reducedMotion });
+    
+    // Dark mode
+    if (darkMode) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+
+    // Text size
+    root.classList.remove('text-small', 'text-normal', 'text-large', 'text-extra-large');
+    root.classList.add(`text-${size}`);
+
+    // Screen reader optimizations
+    if (screenReader) {
+      root.classList.add('screen-reader-optimized');
+    } else {
+      root.classList.remove('screen-reader-optimized');
+    }
+
+    // Keyboard navigation
+    if (keyboardNav) {
+      root.classList.add('keyboard-navigation');
+    } else {
+      root.classList.remove('keyboard-navigation');
+    }
+
+    // Focus indicators
+    if (focusInd) {
+      root.classList.add('focus-indicators');
+    } else {
+      root.classList.remove('focus-indicators');
+    }
+
+    // Reduced motion
+    if (reducedMotion) {
+      root.classList.add('reduced-motion');
+    } else {
+      root.classList.remove('reduced-motion');
+    }
   };
 
-  // Mock job postings data
-  const jobPostings = [
-    {
-      id: 1,
-      title: "Senior Software Engineer",
-      status: "Active",
-      type: "Full-time",
-      location: "Remote",
-      salary: "P50,000 - P70,000",
-      period: "monthly",
-      level: "Senior Level",
-      skills: ["React", "Node.js", "TypeScript"],
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      applications: 15,
-      dueDate: "Dec 15"
-    },
-    {
-      id: 2,
-      title: "UX/UI Designer",
-      status: "Active",
-      type: "Full-time",
-      location: "Hybrid",
-      salary: "P45,000 - P60,000",
-      period: "monthly",
-      level: "Mid Level",
-      skills: ["Figma", "Adobe XD", "Prototyping"],
-      accessibilityFeatures: ["Screen Reader Optimized", "Flexible Hours"],
-      applications: 8,
-      dueDate: "Dec 20"
-    },
-    {
-      id: 3,
-      title: "Customer Support Specialist",
-      status: "Closed",
-      type: "Part-time",
-      location: "On-Site",
-      salary: "P25,000 - P35,000",
-      period: "monthly",
-      level: "Entry Level",
-      skills: ["Communication", "Problem Solving"],
-      accessibilityFeatures: ["Accessible Office"],
-      applications: 12,
-      dueDate: "Dec 10"
-    },
-    {
-      id: 4,
-      title: "Tigluto",
-      status: "Active",
-      type: "Part-time",
-      location: "On-Site",
-      salary: "P5,000 - P10,000",
-      period: "monthly",
-      level: "Entry Level",
-      skills: ["Cleaning :)"],
-      accessibilityFeatures: ["Accessible Office"],
-      applications: 12,
-      dueDate: "Dec 5"
-    }
-  ];
+  // Load saved accessibility preferences
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    const savedTextSize = localStorage.getItem('textSize') || 'normal';
+    const savedScreenReader = localStorage.getItem('screenReader') === 'true';
+    const savedKeyboardNavigation = localStorage.getItem('keyboardNavigation') === 'true';
+    const savedFocusIndicators = localStorage.getItem('focusIndicators') !== 'false';
+    const savedReducedMotion = localStorage.getItem('reducedMotion') === 'true';
+
+    setIsDarkMode(savedDarkMode);
+    setTextSize(savedTextSize);
+    setScreenReader(savedScreenReader);
+    setKeyboardNavigation(savedKeyboardNavigation);
+    setFocusIndicators(savedFocusIndicators);
+    setReducedMotion(savedReducedMotion);
+
+    // Apply initial styles
+    applyAccessibilityStyles(savedDarkMode, savedTextSize, savedScreenReader, savedKeyboardNavigation, savedFocusIndicators, savedReducedMotion);
+  }, []);
+
+  // Real company profile data from backend
+  const companyProfile = fetchedData ? {
+    companylogo: fetchedData.companylogo || '',
+    name: fetchedData.company_name || 'Company',
+    industry: fetchedData.industryPreference || 'Technology',
+    rating: fetchedData.rating || 0,
+    profileViews: companyStats.profileViews,
+    applications: companyStats.applicationsReceived,
+    interviews: companyStats.interviewsScheduled,
+    jobsPosted: companyStats.jobsPosted
+  } : null;
+
+  // Real job postings data from backend
+  const jobPostings = fetchJob || [];
 
   // Mock recent applicants data
   const recentApplicants = [
@@ -101,15 +121,22 @@ const EmployerDashboard = () => {
     }
   ];
 
-  const items = [
-    { text: 'Company Profile', completed: fetchedData.set_company_profile },
-    { text: 'Job Roles & Requirements', completed: fetchedData.set_jobRoles_requirements },
-    { text: 'Work Environment', completed: fetchedData.set_work_environment }
-  ];
+  // Profile completion tracking based on real data
+  const getProfileCompletionItems = () => {
+    if (!fetchedData) return [];
+    
+    return [
+      { text: 'Company Profile', completed: !!(fetchedData.company_name && fetchedData.company_email) },
+      { text: 'Job Roles & Requirements', completed: !!(fetchedData.jobRoles_requirements && fetchedData.jobRoles_requirements.length > 0) },
+      { text: 'Work Environment', completed: !!(fetchedData.work_environment && fetchedData.work_environment.length > 0) }
+    ];
+  };
+
+  const items = getProfileCompletionItems();
 
   const totalItems = items.length;
   const completedItems = items.filter(item => item.completed).length;
-  const progressPercentage = Math.round((completedItems / totalItems) * 100);
+  const progressPercentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
   const itemsLeft = totalItems - completedItems;
 
   const quickActions = [
@@ -133,33 +160,87 @@ const EmployerDashboard = () => {
     }
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
+  // Fetch company profile data
+  const fetchCompanyProfile = async () => {
       try {
+      setIsLoadingProfile(true);
         const response = await api.get("/retrieve/dashboard");
         if (response.data.success) {
           setFetchedData(response.data.data);
         }
       } catch (error) {
-        console.error("Failed to load profile:", error);
+      console.error("Failed to load company profile:", error);
+    } finally {
+      setIsLoadingProfile(false);
       }
     };
-    fetchData();
-  }, []);
 
-  useEffect(() => {
-    const fetchJob = async () => {
+  // Fetch company job postings
+  const fetchCompanyJobs = async () => {
       try {
+      setIsLoadingJobs(true);
         const response = await api.get('/job/all');
         if(response.data.success) {
-          setFetchJob(response.data.job);
+        setFetchJob(response.data.job || []);
         }
       } catch (error) {
         console.error("Failed to load jobs:", error);
-      }
-    };
-    fetchJob();
-  }, [fetchJob]);
+      setFetchJob([]);
+    } finally {
+      setIsLoadingJobs(false);
+    }
+  };
+
+  // Fetch company statistics
+  const fetchCompanyStats = async () => {
+    try {
+      const [jobsRes, applicationsRes] = await Promise.all([
+        api.get('/job/count'),
+        api.get('/api/applications/employer/count')
+      ]);
+
+      setCompanyStats({
+        jobsPosted: jobsRes.data.count || 0,
+        applicationsReceived: applicationsRes.data.count || 0,
+        interviewsScheduled: 0, // This would come from a separate API
+        profileViews: fetchedData?.profile_views || 0
+      });
+    } catch (error) {
+      console.error('Failed to fetch company stats:', error);
+    }
+  };
+
+  // Load all data on component mount
+  useEffect(() => {
+    fetchCompanyProfile();
+    fetchCompanyJobs();
+  }, []);
+
+  // Fetch company stats when profile data is loaded
+  useEffect(() => {
+    if (fetchedData) {
+      fetchCompanyStats();
+    }
+  }, [fetchedData]);
+
+  // Show loading state while data is being fetched
+  if (isLoadingProfile) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <EmployerHeader disabled={false} />
+        <main className="flex-1">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="flex items-center justify-center h-64">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading dashboard...</p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -178,9 +259,9 @@ const EmployerDashboard = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
                   <div className="relative flex-shrink-0 flex justify-center sm:justify-start">
                   {/* Company Logo */}
-                  {companyProfile.companylogo ?  (
+                  {companyProfile?.companylogo ?  (
                       <img 
-                        src={fetchedData.companylogo} 
+                        src={companyProfile.companylogo} 
                         alt="Company Logo"
                         className="w-16 h-16 rounded-full object-cover border-4 border-blue-100"
                       />
@@ -554,32 +635,133 @@ const EmployerDashboard = () => {
               <div className="bg-white rounded-lg shadow p-4 sm:p-6">
                 <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Accessibility Tools</h3>
                 <div className="space-y-4">
+                  {/* Dark Mode */}
                   <div className="flex items-center justify-between">
-                    <span className="text-xs sm:text-sm font-medium text-gray-700">High Contrast</span>
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Dark Mode</span>
                     <button
-                      onClick={() => setHighContrast(!highContrast)}
+                      onClick={() => {
+                        const newDarkMode = !isDarkMode;
+                        setIsDarkMode(newDarkMode);
+                        localStorage.setItem('darkMode', newDarkMode.toString());
+                        applyAccessibilityStyles(newDarkMode, textSize, screenReader, keyboardNavigation, focusIndicators, reducedMotion);
+                      }}
                       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                        highContrast ? 'bg-blue-600' : 'bg-gray-200'
+                        isDarkMode ? 'bg-blue-600' : 'bg-gray-200'
                       }`}
                     >
                       <span
                         className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                          highContrast ? 'translate-x-6' : 'translate-x-1'
+                          isDarkMode ? 'translate-x-6' : 'translate-x-1'
                         }`}
                       />
                     </button>
                   </div>
+
+                  {/* Text Size */}
                   <div className="flex items-center justify-between">
                     <span className="text-xs sm:text-sm font-medium text-gray-700">Large Text</span>
                     <button
-                      onClick={() => setLargeText(!largeText)}
+                      onClick={() => {
+                        const newTextSize = textSize === 'normal' ? 'large' : 'normal';
+                        setTextSize(newTextSize);
+                        localStorage.setItem('textSize', newTextSize);
+                        applyAccessibilityStyles(isDarkMode, newTextSize, screenReader, keyboardNavigation, focusIndicators, reducedMotion);
+                      }}
                       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                        largeText ? 'bg-blue-600' : 'bg-gray-200'
+                        textSize === 'large' ? 'bg-blue-600' : 'bg-gray-200'
                       }`}
                     >
                       <span
                         className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                          largeText ? 'translate-x-6' : 'translate-x-1'
+                          textSize === 'large' ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Screen Reader Optimizations */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Screen Reader Optimized</span>
+                    <button
+                      onClick={() => {
+                        const newScreenReader = !screenReader;
+                        setScreenReader(newScreenReader);
+                        localStorage.setItem('screenReader', newScreenReader.toString());
+                        applyAccessibilityStyles(isDarkMode, textSize, newScreenReader, keyboardNavigation, focusIndicators, reducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        screenReader ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          screenReader ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Enhanced Keyboard Navigation */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Enhanced Keyboard Navigation</span>
+                    <button
+                      onClick={() => {
+                        const newKeyboardNavigation = !keyboardNavigation;
+                        setKeyboardNavigation(newKeyboardNavigation);
+                        localStorage.setItem('keyboardNavigation', newKeyboardNavigation.toString());
+                        applyAccessibilityStyles(isDarkMode, textSize, screenReader, newKeyboardNavigation, focusIndicators, reducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        keyboardNavigation ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          keyboardNavigation ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Enhanced Focus Indicators */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Enhanced Focus Indicators</span>
+                    <button
+                      onClick={() => {
+                        const newFocusIndicators = !focusIndicators;
+                        setFocusIndicators(newFocusIndicators);
+                        localStorage.setItem('focusIndicators', newFocusIndicators.toString());
+                        applyAccessibilityStyles(isDarkMode, textSize, screenReader, keyboardNavigation, newFocusIndicators, reducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        focusIndicators ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          focusIndicators ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Reduced Motion */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-medium text-gray-700">Reduced Motion</span>
+                    <button
+                      onClick={() => {
+                        const newReducedMotion = !reducedMotion;
+                        setReducedMotion(newReducedMotion);
+                        localStorage.setItem('reducedMotion', newReducedMotion.toString());
+                        applyAccessibilityStyles(isDarkMode, textSize, screenReader, keyboardNavigation, focusIndicators, newReducedMotion);
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        reducedMotion ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          reducedMotion ? 'translate-x-6' : 'translate-x-1'
                         }`}
                       />
                     </button>

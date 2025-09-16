@@ -371,7 +371,7 @@ const AppliedJobs = () => {
                     </div>
                     
                     <button
-                      className="p-2 rounded-lg transition-colors text-yellow-500 hover:text-yellow-600"
+                      className="p-2 rounded-lg transition-colors text-red-500 hover:text-red-600"
                       title="Remove from saved jobs"
                     >
                       <svg className="w-5 h-5" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
