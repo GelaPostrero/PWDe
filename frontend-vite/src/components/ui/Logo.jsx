@@ -23,6 +23,6 @@ const Logo = ({ showText = false, to = '/', asLink = true }) => {
       {logoContent}
     </div>
   );
-};
+}; 
 
 export default Logo;

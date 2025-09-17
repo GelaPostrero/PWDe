@@ -53,6 +53,7 @@ const EmployerSignUp = () => {
     }
 
     console.log('Employer registration:', formData);
+    console.log('Form data being sent:', JSON.stringify(formData));
     localStorage.setItem('companyEmail', formData.companyEmail);
 
     try {
@@ -68,8 +69,9 @@ const EmployerSignUp = () => {
         body: JSON.stringify(formData)
       });
 
+      console.log('Response status:', response.status);
       const data = await response.json();
-      console.log(data);
+      console.log('Response data:', data);
 
       if(data.success) {
         Swal.fire({

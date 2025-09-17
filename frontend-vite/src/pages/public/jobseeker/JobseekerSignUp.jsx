@@ -413,8 +413,7 @@ const JobseekerSignUp = () => {
                   <option value="" disabled>Choose your gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
-                  <option value="prefer-not">Prefer not to say</option>
-                  <option value="Other">Other</option>
+                  <option value="Other">Prefer not to say</option>
                 </select>
               </div>
 

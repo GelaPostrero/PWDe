@@ -245,6 +245,13 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
         console.log("USER ID: ", user_id);
         const tempdata = tempOnboardPWDs.get(String(pwd_id));
         let { educations, highestLevel } = tempdata?.education || {};
+        console.log("Education data from frontend:", { educations, highestLevel });
+        
+        // Provide default value if highestLevel is undefined
+        if (!highestLevel) {
+            highestLevel = "Bachelor's";
+            console.log("Set default highestLevel to:", highestLevel);
+        }
         const workExperiences = tempdata?.workExperience || [];
 
         if (!tempdata) {
@@ -284,40 +291,71 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
             }
         });
 
-        const educationRecords = educations.map((edu) => ({
-            pwd_id,
-            highest_level: highestLevel,
-            institution: edu?.institutionName,
-            location: edu?.location,
-            field_of_study: edu?.fieldOfStudy,
-            degree: edu?.degree,
-            graduation_details: edu?.graduationStatus,
-            year_graduated: edu?.graduationYear
-        }));
+        const educationRecords = (educations || [])
+            .map((edu) => {
+                const finalHighestLevel = highestLevel || edu?.degree || "Bachelor's";
+                const year = edu?.graduationYear;
+                console.log("Education record - RAW year:", year, "Type:", typeof year);
+                console.log("Education record:", { 
+                    pwd_id, 
+                    highest_level: finalHighestLevel, 
+                    institution: edu?.institutionName,
+                    degree: edu?.degree,
+                    year_graduated: year
+                });
+                
+                const finalYear = year && year.toString().trim() !== '' ? year.toString() : null;
+                console.log("Education record - FINAL year:", finalYear, "Type:", typeof finalYear);
+                
+                return {
+                    pwd_id,
+                    highest_level: finalHighestLevel,
+                    institution: edu?.institutionName || '',
+                    location: edu?.location || '',
+                    field_of_study: edu?.fieldOfStudy || '',
+                    degree: edu?.degree || '',
+                    graduation_details: edu?.graduationStatus || '',
+                    year_graduated: finalYear
+                };
+            })
+            .filter(r => r.institution || r.degree || r.field_of_study);
 
-        const educationData = await prisma.pwd_Education.createMany({
-            data: educationRecords
-        });
+        // Only create education records if we have valid data
+        if (educationRecords.length > 0) {
+            const educationData = await prisma.pwd_Education.createMany({
+                data: educationRecords
+            });
+            console.log("Education records created successfully:", educationData);
+        } else {
+            console.log("Skipping education records creation - no valid data");
+        }
 
         const startDate = `${tempdata.workExperience?.startMonth} ${tempdata.workExperience?.startYear} `;
         const endDate = `${tempdata.workExperience?.endMonth} ${tempdata.workExperience?.endYear}`;
 
-        const workExperienceRecords = workExperiences.map((exp) => ({
-            pwd_id,
-            company: exp?.company || '',
-            job_title: exp?.jobTitle || '',
-            location: exp?.location || '',
-            country: exp?.country || '',
-            currently_working_on_this_role: exp?.isCurrent || false,
-            start_date: exp?.startDate || '',
-            end_date: exp?.endDate || '',
-            description: exp?.description || '',
-            employment_type: exp?.employmentType || ''
-        }));
+        const workExperienceRecords = workExperiences
+            .map((exp) => ({
+                pwd_id,
+                company: exp?.company || '',
+                job_title: exp?.jobTitle || '',
+                location: exp?.location || '',
+                country: exp?.country || '',
+                currently_working_on_this_role: !!exp?.isCurrent,
+                start_date: exp?.startDate || '',
+                end_date: exp?.endDate || '',
+                description: exp?.description || '',
+                employment_type: exp?.employmentType || ''
+            }))
+            .filter(r => r.company || r.job_title);
 
-        const workExperienceData = await prisma.pwd_Experience.createMany({
-            data: workExperienceRecords
-        });
+        if (workExperienceRecords.length > 0) {
+            const workExperienceData = await prisma.pwd_Experience.createMany({
+                data: workExperienceRecords
+            });
+            console.log("Work experience records created successfully:", workExperienceData);
+        } else {
+            console.log("Skipping work experience records creation - no valid data");
+        }
 
         const accessibilityNeedsData = await prisma.pwd_Accessibility_Needs.create({
             data: {
@@ -347,7 +385,12 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
         });
     } catch (error) {
         console.log('Error completing PWD profile:', error);
-        return res.status(500).json({ error: 'Failed to complete PWD profile.' });
+        console.log('Error details:', error.message);
+        console.log('Error code:', error.code);
+        return res.status(500).json({ 
+            error: 'Failed to complete PWD profile.',
+            details: error.message 
+        });
     }
 });
 
