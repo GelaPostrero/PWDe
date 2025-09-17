@@ -256,11 +256,7 @@ const JobseekerOnboardingCompletion = () => {
         profileCompletion.append('resume', resume.file, resume.name || 'resume.pdf');
       }
 
-      const response = await api.post('/onboard/pwd/complete-profile', profileCompletion, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      });
+      const response = await api.post('/onboard/pwd/complete-profile', profileCompletion);
 
       // Wait for both API call and minimum loading time
       await Promise.all([response, minLoadingTime]);

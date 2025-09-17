@@ -492,122 +492,136 @@ const JobseekerDashboard = () => {
 
       {/* Main Content */}
       <main className="flex-1 py-4 sm:py-6 lg:py-8">
-        <div className="mx-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-16">
+        <div className="max-full ml-8 mr-8 px-4 sm:px-6 lg:px-8">
           
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {/* Top Section - Full Width Profile */}
-            <div className="lg:col-span-3 mb-4 sm:mb-6 lg:mb-3">
+          {/* Combined Profile and Key Metrics Section */}
+          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
               {/* User Profile Section */}
-              <div className="bg-white rounded-lg shadow p-4 sm:p-6">
-                <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
-                  {/* Profile Avatar */}
-                  <div className="relative flex-shrink-0 flex justify-center sm:justify-start">
-                    {fetchedData?.profile_picture ? (
-                      <img
-                        src={fetchedData.profile_picture}
-                        alt="Profile"
-                        className="w-16 h-16 rounded-full object-cover border-4 border-blue-100"
-                      />
-                    ): (
-                      <img
-                        src="https://i.pravatar.cc/80?img=5"
-                        alt="Profile"
-                        className="w-16 h-16 rounded-full object-cover border-4 border-blue-100"
-                      />
-                    )}
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
-                  </div>
+              <div className="flex items-center space-x-4 flex-1">
+                {/* Profile Avatar */}
+                <div className="relative flex-shrink-0">
+                  {fetchedData?.profile_picture ? (
+                    <img
+                      src={fetchedData.profile_picture}
+                      alt="Profile"
+                      className="w-16 h-16 rounded-full object-cover"
+                    />
+                  ): (
+                    <img
+                      src="https://i.pravatar.cc/80?img=5"
+                      alt="Profile"
+                      className="w-16 h-16 rounded-full object-cover"
+                    />
+                  )}
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
+                </div>
 
-                  {/* Name and Rating */}
-                  <div className="flex-shrink-0 text-center sm:text-left">
-                    <h2 className="text-lg font-bold text-gray-900">{userProfile.name}</h2>
-                    <p className="text-sm text-gray-600">{userProfile.role}</p>
-                    <div className="flex items-center justify-center sm:justify-start mt-1">
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <svg
-                            key={i}
-                            className={`w-4 h-4 ${
-                              i < Math.floor(userProfile.rating) 
-                                ? 'text-yellow-400' 
-                                : i < userProfile.rating 
-                                  ? 'text-yellow-400' 
-                                  : 'text-gray-300'
-                            }`}
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                {/* User Info */}
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-1">
+                    <h2
+                      className="text-xl font-bold text-gray-900"
+                      title={userProfile.name}
+                    >
+                      {userProfile.name}
+                    </h2>
+                    {/* Verification Status */}
+                    <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
+                      fetchedData?.is_verified ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'
+                    }`}>
+                      {fetchedData?.is_verified ? (
+                        <>
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                           </svg>
-                        ))}
-                      </div>
-                      <span className="ml-1 text-xs text-gray-600 font-medium">{userProfile.rating}/5</span>
+                          <span>Verified</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                          </svg>
+                          <span>Unverified</span>
+                        </>
+                      )}
                     </div>
                   </div>
-
-                  {/* Key Metrics - inline with profile */}
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-1">
-                   <Link to="/jobseeker/profile" className="flex-1 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
-                      <div className="flex items-center justify-between h-full">
-                        <div className="flex flex-col items-start">
-                          <span className="text-xs font-medium text-gray-600 mb-1">Profile Views</span>
-                          <div className="text-xl font-bold text-gray-600">{userProfile.profileViews}</div>
-                        </div>
-                        <div className="flex items-center">
-                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </Link>
-                    <Link to="/jobseeker/applications" className="flex-1 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
-                      <div className="flex items-center justify-between h-full">
-                        <div className="flex flex-col items-start">
-                          <span className="text-xs font-medium text-gray-600 mb-1">Applications</span>
-                          <div className="text-xl font-bold text-gray-600">{userProfile.applications}</div>
-                        </div>
-                        <div className="flex items-center">
-                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </Link>
-                    <Link to="/jobseeker/applications" className="flex-1 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
-                      <div className="flex items-center justify-between h-full">
-                        <div className="flex flex-col items-start">
-                          <span className="text-xs font-medium text-gray-600 mb-1">Interviews</span>
-                          <div className="text-xl font-bold text-gray-600">{userProfile.interviews}</div>
-                        </div>
-                        <div className="flex items-center">
-                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </Link>
-                    <Link to="/find-job/saved" className="flex-1 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer">
-                      <div className="flex items-center justify-between h-full">
-                        <div className="flex flex-col items-start">
-                          <span className="text-xs font-medium text-gray-600 mb-1">Saved Jobs</span>
-                          <div className="text-xl font-bold text-gray-600">{userProfile.savedJobs}</div>
-                        </div>
-                        <div className="flex items-center">
-                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </Link>
+                  <p className="text-sm text-gray-600">{userProfile.role}</p>
+                  <div className="flex items-center mt-1">
+                    <div className="flex items-center">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          key={i}
+                          className={`w-4 h-4 ${
+                            i < Math.floor(userProfile.rating || 4.8)
+                              ? 'text-yellow-400'
+                              : i < (userProfile.rating || 4.8)
+                                ? 'text-yellow-400'
+                                : 'text-gray-300'
+                          }`}
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span className="ml-2 text-sm text-gray-600 font-medium">{userProfile.rating || 4.8}/5</span>
                   </div>
                 </div>
               </div>
+
+              {/* Key Metrics - Professional Button Layout */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full lg:w-auto lg:min-w-[900px]">
+                <Link to="/jobseeker/profile" className="bg-gray-50 hover:bg-gray-100 rounded-xl p-4 text-left transition-colors w-full">
+                  <div className="flex items-start justify-between mb-1">
+                    <span className="text-sm font-medium text-gray-600 truncate">Profile Views</span>
+                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  </div>
+                  <div className="text-xl font-medium text-gray-900 leading-none truncate">{userProfile.profileViews || 0}</div>
+                </Link>
+
+                <Link to="/jobseeker/applications" className="bg-gray-50 hover:bg-gray-100 rounded-xl p-4 text-left transition-colors w-full">
+                  <div className="flex items-start justify-between mb-1">
+                    <span className="text-sm font-medium text-gray-600 truncate">Applications</span>
+                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </div>
+                  <div className="text-xl font-medium text-gray-900 leading-none truncate">{userProfile.applications || 0}</div>
+                </Link>
+
+                <Link to="/jobseeker/applications" className="bg-gray-50 hover:bg-gray-100 rounded-xl p-4 text-left transition-colors w-full">
+                  <div className="flex items-start justify-between mb-1">
+                    <span className="text-sm font-medium text-gray-600 truncate">Interviews</span>
+                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="text-xl font-medium text-gray-900 leading-none truncate">{userProfile.interviews || 0}</div>
+                </Link>
+
+                <Link to="/find-job/saved" className="bg-gray-50 hover:bg-gray-100 rounded-xl p-4 text-left transition-colors w-full">
+                  <div className="flex items-start justify-between mb-1">
+                    <span className="text-sm font-medium text-gray-600 truncate">Saved Jobs</span>
+                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </div>
+                  <div className="text-xl font-medium text-gray-900 leading-none truncate">{userProfile.savedJobs || 0}</div>
+                </Link>
+              </div>
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
             {/* Left Column - AI Jobs */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-3">
               {/* AI Recommended Jobs Section */}
               <div className="bg-white rounded-lg shadow p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6">
