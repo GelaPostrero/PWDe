@@ -134,6 +134,8 @@ router.post('/users/register/pwd/documents', memoryUploadForPWD, async (req, res
 
 // Register a new user phase 1 for Employer
 router.post('/users/register/employer', async (req, res) => {
+  console.log('Received employer registration request:', req.body);
+  
   const {
     companyName,
     companyEmail,
@@ -141,6 +143,34 @@ router.post('/users/register/employer', async (req, res) => {
     companyAddress,
     password
   } = req.body;
+
+  // Validate required fields
+  if (!companyName) {
+    return res.status(400).json({ error: 'Company name is required.' });
+  }
+  if (!companyEmail) {
+    return res.status(400).json({ error: 'Company email is required.' });
+  }
+  if (!companyPhone) {
+    return res.status(400).json({ error: 'Company phone number is required.' });
+  }
+  if (!companyAddress) {
+    return res.status(400).json({ error: 'Company address is required.' });
+  }
+  if (!password) {
+    return res.status(400).json({ error: 'Password is required.' });
+  }
+
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(companyEmail)) {
+    return res.status(400).json({ error: 'Please enter a valid email address.' });
+  }
+
+  // Validate password length
+  if (password.length < 6) {
+    return res.status(400).json({ error: 'Password must be at least 6 characters long.' });
+  }
 
   const existingEmail = await prisma.users.findUnique({
     where: { email: companyEmail }

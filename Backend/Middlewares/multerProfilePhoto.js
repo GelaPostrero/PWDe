@@ -37,6 +37,8 @@ const storage = multer.diskStorage({
         fs.mkdirSync(userDir, { recursive: true });
     }
 
+    // Set userDir on request object for use in filename function
+    req.userDir = userDir;
     cb(null, userDir);
   },
   filename: function (req, file, cb) {

@@ -301,22 +301,29 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
         const startDate = `${tempdata.workExperience?.startMonth} ${tempdata.workExperience?.startYear} `;
         const endDate = `${tempdata.workExperience?.endMonth} ${tempdata.workExperience?.endYear}`;
 
-        const workExperienceRecords = workExperiences.map((exp) => ({
-            pwd_id,
-            company: exp?.company || '',
-            job_title: exp?.jobTitle || '',
-            location: exp?.location || '',
-            country: exp?.country || '',
-            currently_working_on_this_role: exp?.isCurrent || false,
-            start_date: exp?.startDate || '',
-            end_date: exp?.endDate || '',
-            description: exp?.description || '',
-            employment_type: exp?.employmentType || ''
-        }));
+        const workExperienceRecords = workExperiences
+            .map((exp) => ({
+                pwd_id,
+                company: exp?.company || '',
+                job_title: exp?.jobTitle || '',
+                location: exp?.location || '',
+                country: exp?.country || '',
+                currently_working_on_this_role: !!exp?.isCurrent,
+                start_date: exp?.startDate || '',
+                end_date: exp?.endDate || '',
+                description: exp?.description || '',
+                employment_type: exp?.employmentType || ''
+            }))
+            .filter(r => r.company || r.job_title);
 
-        const workExperienceData = await prisma.pwd_Experience.createMany({
-            data: workExperienceRecords
-        });
+        if (workExperienceRecords.length > 0) {
+            const workExperienceData = await prisma.pwd_Experience.createMany({
+                data: workExperienceRecords
+            });
+            console.log("Work experience records created successfully:", workExperienceData);
+        } else {
+            console.log("Skipping work experience records creation - no valid data");
+        }
 
         const accessibilityNeedsData = await prisma.pwd_Accessibility_Needs.create({
             data: {
@@ -346,7 +353,12 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
         });
     } catch (error) {
         console.log('Error completing PWD profile:', error);
-        return res.status(500).json({ error: 'Failed to complete PWD profile.' });
+        console.log('Error details:', error.message);
+        console.log('Error code:', error.code);
+        return res.status(500).json({ 
+            error: 'Failed to complete PWD profile.',
+            details: error.message 
+        });
     }
 });
 
