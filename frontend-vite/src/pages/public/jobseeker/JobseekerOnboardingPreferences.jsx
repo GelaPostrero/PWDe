@@ -132,10 +132,11 @@ const JobseekerOnboardingPreferences = () => {
   };
 
   const handleSalaryChange = (field, value) => {
-    const formatted = formatNumber(value);
+    // Only apply number formatting to min and max fields, not frequency
+    const formatted = (field === 'min' || field === 'max') ? formatNumber(value) : value;
     setSalaryRange((prev) => ({
       ...prev,
-      [field]: formatted, // stored with commas now
+      [field]: formatted,
     }));
   };
 
