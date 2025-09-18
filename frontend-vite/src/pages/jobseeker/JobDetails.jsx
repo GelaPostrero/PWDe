@@ -17,6 +17,23 @@ const JobDetails = () => {
   const [hasApplied, setHasApplied] = useState(false);
   const [applicationData, setApplicationData] = useState(null);
   const [isWithdrawing, setIsWithdrawing] = useState(false);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [showResumeModal, setShowResumeModal] = useState(false);
+
+  // Handle ESC key to close modals
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape') {
+        setShowVideoModal(false);
+        setShowResumeModal(false);
+      }
+    };
+
+    if (showVideoModal || showResumeModal) {
+      document.addEventListener('keydown', handleEscKey);
+      return () => document.removeEventListener('keydown', handleEscKey);
+    }
+  }, [showVideoModal, showResumeModal]);
 
   // Determine breadcrumb path based on referrer
   const getBreadcrumbPath = () => {
@@ -133,6 +150,8 @@ const JobDetails = () => {
         if (response.data.success) {
           setHasApplied(response.data.hasApplied);
           setApplicationData(response.data.application);
+          console.log('Application data received:', response.data.application);
+          console.log('Video file path:', response.data.application?.video_file_path);
         }
       } catch (error) {
         console.error('Error checking application status:', error);
@@ -460,21 +479,18 @@ const JobDetails = () => {
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">Resume File</h3>
                         {applicationData?.resume ? (
-                          <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                          <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                               onClick={() => setShowResumeModal(true)}>
                             <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
-                            <div>
+                            <div className="flex-1">
                               <p className="font-medium text-gray-900">{applicationData.resume.title}</p>
-                              <a 
-                                href={`http://localhost:4000/uploads/Resumes/${applicationData.resume.file_path}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 hover:text-blue-700 text-sm"
-                              >
-                                View Resume
-                              </a>
+                              <p className="text-sm text-gray-500">Click to view resume</p>
                             </div>
+                            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
                           </div>
                         ) : (
                           <p className="text-gray-500 italic">No resume uploaded</p>
@@ -513,9 +529,6 @@ const JobDetails = () => {
                         {applicationData?.work_experience && applicationData.work_experience.length > 0 ? (
                           <div className="p-4 bg-gray-50 rounded-lg space-y-4">
                             {applicationData.work_experience.map((exp, index) => {
-                              // Debug: Log the actual data structure
-                              console.log('Work experience data:', exp);
-                              
                               // Handle both camelCase and snake_case field names
                               const title = exp.title || exp.job_title || '';
                               const company = exp.company || exp.company_name || '';
@@ -525,8 +538,6 @@ const JobDetails = () => {
                               const location = exp.location || exp.location_city || '';
                               const country = exp.country || exp.location_country || '';
                               const description = exp.description || exp.job_description || '';
-                              
-                              console.log('Processed work experience:', { title, company, startDate, endDate, employmentType, location, country, description });
                               
                               return (
                                 <div key={index} className="space-y-1">
@@ -558,15 +569,16 @@ const JobDetails = () => {
                         )}
                       </div>
 
+
                       {/* Portfolio Links */}
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">Portfolio Links</h3>
-                        {applicationData?.portfolio_links && Object.values(applicationData.portfolio_links).some(link => link && link.trim()) ? (
+                        {applicationData?.portfolio_links && Object.values(applicationData.portfolio_links).some(link => link && typeof link === 'string' && link.trim()) ? (
                           <div className="p-4 bg-gray-50 rounded-lg space-y-2">
-                            {applicationData.portfolio_links.linkedin && (
+                            {applicationData.portfolio_links.linkedin && typeof applicationData.portfolio_links.linkedin === 'string' && applicationData.portfolio_links.linkedin.trim() && (
                               <div>
                                 <a 
-                                  href={typeof applicationData.portfolio_links.linkedin === 'string' && applicationData.portfolio_links.linkedin.startsWith('http') ? applicationData.portfolio_links.linkedin : `https://${applicationData.portfolio_links.linkedin}`} 
+                                  href={applicationData.portfolio_links.linkedin.startsWith('http') ? applicationData.portfolio_links.linkedin : `https://${applicationData.portfolio_links.linkedin}`} 
                                   target="_blank" 
                                   rel="noopener noreferrer" 
                                   className="text-blue-600 hover:text-blue-700 text-sm underline"
@@ -575,10 +587,10 @@ const JobDetails = () => {
                                 </a>
                               </div>
                             )}
-                            {applicationData.portfolio_links.github && (
+                            {applicationData.portfolio_links.github && typeof applicationData.portfolio_links.github === 'string' && applicationData.portfolio_links.github.trim() && (
                               <div>
                                 <a 
-                                  href={typeof applicationData.portfolio_links.github === 'string' && applicationData.portfolio_links.github.startsWith('http') ? applicationData.portfolio_links.github : `https://${applicationData.portfolio_links.github}`} 
+                                  href={applicationData.portfolio_links.github.startsWith('http') ? applicationData.portfolio_links.github : `https://${applicationData.portfolio_links.github}`} 
                                   target="_blank" 
                                   rel="noopener noreferrer" 
                                   className="text-blue-600 hover:text-blue-700 text-sm underline"
@@ -587,10 +599,10 @@ const JobDetails = () => {
                                 </a>
                               </div>
                             )}
-                            {applicationData.portfolio_links.portfolio && (
+                            {applicationData.portfolio_links.portfolio && typeof applicationData.portfolio_links.portfolio === 'string' && applicationData.portfolio_links.portfolio.trim() && (
                               <div>
                                 <a 
-                                  href={typeof applicationData.portfolio_links.portfolio === 'string' && applicationData.portfolio_links.portfolio.startsWith('http') ? applicationData.portfolio_links.portfolio : `https://${applicationData.portfolio_links.portfolio}`} 
+                                  href={applicationData.portfolio_links.portfolio.startsWith('http') ? applicationData.portfolio_links.portfolio : `https://${applicationData.portfolio_links.portfolio}`} 
                                   target="_blank" 
                                   rel="noopener noreferrer" 
                                   className="text-blue-600 hover:text-blue-700 text-sm underline"
@@ -599,10 +611,10 @@ const JobDetails = () => {
                                 </a>
                               </div>
                             )}
-                            {applicationData.portfolio_links.other && (
+                            {applicationData.portfolio_links.other && typeof applicationData.portfolio_links.other === 'string' && applicationData.portfolio_links.other.trim() && (
                               <div>
                                 <a 
-                                  href={typeof applicationData.portfolio_links.other === 'string' && applicationData.portfolio_links.other.startsWith('http') ? applicationData.portfolio_links.other : `https://${applicationData.portfolio_links.other}`} 
+                                  href={applicationData.portfolio_links.other.startsWith('http') ? applicationData.portfolio_links.other : `https://${applicationData.portfolio_links.other}`} 
                                   target="_blank" 
                                   rel="noopener noreferrer" 
                                   className="text-blue-600 hover:text-blue-700 text-sm underline"
@@ -622,9 +634,27 @@ const JobDetails = () => {
                       {/* Video Introduction */}
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">Video Introduction</h3>
-                        <div className="p-4 bg-gray-50 rounded-lg">
-                          <p className="text-gray-500 italic">No video introduction included in this application</p>
-                        </div>
+                        {applicationData?.video_file_path ? (
+                          <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                               onClick={() => setShowVideoModal(true)}>
+                            <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center">
+                              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M8 5v10l8-5-8-5z"/>
+                              </svg>
+                            </div>
+                            <div className="flex-1">
+                              <p className="font-medium text-gray-900">{applicationData.video_file_path}</p>
+                              <p className="text-sm text-gray-500">Click to play video</p>
+                            </div>
+                            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </div>
+                        ) : (
+                          <div className="p-4 bg-gray-50 rounded-lg">
+                            <p className="text-gray-500 italic">No video introduction included in this application</p>
+                          </div>
+                        )}
                       </div>
 
                       {/* Application Date */}
@@ -793,7 +823,7 @@ const JobDetails = () => {
                     // Application-specific buttons
                     <div className="flex space-x-2">
                       <button
-                        onClick={() => navigate(`/jobseeker/submit-application/${jobData.id}`)}
+                        onClick={() => navigate(`/jobseeker/submit-application/${jobData.id}?edit=true`)}
                         className="flex-1 py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center justify-center space-x-2"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -911,6 +941,68 @@ const JobDetails = () => {
         showNotification={true} 
         notificationCount={3}
       />
+
+      {/* Video Modal */}
+      {showVideoModal && applicationData?.video_file_path && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+             onClick={(e) => e.target === e.currentTarget && setShowVideoModal(false)}>
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b">
+              <h3 className="text-lg font-semibold text-gray-900">Video Introduction</h3>
+              <button
+                onClick={() => setShowVideoModal(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-4">
+              <video 
+                controls 
+                className="w-full h-auto max-h-[70vh]"
+                src={`http://localhost:4000/uploads/Resumes/${applicationData.pwd_id}/${applicationData.video_file_path}`}
+                autoPlay
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Resume Modal */}
+      {showResumeModal && applicationData?.resume && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+             onClick={(e) => e.target === e.currentTarget && setShowResumeModal(false)}>
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b">
+              <h3 className="text-lg font-semibold text-gray-900">{applicationData.resume.title}</h3>
+              <button
+                onClick={() => setShowResumeModal(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-4 h-[70vh]">
+              {console.log('Resume data:', applicationData.resume)}
+              {console.log('Application pwd_id:', applicationData.pwd_id)}
+              {console.log('Resume URL:', `http://localhost:4000/uploads/Resumes/${applicationData.pwd_id}/${applicationData.resume.file_path}`)}
+              <iframe
+                src={`http://localhost:4000/uploads/Resumes/${applicationData.pwd_id}/resume-1758017183531-306206094.pdf`}
+                className="w-full h-full border-0"
+                title={applicationData.resume.title}
+                onError={(e) => console.error('Iframe error:', e)}
+                onLoad={() => console.log('Iframe loaded successfully')}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
