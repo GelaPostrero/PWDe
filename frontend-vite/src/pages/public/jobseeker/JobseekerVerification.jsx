@@ -509,7 +509,7 @@ const JobseekerVerification = () => {
               </div>
 
               <div className="mt-6 flex items-center gap-4">
-                <button onClick={() => navigate('/onboarding/jobseeker/skills')} className="flex-1 border border-gray-300 rounded-lg py-3 hover:bg-gray-50 transition-colors">Skip for Now</button>
+                <button onClick={() => navigate('/signup/jobseeker/activation')} className="flex-1 border border-gray-300 rounded-lg py-3 hover:bg-gray-50 transition-colors">Skip for Now</button>
                 <button 
                   onClick={submitDocuments} 
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 transition-colors"

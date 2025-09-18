@@ -282,6 +282,16 @@ const JobseekerDashboard = () => {
       setIsLoadingProfile(true);
       const response = await api.get('/retrieve/profile');
       if (response.data.success) {
+        console.log('Dashboard - Profile data received:', response.data.data);
+        console.log('Dashboard - Profile completion fields:', {
+          basic_information: response.data.data.basic_information,
+          professional_summary_completed: response.data.data.professional_summary_completed,
+          workexperience: response.data.data.workexperience,
+          education: response.data.data.education,
+          portfolio_items: response.data.data.portfolio_items,
+          skills: response.data.data.skills,
+          set_accessibility_preferences: response.data.data.set_accessibility_preferences
+        });
         setFetchedData(response.data.data);
       } else {
         console.error('Profile fetch failed:', response.data);
