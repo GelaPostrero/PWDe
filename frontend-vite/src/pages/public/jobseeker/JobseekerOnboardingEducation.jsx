@@ -46,6 +46,51 @@ const JobseekerOnboardingEducation = () => {
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+  // Load saved data from localStorage on component mount
+  React.useEffect(() => {
+    const savedData = localStorage.getItem('jobseeker-education-form');
+    console.log('Loading saved education data:', savedData);
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
+        console.log('Parsed education data:', parsedData);
+        setinstitutionName(parsedData.institutionName || '');
+        setLocation(parsedData.location || '');
+        setFieldOfStudy(parsedData.fieldOfStudy || '');
+        setDegree(parsedData.degree || '');
+        setGraduationStatus(parsedData.graduationStatus || 'Graduated');
+        setGraduationYear(parsedData.graduationYear || '');
+        setAdditionalEducations(parsedData.additionalEducations || []);
+      } catch (error) {
+        console.error('Error parsing saved education data:', error);
+      }
+    } else {
+      console.log('No saved education data found in localStorage');
+    }
+    // Mark initial load as complete after a short delay
+    setTimeout(() => setIsInitialLoad(false), 100);
+  }, []);
+
+  // Save form data to localStorage whenever form fields change
+  React.useEffect(() => {
+    // Don't save during initial load to avoid overwriting loaded data
+    if (!isInitialLoad) {
+      const formData = {
+        institutionName,
+        location,
+        fieldOfStudy,
+        degree,
+        graduationStatus,
+        graduationYear,
+        additionalEducations,
+        timestamp: Date.now()
+      };
+      console.log('Saving education data:', formData);
+      localStorage.setItem('jobseeker-education-form', JSON.stringify(formData));
+    }
+  }, [institutionName, location, fieldOfStudy, degree, graduationStatus, graduationYear, additionalEducations, isInitialLoad]);
 
   const handleStepClick = (key) => {
     // Only allow navigation to previous steps or current step

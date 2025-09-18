@@ -52,13 +52,49 @@ const routeForStep = (key) => {
 const JobseekerOnboardingSkills = () => {
   const navigate = useNavigate();
   const [profession, setProfession] = useState("");
-  const [selected, setSelected] = useState(['javascript', 'uiux', 'pm']);
+  const [selected, setSelected] = useState([]);
   const [customSkill, setCustomSkill] = useState("");
-  const [showCustomInput, setShowCustomInput] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+  // Load saved data from localStorage on component mount
+  React.useEffect(() => {
+    const savedData = localStorage.getItem('jobseeker-skills-form');
+    console.log('Loading saved skills data:', savedData);
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
+        console.log('Parsed skills data:', parsedData);
+        console.log('Setting profession to:', parsedData.profession);
+        console.log('Setting selected to:', parsedData.selected);
+        setProfession(parsedData.profession || "");
+        setSelected(parsedData.selected || []);
+      } catch (error) {
+        console.error('Error parsing saved skills data:', error);
+      }
+    } else {
+      console.log('No saved data found in localStorage');
+    }
+    // Mark initial load as complete after a short delay
+    setTimeout(() => setIsInitialLoad(false), 100);
+  }, []);
+
+  // Save form data to localStorage whenever profession or selected skills change
+  React.useEffect(() => {
+    // Don't save during initial load to avoid overwriting loaded data
+    if (!isInitialLoad) {
+      const formData = {
+        profession,
+        selected,
+        timestamp: Date.now()
+      };
+      console.log('Saving skills data:', formData);
+      localStorage.setItem('jobseeker-skills-form', JSON.stringify(formData));
+    }
+  }, [profession, selected, isInitialLoad]);
 
   const toggleSkill = (id) => {
     setSelected((prev) => (prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]));
@@ -132,7 +168,6 @@ const JobseekerOnboardingSkills = () => {
       
       setSelected(prev => [...prev, newSkill.id]);
       setCustomSkill("");
-      setShowCustomInput(false);
     }
   };
 
@@ -170,6 +205,8 @@ const JobseekerOnboardingSkills = () => {
       await Promise.all([response, minLoadingTime]);
       
       if(response.data.success) {
+        // Don't clear saved form data - let user navigate back and see their data
+        // localStorage.removeItem('jobseeker-skills-form');
         Swal.fire({
           icon: 'success',
           html: '<h5><b>Professional Skills Assessment</b></h5>\n<h6>You may now fillup your education data.</h6>',
@@ -192,6 +229,8 @@ const JobseekerOnboardingSkills = () => {
         console.log('Network error detected, proceeding with mock data');
         // Wait for minimum loading time even for network errors
         await minLoadingTime;
+        // Don't clear saved form data - let user navigate back and see their data
+        // localStorage.removeItem('jobseeker-skills-form');
         Swal.fire({
           icon: 'info',
           title: 'Development Mode',
@@ -215,6 +254,19 @@ const JobseekerOnboardingSkills = () => {
     const shouldSkip = window.confirm('Adding your skills greatly improves job matches. Do you want to skip for now?');
     if (shouldSkip) navigate(routeForStep('education'));
   };
+
+  // Function to clear saved data (can be called from completion page)
+  const clearSavedData = () => {
+    localStorage.removeItem('jobseeker-skills-form');
+  };
+
+  // Make clearSavedData available globally for other components to call
+  React.useEffect(() => {
+    window.clearJobseekerSkillsData = clearSavedData;
+    return () => {
+      delete window.clearJobseekerSkillsData;
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -389,50 +441,29 @@ const JobseekerOnboardingSkills = () => {
                   <p className="mt-2 text-sm text-red-600">{errors.skills}</p>
                 )}
 
-                {/* Add Additional Skills Button */}
-                {!showCustomInput ? (
-                  <button 
-                    onClick={() => setShowCustomInput(true)}
-                    className="w-full mt-4 p-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-blue-300 hover:text-blue-600 transition-colors text-center"
-                  >
-                    <svg className="w-5 h-5 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                    </svg>
-                    Add additional skills
-                  </button>
-                ) : (
-                  <div className="mt-4 p-4 border-2 border-dashed border-blue-300 rounded-lg bg-blue-50">
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={customSkill}
-                        onChange={(e) => setCustomSkill(e.target.value)}
-                        placeholder="Enter custom skill (e.g., Machine Learning, Digital Marketing)"
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        onKeyPress={(e) => e.key === 'Enter' && addCustomSkill()}
-                      />
-                      <button
-                        onClick={addCustomSkill}
-                        disabled={!customSkill.trim()}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        Add
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowCustomInput(false);
-                          setCustomSkill("");
-                        }}
-                        className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-2">
-                      💡 Tip: Add skills that are specific to your expertise and not already listed above
-                    </p>
+                {/* Add Custom Skills Input */}
+                <div className="mt-4">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={customSkill}
+                      onChange={(e) => setCustomSkill(e.target.value)}
+                      placeholder="Enter custom skill (e.g., Machine Learning, Digital Marketing)"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      onKeyPress={(e) => e.key === 'Enter' && addCustomSkill()}
+                    />
+                    <button
+                      onClick={addCustomSkill}
+                      disabled={!customSkill.trim()}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Add
+                    </button>
                   </div>
-                )}
+                  <p className="text-xs text-gray-500 mt-2">
+                    💡 Tip: Add skills that are specific to your expertise and not already listed above
+                  </p>
+                </div>
               </div>
 
               {/* Navigation Buttons */}
@@ -450,10 +481,10 @@ const JobseekerOnboardingSkills = () => {
                   <button 
                     onClick={handleSkip} 
                     disabled={isLoading}
-                    className={`px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium transition-colors ${
+                    className={`text-sm font-medium transition-colors ${
                       isLoading 
                         ? 'text-gray-400 cursor-not-allowed' 
-                        : 'text-gray-700 bg-white hover:bg-gray-50'
+                        : 'text-blue-600 hover:text-blue-800'
                     }`}
                   >
                     Skip for now
@@ -474,7 +505,7 @@ const JobseekerOnboardingSkills = () => {
                       </>
                     ) : (
                       <>
-                        {isFormValid ? 'Next' : 'Complete Form'}
+                        Next
                         <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>

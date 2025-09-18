@@ -41,6 +41,67 @@ const JobseekerOnboardingExperience = () => {
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  
+  // All state variables need to be declared before useEffect hooks
+  const [jobTitle, setJobTitle] = useState('');
+  const [company, setCompany] = useState('');
+  const [location, setLocation] = useState('');
+  const [country, setCountry] = useState('Philippines');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [employmentType, setEmploymentType] = useState('Full-time');
+  const [description, setDescription] = useState('');
+
+  // Load saved data from localStorage on component mount
+  React.useEffect(() => {
+    const savedData = localStorage.getItem('jobseeker-experience-form');
+    console.log('Loading saved experience data:', savedData);
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
+        console.log('Parsed experience data:', parsedData);
+        setJobTitle(parsedData.jobTitle || '');
+        setCompany(parsedData.company || '');
+        setLocation(parsedData.location || '');
+        setCountry(parsedData.country || 'Philippines');
+        setStartDate(parsedData.startDate ? new Date(parsedData.startDate) : null);
+        setEndDate(parsedData.endDate ? new Date(parsedData.endDate) : null);
+        setIsCurrent(parsedData.isCurrent || false);
+        setEmploymentType(parsedData.employmentType || 'Full-time');
+        setDescription(parsedData.description || '');
+        setAdditionalExperiences(parsedData.additionalExperiences || []);
+      } catch (error) {
+        console.error('Error parsing saved experience data:', error);
+      }
+    } else {
+      console.log('No saved experience data found in localStorage');
+    }
+    // Mark initial load as complete after a short delay
+    setTimeout(() => setIsInitialLoad(false), 100);
+  }, []);
+
+  // Save form data to localStorage whenever form fields change
+  React.useEffect(() => {
+    // Don't save during initial load to avoid overwriting loaded data
+    if (!isInitialLoad) {
+      const formData = {
+        jobTitle,
+        company,
+        location,
+        country,
+        startDate: startDate ? startDate.toISOString() : null,
+        endDate: endDate ? endDate.toISOString() : null,
+        isCurrent,
+        employmentType,
+        description,
+        additionalExperiences,
+        timestamp: Date.now()
+      };
+      console.log('Saving experience data:', formData);
+      localStorage.setItem('jobseeker-experience-form', JSON.stringify(formData));
+    }
+  }, [jobTitle, company, location, country, startDate, endDate, isCurrent, employmentType, description, additionalExperiences, isInitialLoad]);
 
   const handleStepClick = (key) => {
     // Only allow navigation to previous steps or current step
@@ -64,15 +125,6 @@ const JobseekerOnboardingExperience = () => {
     }
   };
   const goBack = () => navigate(routeForStep('education'));
-
-  const [jobTitle, setJobTitle] = useState('');
-  const [company, setCompany] = useState('');
-  const [location, setLocation] = useState('');
-  const [country, setCountry] = useState('Philippines');
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [employmentType, setEmploymentType] = useState('Full-time');
-  const [description, setDescription] = useState('');
 
   // Calendar state for start date
   const [showStartCalendar, setShowStartCalendar] = useState(false);

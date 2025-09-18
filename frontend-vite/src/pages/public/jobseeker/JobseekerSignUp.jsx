@@ -126,7 +126,7 @@ const JobseekerSignUp = () => {
     // Set loading state
     setIsLoading(true);
 
-    if(!formData.email || !formData.phone || !formData.address || !formData.gender || !formData.password || !formData.confirmPassword || !formData.disabilityType || !formData.firstName || !formData.lastName || !formData.middleName) {
+    if(!formData.email || !formData.phone || !formData.address || !formData.gender || !formData.password || !formData.confirmPassword || !formData.disabilityType || !formData.firstName || !formData.lastName) {
       Swal.fire({
         icon: 'warning',
         title: 'Please double check your data.',
@@ -311,7 +311,7 @@ const JobseekerSignUp = () => {
             <form onSubmit={handleSubmit} className="mt-8 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <input name="firstName" value={formData.firstName} onChange={handleChange} placeholder="Enter your first name" className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-                <input name="middleName" value={formData.middleName} onChange={handleChange} placeholder="Enter your middle name" className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                <input name="middleName" value={formData.middleName} onChange={handleChange} placeholder="Enter your middle name (optional)" className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
                 <input name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Enter your last name" className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
               </div>
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import api from '../../../utils/api.js'
@@ -39,9 +39,57 @@ const JobseekerOnboardingPreferences = () => {
   const [workArrangement, setWorkArrangement] = useState('');
   const [employmentTypes, setEmploymentTypes] = useState([]);
   const [experienceLevel, setExperienceLevel] = useState('');
-  const [salaryRange, setSalaryRange] = useState({ currency: 'PHP', min: '', max: '' });
+  const [salaryRange, setSalaryRange] = useState({ currency: 'PHP', min: '', max: '', frequency: '' });
   const [isFormValid, setIsFormValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+  // Salary frequency options
+  const salaryFrequencies = [
+    'Weekly',
+    'Bi-weekly', 
+    'Monthly',
+    'Yearly',
+    'Hourly'
+  ];
+
+  // Load saved data from localStorage on component mount
+  React.useEffect(() => {
+    const savedData = localStorage.getItem('jobseeker-preferences-form');
+    console.log('Loading saved preferences data:', savedData);
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
+        console.log('Parsed preferences data:', parsedData);
+        setWorkArrangement(parsedData.workArrangement || '');
+        setEmploymentTypes(parsedData.employmentTypes || []);
+        setExperienceLevel(parsedData.experienceLevel || '');
+        setSalaryRange(parsedData.salaryRange || { currency: 'PHP', min: '', max: '', frequency: '' });
+      } catch (error) {
+        console.error('Error parsing saved preferences data:', error);
+      }
+    } else {
+      console.log('No saved preferences data found in localStorage');
+    }
+    // Mark initial load as complete after a short delay
+    setTimeout(() => setIsInitialLoad(false), 100);
+  }, []);
+
+  // Save form data to localStorage whenever form fields change
+  React.useEffect(() => {
+    // Don't save during initial load to avoid overwriting loaded data
+    if (!isInitialLoad) {
+      const formData = {
+        workArrangement,
+        employmentTypes,
+        experienceLevel,
+        salaryRange,
+        timestamp: Date.now()
+      };
+      console.log('Saving preferences data:', formData);
+      localStorage.setItem('jobseeker-preferences-form', JSON.stringify(formData));
+    }
+  }, [workArrangement, employmentTypes, experienceLevel, salaryRange, isInitialLoad]);
 
   // Validate form - work arrangement and experience level are required
   const validateForm = () => {
@@ -316,12 +364,30 @@ const JobseekerOnboardingPreferences = () => {
 
               <div className="border border-gray-200 rounded-xl p-4">
                 <div className="font-medium text-gray-900 mb-4">Salary Range (Optional)</div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-end">
                   <div>
                     <label className="block text-sm text-gray-700 mb-1">Currency</label>
                     <div className="relative">
                       <select className="w-full appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         <option>PHP (Philippine Peso)</option>
+                      </select>
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-700 mb-1">Frequency</label>
+                    <div className="relative">
+                      <select 
+                        value={salaryRange.frequency}
+                        onChange={(e) => handleSalaryChange("frequency", e.target.value)}
+                        className="w-full appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      >
+                        <option value="">Select frequency</option>
+                        {salaryFrequencies.map((frequency) => (
+                          <option key={frequency} value={frequency}>
+                            {frequency}
+                          </option>
+                        ))}
                       </select>
                       <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">▾</span>
                     </div>

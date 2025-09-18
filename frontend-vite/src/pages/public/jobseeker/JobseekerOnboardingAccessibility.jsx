@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import api from '../../../utils/api.js'
@@ -71,6 +71,47 @@ const JobseekerOnboardingAccessibility = () => {
   const [additionalInfo, setAdditionalInfo] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+  // Load saved data from localStorage on component mount
+  React.useEffect(() => {
+    const savedData = localStorage.getItem('jobseeker-accessibility-form');
+    console.log('Loading saved accessibility data:', savedData);
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
+        console.log('Parsed accessibility data:', parsedData);
+        setVisualNeeds(parsedData.visualNeeds || []);
+        setHearingNeeds(parsedData.hearingNeeds || []);
+        setMobilityNeeds(parsedData.mobilityNeeds || []);
+        setCognitiveNeeds(parsedData.cognitiveNeeds || []);
+        setAdditionalInfo(parsedData.additionalInfo || '');
+      } catch (error) {
+        console.error('Error parsing saved accessibility data:', error);
+      }
+    } else {
+      console.log('No saved accessibility data found in localStorage');
+    }
+    // Mark initial load as complete after a short delay
+    setTimeout(() => setIsInitialLoad(false), 100);
+  }, []);
+
+  // Save form data to localStorage whenever form fields change
+  React.useEffect(() => {
+    // Don't save during initial load to avoid overwriting loaded data
+    if (!isInitialLoad) {
+      const formData = {
+        visualNeeds,
+        hearingNeeds,
+        mobilityNeeds,
+        cognitiveNeeds,
+        additionalInfo,
+        timestamp: Date.now()
+      };
+      console.log('Saving accessibility data:', formData);
+      localStorage.setItem('jobseeker-accessibility-form', JSON.stringify(formData));
+    }
+  }, [visualNeeds, hearingNeeds, mobilityNeeds, cognitiveNeeds, additionalInfo, isInitialLoad]);
 
   // Validate form - at least one category should have selections
   const validateForm = () => {
