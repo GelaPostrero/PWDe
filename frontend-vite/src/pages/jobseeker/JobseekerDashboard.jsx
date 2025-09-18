@@ -94,7 +94,7 @@ const JobseekerDashboard = () => {
   const userProfile = fetchedData ? {
     name: fetchedData.fullname || `${fetchedData.firstname || ''} ${fetchedData.middlename || ''} ${fetchedData.lastname || ''}`.trim().replace(/\s+/g, ' ') || 'User',
     role: fetchedData.professional_role || 'Professional',
-    rating: fetchedData.rating || 0,
+    rating: fetchedData.rating,
     profileViews: userStats.profileViews,
     applications: userStats.applications,
     interviews: userStats.interviews,
@@ -303,9 +303,11 @@ const JobseekerDashboard = () => {
         api.get('/api/saved-jobs/count')
       ]);
 
+      console.log("Saved jobs response:", savedJobsRes.data);
+
       setUserStats({
-        applications: applicationsRes.data.count || 0,
-        savedJobs: savedJobsRes.data.count || 0,
+        applications: applicationsRes.data.data.total || 0,
+        savedJobs: savedJobsRes.data.data.count || 0,
         profileViews: fetchedData?.profile_views || 0,
         interviews: 0 // This would come from a separate API
       });

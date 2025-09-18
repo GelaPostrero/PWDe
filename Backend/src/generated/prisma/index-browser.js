@@ -217,7 +217,6 @@ exports.Prisma.Pwd_Accessibility_NeedsScalarFieldEnum = {
 exports.Prisma.Pwd_EducationScalarFieldEnum = {
   id: 'id',
   pwd_id: 'pwd_id',
-  highest_level: 'highest_level',
   institution: 'institution',
   location: 'location',
   degree: 'degree',
@@ -326,6 +325,7 @@ exports.Prisma.ApplicationsScalarFieldEnum = {
   proposed_salary: 'proposed_salary',
   work_experience: 'work_experience',
   portfolio_links: 'portfolio_links',
+  status: 'status',
   submitted_at: 'submitted_at',
   updated_at: 'updated_at',
   status_changed_at: 'status_changed_at'

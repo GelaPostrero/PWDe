@@ -577,6 +577,60 @@ router.put('/:applicationId/status', authenticateToken, async (req, res) => {
   }
 });
 
+// Get application count for a PWD user
+router.get('/count', authenticateToken, async (req, res) => {
+  try {
+    const pwd_id = req.user?.pwd_id;
+    const userType = req.user?.userType;
+
+    if (userType !== 'PWD' || !pwd_id) {
+      return res.status(400).json({ success: false, message: 'Invalid user type' });
+    }
+
+    const totalApplications = await prisma.Applications.count({
+      where: { pwd_id: pwd_id }
+    });
+
+    const pendingApplications = await prisma.Applications.count({
+      where: { 
+        pwd_id: pwd_id,
+        status: 'Pending'
+      }
+    });
+
+    const acceptedApplications = await prisma.Applications.count({
+      where: { 
+        pwd_id: pwd_id,
+        status: 'Accepted'
+      }
+    });
+
+    const rejectedApplications = await prisma.Applications.count({
+      where: { 
+        pwd_id: pwd_id,
+        status: 'Rejected'
+      }
+    });
+
+    res.json({
+      success: true,
+      data: {
+        total: totalApplications,
+        pending: pendingApplications,
+        accepted: acceptedApplications,
+        rejected: rejectedApplications
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching application count:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to fetch application count',
+      error: error.message 
+    });
+  }
+});
+
 // Get single application details
 router.get('/:applicationId', authenticateToken, async (req, res) => {
   try {
@@ -721,60 +775,6 @@ router.delete('/:applicationId/withdraw', authenticateToken, async (req, res) =>
   } catch (error) {
     console.error('Error withdrawing application:', error);
     res.status(500).json({ success: false, message: 'Failed to withdraw application' });
-  }
-});
-
-// Get application count for a PWD user
-router.get('/count', authenticateToken, async (req, res) => {
-  try {
-    const pwd_id = req.user?.pwd_id;
-    const userType = req.user?.userType;
-
-    if (userType !== 'PWD' || !pwd_id) {
-      return res.status(400).json({ success: false, message: 'Invalid user type' });
-    }
-
-    const totalApplications = await prisma.Applications.count({
-      where: { pwd_id: pwd_id }
-    });
-
-    const pendingApplications = await prisma.Applications.count({
-      where: { 
-        pwd_id: pwd_id,
-        status: 'Pending'
-      }
-    });
-
-    const acceptedApplications = await prisma.Applications.count({
-      where: { 
-        pwd_id: pwd_id,
-        status: 'Accepted'
-      }
-    });
-
-    const rejectedApplications = await prisma.Applications.count({
-      where: { 
-        pwd_id: pwd_id,
-        status: 'Rejected'
-      }
-    });
-
-    res.json({
-      success: true,
-      data: {
-        total: totalApplications,
-        pending: pendingApplications,
-        accepted: acceptedApplications,
-        rejected: rejectedApplications
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching application count:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Failed to fetch application count',
-      error: error.message 
-    });
   }
 });
 

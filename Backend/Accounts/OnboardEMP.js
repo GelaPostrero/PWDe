@@ -79,7 +79,6 @@ router.post('/emp/onboard/work-environment', authenticateToken, async (req, res)
 
 router.post('/emp/onboard/complete-profile', authenticateToken, profilePhoto, async(req, res) => {
     const userId = req.user?.userId
-    const userType = req.user?.userType
     const emp_id = req.user?.emp_id
 
     const {

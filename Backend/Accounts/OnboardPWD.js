@@ -51,7 +51,7 @@ router.post('/pwd/onboard/assessment', authenticateToken, async (req, res) => {
 // Education & Qualification ni nga API for PWD
 router.post('/pwd/onboard/education', authenticateToken, async (req, res) => {
     const pwd_id = req.user.pwd_id;
-    const { educations, highestLevel } = req.body; // expects array
+    const { educations } = req.body; // expects array
 
     if (!pwd_id) {
         return res.status(400).json({ error: 'User not found!' });
@@ -66,7 +66,7 @@ router.post('/pwd/onboard/education', authenticateToken, async (req, res) => {
     }
 
     try {
-        mergeStepData(pwd_id, 'education', { educations, highestLevel, education: true });
+        mergeStepData(pwd_id, 'education', { educations, education: true });
         console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
         res.status(200).json({
             message: 'PWD education data received successfully.',
@@ -244,7 +244,7 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
         console.log("PWD ID: ", pwd_id);
         console.log("USER ID: ", user_id);
         const tempdata = tempOnboardPWDs.get(String(pwd_id));
-        let { educations, highestLevel } = tempdata?.education || {};
+        let { educations } = tempdata?.education || {};
         const workExperiences = tempdata?.workExperience || [];
 
         if (!tempdata) {
@@ -286,7 +286,6 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
 
         const educationRecords = educations.map((edu) => ({
             pwd_id,
-            highest_level: highestLevel,
             institution: edu?.institutionName,
             location: edu?.location,
             field_of_study: edu?.fieldOfStudy,

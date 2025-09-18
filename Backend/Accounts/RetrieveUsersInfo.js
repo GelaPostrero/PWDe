@@ -102,6 +102,7 @@ router.get('/dashboard', authenticateToken, async (req, res) => {
                 include: {
                     pwd_Profile: {
                         select: {
+                            pwd_id: true,
                             first_name: true,
                             middle_name: true,
                             last_name: true,
@@ -131,6 +132,10 @@ router.get('/dashboard', authenticateToken, async (req, res) => {
                 return res.status(404).json({ error: "PWD not found." });
             }
 
+            const savedJobs = await prisma.Saved_Jobs.count({
+                where: { pwd_id: user.pwd_Profile?.pwd_id },
+            });
+
             return res.json({
                 success: true,
                 data: {
@@ -144,7 +149,7 @@ router.get('/dashboard', authenticateToken, async (req, res) => {
                     professional_role: user.pwd_Profile?.professional_role,
                     profile_views: user.pwd_Profile?.profile_views,
                     interviews: user.pwd_Profile?.interviews,
-                    saved_jobs: user.pwd_Profile?._count.Saved_Jobs,
+                    saved_jobs: savedJobs,
                     applications: user.pwd_Profile?._count.applications,
                     rating: user.pwd_Profile?.rating,
                     basic_information: user.pwd_Profile?.basic_information,

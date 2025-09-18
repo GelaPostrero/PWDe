@@ -126,9 +126,9 @@ const EmployerDashboard = () => {
     if (!fetchedData) return [];
     
     return [
-      { text: 'Company Profile', completed: !!(fetchedData.company_name && fetchedData.company_email) },
-      { text: 'Job Roles & Requirements', completed: !!(fetchedData.jobRoles_requirements && fetchedData.jobRoles_requirements.length > 0) },
-      { text: 'Work Environment', completed: !!(fetchedData.work_environment && fetchedData.work_environment.length > 0) }
+      { text: 'Company Profile', completed: fetchedData.set_company_profile },
+      { text: 'Job Roles & Requirements', completed: fetchedData.set_jobRoles_requirements },
+      { text: 'Work Environment', completed: fetchedData.set_work_environment }
     ];
   };
 

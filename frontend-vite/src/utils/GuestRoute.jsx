@@ -13,7 +13,7 @@ export default function GuestRoute({ children }) {
         // Token is valid -> redirect based on userType
         if (decoded.userType === "PWD") {
           return <Navigate to="/jobseeker/dashboard" replace />;
-        } else if (decoded.userType === "EMPLOYER") {
+        } else if (decoded.userType === "Employer") {
           return <Navigate to="/employer/dashboard" replace />;
         }
       } else {

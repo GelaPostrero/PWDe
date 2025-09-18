@@ -9031,7 +9031,6 @@ export namespace Prisma {
   export type Pwd_EducationMinAggregateOutputType = {
     id: number | null
     pwd_id: number | null
-    highest_level: string | null
     institution: string | null
     location: string | null
     degree: string | null
@@ -9044,7 +9043,6 @@ export namespace Prisma {
   export type Pwd_EducationMaxAggregateOutputType = {
     id: number | null
     pwd_id: number | null
-    highest_level: string | null
     institution: string | null
     location: string | null
     degree: string | null
@@ -9057,7 +9055,6 @@ export namespace Prisma {
   export type Pwd_EducationCountAggregateOutputType = {
     id: number
     pwd_id: number
-    highest_level: number
     institution: number
     location: number
     degree: number
@@ -9082,7 +9079,6 @@ export namespace Prisma {
   export type Pwd_EducationMinAggregateInputType = {
     id?: true
     pwd_id?: true
-    highest_level?: true
     institution?: true
     location?: true
     degree?: true
@@ -9095,7 +9091,6 @@ export namespace Prisma {
   export type Pwd_EducationMaxAggregateInputType = {
     id?: true
     pwd_id?: true
-    highest_level?: true
     institution?: true
     location?: true
     degree?: true
@@ -9108,7 +9103,6 @@ export namespace Prisma {
   export type Pwd_EducationCountAggregateInputType = {
     id?: true
     pwd_id?: true
-    highest_level?: true
     institution?: true
     location?: true
     degree?: true
@@ -9208,7 +9202,6 @@ export namespace Prisma {
   export type Pwd_EducationGroupByOutputType = {
     id: number
     pwd_id: number
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -9240,7 +9233,6 @@ export namespace Prisma {
   export type Pwd_EducationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     pwd_id?: boolean
-    highest_level?: boolean
     institution?: boolean
     location?: boolean
     degree?: boolean
@@ -9254,7 +9246,6 @@ export namespace Prisma {
   export type Pwd_EducationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     pwd_id?: boolean
-    highest_level?: boolean
     institution?: boolean
     location?: boolean
     degree?: boolean
@@ -9268,7 +9259,6 @@ export namespace Prisma {
   export type Pwd_EducationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     pwd_id?: boolean
-    highest_level?: boolean
     institution?: boolean
     location?: boolean
     degree?: boolean
@@ -9282,7 +9272,6 @@ export namespace Prisma {
   export type Pwd_EducationSelectScalar = {
     id?: boolean
     pwd_id?: boolean
-    highest_level?: boolean
     institution?: boolean
     location?: boolean
     degree?: boolean
@@ -9292,7 +9281,7 @@ export namespace Prisma {
     updated_at?: boolean
   }
 
-  export type Pwd_EducationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pwd_id" | "highest_level" | "institution" | "location" | "degree" | "field_of_study" | "graduation_details" | "year_graduated" | "updated_at", ExtArgs["result"]["pwd_Education"]>
+  export type Pwd_EducationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pwd_id" | "institution" | "location" | "degree" | "field_of_study" | "graduation_details" | "year_graduated" | "updated_at", ExtArgs["result"]["pwd_Education"]>
   export type Pwd_EducationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
   }
@@ -9311,7 +9300,6 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       pwd_id: number
-      highest_level: string
       institution: string
       location: string
       degree: string
@@ -9745,7 +9733,6 @@ export namespace Prisma {
   interface Pwd_EducationFieldRefs {
     readonly id: FieldRef<"Pwd_Education", 'Int'>
     readonly pwd_id: FieldRef<"Pwd_Education", 'Int'>
-    readonly highest_level: FieldRef<"Pwd_Education", 'String'>
     readonly institution: FieldRef<"Pwd_Education", 'String'>
     readonly location: FieldRef<"Pwd_Education", 'String'>
     readonly degree: FieldRef<"Pwd_Education", 'String'>
@@ -17496,6 +17483,7 @@ export namespace Prisma {
     proposed_salary: Decimal | null
     work_experience: string | null
     portfolio_links: string | null
+    status: string | null
     submitted_at: Date | null
     updated_at: Date | null
     status_changed_at: Date | null
@@ -17511,6 +17499,7 @@ export namespace Prisma {
     proposed_salary: Decimal | null
     work_experience: string | null
     portfolio_links: string | null
+    status: string | null
     submitted_at: Date | null
     updated_at: Date | null
     status_changed_at: Date | null
@@ -17526,6 +17515,7 @@ export namespace Prisma {
     proposed_salary: number
     work_experience: number
     portfolio_links: number
+    status: number
     submitted_at: number
     updated_at: number
     status_changed_at: number
@@ -17561,6 +17551,7 @@ export namespace Prisma {
     proposed_salary?: true
     work_experience?: true
     portfolio_links?: true
+    status?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17576,6 +17567,7 @@ export namespace Prisma {
     proposed_salary?: true
     work_experience?: true
     portfolio_links?: true
+    status?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17591,6 +17583,7 @@ export namespace Prisma {
     proposed_salary?: true
     work_experience?: true
     portfolio_links?: true
+    status?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17693,6 +17686,7 @@ export namespace Prisma {
     proposed_salary: Decimal
     work_experience: string | null
     portfolio_links: string | null
+    status: string | null
     submitted_at: Date
     updated_at: Date
     status_changed_at: Date
@@ -17727,6 +17721,7 @@ export namespace Prisma {
     proposed_salary?: boolean
     work_experience?: boolean
     portfolio_links?: boolean
+    status?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
@@ -17749,6 +17744,7 @@ export namespace Prisma {
     proposed_salary?: boolean
     work_experience?: boolean
     portfolio_links?: boolean
+    status?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
@@ -17768,6 +17764,7 @@ export namespace Prisma {
     proposed_salary?: boolean
     work_experience?: boolean
     portfolio_links?: boolean
+    status?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
@@ -17787,12 +17784,13 @@ export namespace Prisma {
     proposed_salary?: boolean
     work_experience?: boolean
     portfolio_links?: boolean
+    status?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
   }
 
-  export type ApplicationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"application_id" | "job_id" | "pwd_id" | "employer_id" | "resume_id" | "custom_message" | "proposed_salary" | "work_experience" | "portfolio_links" | "submitted_at" | "updated_at" | "status_changed_at", ExtArgs["result"]["applications"]>
+  export type ApplicationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"application_id" | "job_id" | "pwd_id" | "employer_id" | "resume_id" | "custom_message" | "proposed_salary" | "work_experience" | "portfolio_links" | "status" | "submitted_at" | "updated_at" | "status_changed_at", ExtArgs["result"]["applications"]>
   export type ApplicationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
@@ -17835,6 +17833,7 @@ export namespace Prisma {
       proposed_salary: Prisma.Decimal
       work_experience: string | null
       portfolio_links: string | null
+      status: string | null
       submitted_at: Date
       updated_at: Date
       status_changed_at: Date
@@ -18276,6 +18275,7 @@ export namespace Prisma {
     readonly proposed_salary: FieldRef<"Applications", 'Decimal'>
     readonly work_experience: FieldRef<"Applications", 'String'>
     readonly portfolio_links: FieldRef<"Applications", 'String'>
+    readonly status: FieldRef<"Applications", 'String'>
     readonly submitted_at: FieldRef<"Applications", 'DateTime'>
     readonly updated_at: FieldRef<"Applications", 'DateTime'>
     readonly status_changed_at: FieldRef<"Applications", 'DateTime'>
@@ -29497,7 +29497,6 @@ export namespace Prisma {
   export const Pwd_EducationScalarFieldEnum: {
     id: 'id',
     pwd_id: 'pwd_id',
-    highest_level: 'highest_level',
     institution: 'institution',
     location: 'location',
     degree: 'degree',
@@ -29627,6 +29626,7 @@ export namespace Prisma {
     proposed_salary: 'proposed_salary',
     work_experience: 'work_experience',
     portfolio_links: 'portfolio_links',
+    status: 'status',
     submitted_at: 'submitted_at',
     updated_at: 'updated_at',
     status_changed_at: 'status_changed_at'
@@ -30658,7 +30658,6 @@ export namespace Prisma {
     NOT?: Pwd_EducationWhereInput | Pwd_EducationWhereInput[]
     id?: IntFilter<"Pwd_Education"> | number
     pwd_id?: IntFilter<"Pwd_Education"> | number
-    highest_level?: StringFilter<"Pwd_Education"> | string
     institution?: StringFilter<"Pwd_Education"> | string
     location?: StringFilter<"Pwd_Education"> | string
     degree?: StringFilter<"Pwd_Education"> | string
@@ -30672,7 +30671,6 @@ export namespace Prisma {
   export type Pwd_EducationOrderByWithRelationInput = {
     id?: SortOrder
     pwd_id?: SortOrder
-    highest_level?: SortOrder
     institution?: SortOrder
     location?: SortOrder
     degree?: SortOrder
@@ -30689,7 +30687,6 @@ export namespace Prisma {
     OR?: Pwd_EducationWhereInput[]
     NOT?: Pwd_EducationWhereInput | Pwd_EducationWhereInput[]
     pwd_id?: IntFilter<"Pwd_Education"> | number
-    highest_level?: StringFilter<"Pwd_Education"> | string
     institution?: StringFilter<"Pwd_Education"> | string
     location?: StringFilter<"Pwd_Education"> | string
     degree?: StringFilter<"Pwd_Education"> | string
@@ -30703,7 +30700,6 @@ export namespace Prisma {
   export type Pwd_EducationOrderByWithAggregationInput = {
     id?: SortOrder
     pwd_id?: SortOrder
-    highest_level?: SortOrder
     institution?: SortOrder
     location?: SortOrder
     degree?: SortOrder
@@ -30724,7 +30720,6 @@ export namespace Prisma {
     NOT?: Pwd_EducationScalarWhereWithAggregatesInput | Pwd_EducationScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Pwd_Education"> | number
     pwd_id?: IntWithAggregatesFilter<"Pwd_Education"> | number
-    highest_level?: StringWithAggregatesFilter<"Pwd_Education"> | string
     institution?: StringWithAggregatesFilter<"Pwd_Education"> | string
     location?: StringWithAggregatesFilter<"Pwd_Education"> | string
     degree?: StringWithAggregatesFilter<"Pwd_Education"> | string
@@ -31315,6 +31310,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFilter<"Applications"> | Decimal | DecimalJsLike | number | string
     work_experience?: StringNullableFilter<"Applications"> | string | null
     portfolio_links?: StringNullableFilter<"Applications"> | string | null
+    status?: StringNullableFilter<"Applications"> | string | null
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
@@ -31336,6 +31332,7 @@ export namespace Prisma {
     proposed_salary?: SortOrder
     work_experience?: SortOrderInput | SortOrder
     portfolio_links?: SortOrderInput | SortOrder
+    status?: SortOrderInput | SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -31360,6 +31357,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFilter<"Applications"> | Decimal | DecimalJsLike | number | string
     work_experience?: StringNullableFilter<"Applications"> | string | null
     portfolio_links?: StringNullableFilter<"Applications"> | string | null
+    status?: StringNullableFilter<"Applications"> | string | null
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
@@ -31381,6 +31379,7 @@ export namespace Prisma {
     proposed_salary?: SortOrder
     work_experience?: SortOrderInput | SortOrder
     portfolio_links?: SortOrderInput | SortOrder
+    status?: SortOrderInput | SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -31404,6 +31403,7 @@ export namespace Prisma {
     proposed_salary?: DecimalWithAggregatesFilter<"Applications"> | Decimal | DecimalJsLike | number | string
     work_experience?: StringNullableWithAggregatesFilter<"Applications"> | string | null
     portfolio_links?: StringNullableWithAggregatesFilter<"Applications"> | string | null
+    status?: StringNullableWithAggregatesFilter<"Applications"> | string | null
     submitted_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
@@ -32898,7 +32898,6 @@ export namespace Prisma {
   }
 
   export type Pwd_EducationCreateInput = {
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -32912,7 +32911,6 @@ export namespace Prisma {
   export type Pwd_EducationUncheckedCreateInput = {
     id?: number
     pwd_id: number
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -32923,7 +32921,6 @@ export namespace Prisma {
   }
 
   export type Pwd_EducationUpdateInput = {
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -32937,7 +32934,6 @@ export namespace Prisma {
   export type Pwd_EducationUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -32950,7 +32946,6 @@ export namespace Prisma {
   export type Pwd_EducationCreateManyInput = {
     id?: number
     pwd_id: number
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -32961,7 +32956,6 @@ export namespace Prisma {
   }
 
   export type Pwd_EducationUpdateManyMutationInput = {
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -32974,7 +32968,6 @@ export namespace Prisma {
   export type Pwd_EducationUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -33611,6 +33604,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -33632,6 +33626,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -33644,6 +33639,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33665,6 +33661,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33682,6 +33679,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -33692,6 +33690,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33707,6 +33706,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35274,7 +35274,6 @@ export namespace Prisma {
   export type Pwd_EducationCountOrderByAggregateInput = {
     id?: SortOrder
     pwd_id?: SortOrder
-    highest_level?: SortOrder
     institution?: SortOrder
     location?: SortOrder
     degree?: SortOrder
@@ -35292,7 +35291,6 @@ export namespace Prisma {
   export type Pwd_EducationMaxOrderByAggregateInput = {
     id?: SortOrder
     pwd_id?: SortOrder
-    highest_level?: SortOrder
     institution?: SortOrder
     location?: SortOrder
     degree?: SortOrder
@@ -35305,7 +35303,6 @@ export namespace Prisma {
   export type Pwd_EducationMinOrderByAggregateInput = {
     id?: SortOrder
     pwd_id?: SortOrder
-    highest_level?: SortOrder
     institution?: SortOrder
     location?: SortOrder
     degree?: SortOrder
@@ -35762,6 +35759,7 @@ export namespace Prisma {
     proposed_salary?: SortOrder
     work_experience?: SortOrder
     portfolio_links?: SortOrder
+    status?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -35786,6 +35784,7 @@ export namespace Prisma {
     proposed_salary?: SortOrder
     work_experience?: SortOrder
     portfolio_links?: SortOrder
+    status?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -35801,6 +35800,7 @@ export namespace Prisma {
     proposed_salary?: SortOrder
     work_experience?: SortOrder
     portfolio_links?: SortOrder
+    status?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -39884,6 +39884,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -39903,6 +39904,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -39950,7 +39952,6 @@ export namespace Prisma {
   }
 
   export type Pwd_EducationCreateWithoutPwd_profileInput = {
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -39962,7 +39963,6 @@ export namespace Prisma {
 
   export type Pwd_EducationUncheckedCreateWithoutPwd_profileInput = {
     id?: number
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -40251,6 +40251,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFilter<"Applications"> | Decimal | DecimalJsLike | number | string
     work_experience?: StringNullableFilter<"Applications"> | string | null
     portfolio_links?: StringNullableFilter<"Applications"> | string | null
+    status?: StringNullableFilter<"Applications"> | string | null
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
@@ -40308,7 +40309,6 @@ export namespace Prisma {
     NOT?: Pwd_EducationScalarWhereInput | Pwd_EducationScalarWhereInput[]
     id?: IntFilter<"Pwd_Education"> | number
     pwd_id?: IntFilter<"Pwd_Education"> | number
-    highest_level?: StringFilter<"Pwd_Education"> | string
     institution?: StringFilter<"Pwd_Education"> | string
     location?: StringFilter<"Pwd_Education"> | string
     degree?: StringFilter<"Pwd_Education"> | string
@@ -41792,6 +41792,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -41811,6 +41812,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -42001,6 +42003,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -42020,6 +42023,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43467,6 +43471,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43487,6 +43492,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43614,6 +43620,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43634,6 +43641,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43757,6 +43765,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43777,6 +43786,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -44018,6 +44028,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44038,6 +44049,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44939,6 +44951,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -44958,6 +44971,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -46472,6 +46486,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -46489,7 +46504,6 @@ export namespace Prisma {
 
   export type Pwd_EducationCreateManyPwd_profileInput = {
     id?: number
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -46571,6 +46585,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46590,6 +46605,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46606,6 +46622,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46641,7 +46658,6 @@ export namespace Prisma {
   }
 
   export type Pwd_EducationUpdateWithoutPwd_profileInput = {
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -46653,7 +46669,6 @@ export namespace Prisma {
 
   export type Pwd_EducationUncheckedUpdateWithoutPwd_profileInput = {
     id?: IntFieldUpdateOperationsInput | number
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -46665,7 +46680,6 @@ export namespace Prisma {
 
   export type Pwd_EducationUncheckedUpdateManyWithoutPwd_profileInput = {
     id?: IntFieldUpdateOperationsInput | number
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -46917,6 +46931,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -47045,6 +47060,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47064,6 +47080,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47080,6 +47097,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47111,6 +47129,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -47121,6 +47140,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47140,6 +47160,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47156,6 +47177,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47295,6 +47317,7 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    status?: string | null
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -47322,6 +47345,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47341,6 +47365,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47357,6 +47382,7 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
