@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 import api from '../../../utils/api.js';
 import Spinner from '../../../components/ui/Spinner.jsx';
 
@@ -39,12 +40,16 @@ const BasicInformation = ({ data, onDataChange, onNext, onBack }) => {
       
       if (response.data.success) {
         onNext();
-      } else {
-        console.warn('Error: ', response.data.message);
-        alert("Error error")
       }
     } catch (error) {
-      console.error('Error proceeding to next step:', error);
+      Swal.fire({
+        icon: 'warning',
+        title: error.response.data.error,
+        toast: true,
+        position: 'bottom-end',
+        timer: 3000,
+        showConfirmButton: false
+      });
     } finally {
       setIsLoading(false);
     }

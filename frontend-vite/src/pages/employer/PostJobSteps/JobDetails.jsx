@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import api from '../../../utils/api.js';
 import Spinner from '../../../components/ui/Spinner.jsx';
 
@@ -41,7 +42,14 @@ const JobDetails = ({ data, onDataChange, onNext, onBack }) => {
         onNext();
       }
     } catch (error) {
-      console.error('Error proceeding to next step:', error);
+      Swal.fire({
+        icon: 'warning',
+        title: error.response.data.error,
+        toast: true,
+        position: 'bottom-end',
+        timer: 3000,
+        showConfirmButton: false
+      });
     } finally {
       setIsLoading(false);
     }

@@ -81,4 +81,39 @@ router.get('/all', authenticateToken, async (req, res) => {
   }
 });
 
+router.get('/count', authenticateToken, async (req, res) => {
+  try {
+    const emp_id = req.user?.emp_id;
+
+    const countJobPosted = await prisma.Job_Listings.count({
+      where: { employer_id: emp_id }
+    });
+
+    res.json({
+      success: true,
+      countJobPosted
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+router.delete('/delete/:jobid', authenticateToken, async (req, res) => {
+  try {
+    const { jobid } = req.params;
+    const emp_id = req.user?.emp_id;
+
+    await prisma.Job_Listings.delete({
+      where: { 
+        job_id: parseInt(jobid, 10),
+        employer_id: emp_id,
+       }
+    })
+
+    res.json({ success: true, message: "Job successfully delted." });
+  } catch(error) {
+    console.error("Error deleting job:", error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+})
 module.exports = router;

@@ -279,25 +279,45 @@ const PostedJobView = () => {
   };
 
   // Handle job deletion
-  const handleDeleteJob = async () => {
-    if (window.confirm('Are you sure you want to delete this job posting? This action cannot be undone.')) {
-      try {
-        const response = await api.delete(`/job/${jobId}/delete`);
-        if(response.data.success) {
+  const handleDeleteJob = async (jobid) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await api.delete(`/job/delete/${jobId}`);
+          if (response.data.success) {
+            navigate('/employer/dashboard')
+            Swal.fire({
+              toast: true,
+              position: "bottom-end",
+              icon: "success",
+              title: "Job deleted successfully",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true
+            });
+          }
+        } catch (error) {
+          console.error("Failed to delete job:", error);
           Swal.fire({
             toast: true,
-            position: 'bottom-end',
-            icon: 'success',
-            title: `Job ID: ${jobId} successfully deleted.`,
-            showConfirmButton: false
-          })
-          navigate('/employer/dashboard');
+            position: "bottom-end",
+            icon: "error",
+            title: "Something went wrong while deleting",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+          });
         }
-      } catch (error) {
-        console.error('Error deleting job:', error);
-        alert('Failed to delete job. Please try again.');
       }
-    }
+    });
   };
 
   // Handle job editing
@@ -552,7 +572,7 @@ const PostedJobView = () => {
                       {jobStatus === 'active' ? (
                         <div className="flex gap-3 mt-6">
                           <button 
-                            onClick={handleDeleteJob}
+                            onClick={() => {handleDeleteJob(jobData.job_id);}}
                             className="flex-1 border border-red-600 text-red-600 hover:bg-red-50 py-2 px-4 rounded-lg font-medium transition-colors text-sm"
                           >
                             Delete

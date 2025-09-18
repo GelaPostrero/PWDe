@@ -35,6 +35,24 @@ router.post('/basic-information', authenticateToken, async (req, res) => {
         return res.status(400).json({ error: 'Employer not found!' });
     }
 
+    const requiredFields = {
+        "Job Title": jobTitle,
+        "Job Category": jobCategory,
+        "Employment Type": employmentType,
+        "Work Arrangement": workArrangement,
+        "Country": country,
+        "Province": province,
+        "City": city,
+        "Salary Type": salaryType,
+        "Minimum Salary": minimumSalary,
+        "Maximum Salary": maximumSalary,
+        "Experience Level": experienceLevel
+    };
+
+    for (const [field, value] of Object.entries(requiredFields)) {
+        if (value === undefined || value === "") return res.status(400).json({ success: false, error: `Field "${field}" is required and cannot be empty.` });
+    }
+
     try {
         mergeStepData(emp_id, 'BasicInformations', {
             jobTitle,
@@ -59,7 +77,7 @@ router.post('/basic-information', authenticateToken, async (req, res) => {
         console.log('Error processing Employers new job basic information:', error);
         return res.status(500).json({ error: 'Failed to process Employers new job basic information.' });
     }
-})
+});
 
 router.post('/jobdetail-requirements', authenticateToken, async (req, res) => {
     const emp_id = req.user.emp_id;
@@ -71,6 +89,28 @@ router.post('/jobdetail-requirements', authenticateToken, async (req, res) => {
 
     if(!emp_id) {
         return res.status(400).json({ error: 'Employer not found!' });
+    }
+
+    const requiredFields = {
+        "Job Description": jobDescription,
+        "Required Skills": requiredSkills,
+        "Application Deadline": applicationDeadline,
+    };
+
+    for (const [field, value] of Object.entries(requiredFields)) {
+        if (value === undefined || value === "" || (Array.isArray(value) && value.length === 0)) 
+            return res.status(400).json({ success: false, error: `Field "${field}" is required and cannot be empty.` });
+    }
+
+    const deadlineDate = new Date(applicationDeadline);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (deadlineDate < today) {
+        return res.status(400).json({ 
+            success: false, 
+            error: "Application deadline cannot be in the past." 
+        });
     }
 
     try {
@@ -89,7 +129,7 @@ router.post('/jobdetail-requirements', authenticateToken, async (req, res) => {
         console.log('Error processing Employers new job basic information:', error);
         return res.status(500).json({ error: 'Failed to process Employers new job basic information.' });
     }
-})
+});
 
 router.post('/accessibility-inclusionfeatures', authenticateToken, async (req, res) => {
     const emp_id = req.user.emp_id;
@@ -100,6 +140,14 @@ router.post('/accessibility-inclusionfeatures', authenticateToken, async (req, r
 
     if(!emp_id) {
         return res.status(400).json({ error: 'Employer not found!' });
+    }
+
+    const requiredFields = {
+        "Accessibility Features": accessibilityFeatures,
+    };
+
+    for (const [field, value] of Object.entries(requiredFields)) {
+        if ((Array.isArray(value) && value.length === 0)) return res.status(400).json({ success: false, error: `Field "${field}" is required and cannot be empty.` });
     }
 
     try {
@@ -116,7 +164,7 @@ router.post('/accessibility-inclusionfeatures', authenticateToken, async (req, r
         console.log('Error processing Employers new job basic information:', error);
         return res.status(500).json({ error: 'Failed to process Employers new job basic information.' });
     }
-})
+});
 
 router.get('/review', authenticateToken, async (req, res) => {
     const emp_id = req.user.emp_id;
@@ -140,7 +188,7 @@ router.get('/review', authenticateToken, async (req, res) => {
         companyname: company_name,
         success: true
     })
-})
+});
 
 router.post('/publish', authenticateToken, async (req, res) => {
     try {
@@ -218,6 +266,6 @@ router.post('/publish', authenticateToken, async (req, res) => {
         console.log("Server error: ", error)
         return res.json({ error: "Server error", success: false })
     }
-})
+});
 
 module.exports = router;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import api from '../../utils/api.js'
 import EmployerHeader from '../../components/ui/EmployerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
@@ -100,9 +101,6 @@ const EmployerDashboard = () => {
     jobsPosted: companyStats.jobsPosted
   } : null;
 
-  // Real job postings data from backend
-  const jobPostings = fetchJob || [];
-
   // Mock recent applicants data
   const recentApplicants = [
     {
@@ -143,7 +141,7 @@ const EmployerDashboard = () => {
     {
       title: "Manage Jobs",
       icon: "🔍",
-      subtitle: "3 jobs posted",
+      subtitle: `${companyStats.jobsPosted} job${companyStats.jobsPosted !== 1 ? 's' : ''} posted`,
       href: "/employer/jobs"
     },
     {
@@ -173,7 +171,7 @@ const EmployerDashboard = () => {
     } finally {
       setIsLoadingProfile(false);
       }
-    };
+  };
 
   // Fetch company job postings
   const fetchCompanyJobs = async () => {
@@ -196,18 +194,69 @@ const EmployerDashboard = () => {
     try {
       const [jobsRes, applicationsRes] = await Promise.all([
         api.get('/job/count'),
-        api.get('/api/applications/employer/count')
+        // api.get('/api/applications/employer/count')
       ]);
+      console.log('jobsRes full:', jobsRes);
+      console.log("Job Count: ", jobsRes.data);
 
-      setCompanyStats({
-        jobsPosted: jobsRes.data.count || 0,
-        applicationsReceived: applicationsRes.data.count || 0,
+      console.log("Updated job count from backend:", jobsRes.data.countJobPosted);
+
+      setCompanyStats(prev => ({
+        ...prev,
+        jobsPosted: jobsRes.data.countJobPosted || 0,
+        applicationsReceived: 0, // applicationsRes.data.count
         interviewsScheduled: 0, // This would come from a separate API
         profileViews: fetchedData?.profile_views || 0
-      });
+      }));
     } catch (error) {
       console.error('Failed to fetch company stats:', error);
     }
+  };
+
+  // Handle delete job
+  const handleDeleteJob = async (jobId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await api.delete(`/job/delete/${jobId}`);
+          if (response.data.success) {
+            setFetchJob(prevJobs => prevJobs.filter(j => j.job_id !== jobId));
+            await fetchCompanyStats();
+
+            Swal.fire({
+              toast: true,
+              position: "bottom-end",
+              icon: "success",
+              title: "Job deleted successfully",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true
+            });
+          } else {
+            throw new Error("Delete failed");
+          }
+        } catch (error) {
+          console.error("Failed to delete job:", error);
+          Swal.fire({
+            toast: true,
+            position: "bottom-end",
+            icon: "error",
+            title: "Something went wrong while deleting",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+          });
+        }
+      }
+    });
   };
 
   // Load all data on component mount
@@ -304,9 +353,9 @@ const EmployerDashboard = () => {
                         <svg
                           key={i}
                           className={`w-4 h-4 ${
-                            i < Math.floor(companyProfile?.rating || 4.8) 
+                            i < Math.floor(companyProfile?.rating || 0) 
                               ? 'text-yellow-400' 
-                              : i < (companyProfile?.rating || 4.8) 
+                              : i < (companyProfile?.rating || 0) 
                                 ? 'text-yellow-400' 
                                 : 'text-gray-300'
                             }`}
@@ -317,7 +366,7 @@ const EmployerDashboard = () => {
                         </svg>
                       ))}
                     </div>
-                    <span className="ml-2 text-sm text-gray-600 font-medium">{companyProfile?.rating || 4.8}/5</span>
+                    <span className="ml-2 text-sm text-gray-600 font-medium">{companyProfile?.rating || 0}/5</span>
                   </div>
                 </div>
               </div>
@@ -362,7 +411,7 @@ const EmployerDashboard = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                   </div>
-                  <div className="text-xl font-medium text-gray-900 leading-none">{companyProfile?.savedJobs || 0}</div>
+                  <div className="text-xl font-medium text-gray-900 leading-none">{companyStats?.jobsPosted || 0}</div>
                 </button>
               </div>
             </div>
@@ -434,7 +483,7 @@ const EmployerDashboard = () => {
                       {/* Skills */}
                       <div className="mb-4">
                         <div className="flex flex-wrap gap-1">
-                          {job.skills_required.slice(0, 3).map((skill, index) => (
+                          {(job.skills_required || []).slice(0, 3).map((skill, index) => (
                             <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
                               {skill.replace(/ \(.*\)$/, '')}
                             </span>
@@ -445,7 +494,7 @@ const EmployerDashboard = () => {
                       {/* Accessibility Features */}
                       <div className="mb-4">
                         <div className="flex flex-wrap gap-1">
-                          {job.workplace_accessibility_features.slice(0, 2).map((feature, index) => (
+                          {(job.workplace_accessibility_features || []).slice(0, 2).map((feature, index) => (
                             <span key={index} className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
                               {feature}
                             </span>
@@ -477,7 +526,7 @@ const EmployerDashboard = () => {
                       {/* Action Buttons */}
                       <div className="flex items-center justify-between gap-2">
                         <button
-                          onClick={() => window.location.href = `/employer/job/${job.job_id}`}
+                          onClick={() => window.location.href = `/employer/job/${job.job_id}/posted`}
                           className="flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors flex-1"
                         >
                           View
@@ -492,12 +541,7 @@ const EmployerDashboard = () => {
                           </svg>
                         </button>
                         <button
-                          onClick={() => {
-                            if (window.confirm('Are you sure you want to delete this job posting?')) {
-                              // Handle delete
-                              console.log('Delete job:', job.job_id);
-                            }
-                          }}
+                          onClick={() => handleDeleteJob(job.job_id)}
                           className="flex items-center justify-center p-2 text-gray-400 hover:text-red-600 transition-colors bg-gray-100 hover:bg-red-50 rounded-lg"
                         >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -520,7 +564,9 @@ const EmployerDashboard = () => {
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium text-gray-700">{progressPercentage}% Complete</span>
-                    <span className="text-sm text-gray-500">{itemsLeft} item{itemsLeft !== 1 ? 's' : ''} left</span>
+                    {itemsLeft > 0 && itemsLeft <= 3 && (
+                      <span className="text-sm text-gray-500">{itemsLeft} item{itemsLeft !== 1 ? 's' : ''} left</span>
+                    )}
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div 
