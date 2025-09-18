@@ -1,62 +1,139 @@
 import React from 'react';
 
+const CheckboxItem = ({ value, checked, onChange, children }) => (
+  <label className="flex items-start gap-3 text-gray-700">
+    <input 
+      type="checkbox" 
+      value={value}
+      checked={checked}
+      onChange={onChange}
+      className="mt-1" 
+    /> 
+    <span>{children}</span>
+  </label>
+);
+
+const Section = ({ title, children }) => (
+  <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6">
+    <div className="text-gray-900 font-medium mb-3">{title}</div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">{children}</div>
+  </div>
+);
+
 const AccessibilityNeedsModal = ({ formData, onFormChange }) => {
-  const handleCheckboxChange = (category, option, checked) => {
+  const handleCheckboxChange = (category, option) => {
     const current = formData[category] || [];
-    if (checked) {
-      onFormChange(category, [...current, option]);
+    if (current.includes(option)) {
+      onFormChange(category, current.filter(v => v !== option)); // remove
     } else {
-      onFormChange(category, current.filter(item => item !== option));
+      onFormChange(category, [...current, option]); // add
     }
   };
 
   return (
     <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Accessibility & Accommodation Needs</h3>
-      <p className="text-gray-600 mb-6">Help us understand your accessibility requirements to ensure inclusive job matching.</p>
-      
-      <div className="border border-gray-200 rounded-xl p-4">
-        <h4 className="text-md font-medium text-gray-900 mb-4 flex items-center">
-          <svg className="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          </svg>
-          Visual Support
-        </h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {['Screen reader', 'Magnification software', 'High contrast mode', 'Large text', 'Voice recognition', 'Braille display'].map((option) => (
-            <label key={option} className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-              <input
-                type="checkbox"
-                checked={formData.visual?.includes(option) || false}
-                onChange={(e) => handleCheckboxChange('visual', option, e.target.checked)}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              />
-              <span className="ml-3 text-sm text-gray-700">{option}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-      
-      <div className="border border-gray-200 rounded-xl p-4">
-        <h4 className="text-md font-medium text-gray-900 mb-4 flex items-center">
-          <svg className="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-          </svg>
-          Hearing Support
-        </h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {['Hearing aids', 'Captioning services', 'Sign language interpreter', 'Visual alerts', 'Assistive listening devices', 'Written communication'].map((option) => (
-            <label key={option} className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-              <input
-                type="checkbox"
-                checked={formData.hearing?.includes(option) || false}
-                onChange={(e) => handleCheckboxChange('hearing', option, e.target.checked)}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              />
-              <span className="ml-3 text-sm text-gray-700">{option}</span>
-            </label>
-          ))}
+      <p className="text-gray-600 mb-6">Help us understand your accessibility needs to ensure the best job matches. <button className="text-blue-600">Select all that apply</button>.</p>
+
+      <Section title="Visual Support Needs">
+        {[
+          "Screen reader compatibility required",
+          "High contrast display support",
+          "Large text/font size options",
+          "Color-blind friendly interfaces",
+          "Magnification software support",
+          "Braille display compatibility",
+          "Audio descriptions for visual content",
+          "None of the above"
+        ].map(option => (
+          <CheckboxItem
+            key={option}
+            value={option}
+            checked={(formData.visual_support || []).includes(option)}
+            onChange={() => handleCheckboxChange('visual_support', option)}
+          >
+            {option}
+          </CheckboxItem>
+        ))}
+      </Section>
+
+      <Section title="Hearing Support Needs">
+        {[
+          "Sign language interpretation",
+          "Real-time captioning/subtitles",
+          "Written communication preference",
+          "Video relay services",
+          "Hearing loop systems",
+          "Visual alerts instead of audio",
+          "TTY/TDD communication support",
+          "None of the above"
+        ].map(option => (
+          <CheckboxItem
+            key={option}
+            value={option}
+            checked={(formData.hearing_support || []).includes(option)}
+            onChange={() => handleCheckboxChange('hearing_support', option)}
+          >
+            {option}
+          </CheckboxItem>
+        ))}
+      </Section>
+
+      <Section title="Mobility Support Needs">
+        {[
+          "Wheelchair accessible workspace",
+          "Adjustable desk/workstation",
+          "Voice recognition software",
+          "Alternative keyboard/mouse options",
+          "Flexible work positioning",
+          "Ergonomic equipment",
+          "Reduced physical demands",
+          "None of the above"
+        ].map(option => (
+          <CheckboxItem
+            key={option}
+            value={option}
+            checked={(formData.mobility_support || []).includes(option)}
+            onChange={() => handleCheckboxChange('mobility_support', option)}
+          >
+            {option}
+          </CheckboxItem>
+        ))}
+      </Section>
+
+      <Section title="Cognitive Support Needs">
+        {[
+          "Extended time for tasks",
+          "Quiet work environment",
+          "Structured work routines",
+          "Written instructions preference",
+          "Flexible scheduling",
+          "Memory aids/reminders",
+          "Reduced multitasking",
+          "None of the above"
+        ].map(option => (
+          <CheckboxItem
+            key={option}
+            value={option}
+            checked={(formData.cognitive_support || []).includes(option)}
+            onChange={() => handleCheckboxChange('cognitive_support', option)}
+          >
+            {option}
+          </CheckboxItem>
+        ))}
+      </Section>
+
+      <div className="bg-white rounded-xl border border-gray-200 p-4">
+        <div className="text-gray-900 font-medium mb-2">Additional Information</div>
+        <textarea 
+          value={formData.additionalInfo || ''} 
+          onChange={(e) => onFormChange('additionalInfo', e.target.value)} 
+          rows="4" 
+          className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+          placeholder="Please share any other specific accommodation needs..." 
+        />
+        <div className="mt-3 text-xs text-blue-700 bg-blue-50 border border-blue-100 rounded-lg p-3">
+          This information is used only for job matching and accommodation purposes. Employers will only see relevant accommodation needs if you choose to share them.
         </div>
       </div>
     </div>

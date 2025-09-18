@@ -37,6 +37,20 @@ const JobseekerActivation = () => {
     const next = [...code];
     next[index] = value;
     setCode(next);
+
+    // Auto-focus next input
+    if (value && index < 5) {
+      const nextInput = document.getElementById(`code-${index + 1}`);
+      if (nextInput) nextInput.focus();
+    }
+  };
+
+  const handleKeyDown = (index, e) => {
+    // Handle backspace
+    if (e.key === 'Backspace' && !code[index] && index > 0) {
+      const prevInput = document.getElementById(`code-${index - 1}`);
+      if (prevInput) prevInput.focus();
+    }
   };
 
   const handleActivation = async () => {
@@ -196,8 +210,10 @@ const JobseekerActivation = () => {
               {code.map((digit, idx) => (
                 <input
                   key={idx}
+                  id={`code-${idx}`}
                   value={digit}
                   onChange={(e) => setDigit(idx, e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(idx, e)}
                   className="w-14 h-14 border rounded-lg text-center text-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   maxLength={1}
                   inputMode="numeric"

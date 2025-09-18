@@ -84,7 +84,10 @@ const JobseekerOnboardingCompletion = () => {
 
   // drag state (resume)
   const [isDraggingResume, setIsDraggingResume] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);  
+  const [isLoading, setIsLoading] = useState(false);
+  
+  // persistence state
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // ---- handlers ----
   const handlePortfolioLinksChange = (field, value) => {
@@ -212,6 +215,55 @@ const JobseekerOnboardingCompletion = () => {
     if (resumeInputRef.current) resumeInputRef.current.value = '';
   };
 
+  // ---- persistence ----
+  // Load saved data on mount
+  useEffect(() => {
+    console.log('Loading completion form data from localStorage');
+    const savedData = localStorage.getItem('jobseeker-completion-form');
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
+        console.log('Loaded completion data:', parsedData);
+        
+        if (parsedData.role) setRole(parsedData.role);
+        if (parsedData.summary) setSummary(parsedData.summary);
+        if (parsedData.portfolioLinks) setPortfolioLinks(parsedData.portfolioLinks);
+        if (parsedData.visibility) setVisibility(parsedData.visibility);
+        if (parsedData.agreeTos !== undefined) setAgreeTos(parsedData.agreeTos);
+        if (parsedData.agreeShare !== undefined) setAgreeShare(parsedData.agreeShare);
+        if (parsedData.agreeTruthful !== undefined) setAgreeTruthful(parsedData.agreeTruthful);
+        
+        console.log('Completion form data restored successfully');
+      } catch (error) {
+        console.error('Error parsing saved completion data:', error);
+      }
+    }
+    
+    // Set initial load to false after a short delay
+    setTimeout(() => {
+      setIsInitialLoad(false);
+    }, 100);
+  }, []);
+
+  // Save data when form fields change
+  useEffect(() => {
+    if (isInitialLoad) return;
+    
+    console.log('Saving completion form data to localStorage');
+    const formData = {
+      role,
+      summary,
+      portfolioLinks,
+      visibility,
+      agreeTos,
+      agreeShare,
+      agreeTruthful
+    };
+    
+    localStorage.setItem('jobseeker-completion-form', JSON.stringify(formData));
+    console.log('Completion form data saved:', formData);
+  }, [role, summary, portfolioLinks, visibility, agreeTos, agreeShare, agreeTruthful, isInitialLoad]);
+
   // ---- cleanup ----
   useEffect(() => {
     return () => {
@@ -247,6 +299,14 @@ const JobseekerOnboardingCompletion = () => {
       profileCompletion.append('otherPlatform', JSON.stringify([portfolioLinks.other])); 
       profileCompletion.append('visibility', visibility);
 
+      // Debug: Log the portfolio data being sent
+      console.log('Portfolio data being sent:', {
+        portfolioUrl: portfolioLinks.portfolio,
+        githubUrl: portfolioLinks.github,
+        linkedinUrl: portfolioLinks.linkedin,
+        otherPlatform: portfolioLinks.other
+      });
+
       // Append files if present
       if (photo?.file) {
         profileCompletion.append('profilePhoto', photo.file, photo.name || 'profile-photo.jpg');
@@ -261,7 +321,17 @@ const JobseekerOnboardingCompletion = () => {
       // Wait for both API call and minimum loading time
       await Promise.all([response, minLoadingTime]);
 
+      console.log('Completion API response:', response.data);
+      
       if(response.data.success) {
+        // Clear all onboarding localStorage data on successful completion
+        localStorage.removeItem('jobseeker-completion-form');
+        localStorage.removeItem('jobseeker-skills-form');
+        localStorage.removeItem('jobseeker-education-form');
+        localStorage.removeItem('jobseeker-experience-form');
+        localStorage.removeItem('jobseeker-accessibility-form');
+        localStorage.removeItem('jobseeker-preferences-form');
+        
         Swal.fire({
           icon: 'success',
           html: '<h5>You have finally completed your onboarding processes. \n<p><b>Welcome to your dashboard.</b></p></h6>',

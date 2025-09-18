@@ -34,24 +34,6 @@ const ProfessionalSummaryModal = ({ formData, onFormChange }) => {
         </div>
       </div>
       
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Hourly Rate (USD)</label>
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <span className="text-gray-500 sm:text-sm">$</span>
-          </div>
-          <input
-            type="number"
-            value={formData.hourlyRate || ''}
-            onChange={(e) => onFormChange('hourlyRate', e.target.value)}
-            className="w-full pl-7 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-            placeholder="25"
-            min="0"
-            step="0.01"
-          />
-        </div>
-        <p className="text-xs text-gray-500 mt-1">Optional: Your preferred hourly rate for freelance work</p>
-      </div>
     </div>
   );
 };

@@ -15,6 +15,7 @@ import {
   AccessibilityNeedsModal,
   EmploymentPreferencesModal
 } from '../../components/modals';
+import VerificationStatusModal from '../../components/modals/VerificationStatusModal.jsx';
 
 const JobseekerProfile = () => {
   // Loading and error states
@@ -42,6 +43,7 @@ const JobseekerProfile = () => {
         
         // Professional Information
         jobTitle: fetchedData.profession,
+        profession: fetchedData.profession,
         professionalSummary: fetchedData.professional_summary,
         hourlyRate: '',
         
@@ -54,6 +56,7 @@ const JobseekerProfile = () => {
         portfolioLinks: {
           github: fetchedData.github_url,
           portfolio: fetchedData.portfolio_url,
+          linkedin: fetchedData.linkedin_url,
           other: fetchedData.otherPlatform
         },
         
@@ -68,6 +71,15 @@ const JobseekerProfile = () => {
           salaryRange: fetchedData.job_preferences?.[0]?.salary_range || '',
           preferredLocations: []
         },
+        
+        // Verification Status
+        verificationStatus: {
+          emailVerified: fetchedData.is_verified || false,
+          documentStatus: fetchedData.document_verification_status || 'not_submitted', // 'not_submitted', 'pending', 'verified', 'rejected'
+          rejectionReason: fetchedData.document_rejection_reason || null,
+          uploadedFiles: fetchedData.verification_documents || []
+        },
+        
         
         // Profile Settings
         profileVisibility: {
@@ -96,6 +108,11 @@ const JobseekerProfile = () => {
           accessibilityPreferences: fetchedData.set_accessibility_preferences
         }
       }));
+      
+      // Debug: Log profession data after profileData is created
+      console.log('Profile data mapping - fetchedData.profession:', fetchedData.profession);
+      console.log('Profile data mapping - fetchedData.educations:', fetchedData.educations);
+      console.log('Profile data mapping - profileData.education:', profileData.education);
     }
   }, [fetchedData]);
 
@@ -125,6 +142,7 @@ const JobseekerProfile = () => {
 
   // Modal functions
   const openModal = (modalType, item = null) => {
+    console.log('Opening modal:', modalType, 'Current activeModal:', activeModal);
     setActiveModal(modalType);
     setEditingItem(item);
     
@@ -149,45 +167,87 @@ const JobseekerProfile = () => {
         });
         break;
       case 'skills':
+        // Use fetchedData.profession as fallback if profileData.profession is empty
+        const professionValue = profileData.profession || fetchedData.profession || '';
+        
         setFormData({
-          skills: [...profileData.skills]
+          skills: [...profileData.skills],
+          profession: professionValue
         });
         break;
       case 'education':
+         console.log('Education modal - Editing item:', item);
+         if (item) {
+           console.log('Education modal - Item field_of_study:', item.field_of_study);
+           console.log('Education modal - Item fieldOfStudy:', item.fieldOfStudy);
+         }
         setFormData(item ? {
-          degree: item.degree,
           institution: item.institution,
-          startYear: item.startYear,
-          endYear: item.endYear,
-          isCurrent: item.isCurrent
-        } : {
-          degree: '',
+           location: item.location,
+           fieldOfStudy: item.field_of_study || item.fieldOfStudy || '',
+           degree: item.degree,
+           graduationStatus: item.graduation_details || item.graduationStatus || 'Graduated',
+           yearGraduated: item.year_graduated || item.yearGraduated || ''
+         } : {
           institution: '',
-          startYear: '',
-          endYear: '',
-          isCurrent: false
+           location: '',
+           fieldOfStudy: '',
+           degree: '',
+           graduationStatus: 'Graduated',
+           yearGraduated: ''
         });
         break;
       case 'workExperience':
-        setFormData(item ? {
+         console.log('Work Experience modal - Editing item:', item);
+         if (item) {
+           console.log('Work Experience modal - Item fields:', {
+             jobTitle: item.jobTitle,
           title: item.title,
+             job_title: item.job_title,
           company: item.company,
-          startMonth: item.startDate ? item.startDate.split('-')[1] : '',
-          startYear: item.startDate ? item.startDate.split('-')[0] : '',
-          endMonth: item.endDate ? item.endDate.split('-')[1] : '',
-          endYear: item.endDate ? item.endDate.split('-')[0] : '',
-          employmentType: item.employmentType,
           location: item.location,
+             country: item.country,
+             startDate: item.startDate,
+             start_date: item.start_date,
+             endDate: item.endDate,
+             end_date: item.end_date,
+             isCurrent: item.isCurrent,
+             employmentType: item.employmentType,
+             employment_type: item.employment_type,
           description: item.description
-        } : {
-          title: '',
+           });
+         }
+         // Helper function to format date for HTML date input
+         const formatDateForInput = (dateString) => {
+           if (!dateString) return '';
+           try {
+             const date = new Date(dateString);
+             return date.toISOString().split('T')[0];
+           } catch (error) {
+             console.error('Error formatting date:', error);
+             return '';
+           }
+         };
+
+         setFormData(item ? {
+           jobTitle: item.jobTitle || item.title || item.job_title || '',
+           company: item.company || '',
+           location: item.location || '',
+           country: item.country || 'Philippines',
+           startDate: formatDateForInput(item.startDate || item.start_date),
+           endDate: formatDateForInput(item.endDate || item.end_date),
+           isCurrent: item.isCurrent || false,
+           employmentType: item.employmentType || item.employment_type || 'Full-time',
+           description: item.description || ''
+         } : {
+           jobTitle: '',
           company: '',
-          startMonth: '',
-          startYear: '',
-          endMonth: '',
-          endYear: '',
-          employmentType: 'Full-time',
           location: '',
+           country: 'Philippines',
+           startDate: '',
+           endDate: '',
+           isCurrent: false,
+           employmentType: 'Full-time',
           description: ''
         });
         break;
@@ -195,10 +255,32 @@ const JobseekerProfile = () => {
         setFormData({ ...profileData.portfolioLinks });
         break;
       case 'accessibilityNeeds':
-        setFormData({ ...profileData.accessibilityNeeds });
+         console.log('Accessibility modal - Current profileData.accessibilityNeeds:', profileData.accessibilityNeeds);
+         setFormData({
+           visual_support: profileData.accessibilityNeeds?.[0]?.visual_support || [],
+           hearing_support: profileData.accessibilityNeeds?.[0]?.hearing_support || [],
+           mobility_support: profileData.accessibilityNeeds?.[0]?.mobility_support || [],
+           cognitive_support: profileData.accessibilityNeeds?.[0]?.cognitive_support || [],
+           additionalInfo: profileData.accessibilityNeeds?.[0]?.additionalInfo || ''
+         });
         break;
       case 'employmentPreferences':
-        setFormData({ ...profileData.employmentPreferences });
+        console.log('Employment Preferences modal - Current profileData.employmentPreferences:', profileData.employmentPreferences);
+        setFormData({
+          workArrangement: profileData.employmentPreferences?.workArrangement || '',
+          employmentTypes: profileData.employmentPreferences?.employmentType || [],
+          experienceLevel: profileData.employmentPreferences?.experienceLevel || '',
+          salaryRange: profileData.employmentPreferences?.salaryRange || { currency: 'PHP', min: '', max: '', frequency: '' }
+        });
+        break;
+      case 'verificationStatus':
+        console.log('Verification Status modal - Current profileData.verificationStatus:', profileData.verificationStatus);
+        setFormData({
+          emailVerified: profileData.verificationStatus?.emailVerified || false,
+          documentStatus: profileData.verificationStatus?.documentStatus || 'not_submitted',
+          rejectionReason: profileData.verificationStatus?.rejectionReason || null,
+          uploadedFiles: profileData.verificationStatus?.uploadedFiles || [] // Load existing uploaded files
+        });
         break;
       default:
         setFormData({});
@@ -216,6 +298,12 @@ const JobseekerProfile = () => {
       ...prev,
       [field]: value
     }));
+  };
+
+  // Special handler for VerificationStatusModal that expects full formData object
+  const handleVerificationFormChange = (updatedFormData) => {
+    console.log('handleVerificationFormChange - received:', updatedFormData);
+    setFormData(updatedFormData);
   };
 
   const handleArrayFormChange = (field, value, index) => {
@@ -247,18 +335,55 @@ const JobseekerProfile = () => {
         setIsLoading(true);
         setError(null);
         
-        const { data } = await api.get('/retrieve/profile'); // get data
-        
-        // Mock API response - this will come from your onboarding data
-        await new Promise(resolve => setTimeout(resolve, 500));
+         console.log('Fetching profile data...');
+         const { data } = await api.get('/retrieve/profile');
+         
+         console.log('Profile API response:', data);
 
-        if(data.success) {
-          console.log("Data: ", data.data);
+         if(data && data.success) {
+           console.log("Profile - Data received:", data.data);
+           console.log("Profile - Profession field from API:", data.data.profession);
+           console.log("Profile - Profile completion fields:", {
+             basic_information: data.data.basic_information,
+             professional_summary_completed: data.data.professional_summary_completed,
+             workexperience: data.data.workexperience,
+             education: data.data.education,
+             portfolio_items: data.data.portfolio_items,
+             skills: data.data.skills,
+             set_accessibility_preferences: data.data.set_accessibility_preferences
+           });
+           console.log("Profile - Portfolio links data:", {
+             github_url: data.data.github_url,
+             portfolio_url: data.data.portfolio_url,
+             linkedin_url: data.data.linkedin_url,
+             otherPlatform: data.data.otherPlatform
+           });
           setFetchedData(data.data);
+         } else {
+           throw new Error('Invalid response format from server');
         }
       } catch (err) {
-        setError('Failed to load profile data');
         console.error('Error fetching profile:', err);
+         
+         // Handle different types of errors
+         if (err.code === 'ECONNABORTED') {
+           setError('Request timed out. Please check your internet connection and try again.');
+         } else if (err.response) {
+           // Server responded with error status
+           setError(`Server error: ${err.response.status} - ${err.response.data?.message || 'Unknown error'}`);
+         } else if (err.request) {
+           // Request was made but no response received
+           setError('Unable to connect to server. Please check if the backend is running.');
+         } else {
+           // Something else happened
+           setError('Failed to load profile data. Please try again.');
+         }
+         
+         console.error('Error response:', err.response);
+         console.error('Error message:', err.message);
+         if (err.response && err.response.data) {
+           console.error('Backend error details:', err.response.data);
+         }
         throw err;
       } finally {
         setIsLoading(false);
@@ -272,7 +397,117 @@ const JobseekerProfile = () => {
         setIsSaving(true);
         setError(null);
         
-        const response = await api.put('/retrieve/update/basic-information', data);
+        let endpoint = '';
+        let payload = data;
+        
+        // Determine the correct endpoint based on section
+        switch (section) {
+          case 'personalInfo':
+            endpoint = '/retrieve/update/basic-information';
+            payload = {
+              firstName: data.firstName,
+              lastName: data.lastName,
+              email: data.email,
+              phone: data.phone,
+              birthDate: data.birthDate,
+              disabilityType: data.disabilityType,
+              location: data.location
+            };
+            break;
+          case 'professionalInfo':
+            endpoint = '/retrieve/update/professional-summary';
+            payload = {
+              professionalSummary: data.professionalSummary
+            };
+            break;
+          case 'skills':
+            endpoint = '/retrieve/update/skills';
+            payload = {
+              skills: data.skills,
+              profession: data.profession
+            };
+            break;
+          case 'education':
+            endpoint = '/retrieve/update/education';
+            console.log('Education API - Data being sent:', data);
+            console.log('Education API - Data type:', typeof data, Array.isArray(data));
+            console.log('Education API - First education entry:', data[0]);
+            payload = {
+              education: data.map(edu => {
+                console.log('Education API - Mapping education entry:', edu);
+                const mappedEdu = {
+                  highestLevel: edu.degree,
+                  institution: edu.institution,
+                  location: edu.location,
+                  degree: edu.degree,
+                  fieldOfStudy: edu.fieldOfStudy || edu.field_of_study || '',
+                  graduationDetails: edu.graduationStatus || edu.graduation_details || '',
+                  yearGraduated: edu.yearGraduated || edu.year_graduated || ''
+                };
+                console.log('Education API - Mapped education entry:', mappedEdu);
+                return mappedEdu;
+              })
+            };
+            console.log('Education API - Final payload:', payload);
+            break;
+           case 'workExperience':
+             endpoint = '/retrieve/update/work-experience';
+             console.log('Work Experience API - Data being sent:', data);
+             console.log('Work Experience API - Data type:', typeof data, Array.isArray(data));
+             payload = {
+               workExperience: data.map(exp => {
+                 console.log('Work Experience API - Mapping experience entry:', exp);
+                 const mappedExp = {
+                   jobTitle: exp.jobTitle || exp.title || exp.job_title || '',
+                   company: exp.company || '',
+                   location: exp.location || '',
+                   country: exp.country || 'Philippines',
+                   startDate: exp.startDate || exp.start_date || '',
+                   endDate: exp.endDate || exp.end_date || '',
+                   isCurrent: exp.isCurrent || false,
+                   employmentType: exp.employmentType || exp.employment_type || 'Full-time',
+                   description: exp.description || ''
+                 };
+                 console.log('Work Experience API - Mapped experience entry:', mappedExp);
+                 return mappedExp;
+               })
+             };
+             console.log('Work Experience API - Final payload:', payload);
+             break;
+           case 'portfolioLinks':
+             endpoint = '/retrieve/update/portfolio-links';
+             payload = {
+               portfolioUrl: data.portfolio,
+               githubUrl: data.github,
+               linkedinUrl: data.linkedin,
+               otherPlatform: JSON.stringify(data.other || [])
+             };
+             break;
+           case 'accessibilityNeeds':
+             endpoint = '/retrieve/update/accessibility-needs';
+             payload = {
+               visual_support: data.visual_support || [],
+               hearing_support: data.hearing_support || [],
+               mobility_support: data.mobility_support || [],
+               cognitive_support: data.cognitive_support || [],
+               additionalInfo: data.additionalInfo || ''
+             };
+             break;
+           case 'employmentPreferences':
+             endpoint = '/retrieve/update/employment-preferences';
+             payload = {
+               workArrangement: data.workArrangement || '',
+               employmentTypes: data.employmentTypes || [],
+               experienceLevel: data.experienceLevel || '',
+               salaryRange: data.salaryRange || { currency: 'PHP', min: '', max: '', frequency: '' }
+             };
+             break;
+           default:
+             throw new Error(`Unknown section: ${section}`);
+        }
+
+        console.log(`Updating ${section} with endpoint: ${endpoint}`, payload);
+        const response = await api.put(endpoint, payload);
 
         if(response.data.success) {
           // Update local state
@@ -281,7 +516,12 @@ const JobseekerProfile = () => {
             [section]: data
           }));
 
+          // Refresh profile data to get updated completion status
+          await apifunctions.fetchProfile();
+
           return { success: true };
+        } else {
+          throw new Error(response.data.error || 'Update failed');
         }
       } catch (err) {
         setError('Failed to update profile');
@@ -356,7 +596,10 @@ const JobseekerProfile = () => {
           await handleUpdateProfile('professionalInfo', formData);
           break;
         case 'skills':
-          await handleUpdateProfile('skills', formData.skills);
+          await handleUpdateProfile('skills', {
+            skills: formData.skills,
+            profession: formData.profession
+          });
           break;
         case 'education':
           if (editingItem) {
@@ -374,25 +617,13 @@ const JobseekerProfile = () => {
         case 'workExperience':
           if (editingItem) {
             // Update existing work experience
-            const workData = {
-              ...formData,
-              id: editingItem.id,
-              startDate: formData.startYear && formData.startMonth ? `${formData.startYear}-${formData.startMonth.padStart(2, '0')}` : '',
-              endDate: formData.endYear && formData.endMonth ? `${formData.endYear}-${formData.endMonth.padStart(2, '0')}` : ''
-            };
             const updatedExperience = profileData.workExperience.map(item => 
-              item.id === editingItem.id ? workData : item
+              item.id === editingItem.id ? { ...formData, id: editingItem.id } : item
             );
             await handleUpdateProfile('workExperience', updatedExperience);
           } else {
             // Add new work experience
-            const workData = {
-              ...formData,
-              id: Date.now(),
-              startDate: formData.startYear && formData.startMonth ? `${formData.startYear}-${formData.startMonth.padStart(2, '0')}` : '',
-              endDate: formData.endYear && formData.endMonth ? `${formData.endYear}-${formData.endMonth.padStart(2, '0')}` : ''
-            };
-            const newExperience = [...profileData.workExperience, workData];
+            const newExperience = [...profileData.workExperience, { ...formData, id: Date.now() }];
             await handleUpdateProfile('workExperience', newExperience);
           }
           break;
@@ -404,6 +635,57 @@ const JobseekerProfile = () => {
           break;
         case 'employmentPreferences':
           await handleUpdateProfile('employmentPreferences', formData);
+          break;
+        case 'verificationStatus':
+          // Handle document upload for verification
+          console.log('Saving verification documents:', formData);
+          console.log('formData.uploadedFiles:', formData.uploadedFiles);
+          console.log('formData.uploadedFiles length:', formData.uploadedFiles?.length);
+          if (formData.uploadedFiles && formData.uploadedFiles.length > 0) {
+            console.log('Uploading files:', formData.uploadedFiles);
+            
+            try {
+              // Create FormData for file upload
+              const formDataToSend = new FormData();
+              
+              // Append each file
+              formData.uploadedFiles.forEach((file, index) => {
+                formDataToSend.append('documents', file);
+              });
+              
+              // Make API call to upload documents
+              const response = await api.put('/retrieve/update/verification-documents', formDataToSend, {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                },
+              });
+              
+              if (response.data.success) {
+                console.log('Documents uploaded successfully:', response.data);
+                
+                // Update the verification status to "pending" after successful upload
+                setProfileData(prev => ({
+                  ...prev,
+                  verificationStatus: {
+                    ...prev.verificationStatus,
+                    documentStatus: 'pending',
+                    uploadedFiles: formData.uploadedFiles // Store the uploaded files
+                  }
+                }));
+                
+                // Show success message
+                alert(`${formData.uploadedFiles.length} document(s) uploaded successfully and will be reviewed within 1-3 business days.`);
+              } else {
+                throw new Error(response.data.message || 'Upload failed');
+              }
+            } catch (error) {
+              console.error('Error uploading documents:', error);
+              alert(`Error uploading documents: ${error.response?.data?.message || error.message}`);
+            }
+          } else {
+            console.log('No uploaded files found in formData');
+            alert('No documents selected for upload.');
+          }
           break;
       }
       closeModal();
@@ -451,10 +733,26 @@ const JobseekerProfile = () => {
 
   // Initialize data on component mount
   useEffect(() => {
+    let isMounted = true;
+    
     const initializeProfile = async () => {
+      try {
+        if (isMounted) {
       await apifunctions.fetchProfile();
+        }
+      } catch (error) {
+        if (isMounted) {
+          console.error('Error initializing profile:', error);
+          setError('Failed to load profile data. Please check your connection and try again.');
+        }
+      }
     };
+    
     initializeProfile();
+    
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (isLoading) {
@@ -504,7 +802,21 @@ const JobseekerProfile = () => {
           
           {error && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 text-sm">{error}</p>
+               <div className="flex items-center justify-between">
+                 <div>
+                   <p className="text-red-600 text-sm font-medium">Error loading profile</p>
+                   <p className="text-red-500 text-sm mt-1">{error}</p>
+                 </div>
+                 <button
+                   onClick={() => {
+                     setError(null);
+                     apifunctions.fetchProfile();
+                   }}
+                   className="ml-4 px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition-colors"
+                 >
+                   Retry
+                 </button>
+               </div>
             </div>
           )}
           
@@ -709,31 +1021,83 @@ const JobseekerProfile = () => {
                   {profileData.portfolioLinks.portfolio && (
                     <div>
                       <span className="text-sm font-medium text-gray-700">Portfolio:</span>
-                      <span className="text-sm text-blue-600 ml-2">{profileData.portfolioLinks.portfolio}</span>
+                      <a
+                        href={profileData.portfolioLinks.portfolio}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-blue-600 ml-2 hover:underline"
+                      >
+                        {profileData.portfolioLinks.portfolio}
+                      </a>
                     </div>
                   )}
                   {profileData.portfolioLinks.github && (
                     <div>
                       <span className="text-sm font-medium text-gray-700">Github:</span>
-                      <span className="text-sm text-blue-600 ml-2">{profileData.portfolioLinks.github}</span>
+                      <a
+                        href={profileData.portfolioLinks.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-blue-600 ml-2 hover:underline"
+                      >
+                        {profileData.portfolioLinks.github}
+                      </a>
+                    </div>
+                  )}
+                  {profileData.portfolioLinks.linkedin && (
+                    <div>
+                      <span className="text-sm font-medium text-gray-700">LinkedIn:</span>
+                      <a
+                        href={profileData.portfolioLinks.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-blue-600 ml-2 hover:underline"
+                      >
+                        {profileData.portfolioLinks.linkedin}
+                      </a>
                     </div>
                   )}
                   {Array.isArray(profileData.portfolioLinks.other) &&
-                  profileData.portfolioLinks.other.length === 2 &&
-                  profileData.portfolioLinks.other[0].trim() !== "" &&
-                  profileData.portfolioLinks.other[1].trim() !== "" && (
+                  profileData.portfolioLinks.other.length > 0 && 
+                  profileData.portfolioLinks.other.some(item => 
+                    (typeof item === 'string' && item.trim() !== '') ||
+                    (typeof item === 'object' && item !== null && item.url && item.url.trim() !== '')
+                  ) && (
                     <div>
-                      <span className="text-sm font-medium text-gray-700">
-                        {profileData.portfolioLinks.other[0]}:
-                      </span>
-                      <a
-                        href={profileData.portfolioLinks.other[1]}
+                      <span className="text-sm font-medium text-gray-700">Other Links:</span>
+                      <div className="mt-1 space-y-1">
+                        {profileData.portfolioLinks.other.map((item, index) => {
+                          if (typeof item === 'string' && item.trim() !== '') {
+                            return (
+                              <div key={index}>
+                                <a
+                                  href={item}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-blue-600 ml-2"
-                      >
-                        {profileData.portfolioLinks.other[1]}
-                      </a>
+                                  className="text-sm text-blue-600 hover:underline"
+                                >
+                                  {item}
+                                </a>
+                              </div>
+                            );
+                          } else if (typeof item === 'object' && item !== null && item.url && item.url.trim() !== '') {
+                            return (
+                              <div key={index}>
+                                <span className="text-sm font-medium text-gray-700">{item.name || 'Link'}:</span>
+                                <a
+                                  href={item.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-blue-600 ml-2 hover:underline"
+                                >
+                                  {item.url}
+                                </a>
+                              </div>
+                            );
+                          }
+                          return null;
+                        })}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -750,27 +1114,68 @@ const JobseekerProfile = () => {
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Verification Status</h3>
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">100% Complete</span>
+                    <span className="text-sm font-medium text-gray-700">
+                      {profileData.verificationStatus.emailVerified && profileData.verificationStatus.documentStatus === 'verified' ? '100% Complete' :
+                       profileData.verificationStatus.emailVerified && profileData.verificationStatus.documentStatus === 'pending' ? '50% Complete' :
+                       profileData.verificationStatus.emailVerified ? '50% Complete' : '0% Complete'}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      {profileData.verificationStatus.documentStatus === 'not_submitted' ? '2 items left' :
+                       profileData.verificationStatus.documentStatus === 'pending' ? '1 item left' :
+                       profileData.verificationStatus.documentStatus === 'rejected' ? '1 item left' : '0 items left'}
+                    </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-green-600 h-2 rounded-full" style={{ width: '100%' }}></div>
+                    <div 
+                      className="bg-blue-600 h-2 rounded-full" 
+                      style={{ 
+                        width: profileData.verificationStatus.emailVerified && profileData.verificationStatus.documentStatus === 'verified' ? '100%' :
+                               profileData.verificationStatus.emailVerified ? '50%' : '0%'
+                      }}
+                    ></div>
                   </div>
                 </div>
-                <div className="space-y-3 mb-4">
-                  {[
-                    { text: 'Identity verified', completed: true },
-                    { text: 'Email verified', completed: true }
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center space-x-3">
+                <div className="space-y-3">
+                  {/* Email Verification */}
+                  <div className="flex items-center space-x-3">
+                    {profileData.verificationStatus.emailVerified ? (
                       <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-sm text-gray-900">{item.text}</span>
+                    ) : (
+                      <div className="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
+                    )}
+                    <span className={`text-sm ${profileData.verificationStatus.emailVerified ? 'text-gray-900' : 'text-gray-600'}`}>
+                      Email verified
+                    </span>
                     </div>
-                  ))}
+                  
+                  {/* Document Verification */}
+                  <div className="flex items-center space-x-3">
+                    {profileData.verificationStatus.documentStatus === 'verified' ? (
+                      <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                    ) : (
+                      <div className="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
+                    )}
+                    <span className={`text-sm ${profileData.verificationStatus.documentStatus === 'verified' ? 'text-gray-900' : 'text-gray-600'}`}>
+                      {profileData.verificationStatus.documentStatus === 'verified' ? 'Documents verified' :
+                       profileData.verificationStatus.documentStatus === 'pending' ? 'Documents under review' :
+                       profileData.verificationStatus.documentStatus === 'rejected' ? 'Documents rejected' :
+                       'Documents not submitted'}
+                    </span>
                 </div>
-                <button className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
-                  Complete Verification
+                </div>
+                <button 
+                  onClick={() => openModal('verificationStatus')}
+                  className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors mt-4"
+                >
+                  {profileData.verificationStatus.documentStatus === 'not_submitted' ? 'Upload Documents' :
+                   profileData.verificationStatus.documentStatus === 'pending' ? 'View Documents' :
+                   profileData.verificationStatus.documentStatus === 'rejected' ? 'Resubmit Documents' :
+                   profileData.verificationStatus.documentStatus === 'verified' ? 'View Documents' :
+                   'View Status'}
                 </button>
               </div>
 
@@ -867,16 +1272,19 @@ const JobseekerProfile = () => {
                   </button>
                 </div>
                 <div className="space-y-4">
-                  {Array.isArray(profileData.education) && profileData.education.length > 0 &&  (
+                  {Array.isArray(profileData.education) && profileData.education.length > 0 ? (
                     profileData.education.map((item) => (
                       <div key={item.id} className="border border-gray-200 rounded-lg p-4">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
-                            <h4 className="font-medium text-gray-900">{item.field_of_study}</h4>
-                            <p className="text-sm text-gray-600">{item.institution}</p>
+                            <h4 className="font-medium text-gray-900">{item.field_of_study || item.fieldOfStudy || 'Field of Study'}</h4>
+                            <p className="text-sm text-gray-600">{item.institution || 'Institution'}</p>
                             <p className="text-sm text-gray-500">
-                              {/* {item.startYear}  */} WALA PA START YEAR
-                              - {item.graduation_details === "Currently Studying" ? "Present" : item.endYear}
+                              {item.location && `${item.location} • `}
+                              {item.degree && `${item.degree} • `}
+                              {(item.graduation_details || item.graduationStatus) === "Currently Studying" ? "Currently Studying" : 
+                               (item.year_graduated || item.yearGraduated) ? (item.year_graduated || item.yearGraduated) : 
+                               (item.graduation_details || item.graduationStatus) || "Graduated"}
                             </p>
                           </div>
                           <div className="flex items-center space-x-2">
@@ -900,6 +1308,14 @@ const JobseekerProfile = () => {
                         </div>
                       </div>
                     ))
+                  ) : (
+                    <div className="text-center py-8 text-gray-500">
+                      <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                      <p className="text-sm">No education information added yet</p>
+                      <p className="text-xs text-gray-400 mt-1">Click "+ Add Education" to get started</p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -921,16 +1337,16 @@ const JobseekerProfile = () => {
                       <div key={item.id} className="border border-gray-200 rounded-lg p-4">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
-                            <h4 className="font-medium text-gray-900">{item.title}</h4>
+                             <h4 className="font-medium text-gray-900">{item.jobTitle || item.title || item.job_title}</h4>
                             <p className="text-sm text-gray-600">{item.company}</p>
                             <p className="text-sm text-gray-500">
-                              {new Date(item.start_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} -{" "}
-                              {item.end_date
-                                ? new Date(item.end_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+                              {(item.startDate || item.start_date) && new Date(item.startDate || item.start_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} -{" "}
+                              {(item.endDate || item.end_date)
+                                ? new Date(item.endDate || item.end_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
                                 : "Present"}{" "}
-                              • {item.employment_type}
+                              • {item.employmentType || item.employment_type}
                             </p>
-                            <p className="text-sm text-gray-500">{item.location}, {item.country}</p>
+                            <p className="text-sm text-gray-500">{item.location && `${item.location}, `}{item.country}</p>
                             <p className="text-sm text-gray-700 mt-2">{item.description}</p>
                           </div>
                           <div className="flex items-center space-x-2">
@@ -970,7 +1386,7 @@ const JobseekerProfile = () => {
                   </button>
                 </div>
                 {Array.isArray(profileData.accessibilityNeeds) &&
-                  profileData.accessibilityNeeds.length > 0 && (
+                  profileData.accessibilityNeeds.length > 0 ? (
                     profileData.accessibilityNeeds.map((needs, idx) => (
                       <div key={idx} className="space-y-3">
                         {/* VISUAL SUPPORT */}
@@ -994,6 +1410,19 @@ const JobseekerProfile = () => {
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                 </svg>
                               </button>
+                              {expandedSections.visualSupport && (
+                                <div className="px-3 pb-3 border-t border-gray-200">
+                                  <div className="pt-3">
+                                    <div className="flex flex-wrap gap-2">
+                                      {needs.visual_support.map((item, index) => (
+                                        <span key={index} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                          {item}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                         )}
 
@@ -1017,6 +1446,19 @@ const JobseekerProfile = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                               </svg>
                             </button>
+                            {expandedSections.hearingSupport && (
+                              <div className="px-3 pb-3 border-t border-gray-200">
+                                <div className="pt-3">
+                                  <div className="flex flex-wrap gap-2">
+                                    {needs.hearing_support.map((item, index) => (
+                                      <span key={index} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        {item}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         )}
 
@@ -1040,6 +1482,19 @@ const JobseekerProfile = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                               </svg>
                             </button>
+                            {expandedSections.mobilitySupport && (
+                              <div className="px-3 pb-3 border-t border-gray-200">
+                                <div className="pt-3">
+                                  <div className="flex flex-wrap gap-2">
+                                    {needs.mobility_support.map((item, index) => (
+                                      <span key={index} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                        {item}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         )}
 
@@ -1063,10 +1518,48 @@ const JobseekerProfile = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                               </svg>
                             </button>
+                            {expandedSections.cognitiveSupport && (
+                              <div className="px-3 pb-3 border-t border-gray-200">
+                                <div className="pt-3">
+                                  <div className="flex flex-wrap gap-2">
+                                    {needs.cognitive_support.map((item, index) => (
+                                      <span key={index} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                        {item}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        {/* ADDITIONAL INFORMATION */}
+                        {needs.additional_information && needs.additional_information.trim() && (
+                          <div className="border border-gray-200 rounded-lg">
+                            <div className="p-3">
+                              <div className="flex items-center space-x-2 mb-2">
+                                <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span className="text-sm font-medium text-gray-900">Additional Information</span>
+                              </div>
+                              <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                {needs.additional_information}
+                              </p>
+                            </div>
                           </div>
                         )}
                       </div>
                     ))
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p className="text-sm">No accessibility needs specified yet</p>
+                    <p className="text-xs text-gray-400 mt-1">Click "Update Requirements" to add your accessibility needs</p>
+                  </div>
                 )}
               </div>
 
@@ -1101,7 +1594,13 @@ const JobseekerProfile = () => {
                   <div>
                     <span className="text-sm font-medium text-gray-700">Salary Range:</span>
                     <span className="text-sm text-gray-900 ml-2">
-                      {profileData.employmentPreferences.salaryRange}/month
+                      {profileData.employmentPreferences.salaryRange && typeof profileData.employmentPreferences.salaryRange === 'object' ? (
+                        profileData.employmentPreferences.salaryRange.min && profileData.employmentPreferences.salaryRange.max ? (
+                          `₱${profileData.employmentPreferences.salaryRange.min.toLocaleString()} - ₱${profileData.employmentPreferences.salaryRange.max.toLocaleString()} ${profileData.employmentPreferences.salaryRange.frequency ? `per ${profileData.employmentPreferences.salaryRange.frequency.toLowerCase()}` : ''}`
+                        ) : 'Not specified'
+                      ) : (
+                        profileData.employmentPreferences.salaryRange || 'Not specified'
+                      )}
                     </span>
                   </div>
                 </div>
@@ -1109,6 +1608,7 @@ const JobseekerProfile = () => {
             </div>
           </div>
         </div>
+
       </main>
 
       <Footer />
@@ -1220,6 +1720,21 @@ const JobseekerProfile = () => {
       >
         <EmploymentPreferencesModal formData={formData} onFormChange={handleFormChange} />
       </ProfileModal>
+
+      <ProfileModal
+        isOpen={activeModal === 'verificationStatus'}
+        onClose={closeModal}
+        title="Verification Status"
+        description="Your account verification status and document review progress"
+        onSave={handleSave}
+        isSaving={isSaving}
+        saveText="Save Changes"
+      >
+        <VerificationStatusModal formData={formData} onFormChange={handleVerificationFormChange} />
+      </ProfileModal>
+      
+      {/* Debug info */}
+      {console.log('Modal render - activeModal:', activeModal, 'verificationStatus check:', activeModal === 'verificationStatus')}
     </div>
   );
 };
