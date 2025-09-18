@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import JobseekerHeader from '../../components/ui/JobseekerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
@@ -10,14 +10,21 @@ import api from '../../utils/api.js';
 const SubmitApplication = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isEditMode = searchParams.get('edit') === 'true';
   const [salaryExpectation, setSalaryExpectation] = useState('');
   const [salaryError, setSalaryError] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
   const [uploadedFiles, setUploadedFiles] = useState({
     resume: null,
     coverLetter: null,
-    portfolio: []
+    portfolio: [],
+    video: null
   });
+  
+  // Edit mode states
+  const [existingApplication, setExistingApplication] = useState(null);
+  const [isLoadingExisting, setIsLoadingExisting] = useState(false);
 
 
   const [coverLetter, setCoverLetter] = useState('');
@@ -93,6 +100,90 @@ const SubmitApplication = () => {
     }
   };
 
+  // Fetch existing application data for edit mode
+  const fetchExistingApplication = async () => {
+    if (!isEditMode) return;
+    
+    try {
+      setIsLoadingExisting(true);
+      console.log('Fetching existing application for job:', jobId);
+      
+      const response = await api.get(`/api/applications/check/${jobId}`);
+      console.log('Existing application response:', response.data);
+      
+      if (response.data.success && response.data.application) {
+        const app = response.data.application;
+        setExistingApplication(app);
+        
+        // Pre-fill form data
+        if (app.custom_message) {
+          setCoverLetter(app.custom_message);
+        }
+        
+        if (app.proposed_salary) {
+          setSalaryExpectation(app.proposed_salary.toString());
+        }
+        
+        if (app.work_experience) {
+          const workExp = Array.isArray(app.work_experience) ? app.work_experience : JSON.parse(app.work_experience);
+          console.log('Work experience from database:', workExp);
+          
+          // Extract IDs if workExp contains objects, otherwise use as is
+          const experienceIds = workExp.map(exp => {
+            if (typeof exp === 'object' && exp.id) {
+              return exp.id;
+            }
+            return exp;
+          });
+          
+          console.log('Selected experience IDs:', experienceIds);
+          setSelectedExperiences(experienceIds);
+        }
+        
+        if (app.portfolio_links) {
+          const portfolio = typeof app.portfolio_links === 'string' ? JSON.parse(app.portfolio_links) : app.portfolio_links;
+          setPortfolioLinks({
+            portfolio: portfolio.portfolio || '',
+            github: portfolio.github || '',
+            linkedin: portfolio.linkedin || '',
+            other: portfolio.other || ''
+          });
+        }
+        
+        // Handle resume
+        if (app.resume) {
+          setUploadedFiles(prev => ({
+            ...prev,
+            resume: {
+              name: app.resume.title,
+              type: 'application/pdf',
+              size: 0 // We don't have the actual file size
+            }
+          }));
+        }
+        
+        // Handle video
+        if (app.video_file_path) {
+          setUploadedFiles(prev => ({
+            ...prev,
+            video: {
+              name: app.video_file_path,
+              type: 'video/mp4',
+              size: 0 // We don't have the actual file size
+            }
+          }));
+        }
+        
+        console.log('Application data pre-filled successfully');
+      }
+    } catch (error) {
+      console.error('Error fetching existing application:', error);
+      // Don't show error to user, just continue with empty form
+    } finally {
+      setIsLoadingExisting(false);
+    }
+  };
+
   // Fetch user work experience and portfolio data
   const fetchUserData = async () => {
     try {
@@ -110,8 +201,8 @@ const SubmitApplication = () => {
          setPortfolioLinks({
            portfolio: userData.portfolio_url || '',
            github: userData.github_url || '',
-           linkedin: userData.otherPlatform || '',
-           other: ''
+           linkedin: userData.linkedin_url || '',
+           other: userData.otherPlatform || ''
          });
       }
     } catch (error) {
@@ -127,8 +218,9 @@ const SubmitApplication = () => {
     if (jobId) {
       fetchJobData();
       fetchUserData();
+      fetchExistingApplication();
     }
-  }, [jobId]);
+  }, [jobId, isEditMode]);
 
   // Modal functions
   const openModal = (modalType, item = null) => {
@@ -310,6 +402,8 @@ const SubmitApplication = () => {
   };
 
   const handleFileUpload = (type, file) => {
+    console.log('File upload triggered:', { type, file: { name: file.name, size: file.size, type: file.type } });
+    
     if (type === 'portfolio') {
       setUploadedFiles(prev => ({
         ...prev,
@@ -321,6 +415,8 @@ const SubmitApplication = () => {
         [type]: file
       }));
     }
+    
+    console.log('Updated uploadedFiles:', uploadedFiles);
   };
 
   const handleFileRemove = (type, index = null) => {
@@ -382,14 +478,34 @@ const SubmitApplication = () => {
       console.log(key, value);
     }
     
-    const response = await api.post('/api/resumes/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const response = await api.post('/api/resumes/upload', formData);
     
     console.log('Resume upload response:', response.data);
     return response.data.data.resume_id; // Backend returns data in 'data' field
+  };
+
+  const uploadVideo = async (videoFile) => {
+    console.log('Uploading video file:', {
+      name: videoFile.name,
+      size: videoFile.size,
+      type: videoFile.type
+    });
+    
+    const formData = new FormData();
+    formData.append('videoFile', videoFile); // Backend expects 'videoFile'
+    
+    console.log('Video FormData contents:');
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+    
+    const response = await api.post('/api/resumes/upload-video', formData);
+    
+    if (response.data.success) {
+      return response.data.data.file_path;
+    } else {
+      throw new Error(response.data.message || 'Failed to upload video');
+    }
   };
 
   const handleSubmitApplication = async () => {
@@ -400,16 +516,54 @@ const SubmitApplication = () => {
     }
 
     try {
-      // Try to upload resume first, but don't block application if it fails
+      console.log('=== SUBMIT APPLICATION DEBUG ===');
+      console.log('isEditMode:', isEditMode);
+      console.log('existingApplication:', existingApplication);
+      console.log('uploadedFiles:', uploadedFiles);
+      
+      // Handle resume upload
       let resumeId = null;
-      if (uploadedFiles.resume) {
+      
+      console.log('=== RESUME HANDLING DEBUG ===');
+      console.log('isEditMode:', isEditMode);
+      console.log('existingApplication:', existingApplication);
+      console.log('existingApplication?.resume:', existingApplication?.resume);
+      console.log('existingApplication?.resume?.resume_id:', existingApplication?.resume?.resume_id);
+      console.log('uploadedFiles.resume:', uploadedFiles.resume);
+      
+      // In edit mode, if there's an existing resume, use it instead of uploading
+      
+      if (isEditMode && existingApplication?.resume?.resume_id) {
+        resumeId = existingApplication.resume.resume_id;
+        console.log('Edit mode: Using existing resume ID:', resumeId);
+      } else if (uploadedFiles.resume) {
+        // Only upload if it's a new file (not in edit mode or no existing resume)
+        console.log('New resume upload:', uploadedFiles.resume.name);
         try {
           resumeId = await uploadResume(uploadedFiles.resume);
           console.log('Resume uploaded with ID:', resumeId);
         } catch (uploadError) {
           console.error('Resume upload failed:', uploadError);
-          // Continue with application submission even if resume upload fails
           console.log('Continuing with application submission without resume ID');
+        }
+      }
+
+      // Handle video upload
+      let videoFilePath = null;
+      
+      // In edit mode, if there's an existing video, use it instead of uploading
+      if (isEditMode && existingApplication?.video_file_path) {
+        videoFilePath = existingApplication.video_file_path;
+        console.log('Edit mode: Using existing video path:', videoFilePath);
+      } else if (uploadedFiles.video) {
+        // Only upload if it's a new file (not in edit mode or no existing video)
+        console.log('New video upload:', uploadedFiles.video.name);
+        try {
+          videoFilePath = await uploadVideo(uploadedFiles.video);
+          console.log('Video uploaded with path:', videoFilePath);
+        } catch (videoError) {
+          console.error('Video upload failed:', videoError);
+          console.log('Continuing with application submission without video file');
         }
       }
 
@@ -418,7 +572,8 @@ const SubmitApplication = () => {
         await api.put('/retrieve/update/basic-information', {
           portfolio_url: portfolioLinks.portfolio,
           github_url: portfolioLinks.github,
-          otherPlatform: portfolioLinks.linkedin
+          linkedin_url: portfolioLinks.linkedin,
+          otherPlatform: portfolioLinks.other
         });
       } catch (profileError) {
         console.error('Profile update failed:', profileError);
@@ -438,19 +593,21 @@ const SubmitApplication = () => {
       proposedSalary: parseFloat(salaryExpectation),
       resumeId: resumeId || null, // Send null if no resume was uploaded
       workExperience: selectedWorkExperiences,
-      portfolioLinks: portfolioLinks
+      portfolioLinks: portfolioLinks,
+      videoFilePath: videoFilePath || null // Send null if no video was uploaded
     };
       
     console.log('Submitting application:', applicationData);
       
       // Submit application to backend
-      const response = await api.post('/api/applications/apply', applicationData);
+      const endpoint = isEditMode ? '/api/applications/update' : '/api/applications/apply';
+      const response = await api.post(endpoint, applicationData);
       
       if (response.data.success) {
-        alert('Application submitted successfully!');
+        alert(isEditMode ? 'Application updated successfully!' : 'Application submitted successfully!');
         navigate('/jobseeker/applications');
       } else {
-        alert('Failed to submit application. Please try again.');
+        alert(`Failed to ${isEditMode ? 'update' : 'submit'} application. Please try again.`);
       }
     } catch (error) {
       console.error('Error submitting application:', error);
@@ -939,12 +1096,22 @@ const SubmitApplication = () => {
               {/* Video Introduction */}
               <div className="bg-white rounded-lg shadow p-6">
                 <h2 className="text-xl font-bold text-gray-900 mb-4">Video Introduction (Optional)</h2>
-                <FileUploadArea
-                  type="video"
-                  accept=".mp4,.mov,.avi,.webm"
-                  title="Upload Video Introduction"
-                  description="MP4, MOV, AVI, or WEBM (Max 50MB)"
-                />
+                
+                {uploadedFiles.video ? (
+                  <FilePreview 
+                    file={uploadedFiles.video} 
+                    onRemove={() => handleFileRemove('video')}
+                    type="video"
+                  />
+                ) : (
+                  <FileUploadArea
+                    type="video"
+                    accept=".mp4,.mov,.avi,.webm"
+                    title="Upload Video Introduction"
+                    description="MP4, MOV, AVI, or WEBM (Max 50MB)"
+                  />
+                )}
+                
                 <div className="mt-4 text-sm text-gray-500">
                   <p>A brief video introduction can help employers get to know you better. Keep it under 3 minutes.</p>
                 </div>
@@ -958,7 +1125,7 @@ const SubmitApplication = () => {
                     onClick={handleSubmitApplication}
                     className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
                   >
-                    Submit Application
+                    {isEditMode ? 'Update Application' : 'Submit Application'}
                   </button>
                   <button
                     onClick={() => navigate(-1)}

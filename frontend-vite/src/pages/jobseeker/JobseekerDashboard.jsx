@@ -202,7 +202,7 @@ const JobseekerDashboard = () => {
           title: "Frontend Developer",
           jobtitle: "Frontend Developer",
           company: "TechCorp Solutions",
-          companyLogo: "https://via.placeholder.com/40",
+          companyLogo: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAyMEMyNi4wNzE0IDIwIDMxIDE1LjA3MTQgMzEgOUgzMUMzMSAxNS4wNzE0IDI2LjA3MTQgMjAgMjAgMjBaIiBmaWxsPSIjOUNBM0FGIi8+CjxjaXJjbGUgY3g9IjIwIiBjeT0iMTQiIHI9IjQiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+",
           type: "Full-time",
           employment_type: "Full-time",
           location: "Toronto, ON",
@@ -225,7 +225,7 @@ const JobseekerDashboard = () => {
           title: "UX Designer",
           jobtitle: "UX Designer", 
           company: "Design Studio Inc",
-          companyLogo: "https://via.placeholder.com/40",
+          companyLogo: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAyMEMyNi4wNzE0IDIwIDMxIDE1LjA3MTQgMzEgOUgzMUMzMSAxNS4wNzE0IDI2LjA3MTQgMjAgMjAgMjBaIiBmaWxsPSIjOUNBM0FGIi8+CjxjaXJjbGUgY3g9IjIwIiBjeT0iMTQiIHI9IjQiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+",
           type: "Contract",
           employment_type: "Contract",
           location: "Vancouver, BC",
@@ -248,7 +248,7 @@ const JobseekerDashboard = () => {
           title: "Data Analyst",
           jobtitle: "Data Analyst",
           company: "Analytics Pro",
-          companyLogo: "https://via.placeholder.com/40",
+          companyLogo: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAyMEMyNi4wNzE0IDIwIDMxIDE1LjA3MTQgMzEgOUgzMUMzMSAxNS4wNzE0IDI2LjA3MTQgMjAgMjAgMjBaIiBmaWxsPSIjOUNBM0FGIi8+CjxjaXJjbGUgY3g9IjIwIiBjeT0iMTQiIHI9IjQiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+",
           type: "Full-time",
           employment_type: "Full-time",
           location: "Montreal, QC",
@@ -676,7 +676,7 @@ const JobseekerDashboard = () => {
                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
                           <div className="flex items-center space-x-2 mb-2 sm:mb-0">
                             <img 
-                              src={job.employer?.profile_picture || job.companyLogo || "https://via.placeholder.com/40"} 
+                              src={job.employer?.profile_picture || job.companyLogo || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAyMEMyNi4wNzE0IDIwIDMxIDE1LjA3MTQgMzEgOUgzMUMzMSAxNS4wNzE0IDI2LjA3MTQgMjAgMjAgMjBaIiBmaWxsPSIjOUNBM0FGIi8+CjxjaXJjbGUgY3g9IjIwIiBjeT0iMTQiIHI9IjQiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+"} 
                               alt={`${job.employer?.company_name || job.company} logo`}
                               className="w-8 h-8 rounded-full object-cover"
                             />

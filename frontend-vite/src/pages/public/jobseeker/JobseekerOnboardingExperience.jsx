@@ -588,7 +588,7 @@ const JobseekerOnboardingExperience = () => {
                       <label className="block text-sm font-medium text-gray-700 mb-2">Start Date*</label>
                       <div className="relative">
                         <input 
-                          value={startDate ? startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
+                          value={startDate ? (typeof startDate === 'string' ? new Date(startDate).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })) : ''} 
                           onClick={() => setShowStartCalendar(true)}
                           readOnly
                           placeholder="Select start date"
@@ -683,7 +683,7 @@ const JobseekerOnboardingExperience = () => {
                       <label className="block text-sm font-medium text-gray-700 mb-2">End Date*</label>
                       <div className="relative">
                         <input 
-                          value={endDate ? endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
+                          value={endDate ? (typeof endDate === 'string' ? new Date(endDate).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })) : ''} 
                           onClick={() => !isCurrent && setShowEndCalendar(true)}
                           readOnly
                           placeholder="Select end date"
@@ -904,8 +904,9 @@ const JobseekerOnboardingExperience = () => {
                     <label className="block text-sm text-gray-700 mb-1">Start Date</label>
                     <div className="relative">
                       <input 
-                        value={exp.startDate ? exp.startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
+                        value={exp.startDate ? (typeof exp.startDate === 'string' ? new Date(exp.startDate).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : exp.startDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })) : ''} 
                         onClick={() => updateAdditionalExperience(exp.id, 'showStartCalendar', true)}
+                        readOnly
                         placeholder="Select start date"
                         className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer ${
                           errors.startDate ? 'border-red-500' : 'border-gray-200'
@@ -1002,8 +1003,9 @@ const JobseekerOnboardingExperience = () => {
                     <label className="block text-sm text-gray-700 mb-1">End Date</label>
                     <div className="relative">
                       <input 
-                        value={exp.endDate ? exp.endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : ''} 
+                        value={exp.endDate ? (typeof exp.endDate === 'string' ? new Date(exp.endDate).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }) : exp.endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })) : ''} 
                         onClick={() => !exp.isCurrent && updateAdditionalExperience(exp.id, 'showEndCalendar', true)}
+                        readOnly
                         placeholder="Select end date"
                         disabled={exp.isCurrent}
                         className={`w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
