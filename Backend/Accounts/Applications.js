@@ -431,7 +431,7 @@ router.get('/job/:jobId/applications', authenticateToken, async (req, res) => {
       prisma.Applications.findMany({
         where,
         include: {
-          pwd: {
+          pwd_profile: {
             select: {
               first_name: true,
               last_name: true,
@@ -446,7 +446,7 @@ router.get('/job/:jobId/applications', authenticateToken, async (req, res) => {
               title: true,
               file_path: true,
               summary: true,
-              skill: true
+              skills: true
             }
           }
         },
@@ -459,10 +459,10 @@ router.get('/job/:jobId/applications', authenticateToken, async (req, res) => {
 
     const applicationsWithUrls = applications.map(app => ({
       ...app,
-      pwd: {
-        ...app.pwd,
-        profile_picture: app.pwd.profile_picture 
-          ? `http://localhost:4000/uploads/PWDs/${app.pwd.user_id}/${app.pwd.profile_picture}`
+      pwd_profile: {
+        ...app.pwd_profile,
+        profile_picture: app.pwd_profile.profile_picture 
+          ? `http://localhost:4000/uploads/PWDs/${app.pwd_profile.user_id}/${app.pwd_profile.profile_picture}`
           : null
       }
     }));
