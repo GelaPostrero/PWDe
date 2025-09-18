@@ -3,6 +3,119 @@ const router = express.Router();
 const prisma = require('../prisma/prisma');
 const authenticateToken = require('../Middlewares/auth');
 
+router.get("/kpis", authenticateToken, async (req, res) => {
+  try {
+    const emp_id = req.user?.emp_id;
+    const { timeRange = "30d" } = req.query; // default: 30 days
+    const now = new Date();
+
+    let days;
+    if (timeRange === "7d") days = 7;
+    else if (timeRange === "30d") days = 30;
+    else if (timeRange === "90d") days = 90;
+    else if (timeRange === "1y") days = 365;
+    else days = 30; // fallback
+
+    const startOfCurrent = new Date(now);
+    startOfCurrent.setDate(now.getDate() - days);
+
+    const startOfPrevious = new Date(startOfCurrent);
+    startOfPrevious.setDate(startOfPrevious.getDate() - days);
+
+    const endOfPrevious = new Date(startOfCurrent);
+    endOfPrevious.setDate(endOfPrevious.getDate() - 1);
+
+    // ---------- Total Applications ----------
+    const currentApplications = await prisma.applications.count({
+      where: { 
+        employer_id: emp_id,
+        submitted_at: { gte: startOfCurrent } 
+      },
+    });
+    const previousApplications = await prisma.applications.count({
+      where: {
+        submitted_at: { gte: startOfPrevious, lte: endOfPrevious },
+      },
+    });
+
+    // ---------- Active Job Postings ----------
+    const currentJobPostings = await prisma.job_Listings.count({
+      where: { 
+        employer_id: emp_id,
+        job_status: "Active", 
+        created_at: { gte: startOfCurrent } 
+      },
+    });
+    const previousJobPostings = await prisma.job_Listings.count({
+      where: {
+        job_status: "Active",
+        created_at: { gte: startOfPrevious, lte: endOfPrevious },
+      },
+    });
+
+    // ---------- Successful Hires ----------
+    const currentHires = await prisma.applications.count({
+      where: { status: "hired", status_changed_at: { gte: startOfCurrent } },
+    });
+    const previousHires = await prisma.applications.count({
+      where: {
+        status: "hired",
+        status_changed_at: { gte: startOfPrevious, lte: endOfPrevious },
+      },
+    });
+
+    // ---------- Avg Time to Hire ----------
+    const currentHireData = await prisma.applications.findMany({
+      where: { status: "hired", status_changed_at: { gte: startOfCurrent } },
+      select: { submitted_at: true, status_changed_at: true },
+    });
+    const previousHireData = await prisma.applications.findMany({
+      where: {
+        status: "hired",
+        status_changed_at: { gte: startOfPrevious, lte: endOfPrevious },
+      },
+      select: { submitted_at: true, status_changed_at: true },
+    });
+
+    const avgDays = (rows) =>
+      rows.length > 0
+        ? Math.round(
+            rows.reduce(
+              (acc, h) =>
+                acc +
+                (h.status_changed_at.getTime() - h.submitted_at.getTime()) /
+                  (1000 * 60 * 60 * 24),
+              0
+            ) / rows.length
+          )
+        : 0;
+
+    const currentAvgTime = avgDays(currentHireData);
+    const previousAvgTime = avgDays(previousHireData);
+
+    // ---------- Helper ----------
+    const formatMetric = (current, previous, invert = false) => {
+      const diff = current - previous;
+      const change =
+        previous > 0 ? Math.round((diff / previous) * 100) : current > 0 ? 100 : 0;
+      const changeType =
+        (invert ? diff < 0 : diff > 0) ? "increase" : diff === 0 ? "neutral" : "decrease";
+      return { current, previous, change, changeType };
+    };
+
+    res.json({
+      timeRange,
+      totalApplications: formatMetric(currentApplications, previousApplications),
+      activeJobPostings: formatMetric(currentJobPostings, previousJobPostings),
+      successfulHires: formatMetric(currentHires, previousHires),
+      avgTimeToHire: formatMetric(currentAvgTime, previousAvgTime, true),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch KPI data" });
+  }
+});
+
 // Get employer dashboard analytics
 router.get('/dashboard', authenticateToken, async (req, res) => {
   try {

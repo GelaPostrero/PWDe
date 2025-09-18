@@ -204,7 +204,7 @@ const EmployerJob = () => {
 
   const handleViewJob = (jobId) => {
     // Navigate to job details page
-    window.location.href = `/employer/job/${jobId}`;
+    window.location.href = `/employer/job/${jobId}/posted`;
   };
 
   // Initialize data on component mount

@@ -17,12 +17,31 @@ import {
 import EmployerHeader from '../../components/ui/EmployerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
 import Chatbot from '../../components/ui/Chatbot.jsx';
+import api from '../../utils/api.js';
 
 const Analytics = () => {
   const [timeRange, setTimeRange] = useState('30d');
+  const [kpis, setKpis] = useState(null);
   const [analyticsData, setAnalyticsData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const fetchKpis = async (range) => {
+    try {
+      setLoading(true);
+      const { data } = await api.get(`/api/analytics/kpis?timeRange=${range}`);
+      setKpis(data);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to fetch KPIs");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchKpis(timeRange);
+  }, [timeRange]);
 
   // Fetch analytics data from backend
   useEffect(() => {
@@ -331,7 +350,7 @@ const Analytics = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Total Applications</p>
-                  <p className="text-3xl font-bold text-gray-900">{analyticsData.kpis.totalApplications.current.toLocaleString()}</p>
+                  <p className="text-3xl font-bold text-gray-900">{kpis?.totalApplications.current.toLocaleString()}</p>
                   <p className="text-sm text-green-600 mt-1">
                     +{analyticsData.kpis.totalApplications.change}% from last month
                   </p>
@@ -348,7 +367,7 @@ const Analytics = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Active Job Postings</p>
-                  <p className="text-3xl font-bold text-gray-900">{analyticsData.kpis.activeJobPostings.current}</p>
+                  <p className="text-3xl font-bold text-gray-900">{kpis?.activeJobPostings.current}</p>
                   <p className="text-sm text-green-600 mt-1">
                     +{analyticsData.kpis.activeJobPostings.change} new this week
                   </p>
@@ -365,7 +384,7 @@ const Analytics = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Successful Hires</p>
-                  <p className="text-3xl font-bold text-gray-900">{analyticsData.kpis.successfulHires.current}</p>
+                  <p className="text-3xl font-bold text-gray-900">{kpis?.successfulHires.current}</p>
                   <p className="text-sm text-green-600 mt-1">
                     +{analyticsData.kpis.successfulHires.change}% conversion rate
                   </p>
@@ -382,7 +401,7 @@ const Analytics = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Avg Time to Hire</p>
-                  <p className="text-3xl font-bold text-gray-900">{analyticsData.kpis.avgTimeToHire.current} days</p>
+                  <p className="text-3xl font-bold text-gray-900">{kpis?.avgTimeToHire.current} days</p>
                   <p className="text-sm text-gray-600 mt-1">
                     (industry avg: {analyticsData.kpis.avgTimeToHire.note.split(': ')[1]})
                   </p>
