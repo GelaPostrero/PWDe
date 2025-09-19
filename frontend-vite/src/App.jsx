@@ -48,7 +48,9 @@ import Transactions from './pages/jobseeker/Transactions.jsx';
 import Resources from './pages/jobseeker/Resources.jsx';
 import Messages from './pages/jobseeker/Messages.jsx';
 import JobseekerProfile from './pages/jobseeker/JobseekerProfile.jsx';
+import ProfilePreview from './pages/jobseeker/ProfilePreview.jsx';
 import JobseekerAccountSettings from './pages/jobseeker/JobseekerAccountSettings.jsx';
+import Support from './pages/jobseeker/Support.jsx';
 import ForgotPassword from './pages/public/ForgotPassword.jsx';
 //import ResumeBuilder from './pages/jobseeker/ResumeBuilder.jsx';
 
@@ -131,7 +133,9 @@ function App() {
           <Route path="/resources" element={<Resources />} />
           <Route path="/messages" element={<Messages />} />
           <Route path="/jobseeker/profile" element={<JobseekerProfile />} />
+          <Route path="/jobseeker/profile-preview" element={<ProfilePreview />} />
           <Route path="/jobseeker/account-settings" element={<JobseekerAccountSettings />} />
+          <Route path="/support" element={<Support />} />
         </Route>
       </Routes>
     </Router>
