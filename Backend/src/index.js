@@ -20,11 +20,19 @@ const analytics = require('../Accounts/Analytics');
 const reviews = require('../Accounts/Reviews');
 const transactions = require('../Accounts/Transactions');
 const aiMatching = require('../Accounts/AIMatching');
+const adminVerification = require('../Accounts/AdminVerification');
 
 const app = express();
 
 app.use(cors({ origin: 'http://localhost:5173'}));
 app.use(express.json());
+
+// Debug middleware for uploads
+app.use('/uploads', (req, res, next) => {
+  console.log('Static file request:', req.url);
+  console.log('Full path:', path.join(__dirname, '../Documents', req.url));
+  next();
+});
 
 app.use('/uploads', express.static(path.join(__dirname, '../Documents')));
 
@@ -47,5 +55,6 @@ app.use('/api/analytics', analytics);
 app.use('/api/reviews', reviews);
 app.use('/api/transactions', transactions);
 app.use('/api/ai-matching', aiMatching);
+app.use('/api/admin', adminVerification);
 
 app.listen(4000, () => console.log(`Server running on http://localhost:4000`));

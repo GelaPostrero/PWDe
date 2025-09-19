@@ -129,7 +129,10 @@ exports.Prisma.UsersScalarFieldEnum = {
   is_verified: 'is_verified',
   user_id: 'user_id',
   password_reset_token: 'password_reset_token',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  document_verification_status: 'document_verification_status',
+  document_rejection_reason: 'document_rejection_reason',
+  verification_documents: 'verification_documents'
 };
 
 exports.Prisma.Pwd_ProfileScalarFieldEnum = {
@@ -185,7 +188,16 @@ exports.Prisma.Pwd_ProfileScalarFieldEnum = {
   education: 'education',
   portfolio_items: 'portfolio_items',
   skills_assessment: 'skills_assessment',
-  set_accessibility_preferences: 'set_accessibility_preferences'
+  set_accessibility_preferences: 'set_accessibility_preferences',
+  make_profile_searchable: 'make_profile_searchable',
+  display_personal_information: 'display_personal_information',
+  display_portfolio_links: 'display_portfolio_links',
+  show_professional_summary: 'show_professional_summary',
+  show_skills_and_expertise: 'show_skills_and_expertise',
+  show_education: 'show_education',
+  show_experience: 'show_experience',
+  display_accommodation_needs: 'display_accommodation_needs',
+  display_employment_preferences: 'display_employment_preferences'
 };
 
 exports.Prisma.Pwd_ExperienceScalarFieldEnum = {
@@ -217,7 +229,6 @@ exports.Prisma.Pwd_Accessibility_NeedsScalarFieldEnum = {
 exports.Prisma.Pwd_EducationScalarFieldEnum = {
   id: 'id',
   pwd_id: 'pwd_id',
-  highest_level: 'highest_level',
   institution: 'institution',
   location: 'location',
   degree: 'degree',
@@ -326,6 +337,8 @@ exports.Prisma.ApplicationsScalarFieldEnum = {
   proposed_salary: 'proposed_salary',
   work_experience: 'work_experience',
   portfolio_links: 'portfolio_links',
+  video_file_path: 'video_file_path',
+  status: 'status',
   submitted_at: 'submitted_at',
   updated_at: 'updated_at',
   status_changed_at: 'status_changed_at'
