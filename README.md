@@ -29,5 +29,5 @@
 | **Frontend**              | HTML, CSS, JavaScript                  |
 | **Backend**               | Node.js, Express.js                    |
 | **Database**              | PostgreSQL                             |
-| **AI/ML**                 | Python (for AI matching model), TensorFlow or similar |
+| **AI/ML**                 |                                        |
 | **Frameworks & Tools**    | React (assumed), Bootstrap (UI), REST API |
