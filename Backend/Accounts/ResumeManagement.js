@@ -9,15 +9,25 @@ const fs = require('fs');
 // Configure multer for resume file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const userId = req.user?.userId;
-    const uploadPath = path.join('./Documents/Resumes', String(userId));
-    
-    // Create directory if it doesn't exist
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
+    try {
+      const userId = req.user?.userId;
+      if (!userId) {
+        return cb(new Error('User ID not found'), null);
+      }
+      
+      const uploadPath = path.join('./Documents/Resumes', String(userId));
+      
+      // Create directory if it doesn't exist
+      if (!fs.existsSync(uploadPath)) {
+        fs.mkdirSync(uploadPath, { recursive: true });
+        console.log('Created directory:', uploadPath);
+      }
+      
+      cb(null, uploadPath);
+    } catch (error) {
+      console.error('Error in multer destination:', error);
+      cb(error, null);
     }
-    
-    cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -26,13 +36,31 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  // Allow only PDF and DOC files
-  const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+  console.log('File filter - File details:', {
+    originalname: file.originalname,
+    mimetype: file.mimetype,
+    size: file.size
+  });
+  
+  // Allow PDF, DOC, DOCX, and video files
+  const allowedTypes = [
+    'application/pdf', 
+    'application/msword', 
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'video/mp4',
+    'video/avi',
+    'video/mov',
+    'video/wmv',
+    'video/webm',
+    'video/quicktime'
+  ];
   
   if (allowedTypes.includes(file.mimetype)) {
+    console.log('File type accepted:', file.mimetype);
     cb(null, true);
   } else {
-    cb(new Error('Only PDF and DOC files are allowed'), false);
+    console.log('File type rejected:', file.mimetype);
+    cb(new Error(`File type '${file.mimetype}' is not allowed. Only PDF, DOC, DOCX, and video files are allowed.`), false);
   }
 };
 
@@ -40,17 +68,168 @@ const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB limit
+    fileSize: 50 * 1024 * 1024 // 50MB limit for video files
+  }
+});
+
+// Error handling middleware for multer
+const handleMulterError = (error, req, res, next) => {
+  if (error instanceof multer.MulterError) {
+    if (error.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'File size too large. Maximum size is 50MB.' 
+      });
+    }
+    return res.status(400).json({ 
+      success: false, 
+      message: error.message 
+    });
+  }
+  if (error) {
+    console.error('Multer error:', error);
+    return res.status(400).json({ 
+      success: false, 
+      message: error.message 
+    });
+  }
+  next();
+};
+
+// Separate multer configuration for videos
+const videoStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    try {
+      const pwd_id = req.user?.pwd_id;
+      const userType = req.user?.userType;
+      const userId = req.user?.userId;
+      
+      console.log('Video upload - User data:', { pwd_id, userType, userId });
+      
+      if (userType !== 'PWD' || !pwd_id) {
+        return cb(new Error('Invalid user type'), null);
+      }
+      
+      const uploadPath = path.join(__dirname, '../Documents/Resumes', pwd_id.toString());
+      
+      // Create directory if it doesn't exist
+      if (!fs.existsSync(uploadPath)) {
+        fs.mkdirSync(uploadPath, { recursive: true });
+        console.log('Created directory:', uploadPath);
+      }
+      
+      cb(null, uploadPath);
+    } catch (error) {
+      console.error('Error in video multer destination:', error);
+      cb(error, null);
+    }
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, 'video-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const videoUpload = multer({
+  storage: videoStorage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: 50 * 1024 * 1024 // 50MB limit for video files
+  }
+});
+
+// Test endpoint
+router.get('/test', (req, res) => {
+  res.json({ success: true, message: 'Resume management endpoint is working' });
+});
+
+// Debug endpoint to check authentication
+router.get('/debug-auth', authenticateToken, (req, res) => {
+  res.json({ 
+    success: true, 
+    message: 'Authentication debug info',
+    user: req.user,
+    userType: req.user?.userType,
+    pwd_id: req.user?.pwd_id,
+    userId: req.user?.userId
+  });
+});
+
+// Upload video file
+router.post('/upload-video', authenticateToken, videoUpload.single('videoFile'), handleMulterError, async (req, res) => {
+  try {
+    console.log('Video upload request received');
+    console.log('User data:', req.user);
+    console.log('File data:', req.file);
+    
+    const pwd_id = req.user?.pwd_id;
+    const userType = req.user?.userType;
+    const userId = req.user?.userId;
+    
+    if (userType !== 'PWD' || !pwd_id) {
+      console.error('Invalid user type or missing pwd_id for video upload:', { userType, pwd_id });
+      return res.status(400).json({ success: false, message: 'Invalid user type or missing user ID' });
+    }
+
+    if (!req.file) {
+      console.error('No video file provided in request');
+      return res.status(400).json({ success: false, message: 'Video file is required' });
+    }
+
+    console.log('Video file uploaded successfully:', req.file.filename);
+    console.log('File saved to:', req.file.path);
+    console.log('User ID:', userId);
+    console.log('File path for database:', req.file.filename);
+    
+    res.status(201).json({
+      success: true,
+      message: 'Video uploaded successfully',
+      data: {
+        filename: req.file.filename,
+        file_path: req.file.filename, // Store just the filename, not full path
+        file_url: `http://localhost:4000/uploads/Resumes/${userId}/${req.file.filename}`
+      }
+    });
+  } catch (error) {
+    console.error('Error uploading video:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to upload video',
+      error: error.message 
+    });
   }
 });
 
 // Upload a new resume
-router.post('/upload', authenticateToken, upload.single('resumeFile'), async (req, res) => {
+router.post('/upload', authenticateToken, upload.single('resumeFile'), handleMulterError, async (req, res) => {
+  // Set timeout for the request
+  const timeout = setTimeout(() => {
+    if (!res.headersSent) {
+      res.status(408).json({ 
+        success: false, 
+        message: 'Request timeout' 
+      });
+    }
+  }, 30000); // 30 second timeout
+
   try {
+    console.log('=== RESUME UPLOAD DEBUG ===');
     console.log('Resume upload request received');
     console.log('User data:', req.user);
     console.log('File data:', req.file);
     console.log('Body data:', req.body);
+    console.log('Headers:', req.headers);
+    console.log('Authorization header:', req.headers.authorization);
+    
+    // Check for multer errors
+    if (req.fileValidationError) {
+      console.error('File validation error:', req.fileValidationError);
+      clearTimeout(timeout);
+      return res.status(400).json({ 
+        success: false, 
+        message: req.fileValidationError 
+      });
+    }
     
     const pwd_id = req.user?.pwd_id;
     const userType = req.user?.userType;
@@ -69,10 +248,14 @@ router.post('/upload', authenticateToken, upload.single('resumeFile'), async (re
     } = req.body;
 
     if (userType !== 'PWD' || !pwd_id) {
-      return res.status(400).json({ success: false, message: 'Invalid user type' });
+      clearTimeout(timeout);
+      console.error('Invalid user type or missing pwd_id:', { userType, pwd_id });
+      return res.status(400).json({ success: false, message: 'Invalid user type or missing user ID' });
     }
 
     if (!req.file) {
+      clearTimeout(timeout);
+      console.error('No file provided in request');
       return res.status(400).json({ success: false, message: 'Resume file is required' });
     }
 
@@ -94,6 +277,13 @@ router.post('/upload', authenticateToken, upload.single('resumeFile'), async (re
     }
 
     // Create resume record
+    console.log('Creating resume with data:', {
+      pwd_id,
+      title: title || 'My Resume',
+      summary: summary || '',
+      file_path: req.file.filename
+    });
+    
     const resume = await prisma.Resumes.create({
       data: {
         pwd_id: pwd_id,
@@ -104,9 +294,7 @@ router.post('/upload', authenticateToken, upload.single('resumeFile'), async (re
         education: JSON.stringify(parsedEducation),
         certifications: JSON.stringify(parsedCertifications),
         achievements: JSON.stringify(parsedAchievements),
-        file_path: req.file.filename,
-        created_at: new Date(),
-        updated_at: new Date()
+        file_path: req.file.filename
       }
     });
 
@@ -114,6 +302,7 @@ router.post('/upload', authenticateToken, upload.single('resumeFile'), async (re
     console.log('File saved to:', req.file.path);
     console.log('File URL will be:', `http://localhost:4000/uploads/Resumes/${userId}/${req.file.filename}`);
     
+    clearTimeout(timeout);
     res.status(201).json({
       success: true,
       message: 'Resume uploaded successfully',
@@ -123,12 +312,16 @@ router.post('/upload', authenticateToken, upload.single('resumeFile'), async (re
       }
     });
   } catch (error) {
+    clearTimeout(timeout);
     console.error('Error uploading resume:', error);
     console.error('Error stack:', error.stack);
+    console.error('Error name:', error.name);
+    console.error('Error code:', error.code);
     res.status(500).json({ 
       success: false, 
       message: 'Failed to upload resume',
-      error: error.message 
+      error: error.message,
+      details: error.stack
     });
   }
 });

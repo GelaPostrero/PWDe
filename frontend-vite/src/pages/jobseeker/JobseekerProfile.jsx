@@ -31,6 +31,7 @@ const JobseekerProfile = () => {
       setProfileData(prev => ({
         ...prev,
         // Basic Information (from onboarding)
+        userId: fetchedData.user_id,
         firstName: fetchedData.firstname,
         middleName: fetchedData.middlename,
         lastName: fetchedData.lastname,
@@ -42,7 +43,7 @@ const JobseekerProfile = () => {
         rating: fetchedData.rating,
         
         // Professional Information
-        jobTitle: fetchedData.profession,
+        jobTitle: fetchedData.professional_role || fetchedData.profession,
         profession: fetchedData.profession,
         professionalSummary: fetchedData.professional_summary,
         hourlyRate: '',
@@ -83,11 +84,15 @@ const JobseekerProfile = () => {
         
         // Profile Settings
         profileVisibility: {
-          searchable: true,
-          hourlyRate: true,
-          personalInfo: true,
-          portfolioLinks: true,
-          accommodationNeeds: true
+          make_profile_searchable: fetchedData.make_profile_searchable || false,
+          display_personal_information: fetchedData.display_personal_information || false,
+          display_portfolio_links: fetchedData.display_portfolio_links || false,
+          show_professional_summary: fetchedData.show_professional_summary || false,
+          show_skills_and_expertise: fetchedData.show_skills_and_expertise || false,
+          show_education: fetchedData.show_education || false,
+          show_experience: fetchedData.show_experience || false,
+          display_accommodation_needs: fetchedData.display_accommodation_needs || false,
+          display_employment_preferences: fetchedData.display_employment_preferences || false
         },
         
         // Verification Status
@@ -417,7 +422,8 @@ const JobseekerProfile = () => {
           case 'professionalInfo':
             endpoint = '/retrieve/update/professional-summary';
             payload = {
-              professionalSummary: data.professionalSummary
+              professionalSummary: data.professionalSummary,
+              jobTitle: data.jobTitle
             };
             break;
           case 'skills':
@@ -536,18 +542,7 @@ const JobseekerProfile = () => {
     // Update profile visibility settings
     updateVisibility: async (settings) => {
       try {
-        // TODO: Replace with actual API call
-        // const response = await fetch('/api/jobseeker/profile/visibility', {
-        //   method: 'PUT',
-        //   headers: {
-        //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify(settings)
-        // });
-        
-        // Mock API response
-        await new Promise(resolve => setTimeout(resolve, 200));
+        const response = await api.put('/retrieve/update/profile-visibility', settings);
         
         setProfileData(prev => ({
           ...prev,
@@ -916,8 +911,15 @@ const JobseekerProfile = () => {
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mt-4 lg:mt-0">
-                <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
-                  Preview Public Profile
+                <button 
+                  onClick={() => window.location.href = '/jobseeker/profile-preview'}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center space-x-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  <span>Preview Public Profile</span>
                 </button>
                 <button 
                   onClick={() => window.location.href = '/jobseeker/account-settings'}
@@ -1180,29 +1182,42 @@ const JobseekerProfile = () => {
               </div>
 
               {/* Profile Visibility */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Profile Visibility</h3>
+              <div className="bg-white rounded-lg shadow p-6" data-section="profileVisibility">
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Profile Visibility</h3>
+                </div>
                 <div className="space-y-4">
                   {[
-                    { key: 'searchable', label: 'Make profile searchable' },
-                    { key: 'hourlyRate', label: 'Show hourly rate' },
-                    { key: 'personalInfo', label: 'Display personal info' },
-                    { key: 'portfolioLinks', label: 'Display Portfolio Links' },
-                    { key: 'accommodationNeeds', label: 'Show accommodation needs' }
+                    { key: 'make_profile_searchable', label: 'Make profile public' },
+                    { key: 'display_personal_information', label: 'Display personal information' },
+                    { key: 'display_portfolio_links', label: 'Display portfolio links' },
+                    { key: 'show_professional_summary', label: 'Show professional summary' },
+                    { key: 'show_skills_and_expertise', label: 'Show skills and expertise' },
+                    { key: 'show_education', label: 'Show education' },
+                    { key: 'show_experience', label: 'Show experience' },
+                    { key: 'display_accommodation_needs', label: 'Display accommodation needs' },
+                    { key: 'display_employment_preferences', label: 'Display employment preferences' }
                   ].map((setting) => (
                     <div key={setting.key} className="flex items-center justify-between">
-                      <span className="text-sm text-gray-700">{setting.label}</span>
+                      <div>
+                        <span className="text-sm text-gray-700">{setting.label}</span>
+                        {setting.description && (
+                          <p className="text-xs text-gray-500 mt-1">{setting.description}</p>
+                        )}
+                      </div>
                       <button
                         onClick={() => toggleVisibility(setting.key)}
                         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                          profileData.profileVisibility[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
+                          profileData.profileVisibility[setting.key] 
+                            ? 'bg-blue-600' 
+                            : 'bg-gray-200'
                         }`}
                       >
-                        <span
-                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                            profileData.profileVisibility[setting.key] ? 'translate-x-6' : 'translate-x-1'
-                          }`}
-                        />
+                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          profileData.profileVisibility[setting.key] 
+                            ? 'translate-x-6' 
+                            : 'translate-x-1'
+                        }`} />
                       </button>
                     </div>
                   ))}
@@ -1732,6 +1747,7 @@ const JobseekerProfile = () => {
       >
         <VerificationStatusModal formData={formData} onFormChange={handleVerificationFormChange} />
       </ProfileModal>
+      
       
       {/* Debug info */}
       {console.log('Modal render - activeModal:', activeModal, 'verificationStatus check:', activeModal === 'verificationStatus')}

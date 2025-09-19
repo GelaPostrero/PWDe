@@ -32,6 +32,10 @@ router.post('/pwd/onboard/assessment', authenticateToken, async (req, res) => {
     }
 
     try {
+        console.log('Assessment API - Received profession:', profession);
+        console.log('Assessment API - Received selectedSkill:', selectedSkill);
+        console.log('Assessment API - Complete req.body:', req.body);
+        
         mergeStepData(pwd_id, 'assessment', {
             profession,
             skills: Array.isArray(selectedSkill) ? selectedSkill : [selectedSkill],
@@ -51,7 +55,7 @@ router.post('/pwd/onboard/assessment', authenticateToken, async (req, res) => {
 // Education & Qualification ni nga API for PWD
 router.post('/pwd/onboard/education', authenticateToken, async (req, res) => {
     const pwd_id = req.user.pwd_id;
-    const { educations, highestLevel } = req.body; // expects array
+    const { educations } = req.body; // expects array
 
     if (!pwd_id) {
         return res.status(400).json({ error: 'User not found!' });
@@ -66,7 +70,7 @@ router.post('/pwd/onboard/education', authenticateToken, async (req, res) => {
     }
 
     try {
-        mergeStepData(pwd_id, 'education', { educations, highestLevel, education: true });
+        mergeStepData(pwd_id, 'education', { educations, education: true });
         console.log('Temporary Onboard PWD Data:', tempOnboardPWDs.get(String(pwd_id)));
         res.status(200).json({
             message: 'PWD education data received successfully.',
@@ -244,14 +248,8 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
         console.log("PWD ID: ", pwd_id);
         console.log("USER ID: ", user_id);
         const tempdata = tempOnboardPWDs.get(String(pwd_id));
-        let { educations, highestLevel } = tempdata?.education || {};
-        console.log("Education data from frontend:", { educations, highestLevel });
-        
-        // Provide default value if highestLevel is undefined
-        if (!highestLevel) {
-            highestLevel = "Bachelor's";
-            console.log("Set default highestLevel to:", highestLevel);
-        }
+        let { educations } = tempdata?.education || {};
+        console.log("Education data from frontend:", { educations });
         const workExperiences = tempdata?.workExperience || [];
 
         if (!tempdata) {
@@ -264,6 +262,10 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
         }
 
         console.log("Temp Data: ", tempOnboardPWDs.get(String(pwd_id)))
+        
+        // Debug: Log profession data being saved
+        console.log('Onboarding completion - profession being saved:', tempdata.assessment?.profession);
+        console.log('Onboarding completion - Complete tempdata.assessment:', tempdata.assessment);
 
         const profileCompletion = await prisma.pwd_Profile.updateMany({
             where: { pwd_id: pwd_id },
@@ -291,14 +293,25 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
             }
         });
 
+        console.log('Profile completion update result:', profileCompletion);
+        console.log('Profile completion fields being set:', {
+            basic_information: true,
+            professional_summary_completed: !!(summary && summary.trim() !== ""),
+            professional_experience: tempdata.work_experience?.professional_experience || false,
+            education: tempdata.education?.education || false,
+            skills_assessment: tempdata.assessment?.skills_assessment || false,
+            set_accessibility_preferences: 
+                (tempdata.accessibilityNeeds?.accessibility_needs || false) 
+                && (tempdata.jobPreferences?.job_preferences || false),
+            portfolio_items: hasPortfolioItems
+        });
+
         const educationRecords = (educations || [])
             .map((edu) => {
-                const finalHighestLevel = highestLevel || edu?.degree || "Bachelor's";
                 const year = edu?.graduationYear;
                 console.log("Education record - RAW year:", year, "Type:", typeof year);
                 console.log("Education record:", { 
                     pwd_id, 
-                    highest_level: finalHighestLevel, 
                     institution: edu?.institutionName,
                     degree: edu?.degree,
                     year_graduated: year
@@ -309,7 +322,6 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
                 
                 return {
                     pwd_id,
-                    highest_level: finalHighestLevel,
                     institution: edu?.institutionName || '',
                     location: edu?.location || '',
                     field_of_study: edu?.fieldOfStudy || '',
@@ -374,7 +386,12 @@ router.post('/pwd/complete-profile', authenticateToken, profilePhoto, async (req
                 work_arrangement: tempdata.jobPreferences?.workArrangement || '',
                 employment_types: tempdata.jobPreferences?.employmentTypes || [],
                 experience_level: tempdata.jobPreferences?.experienceLevel || '',
-                salary_range: `${tempdata.jobPreferences?.salaryRange.currency || ''} ${tempdata.jobPreferences?.salaryRange.min || ''} - ${tempdata.jobPreferences?.salaryRange.max || ''}`
+                salary_range: JSON.stringify({
+                    currency: tempdata.jobPreferences?.salaryRange.currency || '',
+                    min: tempdata.jobPreferences?.salaryRange.min || '',
+                    max: tempdata.jobPreferences?.salaryRange.max || '',
+                    frequency: tempdata.jobPreferences?.salaryRange.frequency || ''
+                })
             }
         });
 

@@ -12,10 +12,11 @@ router.post('/apply', authenticateToken, async (req, res) => {
     
     const pwd_id = req.user?.pwd_id;
     const userType = req.user?.userType;
-    const { jobId, customMessage, proposedSalary, resumeId, workExperience, portfolioLinks } = req.body;
+    const { jobId, customMessage, proposedSalary, resumeId, workExperience, portfolioLinks, videoFilePath } = req.body;
     
     console.log('Received work experience data:', workExperience);
     console.log('Received portfolio links data:', portfolioLinks);
+    console.log('Received video file path:', videoFilePath);
 
     console.log('User type validation:', { userType, pwd_id });
     
@@ -94,6 +95,7 @@ router.post('/apply', authenticateToken, async (req, res) => {
     // Create application
     console.log('Storing work experience in DB:', workExperience ? JSON.stringify(workExperience) : null);
     console.log('Storing portfolio links in DB:', portfolioLinks ? JSON.stringify(portfolioLinks) : null);
+    console.log('Storing video file path in DB:', videoFilePath);
     
     const application = await prisma.Applications.create({
       data: {
@@ -105,6 +107,7 @@ router.post('/apply', authenticateToken, async (req, res) => {
         proposed_salary: proposedSalary || null,
         work_experience: workExperience ? JSON.stringify(workExperience) : null,
         portfolio_links: portfolioLinks ? JSON.stringify(portfolioLinks) : null,
+        video_file_path: videoFilePath || null,
         submitted_at: new Date(),
         status_changed_at: new Date()
       },
@@ -283,8 +286,10 @@ router.get('/check/:jobId', authenticateToken, async (req, res) => {
         },
         resume: {
           select: {
+            resume_id: true,
             title: true,
-            file_path: true
+            file_path: true,
+            pwd_id: true
           }
         }
       }
@@ -293,6 +298,8 @@ router.get('/check/:jobId', authenticateToken, async (req, res) => {
     if (existingApplication) {
       console.log('Raw work experience from DB:', existingApplication.work_experience);
       console.log('Raw portfolio links from DB:', existingApplication.portfolio_links);
+      console.log('Raw video file path from DB:', existingApplication.video_file_path);
+      console.log('Raw resume data from DB:', existingApplication.resume);
       
       const applicationWithUrls = {
         ...existingApplication,
@@ -577,10 +584,144 @@ router.put('/:applicationId/status', authenticateToken, async (req, res) => {
   }
 });
 
+// Update existing application
+router.post('/update', authenticateToken, async (req, res) => {
+  try {
+    console.log('Update application request received');
+    console.log('Request body:', req.body);
+    
+    const pwd_id = req.user?.pwd_id;
+    const userType = req.user?.userType;
+    
+    if (userType !== 'PWD' || !pwd_id) {
+      return res.status(400).json({ success: false, message: 'Invalid user type' });
+    }
+
+    const { jobId, customMessage, proposedSalary, resumeId, workExperience, portfolioLinks, videoFilePath } = req.body;
+    
+    if (!jobId) {
+      return res.status(400).json({ success: false, message: 'Job ID is required' });
+    }
+
+    // Check if application exists
+    const existingApplication = await prisma.Applications.findFirst({
+      where: {
+        job_id: parseInt(jobId),
+        pwd_id: pwd_id
+      }
+    });
+
+    if (!existingApplication) {
+      return res.status(404).json({ success: false, message: 'Application not found' });
+    }
+
+    // Update the application
+    const updatedApplication = await prisma.Applications.update({
+      where: {
+        application_id: existingApplication.application_id
+      },
+      data: {
+        custom_message: customMessage || '',
+        proposed_salary: proposedSalary || null,
+        resume_id: resumeId || null,
+        work_experience: workExperience ? JSON.stringify(workExperience) : null,
+        portfolio_links: portfolioLinks ? JSON.stringify(portfolioLinks) : null,
+        video_file_path: videoFilePath || null,
+        updated_at: new Date()
+      }
+    });
+
+    console.log('Application updated successfully:', updatedApplication);
+    
+    res.status(200).json({
+      success: true,
+      message: 'Application updated successfully',
+      data: updatedApplication
+    });
+  } catch (error) {
+    console.error('Error updating application:', error);
+    res.status(500).json({ success: false, message: 'Failed to update application' });
+  }
+});
+
+// Get application count for a PWD user
+router.get('/count', authenticateToken, async (req, res) => {
+  try {
+    console.log('Applications count endpoint called');
+    console.log('User data:', req.user);
+    
+    const pwd_id = req.user?.pwd_id;
+    const userType = req.user?.userType;
+
+    if (userType !== 'PWD' || !pwd_id) {
+      console.log('Invalid user type or missing pwd_id');
+      return res.status(400).json({ success: false, message: 'Invalid user type' });
+    }
+
+    console.log('Fetching applications for pwd_id:', pwd_id);
+    const totalApplications = await prisma.Applications.count({
+      where: { pwd_id: pwd_id }
+    });
+
+    console.log('Total applications:', totalApplications);
+    
+    const pendingApplications = await prisma.Applications.count({
+      where: { 
+        pwd_id: pwd_id,
+        status: 'Pending'
+      }
+    });
+
+    const acceptedApplications = await prisma.Applications.count({
+      where: { 
+        pwd_id: pwd_id,
+        status: 'Accepted'
+      }
+    });
+
+    const rejectedApplications = await prisma.Applications.count({
+      where: { 
+        pwd_id: pwd_id,
+        status: 'Rejected'
+      }
+    });
+
+    console.log('Application counts:', {
+      total: totalApplications,
+      pending: pendingApplications,
+      accepted: acceptedApplications,
+      rejected: rejectedApplications
+    });
+
+    res.json({
+      success: true,
+      data: {
+        total: totalApplications,
+        pending: pendingApplications,
+        accepted: acceptedApplications,
+        rejected: rejectedApplications
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching application count:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to fetch application count',
+      error: error.message 
+    });
+  }
+});
+
 // Get single application details
 router.get('/:applicationId', authenticateToken, async (req, res) => {
   try {
     const { applicationId } = req.params;
+    console.log('Getting application details for ID:', applicationId);
+    
+    if (!applicationId) {
+      return res.status(400).json({ success: false, message: 'Application ID is required' });
+    }
+    
     const userId = req.user?.userId;
     const userType = req.user?.userType;
     const pwd_id = req.user?.pwd_id;
@@ -612,6 +753,7 @@ router.get('/:applicationId', authenticateToken, async (req, res) => {
         },
         resume: {
           select: {
+            resume_id: true,
             title: true,
             file_path: true,
             summary: true,
@@ -721,60 +863,6 @@ router.delete('/:applicationId/withdraw', authenticateToken, async (req, res) =>
   } catch (error) {
     console.error('Error withdrawing application:', error);
     res.status(500).json({ success: false, message: 'Failed to withdraw application' });
-  }
-});
-
-// Get application count for a PWD user
-router.get('/count', authenticateToken, async (req, res) => {
-  try {
-    const pwd_id = req.user?.pwd_id;
-    const userType = req.user?.userType;
-
-    if (userType !== 'PWD' || !pwd_id) {
-      return res.status(400).json({ success: false, message: 'Invalid user type' });
-    }
-
-    const totalApplications = await prisma.Applications.count({
-      where: { pwd_id: pwd_id }
-    });
-
-    const pendingApplications = await prisma.Applications.count({
-      where: { 
-        pwd_id: pwd_id,
-        status: 'Pending'
-      }
-    });
-
-    const acceptedApplications = await prisma.Applications.count({
-      where: { 
-        pwd_id: pwd_id,
-        status: 'Accepted'
-      }
-    });
-
-    const rejectedApplications = await prisma.Applications.count({
-      where: { 
-        pwd_id: pwd_id,
-        status: 'Rejected'
-      }
-    });
-
-    res.json({
-      success: true,
-      data: {
-        total: totalApplications,
-        pending: pendingApplications,
-        accepted: acceptedApplications,
-        rejected: rejectedApplications
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching application count:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Failed to fetch application count',
-      error: error.message 
-    });
   }
 });
 

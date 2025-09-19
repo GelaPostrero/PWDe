@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import api from '../../utils/api.js';
 import JobseekerHeader from '../../components/ui/JobseekerHeader.jsx';
 import Footer from '../../components/ui/Footer.jsx';
@@ -7,39 +8,42 @@ import Chatbot from '../../components/ui/Chatbot.jsx';
 const JobseekerAccountSettings = () => {
   // Loading and error states
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
   const [fetchData, setFetchData] = useState([]);
 
   // Account data state
   const [accountData, setAccountData] = useState({});
 
   useEffect(() => {
-    if(fetchData) {
+    if(fetchData && Object.keys(fetchData).length > 0) {
+      console.log('Setting account data from fetchData:', fetchData);
       setAccountData(prev => ({
         ...prev,
         account: {
           // Basic Account Information
-          email: fetchData.email,
-          phone: fetchData.phone,
+          email: fetchData.email || '',
+          phone: fetchData.phone || '',
           password: '',
           confirmPassword: '',
           
           // Profile Information
-          firstName: fetchData.firstname,
-          lastName: fetchData.lastname,
-          profilePicture: fetchData.profile_picture,
+          firstName: fetchData.firstname || '',
+          lastName: fetchData.lastname || '',
+          profilePicture: fetchData.profile_picture || '',
         },
         
         // Privacy Settings
         privacy: {
-          profileVisibility: fetchData.profile_visibility, // public, connections, private
-          showEmail: fetchData.show_email,
-          showPhone: fetchData.show_phone_number,
-          showLocation: fetchData.show_location,
-          allowMessages: fetchData.allow_messages,
-          showOnlineStatus: fetchData.show_online_status
+          profileVisibility: fetchData.profile_visibility || 'public', // public, connections, private
+          display_personal_information: fetchData.display_personal_information !== undefined ? fetchData.display_personal_information : true,
+          display_portfolio_links: fetchData.display_portfolio_links !== undefined ? fetchData.display_portfolio_links : true,
+          show_professional_summary: fetchData.show_professional_summary !== undefined ? fetchData.show_professional_summary : true,
+          show_skills_and_expertise: fetchData.show_skills_and_expertise !== undefined ? fetchData.show_skills_and_expertise : true,
+          show_education: fetchData.show_education !== undefined ? fetchData.show_education : true,
+          show_experience: fetchData.show_experience !== undefined ? fetchData.show_experience : true,
+          display_accommodation_needs: fetchData.display_accommodation_needs !== undefined ? fetchData.display_accommodation_needs : true,
+          display_employment_preferences: fetchData.display_employment_preferences !== undefined ? fetchData.display_employment_preferences : true,
+          allowMessages: fetchData.allow_messages !== undefined ? fetchData.allow_messages : true
         },
         
         // Notification Preferences
@@ -47,16 +51,12 @@ const JobseekerAccountSettings = () => {
           email: {
             jobMatches: fetchData.job_matches,
             messages: fetchData.messages,
-            applications: fetchData.application_updates,
-            profileViews: fetchData.email_profile_views,
-            weeklyDigest: fetchData.weekly_digest,
-            marketing: fetchData.marketing_emails
+            applications: fetchData.application_updates
           },
           push: {
             jobMatches: fetchData.push_notif_job_matches,
             messages: fetchData.push_notif_messages,
-            applications: fetchData.push_notif_application_updates,
-            profileViews: fetchData.push_notif_profile_views
+            applications: fetchData.push_notif_application_updates
           },
           sms: {
             urgentMessages: fetchData.urgent_messages,
@@ -90,23 +90,47 @@ const JobseekerAccountSettings = () => {
   const [showDeactivateModal, setShowDeactivateModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
+  
+  // Password form states
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   // API Functions
   const apifunction = {
     fetchAccountData: async () => {
       try {
         setIsLoading(true);
-        setError(null);
         
         const { data } = await api.get('/account-settings/account-information');
 
         await new Promise(resolve => setTimeout(resolve, 500));
 
         if(data.success) {
+          console.log('Account data fetched successfully:', data.data);
           setFetchData(data.data);
+        } else {
+          console.error('Failed to fetch account data:', data);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Failed to load account data',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+          });
         }
       } catch (err) {
-        setError('Failed to load account data');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Failed to load account data',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
         console.error('Error fetching account data:', err);
         throw err;
       } finally {
@@ -117,7 +141,6 @@ const JobseekerAccountSettings = () => {
     updateAccountData: async (section, data) => {
       try {
         setIsSaving(true);
-        setError(null);
 
         let dataToSend = { ...data };
 
@@ -125,22 +148,54 @@ const JobseekerAccountSettings = () => {
           delete dataToSend.profilePicture
         }
         
+        console.log('Sending update request:', { section, data: dataToSend });
         const response = await api.put('/account-settings/update', { section, data: dataToSend });
+        console.log('Update response:', response.data);
 
-        if(response.data.success) {
+        if(response.data && response.data.success) {
           setAccountData(prev => ({
             ...prev,
             [section]: data
           }));
-          setSuccessMessage('Settings updated successfully!');
-          setTimeout(() => setSuccessMessage(''), 3000);
+          
+          // Show SweetAlert success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Account updated successfully!',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+          });
+          
           return { success: true };
         } else {
-          setError('Failed to update settings');
+          const errorMsg = response.data?.error || 'Failed to update settings';
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: errorMsg,
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+          });
+          console.error('Update failed:', response.data);
         }
       } catch (err) {
-        setError('Failed to update settings');
+        const errorMsg = err.response?.data?.error || err.message || 'Failed to update settings';
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: errorMsg,
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
         console.error('Error updating account data:', err);
+        console.error('Error response:', err.response?.data);
         throw err;
       } finally {
         setIsSaving(false);
@@ -150,24 +205,47 @@ const JobseekerAccountSettings = () => {
     changePassword: async (currentPassword, newPassword) => {
       try {
         setIsSaving(true);
-        setError(null);
         
         const { data } = await api.put('/account-settings/update-password', {currentPassword, newPassword});
         //  Replace with actual API call
         await new Promise(resolve => setTimeout(resolve, 500));
         
         if(data.success) {
-          setSuccessMessage('Password changed successfully!');
-          setTimeout(() => setSuccessMessage(''), 3000);
+          // Show SweetAlert success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Password changed successfully!',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+          });
           return { success: true };
         }
 
         
       } catch (err) {
         if (err.response?.status === 400) {
-          setError("Incorrect password");
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Incorrect password',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+          });
         } else {
-          setError('Failed to change password');
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Failed to change password',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+          });
           console.error('Error changing password:', err);
           throw err;
         }
@@ -179,7 +257,6 @@ const JobseekerAccountSettings = () => {
     deleteAccount: async (password) => {
       try {
         setIsSaving(true);
-        setError(null);
 
         //  Replace with actual API call
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -189,11 +266,99 @@ const JobseekerAccountSettings = () => {
 
         return { success: true };
       } catch (err) {
-        setError('Failed to delete account');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Failed to delete account',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
         console.error('Error deleting account:', err);
         throw err;
       } finally {
         setIsSaving(false);
+      }
+    },
+
+    // Update profile visibility settings
+    updateVisibility: async (settings) => {
+      try {
+        const response = await api.put('/retrieve/update/profile-visibility', settings);
+        
+        setAccountData(prev => ({
+          ...prev,
+          privacy: {
+            ...prev.privacy,
+            ...settings
+          }
+        }));
+        
+        // Show success message
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Visibility settings updated successfully!',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
+        
+        return { success: true };
+      } catch (err) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Failed to update visibility settings',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
+        console.error('Error updating visibility:', err);
+        throw err;
+      }
+    },
+
+    // Update notification preferences
+    updateNotifications: async (settings) => {
+      try {
+        const response = await api.put('/retrieve/update/notification-preferences', settings);
+        
+        setAccountData(prev => ({
+          ...prev,
+          notifications: {
+            ...prev.notifications,
+            ...settings
+          }
+        }));
+        
+        // Show success message
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Notification preferences updated successfully!',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
+        
+        return { success: true };
+      } catch (err) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Failed to update notification preferences',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
+        console.error('Error updating notifications:', err);
+        throw err;
       }
     }
   };
@@ -222,13 +387,29 @@ const JobseekerAccountSettings = () => {
     if (file) {
       // Validate file type
       if (!file.type.startsWith('image/')) {
-        setError('Please select a valid image file');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please select a valid image file',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
         return;
       }
 
       // Validate file size (2MB limit)
       if (file.size > 2 * 1024 * 1024) {
-        setError('File size must be less than 2MB');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'File size must be less than 2MB',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
         return;
       }
 
@@ -241,7 +422,6 @@ const JobseekerAccountSettings = () => {
       };
       reader.readAsDataURL(file);
 
-      setError(null);
     }
   };
 
@@ -250,7 +430,6 @@ const JobseekerAccountSettings = () => {
     if (selectedFile) {
       try {
         setIsSaving(true);
-        setError(null);
         
         const formData = new FormData();
         formData.append('profilePhoto', selectedFile);
@@ -265,7 +444,17 @@ const JobseekerAccountSettings = () => {
             ...prev,
             profilePicture: previewUrl
           }));
-          setSuccessMessage('Profile photo updated successfully!');
+          
+          // Show SweetAlert success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Profile photo updated successfully!',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+          });
 
           setSelectedFile(null);
           setPreviewUrl('');
@@ -276,10 +465,26 @@ const JobseekerAccountSettings = () => {
 
           setTimeout(() => window.location.reload(), 1000);
         } else {
-          setError('Failed to update settings');
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Failed to update settings',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+          });
         }
       } catch (err) {
-        setError('Failed to update profile photo');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Failed to update profile photo',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
         console.error('Error updating photo:', err);
       } finally {
         setIsSaving(false);
@@ -302,7 +507,55 @@ const JobseekerAccountSettings = () => {
 
   const handleSave = async (section) => {
     try {
+      console.log('Saving section:', section, 'with data:', accountData[section]);
       await apifunction.updateAccountData(section, accountData[section]);
+      console.log('Save completed successfully');
+    } catch (err) {
+      console.error('Save failed:', err);
+      // Error already handled in API function
+    }
+  };
+
+  // Handle visibility toggle
+  const handleToggleVisibility = async (setting) => {
+    try {
+      const newSettings = {
+        ...accountData.privacy,
+        [setting]: !accountData.privacy?.[setting]
+      };
+      
+      await apifunction.updateVisibility(newSettings);
+    } catch (err) {
+      // Error already handled in API function
+    }
+  };
+
+  // Handle profile visibility radio button change
+  const handleProfileVisibilityChange = async (value) => {
+    try {
+      const newSettings = {
+        ...accountData.privacy,
+        profileVisibility: value
+      };
+      
+      await apifunction.updateVisibility(newSettings);
+    } catch (err) {
+      // Error already handled in API function
+    }
+  };
+
+  // Handle notification toggle
+  const handleNotificationToggle = async (type, setting) => {
+    try {
+      const newSettings = {
+        ...accountData.notifications,
+        [type]: {
+          ...accountData.notifications[type],
+          [setting]: !accountData.notifications[type][setting]
+        }
+      };
+      
+      await apifunction.updateNotifications(newSettings);
     } catch (err) {
       // Error already handled in API function
     }
@@ -312,15 +565,40 @@ const JobseekerAccountSettings = () => {
     e.preventDefault();
 
     // Validation
-    if (!accountData.password || !accountData.confirmPassword) {
-      setError('Please fill in all password fields');
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Please fill in all password fields',
+        timer: 3000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+      });
+      return;
+    }
+    
+    // Check if passwords match
+    if (newPassword !== confirmPassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Passwords do not match',
+        timer: 3000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+      });
       return;
     }
     
     try {
-      await apifunction.changePassword(accountData.password, accountData.confirmPassword);
+      await apifunction.changePassword(currentPassword, newPassword);
       setShowPasswordForm(false);
-      setAccountData(prev => ({ ...prev, password: '', confirmPassword: '' }));
+      // Clear password fields
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
     } catch (err) {
       // Error already handled in API function
     }
@@ -339,7 +617,6 @@ const JobseekerAccountSettings = () => {
   const handleRemoveDevice = async (deviceId) => {
     try {
       setIsSaving(true);
-      setError(null);
 
       //Replace with actual API call
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -353,11 +630,27 @@ const JobseekerAccountSettings = () => {
         }
       }));
 
-      setSuccessMessage('Device removed successfully');
-      setTimeout(() => setSuccessMessage(''), 3000);
+      // Show SweetAlert success message
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Device removed successfully',
+        timer: 3000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+      });
 
     } catch (err) {
-      setError('Failed to remove device');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Failed to remove device',
+        timer: 3000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+      });
       console.error('Error removing device:', err);
     } finally {
       setIsSaving(false);
@@ -403,17 +696,7 @@ const JobseekerAccountSettings = () => {
       <main className="flex-1 py-6 sm:py-8">
         <div className="mx-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-16">
 
-          {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 text-sm">{error}</p>
-            </div>
-          )}
 
-          {successMessage && (
-            <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-green-600 text-sm">{successMessage}</p>
-            </div>
-          )}
 
           {/* Header */}
           <div className="mb-8">
@@ -461,7 +744,7 @@ const JobseekerAccountSettings = () => {
                       <div className="flex items-center space-x-4">
                         <div className="relative">
                           <img
-                            src={previewUrl || accountData.account.profilePicture}
+                            src={previewUrl || accountData.account?.profilePicture || '/favicon.png'}
                             alt="Profile"
                             className="w-20 h-20 rounded-full object-cover border-4 border-gray-200"
                           />
@@ -526,7 +809,7 @@ const JobseekerAccountSettings = () => {
                           <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
                           <input
                             type="text"
-                            value={accountData.account.firstName}
+                            value={accountData.account?.firstName || ''}
                             onChange={(e) => handleInputChange('account', 'firstName', e.target.value)}
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                           />
@@ -535,7 +818,7 @@ const JobseekerAccountSettings = () => {
                           <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
                           <input
                             type="text"
-                            value={accountData.account.lastName}
+                            value={accountData.account?.lastName || ''}
                             onChange={(e) => handleInputChange('account', 'lastName', e.target.value)}
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                           />
@@ -546,7 +829,7 @@ const JobseekerAccountSettings = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                         <input
                           type="email"
-                          value={accountData.account.email}
+                          value={accountData.account?.email || ''}
                           onChange={(e) => handleInputChange('account', 'email', e.target.value)}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                         />
@@ -557,7 +840,7 @@ const JobseekerAccountSettings = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                         <input
                           type="tel"
-                          value={accountData.account.phone}
+                          value={accountData.account?.phone || ''}
                           onChange={(e) => handleInputChange('account', 'phone', e.target.value)}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                         />
@@ -584,8 +867,8 @@ const JobseekerAccountSettings = () => {
                               <label className="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
                               <input
                                 type="password"
-                                value={accountData.password}
-                                onChange={(e) => handleInputChange('', 'password', e.target.value)}
+                                value={currentPassword}
+                                onChange={(e) => setCurrentPassword(e.target.value)}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                                 required
                               />
@@ -594,8 +877,18 @@ const JobseekerAccountSettings = () => {
                               <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
                               <input
                                 type="password"
-                                value={accountData.confirmPassword}
-                                onChange={(e) => handleInputChange('', 'confirmPassword', e.target.value)}
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                                required
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
+                              <input
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                                 required
                               />
@@ -610,7 +903,12 @@ const JobseekerAccountSettings = () => {
                               </button>
                               <button
                                 type="button"
-                                onClick={() => setShowPasswordForm(false)}
+                                onClick={() => {
+                                  setShowPasswordForm(false);
+                                  setCurrentPassword('');
+                                  setNewPassword('');
+                                  setConfirmPassword('');
+                                }}
                                 className="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
                               >
                                 Cancel
@@ -645,8 +943,7 @@ const JobseekerAccountSettings = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-3">Profile Visibility</label>
                         <div className="space-y-3">
                           {[
-                            { value: 'public', label: 'Public', description: 'Anyone can see your profile' },
-                            { value: 'connections', label: 'Connections Only', description: 'Only your connections can see your profile' },
+                            { value: 'public', label: 'Public', description: 'Employers can see your profile' },
                             { value: 'private', label: 'Private', description: 'Only you can see your profile' }
                           ].map((option) => (
                             <label key={option.value} className="flex items-start">
@@ -654,8 +951,8 @@ const JobseekerAccountSettings = () => {
                                 type="radio"
                                 name="profileVisibility"
                                 value={option.value}
-                                checked={accountData.privacy.profileVisibility === option.value}
-                                onChange={(e) => handleInputChange('privacy', 'profileVisibility', e.target.value)}
+                                checked={accountData.privacy?.profileVisibility === option.value}
+                                onChange={(e) => handleProfileVisibilityChange(e.target.value)}
                                 className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                               />
                               <div className="ml-3">
@@ -671,11 +968,15 @@ const JobseekerAccountSettings = () => {
                         <h3 className="text-lg font-medium text-gray-900 mb-4">Information Visibility</h3>
                         <div className="space-y-4">
                           {[
-                            { key: 'showEmail', label: 'Show email address', description: 'Allow others to see your email' },
-                            { key: 'showPhone', label: 'Show phone number', description: 'Allow others to see your phone number' },
-                            { key: 'showLocation', label: 'Show location', description: 'Allow others to see your location' },
-                            { key: 'allowMessages', label: 'Allow messages', description: 'Let others send you messages' },
-                            { key: 'showOnlineStatus', label: 'Show online status', description: 'Let others see when you\'re online' }
+                            { key: 'display_personal_information', label: 'Display personal information', description: 'Show your personal details on your profile' },
+                            { key: 'display_portfolio_links', label: 'Display portfolio links', description: 'Show your portfolio and social links' },
+                            { key: 'show_professional_summary', label: 'Show professional summary', description: 'Display your professional summary' },
+                            { key: 'show_skills_and_expertise', label: 'Show skills and expertise', description: 'Display your skills and areas of expertise' },
+                            { key: 'show_education', label: 'Show education', description: 'Display your educational background' },
+                            { key: 'show_experience', label: 'Show experience', description: 'Display your work experience' },
+                            { key: 'display_accommodation_needs', label: 'Display accommodation needs', description: 'Show your accessibility and accommodation requirements' },
+                            { key: 'display_employment_preferences', label: 'Display employment preferences', description: 'Show your job preferences and requirements' },
+                            { key: 'allowMessages', label: 'Allow messages', description: 'Let others send you messages' }
                           ].map((setting) => (
                             <div key={setting.key} className="flex items-center justify-between">
                               <div>
@@ -683,12 +984,12 @@ const JobseekerAccountSettings = () => {
                                 <div className="text-sm text-gray-500">{setting.description}</div>
                               </div>
                               <button
-                                onClick={() => handleInputChange('privacy', setting.key, !accountData.privacy[setting.key])}
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.privacy[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
+                                onClick={() => handleToggleVisibility(setting.key)}
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.privacy?.[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
                                   }`}
                               >
                                 <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.privacy[setting.key] ? 'translate-x-6' : 'translate-x-1'
+                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.privacy?.[setting.key] ? 'translate-x-6' : 'translate-x-1'
                                     }`}
                                 />
                               </button>
@@ -725,10 +1026,7 @@ const JobseekerAccountSettings = () => {
                           {[
                             { key: 'jobMatches', label: 'Job matches', description: 'Get notified when new jobs match your profile' },
                             { key: 'messages', label: 'Messages', description: 'Get notified when you receive new messages' },
-                            { key: 'applications', label: 'Application updates', description: 'Get notified about your job applications' },
-                            { key: 'profileViews', label: 'Profile views', description: 'Get notified when someone views your profile' },
-                            { key: 'weeklyDigest', label: 'Weekly digest', description: 'Receive a weekly summary of activity' },
-                            { key: 'marketing', label: 'Marketing emails', description: 'Receive promotional content and updates' }
+                            { key: 'applications', label: 'Application updates', description: 'Get notified about your job applications' }
                           ].map((setting) => (
                             <div key={setting.key} className="flex items-center justify-between">
                               <div>
@@ -736,12 +1034,12 @@ const JobseekerAccountSettings = () => {
                                 <div className="text-sm text-gray-500">{setting.description}</div>
                               </div>
                               <button
-                                onClick={() => handleNestedInputChange('notifications', 'email', setting.key, !accountData.notifications.email[setting.key])}
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.notifications.email[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
+                                onClick={() => handleNotificationToggle('email', setting.key)}
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.notifications?.email?.[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
                                   }`}
                               >
                                 <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.notifications.email[setting.key] ? 'translate-x-6' : 'translate-x-1'
+                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.notifications?.email?.[setting.key] ? 'translate-x-6' : 'translate-x-1'
                                     }`}
                                 />
                               </button>
@@ -757,8 +1055,7 @@ const JobseekerAccountSettings = () => {
                           {[
                             { key: 'jobMatches', label: 'Job matches', description: 'Get push notifications for new job matches' },
                             { key: 'messages', label: 'Messages', description: 'Get push notifications for new messages' },
-                            { key: 'applications', label: 'Application updates', description: 'Get push notifications for application updates' },
-                            { key: 'profileViews', label: 'Profile views', description: 'Get push notifications for profile views' }
+                            { key: 'applications', label: 'Application updates', description: 'Get push notifications for application updates' }
                           ].map((setting) => (
                             <div key={setting.key} className="flex items-center justify-between">
                               <div>
@@ -766,12 +1063,12 @@ const JobseekerAccountSettings = () => {
                                 <div className="text-sm text-gray-500">{setting.description}</div>
                               </div>
                               <button
-                                onClick={() => handleNestedInputChange('notifications', 'push', setting.key, !accountData.notifications.push[setting.key])}
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.notifications.push[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
+                                onClick={() => handleNotificationToggle('push', setting.key)}
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.notifications?.push?.[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
                                   }`}
                               >
                                 <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.notifications.push[setting.key] ? 'translate-x-6' : 'translate-x-1'
+                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.notifications?.push?.[setting.key] ? 'translate-x-6' : 'translate-x-1'
                                     }`}
                                 />
                               </button>
@@ -794,12 +1091,12 @@ const JobseekerAccountSettings = () => {
                                 <div className="text-sm text-gray-500">{setting.description}</div>
                               </div>
                               <button
-                                onClick={() => handleNestedInputChange('notifications', 'sms', setting.key, !accountData.notifications.sms[setting.key])}
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.notifications.sms[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
+                                onClick={() => handleNotificationToggle('sms', setting.key)}
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.notifications?.sms?.[setting.key] ? 'bg-blue-600' : 'bg-gray-200'
                                   }`}
                               >
                                 <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.notifications.sms[setting.key] ? 'translate-x-6' : 'translate-x-1'
+                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.notifications?.sms?.[setting.key] ? 'translate-x-6' : 'translate-x-1'
                                     }`}
                                 />
                               </button>
@@ -836,17 +1133,17 @@ const JobseekerAccountSettings = () => {
                           <p className="text-sm text-gray-500">Add an extra layer of security to your account</p>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${accountData.security.twoFactorAuth
+                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${accountData.security?.twoFactorAuth
                               ? 'bg-green-100 text-green-800'
                               : 'bg-gray-100 text-gray-800'
                             }`}>
-                            {accountData.security.twoFactorAuth ? 'Enabled' : 'Disabled'}
+                            {accountData.security?.twoFactorAuth ? 'Enabled' : 'Disabled'}
                           </span>
                           <button
-                            onClick={() => handleInputChange('security', 'twoFactorAuth', !accountData.security.twoFactorAuth)}
+                            onClick={() => handleInputChange('security', 'twoFactorAuth', !accountData.security?.twoFactorAuth)}
                             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                           >
-                            {accountData.security.twoFactorAuth ? 'Disable' : 'Enable'}
+                            {accountData.security?.twoFactorAuth ? 'Disable' : 'Enable'}
                           </button>
                         </div>
                       </div>
@@ -858,12 +1155,12 @@ const JobseekerAccountSettings = () => {
                           <p className="text-sm text-gray-500">Get notified when someone logs into your account</p>
                         </div>
                         <button
-                          onClick={() => handleInputChange('security', 'loginAlerts', !accountData.security.loginAlerts)}
-                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.security.loginAlerts ? 'bg-blue-600' : 'bg-gray-200'
+                          onClick={() => handleInputChange('security', 'loginAlerts', !accountData.security?.loginAlerts)}
+                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${accountData.security?.loginAlerts ? 'bg-blue-600' : 'bg-gray-200'
                             }`}
                         >
                           <span
-                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.security.loginAlerts ? 'translate-x-6' : 'translate-x-1'
+                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${accountData.security?.loginAlerts ? 'translate-x-6' : 'translate-x-1'
                               }`}
                           />
                         </button>
@@ -875,7 +1172,7 @@ const JobseekerAccountSettings = () => {
                         <p className="text-sm text-gray-500 mb-4">Automatically log out after a period of inactivity</p>
                         <div className="flex items-center space-x-4">
                           <select
-                            value={accountData.security.sessionTimeout}
+                            value={accountData.security?.sessionTimeout || 30}
                             onChange={(e) => handleInputChange('security', 'sessionTimeout', parseInt(e.target.value))}
                             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                           >
@@ -892,7 +1189,7 @@ const JobseekerAccountSettings = () => {
                       <div className="p-4 border border-gray-200 rounded-lg">
                         <h3 className="text-lg font-medium text-gray-900 mb-4">Trusted Devices</h3>
                         <div className="space-y-3">
-                          {accountData.security.trustedDevices.map((device) => (
+                          {(accountData.security?.trustedDevices || []).map((device) => (
                             <div key={device.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                               <div>
                                 <div className="font-medium text-gray-900">{device.name}</div>
@@ -1070,14 +1367,20 @@ const JobseekerAccountSettings = () => {
                   onClick={async () => {
                     try {
                       setIsSaving(true);
-                      setError(null);
 
                       // TODO: Replace with actual API call
                       await new Promise(resolve => setTimeout(resolve, 1000));
 
                       setShowDeactivateModal(false);
-                      setSuccessMessage('Account deactivated successfully. You can reactivate by logging in.');
-                      setTimeout(() => setSuccessMessage(''), 5000);
+                      
+                      // Show SweetAlert success message
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'Account Deactivated',
+                        text: 'Account deactivated successfully. You can reactivate by logging in.',
+                        timer: 5000,
+                        showConfirmButton: true
+                      });
 
                       // Update account status
                       setAccountData(prev => ({
@@ -1089,7 +1392,15 @@ const JobseekerAccountSettings = () => {
                       }));
 
                     } catch (err) {
-                      setError('Failed to deactivate account');
+                      Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Failed to deactivate account',
+                        timer: 3000,
+                        showConfirmButton: false,
+                        toast: true,
+                        position: 'top-end'
+                      });
                       console.error('Error deactivating account:', err);
                     } finally {
                       setIsSaving(false);

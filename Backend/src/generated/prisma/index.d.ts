@@ -3298,6 +3298,8 @@ export namespace Prisma {
     user_id: number | null
     password_reset_token: string | null
     created_at: string | null
+    document_verification_status: string | null
+    document_rejection_reason: string | null
   }
 
   export type UsersMaxAggregateOutputType = {
@@ -3310,6 +3312,8 @@ export namespace Prisma {
     user_id: number | null
     password_reset_token: string | null
     created_at: string | null
+    document_verification_status: string | null
+    document_rejection_reason: string | null
   }
 
   export type UsersCountAggregateOutputType = {
@@ -3322,6 +3326,9 @@ export namespace Prisma {
     user_id: number
     password_reset_token: number
     created_at: number
+    document_verification_status: number
+    document_rejection_reason: number
+    verification_documents: number
     _all: number
   }
 
@@ -3344,6 +3351,8 @@ export namespace Prisma {
     user_id?: true
     password_reset_token?: true
     created_at?: true
+    document_verification_status?: true
+    document_rejection_reason?: true
   }
 
   export type UsersMaxAggregateInputType = {
@@ -3356,6 +3365,8 @@ export namespace Prisma {
     user_id?: true
     password_reset_token?: true
     created_at?: true
+    document_verification_status?: true
+    document_rejection_reason?: true
   }
 
   export type UsersCountAggregateInputType = {
@@ -3368,6 +3379,9 @@ export namespace Prisma {
     user_id?: true
     password_reset_token?: true
     created_at?: true
+    document_verification_status?: true
+    document_rejection_reason?: true
+    verification_documents?: true
     _all?: true
   }
 
@@ -3467,6 +3481,9 @@ export namespace Prisma {
     user_id: number
     password_reset_token: string | null
     created_at: string
+    document_verification_status: string | null
+    document_rejection_reason: string | null
+    verification_documents: string[]
     _count: UsersCountAggregateOutputType | null
     _avg: UsersAvgAggregateOutputType | null
     _sum: UsersSumAggregateOutputType | null
@@ -3498,6 +3515,9 @@ export namespace Prisma {
     user_id?: boolean
     password_reset_token?: boolean
     created_at?: boolean
+    document_verification_status?: boolean
+    document_rejection_reason?: boolean
+    verification_documents?: boolean
     messages?: boolean | Users$messagesArgs<ExtArgs>
     employer_Profile?: boolean | Users$employer_ProfileArgs<ExtArgs>
     notifications?: boolean | Users$notificationsArgs<ExtArgs>
@@ -3523,6 +3543,9 @@ export namespace Prisma {
     user_id?: boolean
     password_reset_token?: boolean
     created_at?: boolean
+    document_verification_status?: boolean
+    document_rejection_reason?: boolean
+    verification_documents?: boolean
   }, ExtArgs["result"]["users"]>
 
   export type UsersSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3535,6 +3558,9 @@ export namespace Prisma {
     user_id?: boolean
     password_reset_token?: boolean
     created_at?: boolean
+    document_verification_status?: boolean
+    document_rejection_reason?: boolean
+    verification_documents?: boolean
   }, ExtArgs["result"]["users"]>
 
   export type UsersSelectScalar = {
@@ -3547,9 +3573,12 @@ export namespace Prisma {
     user_id?: boolean
     password_reset_token?: boolean
     created_at?: boolean
+    document_verification_status?: boolean
+    document_rejection_reason?: boolean
+    verification_documents?: boolean
   }
 
-  export type UsersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"email" | "password_hash" | "phone_number" | "user_type" | "account_status" | "is_verified" | "user_id" | "password_reset_token" | "created_at", ExtArgs["result"]["users"]>
+  export type UsersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"email" | "password_hash" | "phone_number" | "user_type" | "account_status" | "is_verified" | "user_id" | "password_reset_token" | "created_at" | "document_verification_status" | "document_rejection_reason" | "verification_documents", ExtArgs["result"]["users"]>
   export type UsersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     messages?: boolean | Users$messagesArgs<ExtArgs>
     employer_Profile?: boolean | Users$employer_ProfileArgs<ExtArgs>
@@ -3594,6 +3623,9 @@ export namespace Prisma {
       user_id: number
       password_reset_token: string | null
       created_at: string
+      document_verification_status: string | null
+      document_rejection_reason: string | null
+      verification_documents: string[]
     }, ExtArgs["result"]["users"]>
     composites: {}
   }
@@ -4038,6 +4070,9 @@ export namespace Prisma {
     readonly user_id: FieldRef<"Users", 'Int'>
     readonly password_reset_token: FieldRef<"Users", 'String'>
     readonly created_at: FieldRef<"Users", 'String'>
+    readonly document_verification_status: FieldRef<"Users", 'String'>
+    readonly document_rejection_reason: FieldRef<"Users", 'String'>
+    readonly verification_documents: FieldRef<"Users", 'String[]'>
   }
     
 
@@ -4803,6 +4838,15 @@ export namespace Prisma {
     portfolio_items: boolean | null
     skills_assessment: boolean | null
     set_accessibility_preferences: boolean | null
+    make_profile_searchable: boolean | null
+    display_personal_information: boolean | null
+    display_portfolio_links: boolean | null
+    show_professional_summary: boolean | null
+    show_skills_and_expertise: boolean | null
+    show_education: boolean | null
+    show_experience: boolean | null
+    display_accommodation_needs: boolean | null
+    display_employment_preferences: boolean | null
   }
 
   export type Pwd_ProfileMaxAggregateOutputType = {
@@ -4856,6 +4900,15 @@ export namespace Prisma {
     portfolio_items: boolean | null
     skills_assessment: boolean | null
     set_accessibility_preferences: boolean | null
+    make_profile_searchable: boolean | null
+    display_personal_information: boolean | null
+    display_portfolio_links: boolean | null
+    show_professional_summary: boolean | null
+    show_skills_and_expertise: boolean | null
+    show_education: boolean | null
+    show_experience: boolean | null
+    display_accommodation_needs: boolean | null
+    display_employment_preferences: boolean | null
   }
 
   export type Pwd_ProfileCountAggregateOutputType = {
@@ -4912,6 +4965,15 @@ export namespace Prisma {
     portfolio_items: number
     skills_assessment: number
     set_accessibility_preferences: number
+    make_profile_searchable: number
+    display_personal_information: number
+    display_portfolio_links: number
+    show_professional_summary: number
+    show_skills_and_expertise: number
+    show_education: number
+    show_experience: number
+    display_accommodation_needs: number
+    display_employment_preferences: number
     _all: number
   }
 
@@ -4985,6 +5047,15 @@ export namespace Prisma {
     portfolio_items?: true
     skills_assessment?: true
     set_accessibility_preferences?: true
+    make_profile_searchable?: true
+    display_personal_information?: true
+    display_portfolio_links?: true
+    show_professional_summary?: true
+    show_skills_and_expertise?: true
+    show_education?: true
+    show_experience?: true
+    display_accommodation_needs?: true
+    display_employment_preferences?: true
   }
 
   export type Pwd_ProfileMaxAggregateInputType = {
@@ -5038,6 +5109,15 @@ export namespace Prisma {
     portfolio_items?: true
     skills_assessment?: true
     set_accessibility_preferences?: true
+    make_profile_searchable?: true
+    display_personal_information?: true
+    display_portfolio_links?: true
+    show_professional_summary?: true
+    show_skills_and_expertise?: true
+    show_education?: true
+    show_experience?: true
+    display_accommodation_needs?: true
+    display_employment_preferences?: true
   }
 
   export type Pwd_ProfileCountAggregateInputType = {
@@ -5094,6 +5174,15 @@ export namespace Prisma {
     portfolio_items?: true
     skills_assessment?: true
     set_accessibility_preferences?: true
+    make_profile_searchable?: true
+    display_personal_information?: true
+    display_portfolio_links?: true
+    show_professional_summary?: true
+    show_skills_and_expertise?: true
+    show_education?: true
+    show_experience?: true
+    display_accommodation_needs?: true
+    display_employment_preferences?: true
     _all?: true
   }
 
@@ -5237,6 +5326,15 @@ export namespace Prisma {
     portfolio_items: boolean
     skills_assessment: boolean
     set_accessibility_preferences: boolean
+    make_profile_searchable: boolean
+    display_personal_information: boolean
+    display_portfolio_links: boolean
+    show_professional_summary: boolean
+    show_skills_and_expertise: boolean
+    show_education: boolean
+    show_experience: boolean
+    display_accommodation_needs: boolean
+    display_employment_preferences: boolean
     _count: Pwd_ProfileCountAggregateOutputType | null
     _avg: Pwd_ProfileAvgAggregateOutputType | null
     _sum: Pwd_ProfileSumAggregateOutputType | null
@@ -5312,6 +5410,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: boolean | Pwd_Profile$applicationsArgs<ExtArgs>
     accessibility_needs?: boolean | Pwd_Profile$accessibility_needsArgs<ExtArgs>
     educations?: boolean | Pwd_Profile$educationsArgs<ExtArgs>
@@ -5379,6 +5486,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["pwd_Profile"]>
 
@@ -5436,6 +5552,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["pwd_Profile"]>
 
@@ -5493,9 +5618,18 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
   }
 
-  export type Pwd_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"first_name" | "last_name" | "middle_name" | "profile_picture" | "bio" | "disability_Type" | "disability_severity" | "gender" | "rating" | "profile_views" | "interviews" | "created_at" | "updated_at" | "pwd_id" | "user_id" | "date_of_birth" | "address" | "pwd_document" | "profession" | "skills" | "portfolio_url" | "github_url" | "linkedin_url" | "otherPlatform" | "professional_role" | "professional_summary" | "hourly_rate" | "profile_visibility" | "show_email" | "show_phone_number" | "show_location" | "allow_messages" | "show_online_status" | "email_job_matches" | "messages" | "application_updates" | "email_profile_views" | "weekly_digest" | "marketing_emails" | "push_notif_job_matches" | "push_notif_messages" | "push_notif_application_updates" | "push_notif_profile_views" | "urgent_messages" | "security_alerts" | "resume_cv" | "basic_information" | "professional_summary_completed" | "professional_experience" | "education" | "portfolio_items" | "skills_assessment" | "set_accessibility_preferences", ExtArgs["result"]["pwd_Profile"]>
+  export type Pwd_ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"first_name" | "last_name" | "middle_name" | "profile_picture" | "bio" | "disability_Type" | "disability_severity" | "gender" | "rating" | "profile_views" | "interviews" | "created_at" | "updated_at" | "pwd_id" | "user_id" | "date_of_birth" | "address" | "pwd_document" | "profession" | "skills" | "portfolio_url" | "github_url" | "linkedin_url" | "otherPlatform" | "professional_role" | "professional_summary" | "hourly_rate" | "profile_visibility" | "show_email" | "show_phone_number" | "show_location" | "allow_messages" | "show_online_status" | "email_job_matches" | "messages" | "application_updates" | "email_profile_views" | "weekly_digest" | "marketing_emails" | "push_notif_job_matches" | "push_notif_messages" | "push_notif_application_updates" | "push_notif_profile_views" | "urgent_messages" | "security_alerts" | "resume_cv" | "basic_information" | "professional_summary_completed" | "professional_experience" | "education" | "portfolio_items" | "skills_assessment" | "set_accessibility_preferences" | "make_profile_searchable" | "display_personal_information" | "display_portfolio_links" | "show_professional_summary" | "show_skills_and_expertise" | "show_education" | "show_experience" | "display_accommodation_needs" | "display_employment_preferences", ExtArgs["result"]["pwd_Profile"]>
   export type Pwd_ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | Pwd_Profile$applicationsArgs<ExtArgs>
     accessibility_needs?: boolean | Pwd_Profile$accessibility_needsArgs<ExtArgs>
@@ -5584,6 +5718,15 @@ export namespace Prisma {
       portfolio_items: boolean
       skills_assessment: boolean
       set_accessibility_preferences: boolean
+      make_profile_searchable: boolean
+      display_personal_information: boolean
+      display_portfolio_links: boolean
+      show_professional_summary: boolean
+      show_skills_and_expertise: boolean
+      show_education: boolean
+      show_experience: boolean
+      display_accommodation_needs: boolean
+      display_employment_preferences: boolean
     }, ExtArgs["result"]["pwd_Profile"]>
     composites: {}
   }
@@ -6070,6 +6213,15 @@ export namespace Prisma {
     readonly portfolio_items: FieldRef<"Pwd_Profile", 'Boolean'>
     readonly skills_assessment: FieldRef<"Pwd_Profile", 'Boolean'>
     readonly set_accessibility_preferences: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly make_profile_searchable: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly display_personal_information: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly display_portfolio_links: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly show_professional_summary: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly show_skills_and_expertise: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly show_education: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly show_experience: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly display_accommodation_needs: FieldRef<"Pwd_Profile", 'Boolean'>
+    readonly display_employment_preferences: FieldRef<"Pwd_Profile", 'Boolean'>
   }
     
 
@@ -9031,7 +9183,6 @@ export namespace Prisma {
   export type Pwd_EducationMinAggregateOutputType = {
     id: number | null
     pwd_id: number | null
-    highest_level: string | null
     institution: string | null
     location: string | null
     degree: string | null
@@ -9044,7 +9195,6 @@ export namespace Prisma {
   export type Pwd_EducationMaxAggregateOutputType = {
     id: number | null
     pwd_id: number | null
-    highest_level: string | null
     institution: string | null
     location: string | null
     degree: string | null
@@ -9057,7 +9207,6 @@ export namespace Prisma {
   export type Pwd_EducationCountAggregateOutputType = {
     id: number
     pwd_id: number
-    highest_level: number
     institution: number
     location: number
     degree: number
@@ -9082,7 +9231,6 @@ export namespace Prisma {
   export type Pwd_EducationMinAggregateInputType = {
     id?: true
     pwd_id?: true
-    highest_level?: true
     institution?: true
     location?: true
     degree?: true
@@ -9095,7 +9243,6 @@ export namespace Prisma {
   export type Pwd_EducationMaxAggregateInputType = {
     id?: true
     pwd_id?: true
-    highest_level?: true
     institution?: true
     location?: true
     degree?: true
@@ -9108,7 +9255,6 @@ export namespace Prisma {
   export type Pwd_EducationCountAggregateInputType = {
     id?: true
     pwd_id?: true
-    highest_level?: true
     institution?: true
     location?: true
     degree?: true
@@ -9208,7 +9354,6 @@ export namespace Prisma {
   export type Pwd_EducationGroupByOutputType = {
     id: number
     pwd_id: number
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -9240,7 +9385,6 @@ export namespace Prisma {
   export type Pwd_EducationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     pwd_id?: boolean
-    highest_level?: boolean
     institution?: boolean
     location?: boolean
     degree?: boolean
@@ -9254,7 +9398,6 @@ export namespace Prisma {
   export type Pwd_EducationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     pwd_id?: boolean
-    highest_level?: boolean
     institution?: boolean
     location?: boolean
     degree?: boolean
@@ -9268,7 +9411,6 @@ export namespace Prisma {
   export type Pwd_EducationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     pwd_id?: boolean
-    highest_level?: boolean
     institution?: boolean
     location?: boolean
     degree?: boolean
@@ -9282,7 +9424,6 @@ export namespace Prisma {
   export type Pwd_EducationSelectScalar = {
     id?: boolean
     pwd_id?: boolean
-    highest_level?: boolean
     institution?: boolean
     location?: boolean
     degree?: boolean
@@ -9292,7 +9433,7 @@ export namespace Prisma {
     updated_at?: boolean
   }
 
-  export type Pwd_EducationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pwd_id" | "highest_level" | "institution" | "location" | "degree" | "field_of_study" | "graduation_details" | "year_graduated" | "updated_at", ExtArgs["result"]["pwd_Education"]>
+  export type Pwd_EducationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pwd_id" | "institution" | "location" | "degree" | "field_of_study" | "graduation_details" | "year_graduated" | "updated_at", ExtArgs["result"]["pwd_Education"]>
   export type Pwd_EducationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
   }
@@ -9311,7 +9452,6 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       pwd_id: number
-      highest_level: string
       institution: string
       location: string
       degree: string
@@ -9745,7 +9885,6 @@ export namespace Prisma {
   interface Pwd_EducationFieldRefs {
     readonly id: FieldRef<"Pwd_Education", 'Int'>
     readonly pwd_id: FieldRef<"Pwd_Education", 'Int'>
-    readonly highest_level: FieldRef<"Pwd_Education", 'String'>
     readonly institution: FieldRef<"Pwd_Education", 'String'>
     readonly location: FieldRef<"Pwd_Education", 'String'>
     readonly degree: FieldRef<"Pwd_Education", 'String'>
@@ -17496,6 +17635,8 @@ export namespace Prisma {
     proposed_salary: Decimal | null
     work_experience: string | null
     portfolio_links: string | null
+    video_file_path: string | null
+    status: string | null
     submitted_at: Date | null
     updated_at: Date | null
     status_changed_at: Date | null
@@ -17511,6 +17652,8 @@ export namespace Prisma {
     proposed_salary: Decimal | null
     work_experience: string | null
     portfolio_links: string | null
+    video_file_path: string | null
+    status: string | null
     submitted_at: Date | null
     updated_at: Date | null
     status_changed_at: Date | null
@@ -17526,6 +17669,8 @@ export namespace Prisma {
     proposed_salary: number
     work_experience: number
     portfolio_links: number
+    video_file_path: number
+    status: number
     submitted_at: number
     updated_at: number
     status_changed_at: number
@@ -17561,6 +17706,8 @@ export namespace Prisma {
     proposed_salary?: true
     work_experience?: true
     portfolio_links?: true
+    video_file_path?: true
+    status?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17576,6 +17723,8 @@ export namespace Prisma {
     proposed_salary?: true
     work_experience?: true
     portfolio_links?: true
+    video_file_path?: true
+    status?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17591,6 +17740,8 @@ export namespace Prisma {
     proposed_salary?: true
     work_experience?: true
     portfolio_links?: true
+    video_file_path?: true
+    status?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17688,11 +17839,13 @@ export namespace Prisma {
     job_id: number
     pwd_id: number
     employer_id: number
-    resume_id: number
+    resume_id: number | null
     custom_message: string
     proposed_salary: Decimal
     work_experience: string | null
     portfolio_links: string | null
+    video_file_path: string | null
+    status: string
     submitted_at: Date
     updated_at: Date
     status_changed_at: Date
@@ -17727,13 +17880,15 @@ export namespace Prisma {
     proposed_salary?: boolean
     work_experience?: boolean
     portfolio_links?: boolean
+    video_file_path?: boolean
+    status?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
     employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
-    resume?: boolean | ResumesDefaultArgs<ExtArgs>
+    resume?: boolean | Applications$resumeArgs<ExtArgs>
     reviews?: boolean | Applications$reviewsArgs<ExtArgs>
     transactions?: boolean | Applications$transactionsArgs<ExtArgs>
     _count?: boolean | ApplicationsCountOutputTypeDefaultArgs<ExtArgs>
@@ -17749,13 +17904,15 @@ export namespace Prisma {
     proposed_salary?: boolean
     work_experience?: boolean
     portfolio_links?: boolean
+    video_file_path?: boolean
+    status?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
     employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
-    resume?: boolean | ResumesDefaultArgs<ExtArgs>
+    resume?: boolean | Applications$resumeArgs<ExtArgs>
   }, ExtArgs["result"]["applications"]>
 
   export type ApplicationsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -17768,13 +17925,15 @@ export namespace Prisma {
     proposed_salary?: boolean
     work_experience?: boolean
     portfolio_links?: boolean
+    video_file_path?: boolean
+    status?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
     employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
-    resume?: boolean | ResumesDefaultArgs<ExtArgs>
+    resume?: boolean | Applications$resumeArgs<ExtArgs>
   }, ExtArgs["result"]["applications"]>
 
   export type ApplicationsSelectScalar = {
@@ -17787,17 +17946,19 @@ export namespace Prisma {
     proposed_salary?: boolean
     work_experience?: boolean
     portfolio_links?: boolean
+    video_file_path?: boolean
+    status?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
   }
 
-  export type ApplicationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"application_id" | "job_id" | "pwd_id" | "employer_id" | "resume_id" | "custom_message" | "proposed_salary" | "work_experience" | "portfolio_links" | "submitted_at" | "updated_at" | "status_changed_at", ExtArgs["result"]["applications"]>
+  export type ApplicationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"application_id" | "job_id" | "pwd_id" | "employer_id" | "resume_id" | "custom_message" | "proposed_salary" | "work_experience" | "portfolio_links" | "video_file_path" | "status" | "submitted_at" | "updated_at" | "status_changed_at", ExtArgs["result"]["applications"]>
   export type ApplicationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
     employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
-    resume?: boolean | ResumesDefaultArgs<ExtArgs>
+    resume?: boolean | Applications$resumeArgs<ExtArgs>
     reviews?: boolean | Applications$reviewsArgs<ExtArgs>
     transactions?: boolean | Applications$transactionsArgs<ExtArgs>
     _count?: boolean | ApplicationsCountOutputTypeDefaultArgs<ExtArgs>
@@ -17806,13 +17967,13 @@ export namespace Prisma {
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
     employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
-    resume?: boolean | ResumesDefaultArgs<ExtArgs>
+    resume?: boolean | Applications$resumeArgs<ExtArgs>
   }
   export type ApplicationsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
     employer_profile?: boolean | Employer_ProfileDefaultArgs<ExtArgs>
-    resume?: boolean | ResumesDefaultArgs<ExtArgs>
+    resume?: boolean | Applications$resumeArgs<ExtArgs>
   }
 
   export type $ApplicationsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -17821,7 +17982,7 @@ export namespace Prisma {
       job_listing: Prisma.$Job_ListingsPayload<ExtArgs>
       pwd_profile: Prisma.$Pwd_ProfilePayload<ExtArgs>
       employer_profile: Prisma.$Employer_ProfilePayload<ExtArgs>
-      resume: Prisma.$ResumesPayload<ExtArgs>
+      resume: Prisma.$ResumesPayload<ExtArgs> | null
       reviews: Prisma.$reviewsPayload<ExtArgs>[]
       transactions: Prisma.$transactionsPayload<ExtArgs>[]
     }
@@ -17830,11 +17991,13 @@ export namespace Prisma {
       job_id: number
       pwd_id: number
       employer_id: number
-      resume_id: number
+      resume_id: number | null
       custom_message: string
       proposed_salary: Prisma.Decimal
       work_experience: string | null
       portfolio_links: string | null
+      video_file_path: string | null
+      status: string
       submitted_at: Date
       updated_at: Date
       status_changed_at: Date
@@ -18235,7 +18398,7 @@ export namespace Prisma {
     job_listing<T extends Job_ListingsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Job_ListingsDefaultArgs<ExtArgs>>): Prisma__Job_ListingsClient<$Result.GetResult<Prisma.$Job_ListingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     pwd_profile<T extends Pwd_ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Pwd_ProfileDefaultArgs<ExtArgs>>): Prisma__Pwd_ProfileClient<$Result.GetResult<Prisma.$Pwd_ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     employer_profile<T extends Employer_ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Employer_ProfileDefaultArgs<ExtArgs>>): Prisma__Employer_ProfileClient<$Result.GetResult<Prisma.$Employer_ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    resume<T extends ResumesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ResumesDefaultArgs<ExtArgs>>): Prisma__ResumesClient<$Result.GetResult<Prisma.$ResumesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    resume<T extends Applications$resumeArgs<ExtArgs> = {}>(args?: Subset<T, Applications$resumeArgs<ExtArgs>>): Prisma__ResumesClient<$Result.GetResult<Prisma.$ResumesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     reviews<T extends Applications$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Applications$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$reviewsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transactions<T extends Applications$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Applications$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transactionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -18276,6 +18439,8 @@ export namespace Prisma {
     readonly proposed_salary: FieldRef<"Applications", 'Decimal'>
     readonly work_experience: FieldRef<"Applications", 'String'>
     readonly portfolio_links: FieldRef<"Applications", 'String'>
+    readonly video_file_path: FieldRef<"Applications", 'String'>
+    readonly status: FieldRef<"Applications", 'String'>
     readonly submitted_at: FieldRef<"Applications", 'DateTime'>
     readonly updated_at: FieldRef<"Applications", 'DateTime'>
     readonly status_changed_at: FieldRef<"Applications", 'DateTime'>
@@ -18672,6 +18837,25 @@ export namespace Prisma {
      * Limit how many Applications to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Applications.resume
+   */
+  export type Applications$resumeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resumes
+     */
+    select?: ResumesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resumes
+     */
+    omit?: ResumesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResumesInclude<ExtArgs> | null
+    where?: ResumesWhereInput
   }
 
   /**
@@ -29397,7 +29581,10 @@ export namespace Prisma {
     is_verified: 'is_verified',
     user_id: 'user_id',
     password_reset_token: 'password_reset_token',
-    created_at: 'created_at'
+    created_at: 'created_at',
+    document_verification_status: 'document_verification_status',
+    document_rejection_reason: 'document_rejection_reason',
+    verification_documents: 'verification_documents'
   };
 
   export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
@@ -29456,7 +29643,16 @@ export namespace Prisma {
     education: 'education',
     portfolio_items: 'portfolio_items',
     skills_assessment: 'skills_assessment',
-    set_accessibility_preferences: 'set_accessibility_preferences'
+    set_accessibility_preferences: 'set_accessibility_preferences',
+    make_profile_searchable: 'make_profile_searchable',
+    display_personal_information: 'display_personal_information',
+    display_portfolio_links: 'display_portfolio_links',
+    show_professional_summary: 'show_professional_summary',
+    show_skills_and_expertise: 'show_skills_and_expertise',
+    show_education: 'show_education',
+    show_experience: 'show_experience',
+    display_accommodation_needs: 'display_accommodation_needs',
+    display_employment_preferences: 'display_employment_preferences'
   };
 
   export type Pwd_ProfileScalarFieldEnum = (typeof Pwd_ProfileScalarFieldEnum)[keyof typeof Pwd_ProfileScalarFieldEnum]
@@ -29497,7 +29693,6 @@ export namespace Prisma {
   export const Pwd_EducationScalarFieldEnum: {
     id: 'id',
     pwd_id: 'pwd_id',
-    highest_level: 'highest_level',
     institution: 'institution',
     location: 'location',
     degree: 'degree',
@@ -29627,6 +29822,8 @@ export namespace Prisma {
     proposed_salary: 'proposed_salary',
     work_experience: 'work_experience',
     portfolio_links: 'portfolio_links',
+    video_file_path: 'video_file_path',
+    status: 'status',
     submitted_at: 'submitted_at',
     updated_at: 'updated_at',
     status_changed_at: 'status_changed_at'
@@ -30067,6 +30264,9 @@ export namespace Prisma {
     user_id?: IntFilter<"Users"> | number
     password_reset_token?: StringNullableFilter<"Users"> | string | null
     created_at?: StringFilter<"Users"> | string
+    document_verification_status?: StringNullableFilter<"Users"> | string | null
+    document_rejection_reason?: StringNullableFilter<"Users"> | string | null
+    verification_documents?: StringNullableListFilter<"Users">
     messages?: Chat_MessageListRelationFilter
     employer_Profile?: XOR<Employer_ProfileNullableScalarRelationFilter, Employer_ProfileWhereInput> | null
     notifications?: NotificationsListRelationFilter
@@ -30091,6 +30291,9 @@ export namespace Prisma {
     user_id?: SortOrder
     password_reset_token?: SortOrderInput | SortOrder
     created_at?: SortOrder
+    document_verification_status?: SortOrderInput | SortOrder
+    document_rejection_reason?: SortOrderInput | SortOrder
+    verification_documents?: SortOrder
     messages?: Chat_MessageOrderByRelationAggregateInput
     employer_Profile?: Employer_ProfileOrderByWithRelationInput
     notifications?: NotificationsOrderByRelationAggregateInput
@@ -30118,6 +30321,9 @@ export namespace Prisma {
     is_verified?: BoolFilter<"Users"> | boolean
     password_reset_token?: StringNullableFilter<"Users"> | string | null
     created_at?: StringFilter<"Users"> | string
+    document_verification_status?: StringNullableFilter<"Users"> | string | null
+    document_rejection_reason?: StringNullableFilter<"Users"> | string | null
+    verification_documents?: StringNullableListFilter<"Users">
     messages?: Chat_MessageListRelationFilter
     employer_Profile?: XOR<Employer_ProfileNullableScalarRelationFilter, Employer_ProfileWhereInput> | null
     notifications?: NotificationsListRelationFilter
@@ -30142,6 +30348,9 @@ export namespace Prisma {
     user_id?: SortOrder
     password_reset_token?: SortOrderInput | SortOrder
     created_at?: SortOrder
+    document_verification_status?: SortOrderInput | SortOrder
+    document_rejection_reason?: SortOrderInput | SortOrder
+    verification_documents?: SortOrder
     _count?: UsersCountOrderByAggregateInput
     _avg?: UsersAvgOrderByAggregateInput
     _max?: UsersMaxOrderByAggregateInput
@@ -30162,6 +30371,9 @@ export namespace Prisma {
     user_id?: IntWithAggregatesFilter<"Users"> | number
     password_reset_token?: StringNullableWithAggregatesFilter<"Users"> | string | null
     created_at?: StringWithAggregatesFilter<"Users"> | string
+    document_verification_status?: StringNullableWithAggregatesFilter<"Users"> | string | null
+    document_rejection_reason?: StringNullableWithAggregatesFilter<"Users"> | string | null
+    verification_documents?: StringNullableListFilter<"Users">
   }
 
   export type Pwd_ProfileWhereInput = {
@@ -30221,6 +30433,15 @@ export namespace Prisma {
     portfolio_items?: BoolFilter<"Pwd_Profile"> | boolean
     skills_assessment?: BoolFilter<"Pwd_Profile"> | boolean
     set_accessibility_preferences?: BoolFilter<"Pwd_Profile"> | boolean
+    make_profile_searchable?: BoolFilter<"Pwd_Profile"> | boolean
+    display_personal_information?: BoolFilter<"Pwd_Profile"> | boolean
+    display_portfolio_links?: BoolFilter<"Pwd_Profile"> | boolean
+    show_professional_summary?: BoolFilter<"Pwd_Profile"> | boolean
+    show_skills_and_expertise?: BoolFilter<"Pwd_Profile"> | boolean
+    show_education?: BoolFilter<"Pwd_Profile"> | boolean
+    show_experience?: BoolFilter<"Pwd_Profile"> | boolean
+    display_accommodation_needs?: BoolFilter<"Pwd_Profile"> | boolean
+    display_employment_preferences?: BoolFilter<"Pwd_Profile"> | boolean
     applications?: ApplicationsListRelationFilter
     accessibility_needs?: Pwd_Accessibility_NeedsListRelationFilter
     educations?: Pwd_EducationListRelationFilter
@@ -30287,6 +30508,15 @@ export namespace Prisma {
     portfolio_items?: SortOrder
     skills_assessment?: SortOrder
     set_accessibility_preferences?: SortOrder
+    make_profile_searchable?: SortOrder
+    display_personal_information?: SortOrder
+    display_portfolio_links?: SortOrder
+    show_professional_summary?: SortOrder
+    show_skills_and_expertise?: SortOrder
+    show_education?: SortOrder
+    show_experience?: SortOrder
+    display_accommodation_needs?: SortOrder
+    display_employment_preferences?: SortOrder
     applications?: ApplicationsOrderByRelationAggregateInput
     accessibility_needs?: Pwd_Accessibility_NeedsOrderByRelationAggregateInput
     educations?: Pwd_EducationOrderByRelationAggregateInput
@@ -30356,6 +30586,15 @@ export namespace Prisma {
     portfolio_items?: BoolFilter<"Pwd_Profile"> | boolean
     skills_assessment?: BoolFilter<"Pwd_Profile"> | boolean
     set_accessibility_preferences?: BoolFilter<"Pwd_Profile"> | boolean
+    make_profile_searchable?: BoolFilter<"Pwd_Profile"> | boolean
+    display_personal_information?: BoolFilter<"Pwd_Profile"> | boolean
+    display_portfolio_links?: BoolFilter<"Pwd_Profile"> | boolean
+    show_professional_summary?: BoolFilter<"Pwd_Profile"> | boolean
+    show_skills_and_expertise?: BoolFilter<"Pwd_Profile"> | boolean
+    show_education?: BoolFilter<"Pwd_Profile"> | boolean
+    show_experience?: BoolFilter<"Pwd_Profile"> | boolean
+    display_accommodation_needs?: BoolFilter<"Pwd_Profile"> | boolean
+    display_employment_preferences?: BoolFilter<"Pwd_Profile"> | boolean
     applications?: ApplicationsListRelationFilter
     accessibility_needs?: Pwd_Accessibility_NeedsListRelationFilter
     educations?: Pwd_EducationListRelationFilter
@@ -30422,6 +30661,15 @@ export namespace Prisma {
     portfolio_items?: SortOrder
     skills_assessment?: SortOrder
     set_accessibility_preferences?: SortOrder
+    make_profile_searchable?: SortOrder
+    display_personal_information?: SortOrder
+    display_portfolio_links?: SortOrder
+    show_professional_summary?: SortOrder
+    show_skills_and_expertise?: SortOrder
+    show_education?: SortOrder
+    show_experience?: SortOrder
+    display_accommodation_needs?: SortOrder
+    display_employment_preferences?: SortOrder
     _count?: Pwd_ProfileCountOrderByAggregateInput
     _avg?: Pwd_ProfileAvgOrderByAggregateInput
     _max?: Pwd_ProfileMaxOrderByAggregateInput
@@ -30486,6 +30734,15 @@ export namespace Prisma {
     portfolio_items?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
     skills_assessment?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
     set_accessibility_preferences?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    make_profile_searchable?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    display_personal_information?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    display_portfolio_links?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    show_professional_summary?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    show_skills_and_expertise?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    show_education?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    show_experience?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    display_accommodation_needs?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
+    display_employment_preferences?: BoolWithAggregatesFilter<"Pwd_Profile"> | boolean
   }
 
   export type Pwd_ExperienceWhereInput = {
@@ -30658,7 +30915,6 @@ export namespace Prisma {
     NOT?: Pwd_EducationWhereInput | Pwd_EducationWhereInput[]
     id?: IntFilter<"Pwd_Education"> | number
     pwd_id?: IntFilter<"Pwd_Education"> | number
-    highest_level?: StringFilter<"Pwd_Education"> | string
     institution?: StringFilter<"Pwd_Education"> | string
     location?: StringFilter<"Pwd_Education"> | string
     degree?: StringFilter<"Pwd_Education"> | string
@@ -30672,7 +30928,6 @@ export namespace Prisma {
   export type Pwd_EducationOrderByWithRelationInput = {
     id?: SortOrder
     pwd_id?: SortOrder
-    highest_level?: SortOrder
     institution?: SortOrder
     location?: SortOrder
     degree?: SortOrder
@@ -30689,7 +30944,6 @@ export namespace Prisma {
     OR?: Pwd_EducationWhereInput[]
     NOT?: Pwd_EducationWhereInput | Pwd_EducationWhereInput[]
     pwd_id?: IntFilter<"Pwd_Education"> | number
-    highest_level?: StringFilter<"Pwd_Education"> | string
     institution?: StringFilter<"Pwd_Education"> | string
     location?: StringFilter<"Pwd_Education"> | string
     degree?: StringFilter<"Pwd_Education"> | string
@@ -30703,7 +30957,6 @@ export namespace Prisma {
   export type Pwd_EducationOrderByWithAggregationInput = {
     id?: SortOrder
     pwd_id?: SortOrder
-    highest_level?: SortOrder
     institution?: SortOrder
     location?: SortOrder
     degree?: SortOrder
@@ -30724,7 +30977,6 @@ export namespace Prisma {
     NOT?: Pwd_EducationScalarWhereWithAggregatesInput | Pwd_EducationScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Pwd_Education"> | number
     pwd_id?: IntWithAggregatesFilter<"Pwd_Education"> | number
-    highest_level?: StringWithAggregatesFilter<"Pwd_Education"> | string
     institution?: StringWithAggregatesFilter<"Pwd_Education"> | string
     location?: StringWithAggregatesFilter<"Pwd_Education"> | string
     degree?: StringWithAggregatesFilter<"Pwd_Education"> | string
@@ -31310,18 +31562,20 @@ export namespace Prisma {
     job_id?: IntFilter<"Applications"> | number
     pwd_id?: IntFilter<"Applications"> | number
     employer_id?: IntFilter<"Applications"> | number
-    resume_id?: IntFilter<"Applications"> | number
+    resume_id?: IntNullableFilter<"Applications"> | number | null
     custom_message?: StringFilter<"Applications"> | string
     proposed_salary?: DecimalFilter<"Applications"> | Decimal | DecimalJsLike | number | string
     work_experience?: StringNullableFilter<"Applications"> | string | null
     portfolio_links?: StringNullableFilter<"Applications"> | string | null
+    video_file_path?: StringNullableFilter<"Applications"> | string | null
+    status?: StringFilter<"Applications"> | string
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
     job_listing?: XOR<Job_ListingsScalarRelationFilter, Job_ListingsWhereInput>
     pwd_profile?: XOR<Pwd_ProfileScalarRelationFilter, Pwd_ProfileWhereInput>
     employer_profile?: XOR<Employer_ProfileScalarRelationFilter, Employer_ProfileWhereInput>
-    resume?: XOR<ResumesScalarRelationFilter, ResumesWhereInput>
+    resume?: XOR<ResumesNullableScalarRelationFilter, ResumesWhereInput> | null
     reviews?: ReviewsListRelationFilter
     transactions?: TransactionsListRelationFilter
   }
@@ -31331,11 +31585,13 @@ export namespace Prisma {
     job_id?: SortOrder
     pwd_id?: SortOrder
     employer_id?: SortOrder
-    resume_id?: SortOrder
+    resume_id?: SortOrderInput | SortOrder
     custom_message?: SortOrder
     proposed_salary?: SortOrder
     work_experience?: SortOrderInput | SortOrder
     portfolio_links?: SortOrderInput | SortOrder
+    video_file_path?: SortOrderInput | SortOrder
+    status?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -31355,18 +31611,20 @@ export namespace Prisma {
     job_id?: IntFilter<"Applications"> | number
     pwd_id?: IntFilter<"Applications"> | number
     employer_id?: IntFilter<"Applications"> | number
-    resume_id?: IntFilter<"Applications"> | number
+    resume_id?: IntNullableFilter<"Applications"> | number | null
     custom_message?: StringFilter<"Applications"> | string
     proposed_salary?: DecimalFilter<"Applications"> | Decimal | DecimalJsLike | number | string
     work_experience?: StringNullableFilter<"Applications"> | string | null
     portfolio_links?: StringNullableFilter<"Applications"> | string | null
+    video_file_path?: StringNullableFilter<"Applications"> | string | null
+    status?: StringFilter<"Applications"> | string
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
     job_listing?: XOR<Job_ListingsScalarRelationFilter, Job_ListingsWhereInput>
     pwd_profile?: XOR<Pwd_ProfileScalarRelationFilter, Pwd_ProfileWhereInput>
     employer_profile?: XOR<Employer_ProfileScalarRelationFilter, Employer_ProfileWhereInput>
-    resume?: XOR<ResumesScalarRelationFilter, ResumesWhereInput>
+    resume?: XOR<ResumesNullableScalarRelationFilter, ResumesWhereInput> | null
     reviews?: ReviewsListRelationFilter
     transactions?: TransactionsListRelationFilter
   }, "application_id">
@@ -31376,11 +31634,13 @@ export namespace Prisma {
     job_id?: SortOrder
     pwd_id?: SortOrder
     employer_id?: SortOrder
-    resume_id?: SortOrder
+    resume_id?: SortOrderInput | SortOrder
     custom_message?: SortOrder
     proposed_salary?: SortOrder
     work_experience?: SortOrderInput | SortOrder
     portfolio_links?: SortOrderInput | SortOrder
+    video_file_path?: SortOrderInput | SortOrder
+    status?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -31399,11 +31659,13 @@ export namespace Prisma {
     job_id?: IntWithAggregatesFilter<"Applications"> | number
     pwd_id?: IntWithAggregatesFilter<"Applications"> | number
     employer_id?: IntWithAggregatesFilter<"Applications"> | number
-    resume_id?: IntWithAggregatesFilter<"Applications"> | number
+    resume_id?: IntNullableWithAggregatesFilter<"Applications"> | number | null
     custom_message?: StringWithAggregatesFilter<"Applications"> | string
     proposed_salary?: DecimalWithAggregatesFilter<"Applications"> | Decimal | DecimalJsLike | number | string
     work_experience?: StringNullableWithAggregatesFilter<"Applications"> | string | null
     portfolio_links?: StringNullableWithAggregatesFilter<"Applications"> | string | null
+    video_file_path?: StringNullableWithAggregatesFilter<"Applications"> | string | null
+    status?: StringWithAggregatesFilter<"Applications"> | string
     submitted_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
@@ -32179,6 +32441,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
@@ -32203,6 +32468,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -32226,6 +32494,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
@@ -32250,6 +32521,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -32274,6 +32548,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
   }
 
   export type UsersUpdateManyMutationInput = {
@@ -32285,6 +32562,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
   }
 
   export type UsersUncheckedUpdateManyInput = {
@@ -32297,6 +32577,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
   }
 
   export type Pwd_ProfileCreateInput = {
@@ -32351,6 +32634,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -32417,6 +32709,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -32480,6 +32781,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -32546,6 +32856,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -32611,6 +32930,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
   }
 
   export type Pwd_ProfileUpdateManyMutationInput = {
@@ -32665,6 +32993,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type Pwd_ProfileUncheckedUpdateManyInput = {
@@ -32721,6 +33058,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type Pwd_ExperienceCreateInput = {
@@ -32898,7 +33244,6 @@ export namespace Prisma {
   }
 
   export type Pwd_EducationCreateInput = {
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -32912,7 +33257,6 @@ export namespace Prisma {
   export type Pwd_EducationUncheckedCreateInput = {
     id?: number
     pwd_id: number
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -32923,7 +33267,6 @@ export namespace Prisma {
   }
 
   export type Pwd_EducationUpdateInput = {
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -32937,7 +33280,6 @@ export namespace Prisma {
   export type Pwd_EducationUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -32950,7 +33292,6 @@ export namespace Prisma {
   export type Pwd_EducationCreateManyInput = {
     id?: number
     pwd_id: number
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -32961,7 +33302,6 @@ export namespace Prisma {
   }
 
   export type Pwd_EducationUpdateManyMutationInput = {
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -32974,7 +33314,6 @@ export namespace Prisma {
   export type Pwd_EducationUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -33611,13 +33950,15 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
     job_listing: Job_ListingsCreateNestedOneWithoutApplicationsInput
     pwd_profile: Pwd_ProfileCreateNestedOneWithoutApplicationsInput
     employer_profile: Employer_ProfileCreateNestedOneWithoutApplicationsInput
-    resume: ResumesCreateNestedOneWithoutApplicationsInput
+    resume?: ResumesCreateNestedOneWithoutApplicationsInput
     reviews?: reviewsCreateNestedManyWithoutApplicationInput
     transactions?: transactionsCreateNestedManyWithoutApplicationInput
   }
@@ -33627,11 +33968,13 @@ export namespace Prisma {
     job_id: number
     pwd_id: number
     employer_id: number
-    resume_id: number
+    resume_id?: number | null
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -33644,13 +33987,15 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
     job_listing?: Job_ListingsUpdateOneRequiredWithoutApplicationsNestedInput
     pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
     employer_profile?: Employer_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
-    resume?: ResumesUpdateOneRequiredWithoutApplicationsNestedInput
+    resume?: ResumesUpdateOneWithoutApplicationsNestedInput
     reviews?: reviewsUpdateManyWithoutApplicationNestedInput
     transactions?: transactionsUpdateManyWithoutApplicationNestedInput
   }
@@ -33660,11 +34005,13 @@ export namespace Prisma {
     job_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
     employer_id?: IntFieldUpdateOperationsInput | number
-    resume_id?: IntFieldUpdateOperationsInput | number
+    resume_id?: NullableIntFieldUpdateOperationsInput | number | null
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33677,11 +34024,13 @@ export namespace Prisma {
     job_id: number
     pwd_id: number
     employer_id: number
-    resume_id: number
+    resume_id?: number | null
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -33692,6 +34041,8 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33702,11 +34053,13 @@ export namespace Prisma {
     job_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
     employer_id?: IntFieldUpdateOperationsInput | number
-    resume_id?: IntFieldUpdateOperationsInput | number
+    resume_id?: NullableIntFieldUpdateOperationsInput | number | null
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34546,6 +34899,14 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type Chat_MessageListRelationFilter = {
     every?: Chat_MessageWhereInput
     some?: Chat_MessageWhereInput
@@ -34641,6 +35002,9 @@ export namespace Prisma {
     user_id?: SortOrder
     password_reset_token?: SortOrder
     created_at?: SortOrder
+    document_verification_status?: SortOrder
+    document_rejection_reason?: SortOrder
+    verification_documents?: SortOrder
   }
 
   export type UsersAvgOrderByAggregateInput = {
@@ -34657,6 +35021,8 @@ export namespace Prisma {
     user_id?: SortOrder
     password_reset_token?: SortOrder
     created_at?: SortOrder
+    document_verification_status?: SortOrder
+    document_rejection_reason?: SortOrder
   }
 
   export type UsersMinOrderByAggregateInput = {
@@ -34669,6 +35035,8 @@ export namespace Prisma {
     user_id?: SortOrder
     password_reset_token?: SortOrder
     created_at?: SortOrder
+    document_verification_status?: SortOrder
+    document_rejection_reason?: SortOrder
   }
 
   export type UsersSumOrderByAggregateInput = {
@@ -34789,14 +35157,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -34959,6 +35319,15 @@ export namespace Prisma {
     portfolio_items?: SortOrder
     skills_assessment?: SortOrder
     set_accessibility_preferences?: SortOrder
+    make_profile_searchable?: SortOrder
+    display_personal_information?: SortOrder
+    display_portfolio_links?: SortOrder
+    show_professional_summary?: SortOrder
+    show_skills_and_expertise?: SortOrder
+    show_education?: SortOrder
+    show_experience?: SortOrder
+    display_accommodation_needs?: SortOrder
+    display_employment_preferences?: SortOrder
   }
 
   export type Pwd_ProfileAvgOrderByAggregateInput = {
@@ -35021,6 +35390,15 @@ export namespace Prisma {
     portfolio_items?: SortOrder
     skills_assessment?: SortOrder
     set_accessibility_preferences?: SortOrder
+    make_profile_searchable?: SortOrder
+    display_personal_information?: SortOrder
+    display_portfolio_links?: SortOrder
+    show_professional_summary?: SortOrder
+    show_skills_and_expertise?: SortOrder
+    show_education?: SortOrder
+    show_experience?: SortOrder
+    display_accommodation_needs?: SortOrder
+    display_employment_preferences?: SortOrder
   }
 
   export type Pwd_ProfileMinOrderByAggregateInput = {
@@ -35074,6 +35452,15 @@ export namespace Prisma {
     portfolio_items?: SortOrder
     skills_assessment?: SortOrder
     set_accessibility_preferences?: SortOrder
+    make_profile_searchable?: SortOrder
+    display_personal_information?: SortOrder
+    display_portfolio_links?: SortOrder
+    show_professional_summary?: SortOrder
+    show_skills_and_expertise?: SortOrder
+    show_education?: SortOrder
+    show_experience?: SortOrder
+    display_accommodation_needs?: SortOrder
+    display_employment_preferences?: SortOrder
   }
 
   export type Pwd_ProfileSumOrderByAggregateInput = {
@@ -35274,7 +35661,6 @@ export namespace Prisma {
   export type Pwd_EducationCountOrderByAggregateInput = {
     id?: SortOrder
     pwd_id?: SortOrder
-    highest_level?: SortOrder
     institution?: SortOrder
     location?: SortOrder
     degree?: SortOrder
@@ -35292,7 +35678,6 @@ export namespace Prisma {
   export type Pwd_EducationMaxOrderByAggregateInput = {
     id?: SortOrder
     pwd_id?: SortOrder
-    highest_level?: SortOrder
     institution?: SortOrder
     location?: SortOrder
     degree?: SortOrder
@@ -35305,7 +35690,6 @@ export namespace Prisma {
   export type Pwd_EducationMinOrderByAggregateInput = {
     id?: SortOrder
     pwd_id?: SortOrder
-    highest_level?: SortOrder
     institution?: SortOrder
     location?: SortOrder
     degree?: SortOrder
@@ -35747,9 +36131,9 @@ export namespace Prisma {
     isNot?: Employer_ProfileWhereInput
   }
 
-  export type ResumesScalarRelationFilter = {
-    is?: ResumesWhereInput
-    isNot?: ResumesWhereInput
+  export type ResumesNullableScalarRelationFilter = {
+    is?: ResumesWhereInput | null
+    isNot?: ResumesWhereInput | null
   }
 
   export type ApplicationsCountOrderByAggregateInput = {
@@ -35762,6 +36146,8 @@ export namespace Prisma {
     proposed_salary?: SortOrder
     work_experience?: SortOrder
     portfolio_links?: SortOrder
+    video_file_path?: SortOrder
+    status?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -35786,6 +36172,8 @@ export namespace Prisma {
     proposed_salary?: SortOrder
     work_experience?: SortOrder
     portfolio_links?: SortOrder
+    video_file_path?: SortOrder
+    status?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -35801,6 +36189,8 @@ export namespace Prisma {
     proposed_salary?: SortOrder
     work_experience?: SortOrder
     portfolio_links?: SortOrder
+    video_file_path?: SortOrder
+    status?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -36404,6 +36794,10 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
+  export type UsersCreateverification_documentsInput = {
+    set: string[]
+  }
+
   export type Chat_MessageCreateNestedManyWithoutSenderInput = {
     create?: XOR<Chat_MessageCreateWithoutSenderInput, Chat_MessageUncheckedCreateWithoutSenderInput> | Chat_MessageCreateWithoutSenderInput[] | Chat_MessageUncheckedCreateWithoutSenderInput[]
     connectOrCreate?: Chat_MessageCreateOrConnectWithoutSenderInput | Chat_MessageCreateOrConnectWithoutSenderInput[]
@@ -36586,6 +36980,11 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type UsersUpdateverification_documentsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type Chat_MessageUpdateManyWithoutSenderNestedInput = {
@@ -37945,10 +38344,12 @@ export namespace Prisma {
     update?: XOR<XOR<Employer_ProfileUpdateToOneWithWhereWithoutApplicationsInput, Employer_ProfileUpdateWithoutApplicationsInput>, Employer_ProfileUncheckedUpdateWithoutApplicationsInput>
   }
 
-  export type ResumesUpdateOneRequiredWithoutApplicationsNestedInput = {
+  export type ResumesUpdateOneWithoutApplicationsNestedInput = {
     create?: XOR<ResumesCreateWithoutApplicationsInput, ResumesUncheckedCreateWithoutApplicationsInput>
     connectOrCreate?: ResumesCreateOrConnectWithoutApplicationsInput
     upsert?: ResumesUpsertWithoutApplicationsInput
+    disconnect?: ResumesWhereInput | boolean
+    delete?: ResumesWhereInput | boolean
     connect?: ResumesWhereUniqueInput
     update?: XOR<XOR<ResumesUpdateToOneWithWhereWithoutApplicationsInput, ResumesUpdateWithoutApplicationsInput>, ResumesUncheckedUpdateWithoutApplicationsInput>
   }
@@ -39069,6 +39470,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -39133,6 +39543,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -39603,6 +40022,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -39667,6 +40095,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -39884,12 +40321,14 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
     job_listing: Job_ListingsCreateNestedOneWithoutApplicationsInput
     employer_profile: Employer_ProfileCreateNestedOneWithoutApplicationsInput
-    resume: ResumesCreateNestedOneWithoutApplicationsInput
+    resume?: ResumesCreateNestedOneWithoutApplicationsInput
     reviews?: reviewsCreateNestedManyWithoutApplicationInput
     transactions?: transactionsCreateNestedManyWithoutApplicationInput
   }
@@ -39898,11 +40337,13 @@ export namespace Prisma {
     application_id?: number
     job_id: number
     employer_id: number
-    resume_id: number
+    resume_id?: number | null
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -39950,7 +40391,6 @@ export namespace Prisma {
   }
 
   export type Pwd_EducationCreateWithoutPwd_profileInput = {
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -39962,7 +40402,6 @@ export namespace Prisma {
 
   export type Pwd_EducationUncheckedCreateWithoutPwd_profileInput = {
     id?: number
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -40055,6 +40494,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
@@ -40078,6 +40520,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -40246,11 +40691,13 @@ export namespace Prisma {
     job_id?: IntFilter<"Applications"> | number
     pwd_id?: IntFilter<"Applications"> | number
     employer_id?: IntFilter<"Applications"> | number
-    resume_id?: IntFilter<"Applications"> | number
+    resume_id?: IntNullableFilter<"Applications"> | number | null
     custom_message?: StringFilter<"Applications"> | string
     proposed_salary?: DecimalFilter<"Applications"> | Decimal | DecimalJsLike | number | string
     work_experience?: StringNullableFilter<"Applications"> | string | null
     portfolio_links?: StringNullableFilter<"Applications"> | string | null
+    video_file_path?: StringNullableFilter<"Applications"> | string | null
+    status?: StringFilter<"Applications"> | string
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
@@ -40308,7 +40755,6 @@ export namespace Prisma {
     NOT?: Pwd_EducationScalarWhereInput | Pwd_EducationScalarWhereInput[]
     id?: IntFilter<"Pwd_Education"> | number
     pwd_id?: IntFilter<"Pwd_Education"> | number
-    highest_level?: StringFilter<"Pwd_Education"> | string
     institution?: StringFilter<"Pwd_Education"> | string
     location?: StringFilter<"Pwd_Education"> | string
     degree?: StringFilter<"Pwd_Education"> | string
@@ -40401,6 +40847,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
@@ -40424,6 +40873,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -40613,6 +41065,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -40678,6 +41139,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -40756,6 +41226,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -40821,6 +41300,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -40883,6 +41371,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
@@ -40948,6 +41445,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -41026,6 +41532,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
@@ -41091,6 +41606,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -41153,6 +41677,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
@@ -41218,6 +41751,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -41296,6 +41838,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
@@ -41361,6 +41912,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -41423,6 +41983,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -41488,6 +42057,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -41566,6 +42144,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -41631,6 +42218,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -41650,6 +42246,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
     pwd_Profile?: Pwd_ProfileCreateNestedOneWithoutUserInput
@@ -41673,6 +42272,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
     pwd_Profile?: Pwd_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -41792,12 +42394,14 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
     job_listing: Job_ListingsCreateNestedOneWithoutApplicationsInput
     pwd_profile: Pwd_ProfileCreateNestedOneWithoutApplicationsInput
-    resume: ResumesCreateNestedOneWithoutApplicationsInput
+    resume?: ResumesCreateNestedOneWithoutApplicationsInput
     reviews?: reviewsCreateNestedManyWithoutApplicationInput
     transactions?: transactionsCreateNestedManyWithoutApplicationInput
   }
@@ -41806,11 +42410,13 @@ export namespace Prisma {
     application_id?: number
     job_id: number
     pwd_id: number
-    resume_id: number
+    resume_id?: number | null
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -41869,6 +42475,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
     pwd_Profile?: Pwd_ProfileUpdateOneWithoutUserNestedInput
@@ -41892,6 +42501,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
     pwd_Profile?: Pwd_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -42001,6 +42613,8 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -42020,6 +42634,8 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -42089,6 +42705,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -42154,6 +42779,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -42248,6 +42882,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -42313,6 +42956,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -42371,6 +43023,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
     pwd_Profile?: Pwd_ProfileCreateNestedOneWithoutUserInput
@@ -42394,6 +43049,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
     pwd_Profile?: Pwd_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -42454,6 +43112,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
     pwd_Profile?: Pwd_ProfileUpdateOneWithoutUserNestedInput
@@ -42477,6 +43138,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
     pwd_Profile?: Pwd_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -42527,6 +43191,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
@@ -42550,6 +43217,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -42577,6 +43247,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
@@ -42600,6 +43273,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -42638,6 +43314,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
@@ -42661,6 +43340,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -42694,6 +43376,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
@@ -42717,6 +43402,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -42838,6 +43526,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceCreateNestedManyWithoutPwd_profileInput
@@ -42903,6 +43600,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
     experiences?: Pwd_ExperienceUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -43227,6 +43933,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUpdateManyWithoutPwd_profileNestedInput
@@ -43292,6 +44007,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
     experiences?: Pwd_ExperienceUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -43467,13 +44191,15 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
     job_listing: Job_ListingsCreateNestedOneWithoutApplicationsInput
     pwd_profile: Pwd_ProfileCreateNestedOneWithoutApplicationsInput
     employer_profile: Employer_ProfileCreateNestedOneWithoutApplicationsInput
-    resume: ResumesCreateNestedOneWithoutApplicationsInput
+    resume?: ResumesCreateNestedOneWithoutApplicationsInput
     transactions?: transactionsCreateNestedManyWithoutApplicationInput
   }
 
@@ -43482,11 +44208,13 @@ export namespace Prisma {
     job_id: number
     pwd_id: number
     employer_id: number
-    resume_id: number
+    resume_id?: number | null
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43507,6 +44235,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
@@ -43530,6 +44261,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -43557,6 +44291,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
@@ -43580,6 +44317,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -43614,13 +44354,15 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
     job_listing?: Job_ListingsUpdateOneRequiredWithoutApplicationsNestedInput
     pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
     employer_profile?: Employer_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
-    resume?: ResumesUpdateOneRequiredWithoutApplicationsNestedInput
+    resume?: ResumesUpdateOneWithoutApplicationsNestedInput
     transactions?: transactionsUpdateManyWithoutApplicationNestedInput
   }
 
@@ -43629,11 +44371,13 @@ export namespace Prisma {
     job_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
     employer_id?: IntFieldUpdateOperationsInput | number
-    resume_id?: IntFieldUpdateOperationsInput | number
+    resume_id?: NullableIntFieldUpdateOperationsInput | number | null
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43660,6 +44404,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
@@ -43683,6 +44430,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -43716,6 +44466,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
@@ -43739,6 +44492,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -43757,13 +44513,15 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
     job_listing: Job_ListingsCreateNestedOneWithoutApplicationsInput
     pwd_profile: Pwd_ProfileCreateNestedOneWithoutApplicationsInput
     employer_profile: Employer_ProfileCreateNestedOneWithoutApplicationsInput
-    resume: ResumesCreateNestedOneWithoutApplicationsInput
+    resume?: ResumesCreateNestedOneWithoutApplicationsInput
     reviews?: reviewsCreateNestedManyWithoutApplicationInput
   }
 
@@ -43772,11 +44530,13 @@ export namespace Prisma {
     job_id: number
     pwd_id: number
     employer_id: number
-    resume_id: number
+    resume_id?: number | null
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43840,6 +44600,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -43905,6 +44674,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -44018,13 +44796,15 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
     job_listing?: Job_ListingsUpdateOneRequiredWithoutApplicationsNestedInput
     pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
     employer_profile?: Employer_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
-    resume?: ResumesUpdateOneRequiredWithoutApplicationsNestedInput
+    resume?: ResumesUpdateOneWithoutApplicationsNestedInput
     reviews?: reviewsUpdateManyWithoutApplicationNestedInput
   }
 
@@ -44033,11 +44813,13 @@ export namespace Prisma {
     job_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
     employer_id?: IntFieldUpdateOperationsInput | number
-    resume_id?: IntFieldUpdateOperationsInput | number
+    resume_id?: NullableIntFieldUpdateOperationsInput | number | null
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44107,6 +44889,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -44172,6 +44963,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -44279,6 +45079,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     pwd_Profile?: Pwd_ProfileCreateNestedOneWithoutUserInput
@@ -44302,6 +45105,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     pwd_Profile?: Pwd_ProfileUncheckedCreateNestedOneWithoutUserInput
@@ -44340,6 +45146,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     pwd_Profile?: Pwd_ProfileUpdateOneWithoutUserNestedInput
@@ -44363,6 +45172,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     pwd_Profile?: Pwd_ProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -44484,6 +45296,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -44549,6 +45370,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -44771,6 +45601,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -44836,6 +45675,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -44939,12 +45787,14 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
     pwd_profile: Pwd_ProfileCreateNestedOneWithoutApplicationsInput
     employer_profile: Employer_ProfileCreateNestedOneWithoutApplicationsInput
-    resume: ResumesCreateNestedOneWithoutApplicationsInput
+    resume?: ResumesCreateNestedOneWithoutApplicationsInput
     reviews?: reviewsCreateNestedManyWithoutApplicationInput
     transactions?: transactionsCreateNestedManyWithoutApplicationInput
   }
@@ -44953,11 +45803,13 @@ export namespace Prisma {
     application_id?: number
     pwd_id: number
     employer_id: number
-    resume_id: number
+    resume_id?: number | null
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -45254,6 +46106,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
@@ -45277,6 +46132,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -45304,6 +46162,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
@@ -45327,6 +46188,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -45365,6 +46229,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
@@ -45388,6 +46255,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -45421,6 +46291,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
@@ -45444,6 +46317,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -45466,6 +46342,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
@@ -45489,6 +46368,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -45527,6 +46409,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
@@ -45550,6 +46435,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -45671,6 +46559,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationCreateNestedManyWithoutPwd_profileInput
@@ -45736,6 +46633,15 @@ export namespace Prisma {
     portfolio_items?: boolean
     skills_assessment?: boolean
     set_accessibility_preferences?: boolean
+    make_profile_searchable?: boolean
+    display_personal_information?: boolean
+    display_portfolio_links?: boolean
+    show_professional_summary?: boolean
+    show_skills_and_expertise?: boolean
+    show_education?: boolean
+    show_experience?: boolean
+    display_accommodation_needs?: boolean
+    display_employment_preferences?: boolean
     applications?: ApplicationsUncheckedCreateNestedManyWithoutPwd_profileInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedCreateNestedManyWithoutPwd_profileInput
     educations?: Pwd_EducationUncheckedCreateNestedManyWithoutPwd_profileInput
@@ -45876,6 +46782,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUpdateManyWithoutPwd_profileNestedInput
@@ -45941,6 +46856,15 @@ export namespace Prisma {
     portfolio_items?: BoolFieldUpdateOperationsInput | boolean
     skills_assessment?: BoolFieldUpdateOperationsInput | boolean
     set_accessibility_preferences?: BoolFieldUpdateOperationsInput | boolean
+    make_profile_searchable?: BoolFieldUpdateOperationsInput | boolean
+    display_personal_information?: BoolFieldUpdateOperationsInput | boolean
+    display_portfolio_links?: BoolFieldUpdateOperationsInput | boolean
+    show_professional_summary?: BoolFieldUpdateOperationsInput | boolean
+    show_skills_and_expertise?: BoolFieldUpdateOperationsInput | boolean
+    show_education?: BoolFieldUpdateOperationsInput | boolean
+    show_experience?: BoolFieldUpdateOperationsInput | boolean
+    display_accommodation_needs?: BoolFieldUpdateOperationsInput | boolean
+    display_employment_preferences?: BoolFieldUpdateOperationsInput | boolean
     applications?: ApplicationsUncheckedUpdateManyWithoutPwd_profileNestedInput
     accessibility_needs?: Pwd_Accessibility_NeedsUncheckedUpdateManyWithoutPwd_profileNestedInput
     educations?: Pwd_EducationUncheckedUpdateManyWithoutPwd_profileNestedInput
@@ -45960,6 +46884,9 @@ export namespace Prisma {
     is_verified?: boolean
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileCreateNestedOneWithoutUserInput
     notifications?: NotificationsCreateNestedManyWithoutUserInput
@@ -45983,6 +46910,9 @@ export namespace Prisma {
     user_id?: number
     password_reset_token?: string | null
     created_at: string
+    document_verification_status?: string | null
+    document_rejection_reason?: string | null
+    verification_documents?: UsersCreateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedCreateNestedManyWithoutSenderInput
     employer_Profile?: Employer_ProfileUncheckedCreateNestedOneWithoutUserInput
     notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
@@ -46021,6 +46951,9 @@ export namespace Prisma {
     is_verified?: BoolFieldUpdateOperationsInput | boolean
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUpdateManyWithoutUserNestedInput
@@ -46044,6 +46977,9 @@ export namespace Prisma {
     user_id?: IntFieldUpdateOperationsInput | number
     password_reset_token?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: StringFieldUpdateOperationsInput | string
+    document_verification_status?: NullableStringFieldUpdateOperationsInput | string | null
+    document_rejection_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_documents?: UsersUpdateverification_documentsInput | string[]
     messages?: Chat_MessageUncheckedUpdateManyWithoutSenderNestedInput
     employer_Profile?: Employer_ProfileUncheckedUpdateOneWithoutUserNestedInput
     notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
@@ -46467,11 +47403,13 @@ export namespace Prisma {
     application_id?: number
     job_id: number
     employer_id: number
-    resume_id: number
+    resume_id?: number | null
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -46489,7 +47427,6 @@ export namespace Prisma {
 
   export type Pwd_EducationCreateManyPwd_profileInput = {
     id?: number
-    highest_level: string
     institution: string
     location: string
     degree: string
@@ -46571,12 +47508,14 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
     job_listing?: Job_ListingsUpdateOneRequiredWithoutApplicationsNestedInput
     employer_profile?: Employer_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
-    resume?: ResumesUpdateOneRequiredWithoutApplicationsNestedInput
+    resume?: ResumesUpdateOneWithoutApplicationsNestedInput
     reviews?: reviewsUpdateManyWithoutApplicationNestedInput
     transactions?: transactionsUpdateManyWithoutApplicationNestedInput
   }
@@ -46585,11 +47524,13 @@ export namespace Prisma {
     application_id?: IntFieldUpdateOperationsInput | number
     job_id?: IntFieldUpdateOperationsInput | number
     employer_id?: IntFieldUpdateOperationsInput | number
-    resume_id?: IntFieldUpdateOperationsInput | number
+    resume_id?: NullableIntFieldUpdateOperationsInput | number | null
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46601,11 +47542,13 @@ export namespace Prisma {
     application_id?: IntFieldUpdateOperationsInput | number
     job_id?: IntFieldUpdateOperationsInput | number
     employer_id?: IntFieldUpdateOperationsInput | number
-    resume_id?: IntFieldUpdateOperationsInput | number
+    resume_id?: NullableIntFieldUpdateOperationsInput | number | null
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46641,7 +47584,6 @@ export namespace Prisma {
   }
 
   export type Pwd_EducationUpdateWithoutPwd_profileInput = {
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -46653,7 +47595,6 @@ export namespace Prisma {
 
   export type Pwd_EducationUncheckedUpdateWithoutPwd_profileInput = {
     id?: IntFieldUpdateOperationsInput | number
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -46665,7 +47606,6 @@ export namespace Prisma {
 
   export type Pwd_EducationUncheckedUpdateManyWithoutPwd_profileInput = {
     id?: IntFieldUpdateOperationsInput | number
-    highest_level?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
     degree?: StringFieldUpdateOperationsInput | string
@@ -46912,11 +47852,13 @@ export namespace Prisma {
     application_id?: number
     job_id: number
     pwd_id: number
-    resume_id: number
+    resume_id?: number | null
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -47045,12 +47987,14 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
     job_listing?: Job_ListingsUpdateOneRequiredWithoutApplicationsNestedInput
     pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
-    resume?: ResumesUpdateOneRequiredWithoutApplicationsNestedInput
+    resume?: ResumesUpdateOneWithoutApplicationsNestedInput
     reviews?: reviewsUpdateManyWithoutApplicationNestedInput
     transactions?: transactionsUpdateManyWithoutApplicationNestedInput
   }
@@ -47059,11 +48003,13 @@ export namespace Prisma {
     application_id?: IntFieldUpdateOperationsInput | number
     job_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
-    resume_id?: IntFieldUpdateOperationsInput | number
+    resume_id?: NullableIntFieldUpdateOperationsInput | number | null
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47075,11 +48021,13 @@ export namespace Prisma {
     application_id?: IntFieldUpdateOperationsInput | number
     job_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
-    resume_id?: IntFieldUpdateOperationsInput | number
+    resume_id?: NullableIntFieldUpdateOperationsInput | number | null
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47111,6 +48059,8 @@ export namespace Prisma {
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -47121,6 +48071,8 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47140,6 +48092,8 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47156,6 +48110,8 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47290,11 +48246,13 @@ export namespace Prisma {
     application_id?: number
     pwd_id: number
     employer_id: number
-    resume_id: number
+    resume_id?: number | null
     custom_message: string
     proposed_salary: Decimal | DecimalJsLike | number | string
     work_experience?: string | null
     portfolio_links?: string | null
+    video_file_path?: string | null
+    status?: string
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -47322,12 +48280,14 @@ export namespace Prisma {
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
     pwd_profile?: Pwd_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
     employer_profile?: Employer_ProfileUpdateOneRequiredWithoutApplicationsNestedInput
-    resume?: ResumesUpdateOneRequiredWithoutApplicationsNestedInput
+    resume?: ResumesUpdateOneWithoutApplicationsNestedInput
     reviews?: reviewsUpdateManyWithoutApplicationNestedInput
     transactions?: transactionsUpdateManyWithoutApplicationNestedInput
   }
@@ -47336,11 +48296,13 @@ export namespace Prisma {
     application_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
     employer_id?: IntFieldUpdateOperationsInput | number
-    resume_id?: IntFieldUpdateOperationsInput | number
+    resume_id?: NullableIntFieldUpdateOperationsInput | number | null
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47352,11 +48314,13 @@ export namespace Prisma {
     application_id?: IntFieldUpdateOperationsInput | number
     pwd_id?: IntFieldUpdateOperationsInput | number
     employer_id?: IntFieldUpdateOperationsInput | number
-    resume_id?: IntFieldUpdateOperationsInput | number
+    resume_id?: NullableIntFieldUpdateOperationsInput | number | null
     custom_message?: StringFieldUpdateOperationsInput | string
     proposed_salary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
+    video_file_path?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string

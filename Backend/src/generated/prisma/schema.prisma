@@ -10,27 +10,30 @@ datasource db {
 }
 
 model Users {
-  email                 String                @unique
-  password_hash         String
-  phone_number          String                @unique
-  user_type             UserType
-  account_status        AccountStatus         @default(Active)
-  is_verified           Boolean               @default(false)
-  user_id               Int                   @id @default(autoincrement())
-  password_reset_token  String?
-  created_at            String
-  messages              Chat_Message[]        @relation("SenderMessages")
-  employer_Profile      Employer_Profile?     @relation("UserToEmployer")
-  notifications         Notifications[]
-  pwd_Profile           Pwd_Profile?          @relation("UserToPWD")
-  chatbot_logs          chatbot_logs[]
-  resources             resources[]
-  reviews_received      reviews[]             @relation("Reviewee")
-  reviews_written       reviews[]             @relation("Reviewer")
-  assigned_tickets      support_tickets[]     @relation("TicketAssignee")
-  support_tickets       support_tickets[]     @relation("TicketUser")
-  processed_withdrawals withdrawal_requests[] @relation("Processor")
-  withdrawal_requests   withdrawal_requests[] @relation("WithdrawalUser")
+  email                        String                @unique
+  password_hash                String
+  phone_number                 String                @unique
+  user_type                    UserType
+  account_status               AccountStatus         @default(Active)
+  is_verified                  Boolean               @default(false)
+  user_id                      Int                   @id @default(autoincrement())
+  password_reset_token         String?
+  created_at                   String
+  document_verification_status String?               @default("not_submitted") // 'not_submitted', 'pending', 'verified', 'rejected'
+  document_rejection_reason    String?
+  verification_documents       String[] // Array of uploaded document file paths
+  messages                     Chat_Message[]        @relation("SenderMessages")
+  employer_Profile             Employer_Profile?     @relation("UserToEmployer")
+  notifications                Notifications[]
+  pwd_Profile                  Pwd_Profile?          @relation("UserToPWD")
+  chatbot_logs                 chatbot_logs[]
+  resources                    resources[]
+  reviews_received             reviews[]             @relation("Reviewee")
+  reviews_written              reviews[]             @relation("Reviewer")
+  assigned_tickets             support_tickets[]     @relation("TicketAssignee")
+  support_tickets              support_tickets[]     @relation("TicketUser")
+  processed_withdrawals        withdrawal_requests[] @relation("Processor")
+  withdrawal_requests          withdrawal_requests[] @relation("WithdrawalUser")
 }
 
 model Pwd_Profile {
@@ -87,6 +90,16 @@ model Pwd_Profile {
   portfolio_items                Boolean                            @default(false)
   skills_assessment              Boolean                            @default(false)
   set_accessibility_preferences  Boolean                            @default(false)
+  // Profile Visibility Settings
+  make_profile_searchable        Boolean                            @default(false)
+  display_personal_information   Boolean                            @default(false)
+  display_portfolio_links        Boolean                            @default(false)
+  show_professional_summary      Boolean                            @default(false)
+  show_skills_and_expertise      Boolean                            @default(false)
+  show_education                 Boolean                            @default(false)
+  show_experience                Boolean                            @default(false)
+  display_accommodation_needs    Boolean                            @default(false)
+  display_employment_preferences Boolean                            @default(false)
   applications                   Applications[]
   accessibility_needs            Pwd_Accessibility_Needs[]
   educations                     Pwd_Education[]
@@ -130,7 +143,6 @@ model Pwd_Accessibility_Needs {
 model Pwd_Education {
   id                 Int         @id @default(autoincrement())
   pwd_id             Int
-  highest_level      String
   institution        String
   location           String
   degree             String
@@ -248,18 +260,20 @@ model Applications {
   job_id            Int
   pwd_id            Int
   employer_id       Int
-  resume_id         Int
+  resume_id         Int?
   custom_message    String
   proposed_salary   Decimal          @db.Decimal(10, 2)
   work_experience   String? // JSON string of selected work experiences
   portfolio_links   String? // JSON string of portfolio links
+  video_file_path   String? // Path to uploaded video file
+  status            String           @default("Pending")
   submitted_at      DateTime
   updated_at        DateTime         @updatedAt
   status_changed_at DateTime
   job_listing       Job_Listings     @relation(fields: [job_id], references: [job_id])
   pwd_profile       Pwd_Profile      @relation(fields: [pwd_id], references: [pwd_id])
   employer_profile  Employer_Profile @relation(fields: [employer_id], references: [employer_id])
-  resume            Resumes          @relation(fields: [resume_id], references: [resume_id])
+  resume            Resumes?         @relation(fields: [resume_id], references: [resume_id])
   reviews           reviews[]
   transactions      transactions[]
 }

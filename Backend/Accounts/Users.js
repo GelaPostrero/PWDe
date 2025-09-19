@@ -322,7 +322,7 @@ router.post('/users/register/verify', async (req, res) => {
         phone_number: userData.phone || userData.companyPhone, 
         user_type: userData.userType,
         created_at: formattedDate,
-        is_verified: true,
+        is_verified: false, // Only true after admin validates documents
       }
   });
 
@@ -362,6 +362,17 @@ router.post('/users/register/verify', async (req, res) => {
         basic_information: userData.basic_information
       }
     })
+
+    // Update user's document verification status if documents were uploaded
+    if (documentFiles && documentFiles.length > 0) {
+      await prisma.users.update({
+        where: { user_id: user.user_id },
+        data: {
+          document_verification_status: 'pending',
+          verification_documents: documentFiles
+        }
+      });
+    }
 
     const payload = {
       userId: user.user_id,
