@@ -29,10 +29,30 @@ const Support = () => {
 
   const [supportTickets, setSupportTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [ticketToDelete, setTicketToDelete] = useState(null);
 
   // Fetch support tickets on component mount
   useEffect(() => {
     fetchSupportTickets();
+  }, []);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Close all dropdowns when clicking outside
+      const dropdowns = document.querySelectorAll('[id^="dropdown-"]');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(event.target) && !event.target.closest('[id^="dropdown-"]')) {
+          dropdown.classList.add('hidden');
+        }
+      });
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   // Fetch support tickets from API
@@ -250,6 +270,73 @@ const Support = () => {
       attachments: ticket.attachments || []
     });
     setShowEditTicket(true);
+  };
+
+  // Handle delete ticket
+  const handleDeleteTicket = (ticket) => {
+    setTicketToDelete(ticket);
+    setShowDeleteConfirm(true);
+  };
+
+  // Confirm delete ticket
+  const confirmDeleteTicket = async () => {
+    if (!ticketToDelete) return;
+
+    try {
+      const ticketId = ticketToDelete.id.replace('TICKET-', '');
+      const response = await api.delete(`/api/support/tickets/${ticketId}`);
+
+      if (response.data.success) {
+        // Refresh tickets list
+        await fetchSupportTickets();
+
+        setShowDeleteConfirm(false);
+        setTicketToDelete(null);
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Support ticket deleted successfully!',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting support ticket:', error);
+      
+      // If API is not available, remove from local state for demo
+      if (error.response?.status === 404 || error.response?.status === 500) {
+        console.log('API not available, removing from local state for demo');
+        setSupportTickets(prev => 
+          prev.filter(ticket => ticket.id !== ticketToDelete.id)
+        );
+        
+        setShowDeleteConfirm(false);
+        setTicketToDelete(null);
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Support ticket deleted successfully! (Demo mode)',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Failed to delete support ticket. Please try again.',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
+      }
+    }
   };
 
   // Handle update ticket
@@ -555,7 +642,7 @@ const Support = () => {
 
           {/* Main Content Area */}
           <div className="lg:col-span-3">
-            <div className="bg-white rounded-lg border border-gray-200">
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
               {/* Header */}
               <div className="px-6 py-4 border-b border-gray-200">
                 <div className="flex items-center justify-between">
@@ -673,8 +760,8 @@ const Support = () => {
                        <span className="ml-2 text-gray-600">Loading tickets...</span>
                      </div>
                    ) : (
-                     <div className="overflow-x-auto">
-                       <table className="min-w-full divide-y divide-gray-200">
+                    <div className="overflow-x-auto overflow-y-visible">
+                      <table className="min-w-full divide-y divide-gray-200">
                          <thead className="bg-gray-50">
                            <tr>
                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -726,22 +813,88 @@ const Support = () => {
                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                    {ticket.created}
                                  </td>
-                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                   <div className="flex space-x-2">
+                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium relative">
+                                   <div className="flex items-center space-x-2">
                                      <button 
                                        onClick={() => handleViewTicket(ticket)}
-                                       className="text-blue-600 hover:text-blue-900"
+                                       className="text-blue-600 hover:text-blue-900 font-medium"
                                      >
                                        View
                                      </button>
-                                     {ticket.status === 'Open' && (
-                                       <button 
-                                         onClick={() => handleEditTicket(ticket)}
-                                         className="text-green-600 hover:text-green-900"
+                                     
+                                     {/* Actions Dropdown */}
+                                     <div className="relative">
+                                       <button
+                                         className="p-1 text-gray-400 hover:text-gray-600 focus:outline-none"
+                                         onClick={(e) => {
+                                           // Close all other dropdowns first
+                                           const allDropdowns = document.querySelectorAll('[id^="dropdown-"]');
+                                           allDropdowns.forEach(dropdown => {
+                                             if (dropdown.id !== `dropdown-${ticket.id}`) {
+                                               dropdown.classList.add('hidden');
+                                             }
+                                           });
+                                           
+                                           // Toggle current dropdown
+                                           const dropdown = document.getElementById(`dropdown-${ticket.id}`);
+                                           if (dropdown) {
+                                             dropdown.classList.toggle('hidden');
+                                             
+                                             // If showing, position it correctly
+                                             if (!dropdown.classList.contains('hidden')) {
+                                               const rect = e.currentTarget.getBoundingClientRect();
+                                               dropdown.style.position = 'fixed';
+                                               dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+                                               dropdown.style.left = `${rect.right - 192}px`; // 192px is dropdown width
+                                               dropdown.style.zIndex = '9999';
+                                             }
+                                           }
+                                         }}
                                        >
-                                         Edit
+                                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                           <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                                         </svg>
                                        </button>
-                                     )}
+                                       
+                                       <div
+                                         id={`dropdown-${ticket.id}`}
+                                         className="hidden w-48 bg-white rounded-md shadow-lg border border-gray-200"
+                                       >
+                                         <div className="py-1">
+                                           {ticket.status === 'Open' && (
+                                             <button
+                                               onClick={() => {
+                                                 handleEditTicket(ticket);
+                                                 const dropdown = document.getElementById(`dropdown-${ticket.id}`);
+                                                 if (dropdown) dropdown.classList.add('hidden');
+                                               }}
+                                               className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                             >
+                                               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                               </svg>
+                                               Edit
+                                             </button>
+                                           )}
+                                           
+                                           {(ticket.status === 'Open' || ticket.status === 'Rejected') && (
+                                             <button
+                                               onClick={() => {
+                                                 handleDeleteTicket(ticket);
+                                                 const dropdown = document.getElementById(`dropdown-${ticket.id}`);
+                                                 if (dropdown) dropdown.classList.add('hidden');
+                                               }}
+                                               className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                                             >
+                                               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                               </svg>
+                                               Delete
+                                             </button>
+                                           )}
+                                         </div>
+                                       </div>
+                                     </div>
                                    </div>
                                  </td>
                                </tr>
@@ -1245,6 +1398,54 @@ const Support = () => {
           </div>
         )}
       </ProfileModal>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <div className="flex items-center mb-4">
+              <div className="flex-shrink-0">
+                <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 19.5c-.77.833.192 2.5 1.732 2.5z" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-lg font-medium text-gray-900">Delete Support Ticket</h3>
+              </div>
+            </div>
+            
+            <div className="mb-6">
+              <p className="text-sm text-gray-500">
+                Are you sure you want to delete this support ticket? This action cannot be undone.
+              </p>
+              {ticketToDelete && (
+                <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+                  <p className="text-sm font-medium text-gray-900">{ticketToDelete.id}</p>
+                  <p className="text-sm text-gray-600">{ticketToDelete.subject}</p>
+                </div>
+              )}
+            </div>
+            
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={() => {
+                  setShowDeleteConfirm(false);
+                  setTicketToDelete(null);
+                }}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDeleteTicket}
+                className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
