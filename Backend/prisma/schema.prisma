@@ -253,6 +253,7 @@ model Applications {
   work_experience   String? // JSON string of selected work experiences
   portfolio_links   String? // JSON string of portfolio links
   status            String?
+  shortlisted       Boolean          @default(false)
   submitted_at      DateTime
   updated_at        DateTime         @updatedAt
   status_changed_at DateTime

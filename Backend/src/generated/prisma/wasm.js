@@ -326,6 +326,7 @@ exports.Prisma.ApplicationsScalarFieldEnum = {
   work_experience: 'work_experience',
   portfolio_links: 'portfolio_links',
   status: 'status',
+  shortlisted: 'shortlisted',
   submitted_at: 'submitted_at',
   updated_at: 'updated_at',
   status_changed_at: 'status_changed_at'

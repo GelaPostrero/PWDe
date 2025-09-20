@@ -63,6 +63,20 @@ const PostedJobView = () => {
     }
   };
 
+  const updateShortlistedApplicants = async (applicationId) => {
+    setLoading(true);
+    try {
+      const { data } = await api.put(`/api/applications/job/${applicationId}/shortlisted`);
+      if(data.success) {
+        fetchApplications(pagination.page);
+      }
+    } catch (error) {
+      console.error('Error shortlisting applicant: ', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Fetch applications data from backend
   useEffect(() => {
     if (activeTab === 'applications') {
@@ -799,7 +813,7 @@ const PostedJobView = () => {
                               </div>
                               <div className="flex items-center space-x-3">
                                 <button 
-                                  onClick={(e) => e.stopPropagation()}
+                                  onClick={() => updateShortlistedApplicants(applicant.application_id)}
                                   className="p-2 text-gray-400 hover:text-red-500 transition-colors"
                                 >
                                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

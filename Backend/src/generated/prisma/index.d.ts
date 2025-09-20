@@ -17484,6 +17484,7 @@ export namespace Prisma {
     work_experience: string | null
     portfolio_links: string | null
     status: string | null
+    shortlisted: boolean | null
     submitted_at: Date | null
     updated_at: Date | null
     status_changed_at: Date | null
@@ -17500,6 +17501,7 @@ export namespace Prisma {
     work_experience: string | null
     portfolio_links: string | null
     status: string | null
+    shortlisted: boolean | null
     submitted_at: Date | null
     updated_at: Date | null
     status_changed_at: Date | null
@@ -17516,6 +17518,7 @@ export namespace Prisma {
     work_experience: number
     portfolio_links: number
     status: number
+    shortlisted: number
     submitted_at: number
     updated_at: number
     status_changed_at: number
@@ -17552,6 +17555,7 @@ export namespace Prisma {
     work_experience?: true
     portfolio_links?: true
     status?: true
+    shortlisted?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17568,6 +17572,7 @@ export namespace Prisma {
     work_experience?: true
     portfolio_links?: true
     status?: true
+    shortlisted?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17584,6 +17589,7 @@ export namespace Prisma {
     work_experience?: true
     portfolio_links?: true
     status?: true
+    shortlisted?: true
     submitted_at?: true
     updated_at?: true
     status_changed_at?: true
@@ -17687,6 +17693,7 @@ export namespace Prisma {
     work_experience: string | null
     portfolio_links: string | null
     status: string | null
+    shortlisted: boolean
     submitted_at: Date
     updated_at: Date
     status_changed_at: Date
@@ -17722,6 +17729,7 @@ export namespace Prisma {
     work_experience?: boolean
     portfolio_links?: boolean
     status?: boolean
+    shortlisted?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
@@ -17745,6 +17753,7 @@ export namespace Prisma {
     work_experience?: boolean
     portfolio_links?: boolean
     status?: boolean
+    shortlisted?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
@@ -17765,6 +17774,7 @@ export namespace Prisma {
     work_experience?: boolean
     portfolio_links?: boolean
     status?: boolean
+    shortlisted?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
@@ -17785,12 +17795,13 @@ export namespace Prisma {
     work_experience?: boolean
     portfolio_links?: boolean
     status?: boolean
+    shortlisted?: boolean
     submitted_at?: boolean
     updated_at?: boolean
     status_changed_at?: boolean
   }
 
-  export type ApplicationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"application_id" | "job_id" | "pwd_id" | "employer_id" | "resume_id" | "custom_message" | "proposed_salary" | "work_experience" | "portfolio_links" | "status" | "submitted_at" | "updated_at" | "status_changed_at", ExtArgs["result"]["applications"]>
+  export type ApplicationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"application_id" | "job_id" | "pwd_id" | "employer_id" | "resume_id" | "custom_message" | "proposed_salary" | "work_experience" | "portfolio_links" | "status" | "shortlisted" | "submitted_at" | "updated_at" | "status_changed_at", ExtArgs["result"]["applications"]>
   export type ApplicationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job_listing?: boolean | Job_ListingsDefaultArgs<ExtArgs>
     pwd_profile?: boolean | Pwd_ProfileDefaultArgs<ExtArgs>
@@ -17834,6 +17845,7 @@ export namespace Prisma {
       work_experience: string | null
       portfolio_links: string | null
       status: string | null
+      shortlisted: boolean
       submitted_at: Date
       updated_at: Date
       status_changed_at: Date
@@ -18276,6 +18288,7 @@ export namespace Prisma {
     readonly work_experience: FieldRef<"Applications", 'String'>
     readonly portfolio_links: FieldRef<"Applications", 'String'>
     readonly status: FieldRef<"Applications", 'String'>
+    readonly shortlisted: FieldRef<"Applications", 'Boolean'>
     readonly submitted_at: FieldRef<"Applications", 'DateTime'>
     readonly updated_at: FieldRef<"Applications", 'DateTime'>
     readonly status_changed_at: FieldRef<"Applications", 'DateTime'>
@@ -29627,6 +29640,7 @@ export namespace Prisma {
     work_experience: 'work_experience',
     portfolio_links: 'portfolio_links',
     status: 'status',
+    shortlisted: 'shortlisted',
     submitted_at: 'submitted_at',
     updated_at: 'updated_at',
     status_changed_at: 'status_changed_at'
@@ -31311,6 +31325,7 @@ export namespace Prisma {
     work_experience?: StringNullableFilter<"Applications"> | string | null
     portfolio_links?: StringNullableFilter<"Applications"> | string | null
     status?: StringNullableFilter<"Applications"> | string | null
+    shortlisted?: BoolFilter<"Applications"> | boolean
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
@@ -31333,6 +31348,7 @@ export namespace Prisma {
     work_experience?: SortOrderInput | SortOrder
     portfolio_links?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
+    shortlisted?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -31358,6 +31374,7 @@ export namespace Prisma {
     work_experience?: StringNullableFilter<"Applications"> | string | null
     portfolio_links?: StringNullableFilter<"Applications"> | string | null
     status?: StringNullableFilter<"Applications"> | string | null
+    shortlisted?: BoolFilter<"Applications"> | boolean
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
@@ -31380,6 +31397,7 @@ export namespace Prisma {
     work_experience?: SortOrderInput | SortOrder
     portfolio_links?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
+    shortlisted?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -31404,6 +31422,7 @@ export namespace Prisma {
     work_experience?: StringNullableWithAggregatesFilter<"Applications"> | string | null
     portfolio_links?: StringNullableWithAggregatesFilter<"Applications"> | string | null
     status?: StringNullableWithAggregatesFilter<"Applications"> | string | null
+    shortlisted?: BoolWithAggregatesFilter<"Applications"> | boolean
     submitted_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeWithAggregatesFilter<"Applications"> | Date | string
@@ -33605,6 +33624,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -33627,6 +33647,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -33640,6 +33661,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33662,6 +33684,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33680,6 +33703,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -33691,6 +33715,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33707,6 +33732,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35760,6 +35786,7 @@ export namespace Prisma {
     work_experience?: SortOrder
     portfolio_links?: SortOrder
     status?: SortOrder
+    shortlisted?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -35785,6 +35812,7 @@ export namespace Prisma {
     work_experience?: SortOrder
     portfolio_links?: SortOrder
     status?: SortOrder
+    shortlisted?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -35801,6 +35829,7 @@ export namespace Prisma {
     work_experience?: SortOrder
     portfolio_links?: SortOrder
     status?: SortOrder
+    shortlisted?: SortOrder
     submitted_at?: SortOrder
     updated_at?: SortOrder
     status_changed_at?: SortOrder
@@ -39885,6 +39914,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -39905,6 +39935,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -40252,6 +40283,7 @@ export namespace Prisma {
     work_experience?: StringNullableFilter<"Applications"> | string | null
     portfolio_links?: StringNullableFilter<"Applications"> | string | null
     status?: StringNullableFilter<"Applications"> | string | null
+    shortlisted?: BoolFilter<"Applications"> | boolean
     submitted_at?: DateTimeFilter<"Applications"> | Date | string
     updated_at?: DateTimeFilter<"Applications"> | Date | string
     status_changed_at?: DateTimeFilter<"Applications"> | Date | string
@@ -41793,6 +41825,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -41813,6 +41846,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -42004,6 +42038,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -42024,6 +42059,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43472,6 +43508,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43493,6 +43530,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43621,6 +43659,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43642,6 +43681,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43766,6 +43806,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -43787,6 +43828,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -44029,6 +44071,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44050,6 +44093,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44952,6 +44996,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -44972,6 +45017,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -46487,6 +46533,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -46586,6 +46633,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46606,6 +46654,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46623,6 +46672,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46932,6 +46982,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -47061,6 +47112,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47081,6 +47133,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47098,6 +47151,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47130,6 +47184,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -47141,6 +47196,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47161,6 +47217,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47178,6 +47235,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47318,6 +47376,7 @@ export namespace Prisma {
     work_experience?: string | null
     portfolio_links?: string | null
     status?: string | null
+    shortlisted?: boolean
     submitted_at: Date | string
     updated_at?: Date | string
     status_changed_at: Date | string
@@ -47346,6 +47405,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47366,6 +47426,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47383,6 +47444,7 @@ export namespace Prisma {
     work_experience?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio_links?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    shortlisted?: BoolFieldUpdateOperationsInput | boolean
     submitted_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     status_changed_at?: DateTimeFieldUpdateOperationsInput | Date | string

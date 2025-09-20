@@ -483,6 +483,45 @@ router.get('/job/:jobId/applications', authenticateToken, async (req, res) => {
   }
 });
 
+// Update application shortlisted
+router.put('/job/:applicationId/shortlisted', authenticateToken, async (req, res) => {
+  try {
+    const emp_id = req.user?.emp_id;
+    const userType = req.user?.userType;
+    const { applicationId } = req.params;
+
+    if (userType !== 'Employer' || !emp_id) {
+      return res.status(403).json({ success: false, message: 'Unauthorized' });
+    }
+
+    // Check that the application belongs to one of employer's jobs
+    const application = await prisma.Applications.findFirst({
+      where: {
+        application_id: parseInt(applicationId),
+        job_listing: {
+          employer_id: emp_id
+        }
+      },
+      include: { job_listing: true }
+    });
+
+    if (!application) {
+      return res.status(404).json({ success: false, message: 'Application not found or not authorized' });
+    }
+
+    // Update status to shortlisted
+    const updated = await prisma.Applications.update({
+      where: { application_id: parseInt(applicationId), employer_id: emp_id },
+      data: { shortlisted: true } 
+    });
+
+    res.json({ success: true, message: 'Applicant shortlisted successfully', data: updated });
+  } catch(error) {
+    console.error('Error fetching shortlisted applications:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch shortlisted applications' });
+  }
+});
+
 // Update application status (for employers)
 router.put('/:applicationId/status', authenticateToken, async (req, res) => {
   try {
